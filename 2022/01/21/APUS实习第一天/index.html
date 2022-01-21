@@ -49,8 +49,7 @@
 <td>虚拟像素，在不同的像素密度的设备上会自动适配</td>
 </tr>
 </tbody></table>
-<h1 id="隐藏状态栏任务栏"><a href="#隐藏状态栏任务栏" class="headerlink" title="隐藏状态栏任务栏"></a>隐藏状态栏任务栏</h1><img src="./1.PNG"/>
-
+<h1 id="隐藏状态栏任务栏"><a href="#隐藏状态栏任务栏" class="headerlink" title="隐藏状态栏任务栏"></a>隐藏状态栏任务栏</h1><p><img src="1.PNG"></p>
 <h2 id="在api30之前"><a href="#在api30之前" class="headerlink" title="在api30之前"></a>在api30之前</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">getWindow().getDecorView().setSystemUIVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN)</span><br></pre></td></tr></table></figure>
 <h2 id="api30后"><a href="#api30后" class="headerlink" title="api30后"></a>api30后</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">WindowCompat.setDecorFitsSystemWindows(window, false)</span><br><span class="line">WindowInsetsControllerCompat(window, window.decorView).let &#123;</span><br><span class="line">    it.hide(WindowInsetsCompat.Type.systemBars())</span><br><span class="line">    //it.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_BARS_BY_TOUCH</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ul>
