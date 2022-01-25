@@ -1,329 +1,34 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh">
 <head>
-  <meta charset="utf-8">
-  <title>APUS实习第一天 | Jingtianer</title>
-  <meta name="keywords" content="">
-  <meta name="description" content="APUS实习第一天 | Jingtianer">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="px dp sp 的区别        px 其实就是像素单位，比如我们通常说的手机分辨列表800*400都是px的单位   sp 同dp相似，还会根据用户的字体大小偏好来缩放   dp 虚拟像素，在不同的像素密度的设备上会自动适配   隐藏状态栏任务栏 在api30之前1getWindow().getDecorView().setSystemUIVisibility(View.SYSTEM_UI">
-<meta property="og:type" content="article">
-<meta property="og:title" content="APUS实习第一天">
-<meta property="og:url" content="https://jingtianer.github.io/home/2022/01/21/APUS%E5%AE%9E%E4%B9%A0%E7%AC%AC%E4%B8%80%E5%A4%A9/index.html">
-<meta property="og:site_name" content="Jingtianer">
-<meta property="og:description" content="px dp sp 的区别        px 其实就是像素单位，比如我们通常说的手机分辨列表800*400都是px的单位   sp 同dp相似，还会根据用户的字体大小偏好来缩放   dp 虚拟像素，在不同的像素密度的设备上会自动适配   隐藏状态栏任务栏 在api30之前1getWindow().getDecorView().setSystemUIVisibility(View.SYSTEM_UI">
-<meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://jingtianer.github.io/home/2022/01/21/APUS%E5%AE%9E%E4%B9%A0%E7%AC%AC%E4%B8%80%E5%A4%A9/1.PNG">
-<meta property="og:image" content="https://jingtianer.github.io/home/2022/01/21/APUS%E5%AE%9E%E4%B9%A0%E7%AC%AC%E4%B8%80%E5%A4%A9/2.webp">
-<meta property="og:image" content="https://jingtianer.github.io/home/2022/01/21/APUS%E5%AE%9E%E4%B9%A0%E7%AC%AC%E4%B8%80%E5%A4%A9/3.webp">
-<meta property="og:image" content="https://jingtianer.github.io/home/2022/01/21/APUS%E5%AE%9E%E4%B9%A0%E7%AC%AC%E4%B8%80%E5%A4%A9/4.png">
-<meta property="article:published_time" content="2022-01-21T13:08:06.000Z">
-<meta property="article:modified_time" content="2022-01-21T13:40:18.847Z">
-<meta property="article:author" content="刘喵喵">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://jingtianer.github.io/home/2022/01/21/APUS%E5%AE%9E%E4%B9%A0%E7%AC%AC%E4%B8%80%E5%A4%A9/1.PNG">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>
+        Jingtianer
+    </title>
+    
+<link rel="stylesheet" href="/home/libs/highlight/styles/monokai-sublime.css">
 
+    
+<link rel="stylesheet" href="/home/libs/font-awesome/css/font-awesome.min.css">
 
-<link rel="icon" href="/img/avatar.jpg">
-
-<link href="/home/css/style.css?v=1.1.0" rel="stylesheet">
-
-<link href="/home/css/hl_theme/github.css?v=1.1.0" rel="stylesheet">
-
-<link href="//cdn.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" rel="stylesheet">
-
-<script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
-<script src="/home/js/titleTip.js?v=1.1.0" ></script>
-
-<script src="//cdn.jsdelivr.net/npm/highlightjs@9.16.2/highlight.pack.min.js"></script>
-<script>
-    hljs.initHighlightingOnLoad();
-</script>
-
-<script src="//cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js"></script>
-
-
-
-<script src="//cdn.jsdelivr.net/npm/jquery.cookie@1.4.1/jquery.cookie.min.js" ></script>
-
-<script src="/home/js/iconfont.js?v=1.1.0" ></script>
+    
+<link rel="stylesheet" href="/home/css/style.css">
 
 <meta name="generator" content="Hexo 5.4.0"></head>
-<div style="display: none">
-  <input class="theme_disqus_on" value="false">
-  <input class="theme_preload_comment" value="">
-  <input class="theme_blog_path" value="/home">
-  <input id="theme_shortcut" value="true" />
-  <input id="theme_highlight_on" value="true" />
-  <input id="theme_code_copy" value="true" />
-</div>
 
-
-
-<body>
-<aside class="nav">
-    <div class="nav-left">
-        <a href="/home/"
-   class="avatar_target">
-    <img class="avatar"
-         src="/home/img/avatar.jpg"/>
-</a>
-<div class="author">
-    <span>刘喵喵</span>
-</div>
-
-<div class="icon">
-    
-        
-    
-        
-            <a title="github"
-               href="https://github.com/jingtianer"
-               target="_blank">
-                
-                    <svg class="iconfont-svg" aria-hidden="true">
-                        <use xlink:href="#icon-github"></use>
-                    </svg>
-                
-            </a>
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-            <a title="email"
-               href="mailto:1043672911@qq.com"
-               target="_blank">
-                
-                    <svg class="iconfont-svg" aria-hidden="true">
-                        <use xlink:href="#icon-email"></use>
-                    </svg>
-                
-            </a>
-        
-    
-        
-            <a title="qq"
-               href="http://wpa.qq.com/msgrd?v=3&uin=1043672911&site=qq&menu=yes"
-               target="_blank">
-                
-                    <svg class="iconfont-svg" aria-hidden="true">
-                        <use xlink:href="#icon-qq"></use>
-                    </svg>
-                
-            </a>
-        
-    
-        
-    
-        
-    
-</div>
-
-
-
-
-<ul>
-    <li>
-        <div class="all active" data-rel="全部文章">全部文章
-            
-                <small>(2)</small>
-            
-        </div>
-    </li>
-    
-</ul>
-<div class="left-bottom">
-    <div class="menus">
-        
-            
-            
-            
+<body id="bodyx">
+    <div class="hd posts">
+    <a href="/index.html"><i class="fa fa-reply replay-btn" aria-hidden="true"></i></a>
+    <div class="post-title">
+        <p>
+            APUS实习第一天
+        </p>
+        <hr>
     </div>
-    <div>
-        
-            <a class="about  hasFriend  site_url"
-               
-               href="/home/about">关于</a>
-        
-        <a style="width: 50%"
-                
-                                           class="friends">友链</a>
-        
-    </div>
-</div>
-<input type="hidden" id="yelog_site_posts_number" value="2">
-<input type="hidden" id="yelog_site_word_count" value="3.5k">
-<div style="display: none">
-    <span id="busuanzi_value_site_uv"></span>
-    <span id="busuanzi_value_site_pv"></span>
-</div>
-
-    </div>
-    <div class="nav-right">
-        <div class="friends-area">
-    <div class="friends-title">
-        友情链接
-        <i class="iconfont icon-left"></i>
-    </div>
-    <div class="friends-content">
-        <ul>
-            
-        </ul>
-    </div>
-</div>
-        <div class="title-list">
-    <div class="right-top">
-        <div id="default-panel">
-            <i class="iconfont icon-search" data-title="搜索 快捷键 i"></i>
-            <div class="right-title">全部文章</div>
-            <i class="iconfont icon-file-tree" data-title="切换到大纲视图 快捷键 w"></i>
-        </div>
-        <div id="search-panel">
-            <i class="iconfont icon-left" data-title="返回"></i>
-            <input id="local-search-input" autocomplete="off"/>
-            <label class="border-line" for="input"></label>
-            <i class="iconfont icon-case-sensitive" data-title="大小写敏感"></i>
-            <i class="iconfont icon-tag" data-title="标签"></i>
-        </div>
-        <div id="outline-panel" style="display: none">
-            <div class="right-title">大纲</div>
-            <i class="iconfont icon-list" data-title="切换到文章列表"></i>
-        </div>
-    </div>
-
-    <div class="tags-list">
-    <input id="tag-search" />
-    <div class="tag-wrapper">
-        
-    </div>
-
-</div>
-
-    
-    <div id="local-search-result">
-
-    </div>
-    
-    <nav id="title-list-nav">
-        
-        <a  class="全部文章 "
-           href="/home/2022/01/21/APUS%E5%AE%9E%E4%B9%A0%E7%AC%AC%E4%B8%80%E5%A4%A9/"
-           data-tag=""
-           data-author="" >
-            <span class="post-title" title="APUS实习第一天">APUS实习第一天</span>
-            <span class="post-date" title="2022-01-21 21:08:06">2022/01/21</span>
-        </a>
-        
-        <a  class="全部文章 "
-           href="/home/2022/01/21/hello-world/"
-           data-tag=""
-           data-author="" >
-            <span class="post-title" title="Hello World">Hello World</span>
-            <span class="post-date" title="2022-01-21 19:59:45">2022/01/21</span>
-        </a>
-        
-        <div id="no-item-tips">
-
-        </div>
-    </nav>
-    <div id="outline-list">
-    </div>
-</div>
-
-    </div>
-    <div class="hide-list">
-        <div class="semicircle" data-title="切换全屏 快捷键 s">
-            <div class="brackets first"><</div>
-            <div class="brackets">&gt;</div>
-        </div>
-    </div>
-</aside>
-<div id="post">
-    <div class="pjax">
-        <article id="post-APUS实习第一天" class="article article-type-post" itemscope itemprop="blogPost">
-    
-        <h1 class="article-title">APUS实习第一天</h1>
-    
-    <div class="article-meta">
-        
-        
-        
-        
-    </div>
-    <div class="article-meta">
-        
-            发布时间 : <time class="date" title='最后更新: 2022-01-21 21:40:18'>2022-01-21 21:08</time>
-        
-    </div>
-    <div class="article-meta">
-        
-        <span>字数:3.4k</span>
-        
-        
-        <span id="busuanzi_container_page_pv">
-            阅读 :<span id="busuanzi_value_page_pv">
-                <span class="count-comment">
-                    <span class="spinner">
-                      <div class="cube1"></div>
-                      <div class="cube2"></div>
-                    </span>
-                </span>
-            </span>
-        </span>
-        
-        
-        <span class="top-comment" title="跳转至评论区">
-            <a href="#comments">
-                评论:<span class="count-comment">
-                    <span class="spinner">
-                      <div class="cube1"></div>
-                      <div class="cube2"></div>
-                    </span>
-                </span>
-            </a>
-        </span>
-        
-    </div>
-    
-    <div class="toc-ref">
-    
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#px-dp-sp-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">px dp sp 的区别</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%9A%90%E8%97%8F%E7%8A%B6%E6%80%81%E6%A0%8F%E4%BB%BB%E5%8A%A1%E6%A0%8F"><span class="toc-text">隐藏状态栏任务栏</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8api30%E4%B9%8B%E5%89%8D"><span class="toc-text">在api30之前</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#api30%E5%90%8E"><span class="toc-text">api30后</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE%E5%AF%BC%E8%88%AA%E6%A0%8F%EF%BC%8C%E7%8A%B6%E6%80%81%E6%A0%8F%E9%A2%9C%E8%89%B2"><span class="toc-text">设置导航栏，状态栏颜色</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#fragment-%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-text">fragment 生命周期</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#onCreateView-%E4%B8%8EonActivityCreated-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">onCreateView 与onActivityCreated 的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#onCreateView"><span class="toc-text">onCreateView</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#onActivityCreated"><span class="toc-text">onActivityCreated</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E9%9D%99%E6%80%81%E5%B8%83%E5%B1%80"><span class="toc-text">1 静态布局</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-View%E5%92%8CViewGroup"><span class="toc-text">1.1 View和ViewGroup</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E5%B8%83%E5%B1%80%E6%A0%91%E7%8A%B6%E5%9B%BE"><span class="toc-text">静态布局树状图</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-%E5%85%AD%E5%A4%A7%E5%B8%83%E5%B1%80"><span class="toc-text">1.3 六大布局</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-1-LinearLayout"><span class="toc-text">1.3.1 LinearLayout</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-2-RelativeLayout"><span class="toc-text">1.3.2 RelativeLayout</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-3-%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B8%83%E5%B1%80"><span class="toc-text">1.3.3 自定义布局</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-4-FrameLayout"><span class="toc-text">1.3.4 FrameLayout</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-5-TableLayout"><span class="toc-text">1.3.5 TableLayout</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-6-AbsoluteLayout"><span class="toc-text">1.3.6 AbsoluteLayout</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-4-%E6%8E%A7%E4%BB%B6"><span class="toc-text">1.4 控件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-4-1-android%E8%87%AA%E5%B8%A6%E6%8E%A7%E4%BB%B6"><span class="toc-text">1.4.1 android自带控件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-4-2-%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8E%A7%E4%BB%B6"><span class="toc-text">1.4.2 自定义控件</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%8A%A8%E6%80%81%E5%B8%83%E5%B1%80"><span class="toc-text">2 动态布局</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-%E7%94%A8%E7%B1%BB%E4%BF%AE%E6%94%B9xml"><span class="toc-text">2.1 用类修改xml</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-%E5%8A%A8%E6%80%81%E7%94%9F%E6%88%90"><span class="toc-text">2.2 动态生成</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Drawable%E7%B1%BB%E5%8F%8AXMLDrawable%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-text">Drawable类及XMLDrawable的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80-%E6%80%A7%E8%B4%A8"><span class="toc-text">一.性质</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C-XMLDrawable"><span class="toc-text">二.XMLDrawable</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-StateListDrawable-selector"><span class="toc-text">1.StateListDrawable(selector)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-LayerDrawable-ps%E5%9B%BE%E5%B1%82"><span class="toc-text">2.LayerDrawable(ps图层)</span></a></li></ol></li></ol></li></ol>
-    
-<style>
-    .left-col .switch-btn,
-    .left-col .switch-area {
-        display: none;
-    }
-    .toc-level-3 i,
-    .toc-level-3 ol {
-        display: none !important;
-    }
-</style>
-</div>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
+    <div class="post-content">
         <h1 id="px-dp-sp-的区别"><a href="#px-dp-sp-的区别" class="headerlink" title="px dp sp 的区别"></a>px dp sp 的区别</h1><table>
 <thead>
 <tr>
@@ -447,269 +152,60 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*实现动画*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line">        ImageView img = (ImageView)findViewById(R.id.imageView);</span><br><span class="line"></span><br><span class="line">        <span class="comment">/*利用工具类获取对象*/</span></span><br><span class="line">        Animation animation= AnimationUtils.loadAnimation(<span class="keyword">this</span>,R.anim.test_animation);</span><br><span class="line">        <span class="comment">/*将动画附加在图片上*/</span></span><br><span class="line">        img.startAnimation(animation);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <img src="./4.png"/>
 
-      
-       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 1043672911@qq.com </span>
     </div>
-</article>
-
-
-<p>
-    <a  class="dashang" onclick="dashangToggle()">赏</a>
-</p>
-
-
-
-
-    <div id="comments"></div>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
-
-<script type="text/javascript">
-    $.getScript('/home/js/gitalk.js', function () {
-        var gitalk = new Gitalk({
-            clientID: '8f0bc288267c461ebe67',
-            clientSecret: 'd57c9df727ef947f6bbdcf65b9f1b4efb131c280',
-            repo: 'jingtianer.github.io/home',
-            owner: 'jingtianer',
-            admin: ['jingtianer'],
-            id: decodeURI(location.pathname),
-            distractionFreeMode: 'true',
-            language: 'zh-CN',
-            perPage: parseInt('10',10)
-        })
-        gitalk.render('comments')
-    })
-</script>
-
-
-
 
     
-
-
-
-
-    </div>
-    <div class="copyright">
-        <p class="footer-entry">
-    ©2000-2022 Jingtianer
-</p>
-<p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
-
-    </div>
-    <div class="full-toc">
-        <button class="full" data-title="切换全屏 快捷键 s"><span class="min "></span></button>
-<a class="" id="rocket" ></a>
-
-    </div>
 </div>
-
-<div class="hide_box" onclick="dashangToggle()"></div>
-<div class="shang_box">
-    <a class="shang_close"  onclick="dashangToggle()">×</a>
-    <div class="shang_tit">
-        <p>喜欢就点赞,疼爱就打赏</p>
-    </div>
-    <div class="shang_payimg">
-        <div class="pay_img">
-            <img src="/home/img/alipay.jpg" class="alipay" title="扫码支持">
-            <img src="/home/img/weixin.jpg" class="weixin" title="扫码支持">
-        </div>
-    </div>
-    <div class="shang_payselect">
-        <span><label><input type="radio" name="pay" checked value="alipay">支付宝</label></span><span><label><input type="radio" name="pay" value="weixin">微信</label></span>
-    </div>
+    <div class="footer" id="footer">
+    <p>Copyright © 2020 <a class="flink" target="_blank" rel="noopener" href="https://hexo.io">Hexo</a>-<a class="flink" target="_blank" rel="noopener" href="https://github.com/sanjinhub/hexo-theme-geek">Geek</a>.
+        <label class="el-switch el-switch-green el-switch-sm" style="vertical-align: sub;">
+            <input type="checkbox" name="switch" id="update_style">
+            <span class="el-switch-style"></span>
+        </label>
+<!--         <script type="text/javascript">
+        var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
+        document.write(unescape("%3Cspan id='cnzz_stat_icon_1278548644'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/stat.php%3Fid%3D1278548644%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+        </script> -->
+    </p>
 </div>
+<input type="hidden" id="web_style" value="black">
+<input type="hidden" id="valine_appid" value="CmCti21ooOOIzFOhEyFkFvR0-gzGzoHsz">
+<input type="hidden" id="valine_appKey" value="FqiyUqbg7McKN2eG0MCewupf">
+
+<script src="/home/libs/jquery.min.js"></script>
 
 
+<script src="/home/libs/highlight/highlight.pack.js"></script>
+
+<script src='//cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js'></script>
+
+<script src="/home/js/js.js"></script>
+
+<style type="text/css">
+.v * {
+    color: #698fca;
+}
+
+.v .vlist .vcard .vhead .vsys {
+    color: #3a3e4a;
+}
+
+.v .vlist .vcard .vh .vmeta .vat {
+    color: #638fd5;
+}
+
+.v .vlist .vcard .vhead .vnick {
+    color: #6ba1ff;
+}
+
+.v a {
+    color: #8696b1;
+}
+
+.v .vlist .vcard .vhead .vnick:hover {
+    color: #669bfc;
+}
+</style>
 </body>
-<script src="/home/js/jquery.pjax.js?v=1.1.0" ></script>
-
-<script src="/home/js/script.js?v=1.1.0" ></script>
-<script>
-    var img_resize = 'default';
-    function initArticle() {
-        /*渲染对应的表格样式*/
-        
-
-        /*渲染打赏样式*/
-        
-        $("input[name=pay]").on("click", function () {
-            if($("input[name=pay]:checked").val()=="weixin"){
-                $(".shang_box .shang_payimg .pay_img").addClass("weixin_img");
-            } else {
-                $(".shang_box .shang_payimg .pay_img").removeClass("weixin_img");
-            }
-        })
-        
-
-        /*高亮代码块行号*/
-        
-        $('pre code').each(function(){
-            var lines = $(this).text().trim().split('\n').length, widther='';
-            if (lines>99) {
-                widther = 'widther'
-            }
-            var $numbering = $('<ul/>').addClass('pre-numbering ' + widther).attr("unselectable","on");
-            $(this).addClass('has-numbering ' + widther)
-                    .parent()
-                    .append($numbering);
-            for(var i=1;i<=lines;i++){
-                $numbering.append($('<li/>').text(i));
-            }
-        });
-        
-
-        /*访问数量*/
-        
-        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
-        
-
-        /*代码高亮，行号对齐*/
-        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
-
-        
-        
-    }
-
-    /*打赏页面隐藏与展示*/
-    
-    function dashangToggle() {
-        $(".shang_box").fadeToggle();
-        $(".hide_box").fadeToggle();
-    }
-    
-
-</script>
-
-<!--加入行号的高亮代码块样式-->
-
-<style>
-    pre{
-        position: relative;
-        margin-bottom: 24px;
-        border-radius: 10px;
-        border: 1px solid #e2dede;
-        background: #FFF;
-        overflow: hidden;
-    }
-    code.has-numbering{
-        margin-left: 30px;
-    }
-    code.has-numbering.widther{
-        margin-left: 35px;
-    }
-    .pre-numbering{
-        margin: 0;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 20px;
-        padding: 0.5em 3px 0.7em 5px;
-        border-right: 1px solid #C3CCD0;
-        text-align: right;
-        color: #AAA;
-        background-color: ;
-    }
-    .pre-numbering.widther {
-        width: 35px;
-    }
-</style>
-
-<!--自定义样式设置-->
-<style>
-    
-    
-    .nav {
-        width: 542px;
-    }
-    .nav.fullscreen {
-        margin-left: -542px;
-    }
-    .nav-left {
-        width: 120px;
-    }
-    
-    
-    @media screen and (max-width: 1468px) {
-        .nav {
-            width: 492px;
-        }
-        .nav.fullscreen {
-            margin-left: -492px;
-        }
-        .nav-left {
-            width: 100px;
-        }
-    }
-    
-    
-    @media screen and (max-width: 1024px) {
-        .nav {
-            width: 492px;
-            margin-left: -492px
-        }
-        .nav.fullscreen {
-            margin-left: 0;
-        }
-    }
-    
-    @media screen and (max-width: 426px) {
-        .nav {
-            width: 100%;
-        }
-        .nav-left {
-            width: 100%;
-        }
-    }
-    
-    
-    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
-        color: #383636;
-    }
-    
-    
-    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
-        color: #5e5e5f;
-    }
-    
-    
-    .nav-right nav a.hover, #local-search-result a.hover{
-        background-color: #e2e0e0;
-    }
-    
-    
-
-    /*列表样式*/
-    
-
-    /* 背景图样式 */
-    
-    
-
-
-    /*引用块样式*/
-    
-
-    /*文章列表背景图*/
-    
-
-    
-    #post .pjax article :not(pre) > code {
-        color: #24292e;
-        font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
-        background-color: rgba(27,31,35,.05);
-        border-radius: 3px;
-        font-size: 85%;
-        margin: 0;
-        padding: .2em .4em;
-    }
-    
-</style>
-
-
-
-
-
-
 
 </html>
