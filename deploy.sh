@@ -1,6 +1,8 @@
 # cp -r ./source /mnt/d/jingtian/blog_back
 # cp *.yml /mnt/d/jingtian/blog_back/
+
 hexo clean
+cat _config.yml | sed "s/`cat token.txt`/<my token>/g" | tee _config.yml.template
 git add .
 git commit -m "`date`"
 git push master

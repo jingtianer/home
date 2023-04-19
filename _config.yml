@@ -69,7 +69,7 @@ ignore: null
 theme: icarus
 deploy:
   type: git
-  repo: https://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@github.com/jingtianer/home
+  repo: https://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@github.com/jingtianer/home
   branch: gh-pages
 
 
