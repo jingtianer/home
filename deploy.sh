@@ -3,7 +3,7 @@
 hexo clean
 git add .
 git commit -m "`date`"
-git push
+git push master
 hexo g
 # sed -i 's/github.com\/jingtianer/jingtianer.github.io/g' public/atom.xml
 hexo d
