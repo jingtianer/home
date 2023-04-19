@@ -70,7 +70,7 @@ theme: icarus
 deploy:
   type: git
   # repo: https://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@github.com/jingtianer/home
-  repo: https://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@github.com/jingtianer/home
+  repo: https://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@github.com/jingtianer/home
   branch: gh-pages
 
 
