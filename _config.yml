@@ -1,0 +1,120 @@
+title: Jingtianer
+subtitle: A cat coder
+description: aka Meow Meow Liu
+keywords: null
+author: Meow Meow Liu
+language: zh-CN
+timezone: Asia/Shanghai
+url: https://jingtianer.github.io/home
+root: /home/
+permalink: ':year/:month/:day/:title/'
+permalink_defaults: null
+pretty_urls:
+  trailing_index: true
+  trailing_html: true
+source_dir: source
+public_dir: public
+tag_dir: tags
+archive_dir: archives
+category_dir: categories
+code_dir: downloads/code
+i18n_dir: ':lang'
+skip_render: null
+new_post_name: ':title.md'
+default_layout: post
+titlecase: false
+external_link:
+  enable: true
+  field: site
+  exclude: ''
+filename_case: 0
+render_drafts: false
+post_asset_folder: false
+relative_link: false
+future: true
+highlight:
+  enable: true
+  line_number: true
+  auto_detect: false
+  tab_replace: ''
+  wrap: true
+  hljs: false
+prismjs:
+  enable: false
+  preprocess: true
+  line_number: true
+  tab_replace: ''
+index_generator:
+  path: ''
+  per_page: 10
+  order_by: '-date'
+default_category: uncategorized
+category_map:
+  - LeetCode: /categories/LeetCode
+  - PAT-(Advanced-Level)-Practice: /categories/PAT-(Advanced-Level)-Practice
+  - PAT-(Basic-Level)-Practice: /categories/PAT-(Basic-Level)-Practice
+  - OS: /categories/OS
+  - Kotlin-Android: /categories/Kotlin-Android
+  - fedfab: /categories/fedfab
+tag_map: null
+meta_generator: true
+date_format: YYYY-MM-DD
+time_format: HH:mm:ss
+updated_option: mtime
+per_page: 10
+pagination_dir: page
+include: null
+exclude: null
+ignore: null
+theme: icarus
+deploy:
+  type: git
+  # repo: https://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@github.com/jingtianer/home
+  repo: https://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@github.com/jingtianer/home
+  branch: gh-pages
+
+
+markdown: 'commonmark'
+
+live2d:
+  enable: true                                   #开启看板娘
+  scriptFrom: local
+  pluginRootPath: live2dw/
+  pluginJsPath: lib/
+  pluginModelPath: assets/
+  tagMode: false
+  log: false
+  model:
+    use: live2d-widget-model-wanko     #指定模型任务
+  display:
+    position: right                              #显示位置
+    width: 200                                   #模型宽度
+    height: 400                                  #模型高度
+  mobile:
+    show: true                                  #是否在移动端显示
+excerpt:
+  depth: 6
+  excerpt_excludes: []
+  more_excludes: []
+  hideWholePostExcerpts: true
+
+gitalk:
+  enable: true #默认的是false，没有打开
+  owner: 'Jingtianer'
+  repo: 'blog_comment'
+  oauth:
+    clientId: 'f0b13fe8021fcd2efe50'
+    clientSecret: '35207c14b34e77c48a3aeee1e94c9da169ffe0c2'
+  admin: ['Jingtianer']
+
+# Extensions
+plugins:
+    hexo-generator-feed
+#Feed Atom
+feed:
+    type: atom
+    path: atom.xml
+    limit: 20
+
+
+rss: /atom.xml

@@ -1,0 +1,29 @@
+widgets:
+    -
+        position: right
+        type: toc
+sidebar:
+    left:
+        sticky: false
+    right:
+        sticky: true
+
+article:
+    highlight:
+        theme: vs
+        clipboard: true
+        fold: unfolded
+    readtime: true
+    update_time: true
+    mathjax: true
+
+    licenses:
+        Creative Commons:
+            icon: fab fa-creative-commons
+            url: https://creativecommons.org/
+        Attribution:
+            icon: fab fa-creative-commons-by
+            url: https://creativecommons.org/licenses/by/4.0/
+        Noncommercial:
+            icon: fab fa-creative-commons-nc
+            url: https://creativecommons.org/licenses/by-nc/4.0/

@@ -1,0 +1,198 @@
+version: 5.1.0
+variant: default
+logo:
+    text: Meow!!
+head:
+    favicon: /img/favicon.svg
+    manifest:
+        name: Jingtianer
+        short_name: Meow!!
+        start_url: https://jingtianer.github.io/home/
+        theme_color: 
+        background_color: 
+        display: standalone
+        icons:
+            -
+                src: ''
+                sizes: ''
+                type: 
+    open_graph:
+        title: 
+        type: blog
+        url: 
+        image: 
+        site_name: 
+        author: 
+        description: 
+        twitter_card: 
+        twitter_id: 
+        twitter_site: 
+        google_plus: 
+        fb_admins: 
+        fb_app_id: 
+    structured_data:
+        title: 
+        description: 
+        url: 
+        author: 
+        publisher: 
+        publisher_logo: 
+        image: 
+    meta:
+        - ''
+    rss: /atom.xml
+navbar:
+    menu:
+        主页: /
+        归档: /archives
+        分类: /categories
+        标签: /tags
+        关于我: /about
+    links:
+        Download on GitHub:
+            icon: fab fa-github
+            url: https://github.com/
+footer:
+    links:
+        Creative Commons:
+            icon: fab fa-creative-commons
+            url: https://creativecommons.org/
+        Attribution 4.0 International:
+            icon: fab fa-creative-commons-by
+            url: https://creativecommons.org/licenses/by/4.0/
+        Download on GitHub:
+            icon: fab fa-github
+            url: https://github.com/ppoffice/hexo-theme-icarus
+        
+article:
+    highlight:
+        theme: vs
+        clipboard: true
+        fold: folded
+    readtime: true
+    update_time: true
+    licenses:
+        Creative Commons:
+            icon: fab fa-creative-commons
+            url: https://creativecommons.org/
+        Attribution:
+            icon: fab fa-creative-commons-by
+            url: https://creativecommons.org/licenses/by/4.0/
+        Noncommercial:
+            icon: fab fa-creative-commons-nc
+            url: https://creativecommons.org/licenses/by-nc/4.0/
+search:
+    type: insight
+    index_pages: true
+sidebar:
+    left:
+        sticky: false
+    right:
+        sticky: false
+widgets:
+    -
+        position: right
+        type: profile
+        author: Meow Meow Liu
+        author_title: NEUQer and BUPTer
+        location: Beijing.
+        avatar: images/avatar.jpg
+        avatar_rounded: true
+        gravatar: 
+        follow_link: https://github.com/jingtianer
+        social_links:
+            Github:
+                icon: fab fa-github
+                url: https://github.com/jingtianer
+            QQ:
+                icon: fab fa-qq
+                url: /2022/10/22/social/qq/
+            E-mail:
+                icon: fas fa-envelope
+                url: mailto:jingtian.liu@foxmail.com
+            RSS:
+                icon: fa fa-rss
+                url: /atom.xml
+    -
+        position: right
+        type: toc
+        index: false
+        collapsed: false
+        depth: 4
+    -
+        position: right
+        type: links
+        links:
+            fedml: https://github.com/jingtianer/fedml_note
+            fabric: https://github.com/jingtianer/fabric_note
+            Yaml-Requests: https://github.com/jingtianer/Yaml-Requests
+            Algorithm: https://github.com/jingtianer/algorith
+    -
+        position: right
+        type: categories
+    -
+        position: right
+        type: recent_posts
+    -
+        position: right
+        type: archives
+    -
+        position: right
+        type: tags
+        order_by: name
+        amount: 
+        show_count: true
+plugins:
+    animejs: true
+    back_to_top: true
+    baidu_analytics:
+        tracking_id: 
+    bing_webmaster:
+        tracking_id: 
+    busuanzi: false
+    cnzz:
+        id: 
+        web_id: 
+    cookie_consent:
+        type: info
+        theme: edgeless
+        static: false
+        position: bottom-left
+        policyLink: https://www.cookiesandyou.com/
+    gallery: true
+    google_analytics:
+        tracking_id: 
+    hotjar:
+        site_id: 
+    katex: false
+    mathjax: true
+    outdated_browser: false
+    progressbar: true
+    statcounter:
+        project: 
+        security: 
+    twitter_conversion_tracking:
+        pixel_id: 
+providers:
+    cdn: jsdelivr
+    fontcdn: google
+    iconcdn: fontawesome
+
+comment:
+    type: gitalk
+    client_id: f0b13fe8021fcd2efe50
+    client_secret: 35207c14b34e77c48a3aeee1e94c9da169ffe0c2
+    repo: blog_comment
+    owner: jingtianer
+    admin:
+        - jingtianer
+    per_page: 20                    # 可选填
+    distraction_free_mode: false    # 可选填
+    pager_direction: last           # 可选填
+    create_issue_manually: false    # 可选填
+    proxy:                          # 可选填
+    flip_move_options:              # 可选填
+    enable_hotkey: true             # 可选填
+    language: zh-CN                 # 可选填
+
+mathjax: true
