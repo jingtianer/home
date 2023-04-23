@@ -8,6 +8,64 @@ toc: true
 language: zh-CN
 ---
 
+## bind9 resolver模式
+- [参考](https://www.cnblogs.com/doherasyang/p/14464999.html)
+
+DNS resolver大概是指dns服务将dns请求转发给一个带有dns解析功能的路由器，路由器完成剩余部分工作然后将处理结果返回给dns服务器
+
+- 上周在尝试跑通fuzz.c中使用resolver模式的afl钩子，目前还没有跑通，存在两个问题
+  - afl变异出的测试用例必须是对域名aaaaaaa.example的一个查询，只有这样named才会将该去查询`master`dns服务器。对于afl输入的测试用例必须将其变换成一个对于aaaaaaa.example的请求
+  - afl钩子会作为一个dns解析器将该请求进行处理，但是处理结果返回给`slave`dns服务器时，`slave`会显示无法找到soa记录，并且以`0`退出程序
+
+
+## asan
+上次开会提到查看asan的输出来确认crash
+
+```sh
+==26512==AddressSanitizer: failed to intercept '__isoc99_printf'
+'==26512==AddressSanitizer: failed to intercept '__isoc99_sprintf'
+'==26512==AddressSanitizer: failed to intercept '__isoc99_snprintf'
+'==26512==AddressSanitizer: failed to intercept '__isoc99_fprintf'
+'==26512==AddressSanitizer: failed to intercept '__isoc99_vprintf'
+'==26512==AddressSanitizer: failed to intercept '__isoc99_vsprintf'
+'==26512==AddressSanitizer: failed to intercept '__isoc99_vsnprintf'
+'==26512==AddressSanitizer: failed to intercept '__isoc99_vfprintf'
+'==26512==AddressSanitizer: failed to intercept 'crypt'
+'==26512==AddressSanitizer: failed to intercept 'crypt_r'
+'==26512==AddressSanitizer: failed to intercept '__cxa_throw'
+'==26512==AddressSanitizer: failed to intercept '__cxa_rethrow_primary_exception'
+'==26512==AddressSanitizer: libc interceptors initialized
+|| `[0x10007fff8000, 0x7fffffffffff]` || HighMem    ||
+|| `[0x02008fff7000, 0x10007fff7fff]` || HighShadow ||
+|| `[0x00008fff7000, 0x02008fff6fff]` || ShadowGap  ||
+|| `[0x00007fff8000, 0x00008fff6fff]` || LowShadow  ||
+|| `[0x000000000000, 0x00007fff7fff]` || LowMem     ||
+MemToShadow(shadow): 0x00008fff7000 0x000091ff6dff 0x004091ff6e00 0x02008fff6fff
+redzone=16
+max_redzone=2048
+quarantine_size_mb=256M
+thread_local_quarantine_size_kb=1024K
+malloc_context_size=30
+SHADOW_SCALE: 3
+SHADOW_GRANULARITY: 8
+SHADOW_OFFSET: 0x7fff8000
+==26512==Installed the sigaction for signal 11
+==26512==Installed the sigaction for signal 7
+==26512==Installed the sigaction for signal 8
+==26512==T0: stack [0x7fff3cc60000,0x7fff3d460000) size 0x800000; local=0x7fff3d45cd78
+==26512==AddressSanitizer Init done
+==26512==T1: stack [0x7f85c54ff000,0x7f85c5cfed80) size 0x7ffd80; local=0x7f85c5cfec88
+==26512==T2: stack [0x7f85c42ee000,0x7f85c4aedd80) size 0x7ffd80; local=0x7f85c4aedc88
+==26512==T3: stack [0x7f85c3aed000,0x7f85c42ecd80) size 0x7ffd80; local=0x7f85c42ecc88
+==26512==T4: stack [0x7f85c32ec000,0x7f85c3aebd80) size 0x7ffd80; local=0x7f85c3aebc88
+==26512==T5: stack [0x7f85c2aeb000,0x7f85c32ead80) size 0x7ffd80; local=0x7f85c32eac88
+==26512==T6: stack [0x7f85c22ea000,0x7f85c2ae9d80) size 0x7ffd80; local=0x7f85c2ae9c88
+==26512==T7: stack [0x7f85c1ae9000,0x7f85c22e8d80) size 0x7ffd80; local=0x7f85c22e8c88
+==26512==T8: stack [0x7f85c12e8000,0x7f85c1ae7d80) size 0x7ffd80; local=0x7f85c1ae7c88
+```
+
+> bind9挖出的crash没有什么有效信息
+
 ## bind9源码阅读
 
 ### loopmgr
