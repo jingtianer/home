@@ -397,27 +397,21 @@ int main(int argc, char **argv) {
         closedir(fd);
     }
     closedir(proc);
+    char *command = alloca((lim_argmax+1) * sizeof(char));
     if(pidscount > 0) {
-        char *command = alloca((lim_argmax+1) * sizeof(char));
         strcpy(command, "ps -f -p");
         for(int i = 0; i < pidscount; i++) {
             sprintf(command, "%s %d", command, pids[i]);
         }
-
-    #ifdef DEBUG
-        fprintf(stderr, "command = %s\n", command);
-    #endif
-        system(command);
     } else {
         char *command = alloca((lim_argmax+1) * sizeof(char));
         sprintf(command, "ps -f -p %d", pid_max);
-
+    }
     #ifdef DEBUG
         fprintf(stderr, "command = %s\n", command);
     #endif
         system(command);
         
-    }
 
     return 0;
 }
