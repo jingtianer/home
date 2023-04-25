@@ -14,8 +14,10 @@ language: zh-CN
 DNS resolver大概是指dns服务将dns请求转发给一个带有dns解析功能的路由器，路由器完成剩余部分工作然后将处理结果返回给dns服务器
 
 - 上周在尝试跑通fuzz.c中使用resolver模式的afl钩子，目前还没有跑通，存在两个问题
-  - afl变异出的测试用例必须是对域名aaaaaaa.example的一个查询，只有这样named才会将该去查询`master`dns服务器。对于afl输入的测试用例必须将其变换成一个对于aaaaaaa.example的请求
+  - afl变异出的测试用例必须是对域名aaaaaaa.example的一个查询，只有这样named才会将该去查询`master`dns服务器（这里需要参考`bind9主从配置`，将named的`aaaaaa.example`zone配置为从服务器）。对于afl输入的测试用例必须将其变换成一个对于aaaaaaa.example的请求
   - afl钩子会作为一个dns解析器将该请求进行处理，但是处理结果返回给`slave`dns服务器时，`slave`会显示无法找到soa记录，并且以`0`退出程序
+
+> 想跑通这个模式的话，需要找到一个方法，将每次afl测试用例转变成对aaaaaa.example的一个查询。
 
 
 ## asan
@@ -96,5 +98,4 @@ libuv可以处理网络，文件等io，向其提供事件触发后的回调，l
 ### isc__nm_udp_read_cb
 我们崩溃的调用栈中的这个函数就是udp请求事件的回调。在前面的`named_server_create`中，会创建timer，timer每tick一下，就会通过interface_mgr把所有监听的协议都读一遍，其中之一就是`isc__nm_udp_read_cb`
 
-
-
+> 目前猜测是多个线程同时读同一个消息，运行较快的线程把资源释放了，运行较慢的线程就读到了错误的数据。但是具体作用机理还是没弄清楚。
