@@ -196,3 +196,228 @@ int main() {
   - 普通磁盘文件的缓存mod为_IOFBUF，全缓冲io，printf会先写入stdio库的缓冲区，write直接写入系统IO缓冲区，一般情况下，write会先于stdio进入系统缓冲区，导致最终写入文件的顺序与代码中的顺序相反
 
 ## 13.5
+
+实现tail
+
+```c
+#define  _XOPEN_SOURCE 600
+#include <string.h>
+#include <stdio.h>
+#include <errno.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <unistd.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <sys/types.h>
+#include <stdarg.h>
+
+#define INFO(msg, ...) fprintf(stderr, "INFO: ");\
+    fprintf(stderr, msg, ##__VA_ARGS__)
+
+#define CHECK(flag, msg, ...) do { \
+        if(!(flag)) {\
+            fprintf(stderr, "FATAL: "); \
+            fprintf(stderr, msg, ##__VA_ARGS__); \
+            fprintf(stderr, " ERROR: %s\n", strerror(errno));                           \
+            exit(2); \
+        } \
+    } while(0)
+
+#define streq(str1, str2) (strcmp(str1, str2)==0)
+
+#ifndef BUFSIZE
+//#define BUFSIZE 0x1000
+//#define BUFSIZE 2
+#define BUFSIZE 1
+#endif
+bool str2int(const char *num, int *ret) {
+    errno = 0;
+    char *end;
+    *ret = strtol(num, &end, 10);
+    CHECK(!(end == num || *end != '\0' || errno != 0), "%s is not a integer!\n", num);
+    return true;
+}
+
+void print(const char *str, ...) {
+    va_list list;
+    va_start(list, str);
+    for(const char *s = str; s != NULL; (s = va_arg(list, const char *))) {
+        size_t slen = va_arg(list, size_t);
+        ssize_t wsize = write(STDOUT_FILENO, s, slen);
+        CHECK(wsize == slen, "fail to print %s\n", s);
+    }
+    va_end(list);
+}
+
+char *str_alloc_reverse_cat(char * str1, const char *str2, int *len1, int len2) {
+    char *str = realloc(strdup(str2), (*len1+len2+1) * sizeof(char));
+    str[len2] = 0;
+    strncat(str, str1, *len1);
+    *len1 += len2;
+    return str;
+}
+
+void tail(int fd, const int line, off_t end) {
+    int num = line;
+    char *buf = (char*)malloc((BUFSIZE+1)*sizeof(char));
+    char **output = (char **)malloc(num *sizeof(char *));
+    int *output_len = (int *) malloc(num * sizeof(int));
+    memset(output, 0, num *sizeof(char *));
+    memset(output_len, 0, num *sizeof(int));
+    while(end > 0 && num) {
+        size_t bufsize = BUFSIZE > end ? end : BUFSIZE;
+        posix_fadvise(fd, end-bufsize, bufsize, POSIX_FADV_WILLNEED);
+        CHECK(end != -1, "end = %ld, fail to lseek fd%d", end, fd);
+        ssize_t readsize = pread(fd, buf, bufsize, end-bufsize);
+        CHECK(readsize >= 0, "readsize = %ld, fail to read fd%d", readsize, fd);
+        buf[readsize] = 0;
+        end -= bufsize;
+        CHECK(end != -1, "end = %ld, fail to lseek fd%d", end, fd);
+        while(readsize >= 0 && num) {
+            ssize_t move = readsize-1;
+            while(move >=0 && buf[move] != '\n') move--;
+            size_t size = readsize - move - 1;
+            if(move >= 0 || end == 0) {
+                num--;
+                output[num] = str_alloc_reverse_cat(output[num], buf+move+1, &output_len[num], size);
+            } else {
+                output[num-1] = str_alloc_reverse_cat(output[num-1], buf+move+1, &output_len[num-1], size);
+            }
+            readsize = move;
+        }
+    }
+    size_t outbufsize = 1;
+    for(int i = num; i < line; i++) {
+        outbufsize += output_len[i]+1;
+    }
+    char *outbuf = (char *) malloc(outbufsize*sizeof(char));
+    outbuf[0] = 0;
+    for(int i = num; i < line; i++) {
+        strcat(outbuf, output[i]);
+        strcat(outbuf, "\n");
+        free(output[i]);
+    }
+    print(outbuf, outbufsize - 1, NULL);
+    free(outbuf);
+    free(buf);
+    free(output);
+}
+
+char *str_alloc_cat(char * str1, const char *str2, int *len1, int len2) {
+    char *str = NULL;
+    if(str1 == NULL) {
+        str = malloc((*len1+len2+1) * sizeof(char));
+        *len1 = 0;
+    } else {
+        str = realloc(str1, (*len1 + len2 + 1) * sizeof(char));
+    }
+    str[*len1] = 0;
+    strncat(str + *len1, str2, len2);
+    *len1 += len2;
+    return str;
+}
+
+void tailsafe(int fd, const int num) { // for file that do not support SEEK_END
+    int line = 0;
+    char *buf = (char*)malloc((BUFSIZE+1)*sizeof(char));
+    char **output = (char **)malloc(num *sizeof(char *));
+    int *output_len = (int *) malloc(num * sizeof(int));
+    memset(output, 0, num *sizeof(char *));
+    memset(output_len, 0, num *sizeof(int));
+
+    size_t readsize = 0, prev_readsize = 0;
+    int i,j;
+    while((readsize = read(fd, buf, BUFSIZE)) != 0) {
+        prev_readsize = readsize;
+        CHECK(readsize >= 0, "readsize = %ld, fail to read fd%d", readsize, fd);
+        buf[readsize] = 0;
+        for(i = 0; i < readsize; i=j+1) {
+            j = i;
+            while(j < readsize && buf[j] != '\n')j++;
+            if(output[line] != NULL && output[line][output_len[line]] == '\n') {
+                free(output[line]);
+                output[line]= NULL;
+            }
+            if(j < readsize) {
+                output[line] = str_alloc_cat(output[line], buf+i, &output_len[line], j - i);
+                output[line][output_len[line]] = '\n';
+                line = (line+1)%num;
+            } else {
+//                size_t end = lseek(fd, i - j, SEEK_CUR);
+                output[line] = str_alloc_cat(output[line], buf+i, &output_len[line], j - i);
+                break;
+            }
+        }
+    }
+    if(i < prev_readsize) {
+        output[line][output_len[line]] = 0;
+        line = (line+1)%num;
+    }
+    if(output[line] == NULL) {
+        line = 0;
+    }
+    size_t outbufsize = 1;
+    for(int i = 0; i < num; i++) {
+        outbufsize += output_len[i]+1;
+        if(output[i] != NULL) output[i][output_len[i]] = 0;
+    }
+    char *outbuf = (char *) malloc(outbufsize*sizeof(char));
+    outbuf[0] = 0;
+    for(int i = 0; i < num && output[(i+line)%num] != NULL; i++) {
+        strcat(outbuf, output[(i+line)%num]);
+        strcat(outbuf, "\n");
+        free(output[(i+line)%num]);
+    }
+    print(outbuf, outbufsize - 1, NULL);
+    free(outbuf);
+    free(output_len);
+    free(output);
+    free(buf);
+}
+
+
+int main(int argc, char ** argv) {
+    char **filename = (char **)malloc(argc * sizeof(char *));
+    int filecount = 0;
+    int num = 10;
+    bool safe = false;
+    for(int i = 1; i < argc; i++) {
+        if(argv[i][0] == '-') {
+            if(streq(argv[i], "--help") || streq(argv[i], "-h")) {
+                INFO("Usage: %s [-h|--help] [-n num] filename", argv[0]);
+            } else if(streq(argv[i], "-n")) {
+                str2int(argv[++i], &num);
+            } else if(streq(argv[i], "--safe")) {
+                safe = true;
+            }
+        } else {
+            filename[filecount++] = strdup(argv[i]);
+        }
+    }
+    CHECK(num >= 0, "num should be non-negative, num = %d\n", num);
+    if(filecount == 0) {
+        INFO("Usage: %s [-h|--help] [-n num] filename", argv[0]);
+    }
+    for(int i = 0; i < filecount; i++) {
+        int fd = open(filename[i], O_RDONLY);
+        CHECK(fd != -1, "fail to open %s, fd = %d", filename[i], fd);
+        if (filecount > 1) print("==> ", 4, filename[i], strlen(filename[i]), " <==", 4, "\n", 1, NULL);
+        if(!safe) {
+            off_t pos = lseek(fd, 0, SEEK_END);
+            CHECK(pos != -1, "fail to lseek %s, pos = %ld", filename[i], pos);
+            tail(fd, num, pos);
+        } else {
+            tailsafe(fd, num);
+        }
+        close(fd);
+        free(filename[i]);
+    }
+    free(filename);
+    return 0;
+}
+```
+
+> 两种方式，正着读和倒着读
+> 有些文件不支持SEEK_END，用`--safe`选项正着读
+
