@@ -73,8 +73,8 @@ void creatFiles(int *arr, int fn) {
         sprintf(filename, "%s/x%06d", path, arr[i]);
         int fd = open(filename, O_RDWR | O_CREAT, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH);
         CHECK(fd != -1, "fail to open file %s, fd = %d", filename, fd);
-        write(fd, " ", 1);
-//        fsync(fd); // Synchronized I/O file integrity completion
+        CHECK(write(fd, " ", 1) == 1, "fail to write");
+//        fsync(fd); // Synchronized I/O file integrity completion，能否保证文件创建？
         close(fd);
     }
     free(filename);
@@ -100,24 +100,23 @@ long clockTic = 0;
 
 // clock_t long int
 // time_t long int
+#define FIX_MINUS(x, max) ((x) < 0 ? ((x)) : (x))
+
 void timeIt(void (*test)(void *args), void *args, double *system, double *user, double *process, double *real) {
     clock_t processStart, processEnd;
     struct timeval realStart, realEnd;
     struct tms start, end;
-    processStart = clock();
-    CHECK(processStart != (clock_t)-1, "fail to get clock, ERROR: %s", strerror(errno));
+    CHECK((processStart = clock()) != (clock_t)-1, "fail to get clock, ERROR: %s", strerror(errno));
     CHECK(gettimeofday(&realStart, NULL) != -1, "fail to get timeofday, ERROR: %s", strerror(errno));
     CHECK(times(&start) != (clock_t)-1, "fail to get times, ERROR: %s", strerror(errno));
     test(args);
-    processEnd = clock();
-    CHECK(processEnd != (clock_t)-1, "fail to get clock, ERROR: %s", strerror(errno));
-    CHECK(gettimeofday(&realEnd, NULL) != -1, "fail to get timeofday, ERROR: %s", strerror(errno));
     CHECK(times(&end) != (clock_t)-1, "fail to get times, ERROR: %s", strerror(errno));
-    // real time 没必要做错误检查（传入NULL不会出错）
-    *process = (double)(processEnd - processStart) / CLOCKS_PER_SEC;
-    *real = (double)(realEnd.tv_usec - realStart.tv_usec) / 1000.0;
-    *user = (double)((end.tms_utime - start.tms_utime)) / (double)clockTic;
-    *system = (double)((end.tms_stime - start.tms_stime)) / (double)clockTic;
+    CHECK(gettimeofday(&realEnd, NULL) != -1, "fail to get timeofday, ERROR: %s", strerror(errno));
+    CHECK((processEnd = clock()) != (clock_t)-1, "fail to get clock, ERROR: %s", strerror(errno));
+    *process = (double)(FIX_MINUS((processEnd - processStart), LONG_MAX)) / CLOCKS_PER_SEC;
+    *real = (double)(FIX_MINUS((realEnd.tv_usec - realStart.tv_usec), LONG_MAX)) / 1000;
+    *user = (double)(FIX_MINUS((end.tms_utime - start.tms_utime), LONG_MAX)) / clockTic;
+    *system = (double)(FIX_MINUS((end.tms_stime - start.tms_stime), LONG_MAX)) / clockTic;
 #ifdef DEBUG
     char *format = "system = %lfs, user = %lfs, process = %lfs, real = %lfms\n";
     printf(format, *system, *user, *process, *real);
@@ -129,6 +128,7 @@ int NOP(const char * command) {
 }
 
 int main(int argc, char **argv) {
+    srand(time(NULL));
     int fn = 0;
     char *format = "system = %.4lfms, user = %.4lfms, process = %.4lfms, real = %.4lfms\n";
 
@@ -182,6 +182,8 @@ system = 20.0000ms, user = 0.0000ms, process = 18.7450ms, real = 18.7320ms
 system = 20.0000ms, user = 0.0000ms, process = 37.0100ms, real = 38.6430ms
 ```
 > O3优化掉CHECK多余的`while(0)`循环，计时更精确
+> 大部分时候第二次大于第一次
+> reeal偶尔为负数，很奇怪
 
 
 ### 解释
