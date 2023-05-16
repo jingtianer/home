@@ -41,3 +41,8 @@ tag: resume
 
 ## 其他信息
 欢迎相互学习&交流!
+
+
+<blockquote class="twitter-tweet"><p lang="qme" dir="ltr"><a href="https://twitter.com/hashtag/%E5%8E%9F%E7%A5%9E?src=hash&amp;ref_src=twsrc%5Etfw">#原神</a> <a href="https://twitter.com/hashtag/%E9%92%9F%E7%A6%BB?src=hash&amp;ref_src=twsrc%5Etfw">#钟离</a> <a href="https://twitter.com/hashtag/GenshinImpact?src=hash&amp;ref_src=twsrc%5Etfw">#GenshinImpact</a> <a href="https://twitter.com/hashtag/zhongli?src=hash&amp;ref_src=twsrc%5Etfw">#zhongli</a> <a href="https://t.co/RPIskvkaAe">pic.twitter.com/RPIskvkaAe</a></p>&mdash; miliya (@mili67891) <a href="https://twitter.com/mili67891/status/1653336751342231553?ref_src=twsrc%5Etfw">May 2, 2023</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
