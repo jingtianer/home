@@ -10,11 +10,13 @@ language: zh-CN
 
 ## 18.1
 4.3.2节曾指出，如果一个文件正处于执行状态，那么要将其打开以执行写操作是不可能的(open)调用返回-1，且将errno置为ETXTBSY。然而，在 shell 中执行如下操作却是可能的:
-$ cc -o longrunner longrunner.c$ ./longrunner &
-Leave running in background
-$ vi longrunner.c
-Make some changes to the source code
-$ cc -o longrunner longrunner.c
+```sh
+gcc -o longrunner longrunner.c$ ./longrunner &
+# Leave running in background
+vi longrunner.c
+# Make some changes to the source code
+gcc -o longrunner longrunner.c
+```
 最后一条命令覆盖了现有的同名可执行文件。原因何在?(提示:在每次编译后调用ls -li命令来查看可执行文件的i-node编号。)
 
 ### 解释
