@@ -219,6 +219,8 @@ int main() {
 - chdir: $ pwd=getcwd(), chdir(dir1), chdir(pwd), chdir(dir1), chdir(pwd), ... $
 - fchdir $ fchdir(fd2), fchdir(fd1), fchdir(fd2), fchdir(fd1), ... $
 
+跟据Flawfinder的输出，chdir, chown等函数依靠路径名，攻击者在调用前将文件移走，会导致chown，chdir失败，使用fchown，fchdir会更安全。
+
 即，少调用一次`getpwd`
 
 若在当前目录下打开了文件，而没有目标目录下的文件
