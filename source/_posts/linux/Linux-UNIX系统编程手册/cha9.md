@@ -83,7 +83,7 @@ rm -rf /home/tmp
 ```
 
 ### 执行结果
-- root用户/root用户有set-user-id标志
+- root用户/普通(或root)用户有set-user-id-root标志（只有这些情况的初始状态为上所述）
 
 |exec|real|effective|save|fs|解释|
 |-|-|-|-|-|-|
@@ -92,6 +92,8 @@ rm -rf /home/tmp
 |`seteuid(2000);`|1000|2000|0|2000|fs会随着e改变，上面也是这样|
 |`setfsuid(2000);`|1000|0|0|2000|只改变fs|
 |`setresuid(-1,2000,3000);`|1000|2000|3000|2000|很正常|
+
+
 
 ## 9.2
 
