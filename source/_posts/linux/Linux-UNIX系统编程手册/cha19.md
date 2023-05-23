@@ -79,7 +79,7 @@ bool delete(int wd) {
     struct listNode *next = head;
     while (next->next) {
         if(next->next->wd == wd) {
-            struct list *del = next->next;
+            struct listNode *del = next->next;
             next->next = next->next->next;
             free(del);
             return true;
@@ -140,7 +140,7 @@ void update_monitor(struct inotify_event *ievent) {
         if((stat1.st_mode & S_IFMT) == S_IFDIR) {
 //            addwatch(new_path);
             if(nftw(new_path, nftw_read, 10, FTW_PHYS) == -1) {
-                fprintf(stderr, "fail to traverse: %s, %s", new_path, strerror(errno));
+                fprintf(stderr, "fail to traverse: %s, %s\n", new_path, strerror(errno));
             }
         }
     }
@@ -153,20 +153,26 @@ int nftw_del(const char *path, const struct stat *sbuf, int type, struct FTW *ft
         default:
             return 0;
     }
-    addwatch(path);
-
-    inotify_rm_watch(fd, searchWD(path)->wd);
-    delete(searchWD(path)->wd);
+//    addwatch(path);
+    int wd = searchWD(path)->wd;
+    inotify_rm_watch(fd,wd);
+    delete(wd);
     return 0;
 }
-void rm_monitor(struct inotify_event *ievent) {
-    struct listNode *node = search(ievent->wd);
-    char *new_path = malloc(strlen(node->name) + strlen(ievent->name) + 1 +  1);
-    sprintf(new_path, "%s/%s", node->name, ievent->name);
-    if(nftw(new_path, nftw_del, 10, FTW_PHYS) == -1) {
-        fprintf(stderr, "fail to traverse: %s, %s", new_path, strerror(errno));
+void rm_monitor(struct inotify_event *ievent, bool recursive) {
+    if(recursive) {
+        struct listNode *node = search(ievent->wd);
+        char *new_path = malloc(strlen(node->name) + strlen(ievent->name) + 1 +  1);
+        sprintf(new_path, "%s/%s", node->name, ievent->name);
+        if (nftw(new_path, nftw_del, 10, FTW_PHYS) == -1) {
+            fprintf(stderr, "fail to traverse: %s, %s\n", new_path, strerror(errno));
+        }
+        free(new_path);
+    } else {
+//        int wd = searchWD(new_path)->wd;
+        inotify_rm_watch(fd,ievent->wd);
+        delete(ievent->wd);
     }
-    free(new_path);
 }
 
 void process_event(struct inotify_event *ievent) {
@@ -182,11 +188,11 @@ void process_event(struct inotify_event *ievent) {
     }
     if(ievent->mask & IN_DELETE_SELF) {
         printf("Monitor: File Deletion: %s, stop monitoring, wd = %s\n", search(ievent->wd)->name, search(ievent->wd)->name);
-        rm_monitor(ievent);
+        rm_monitor(ievent, false);
     }
     if(ievent->mask & IN_MOVED_FROM) {
         printf("Monitor: File Move in, from: %s/%s\n", search(ievent->wd)->name, ievent->name);
-        rm_monitor(ievent);
+        rm_monitor(ievent, true);
 
     }
     if(ievent->mask & IN_MOVED_TO) {
@@ -205,12 +211,12 @@ int main(int argc, char *argv[]) {
 
     head = newListNode(0, "", NULL);
     if(head == NULL) {
-        fprintf(stderr, "fail to malloc head, %s", strerror(errno));
+        fprintf(stderr, "fail to malloc head, %s\n", strerror(errno));
         return 2;
     }
 
     if(nftw(monitor_root, nftw_read, 10, FTW_PHYS) == -1) {
-        fprintf(stderr, "fail to traverse: %s, %s", monitor_root, strerror(errno));
+        fprintf(stderr, "fail to traverse: %s, %s\n", monitor_root, strerror(errno));
     }
 
     void *ievent = malloc(10 * (sizeof(struct inotify_event) + NAME_MAX + 1));
