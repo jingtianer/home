@@ -6,6 +6,10 @@ categories: LeetCode
 toc: true
 language: zh-CN
 ---
+<audio controls autoplay>
+  <source src="/home/audio/不怕_赵蕾.mp3" type="audio/mpeg">
+Your browser does not support the audio element.
+</audio>
 
 ## <font color="red">[hard] </font>[1377. T 秒后青蛙的位置](https://leetcode.cn/problems/frog-position-after-t-seconds/description/)
 
