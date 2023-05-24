@@ -1,6 +1,6 @@
 ---
 title: cha21.信号:信号处理器函数
-date: 2023-5-23 18:05:00
+date: 2023-5-24 18:05:00
 tags: 
     - Linux/UNIX系统编程手册
 categories: linux
