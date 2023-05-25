@@ -251,3 +251,276 @@ public:
 
 > 时间 40 ms 击败 66.87% 
 > 内存 32.2 MB 击败 48.64%
+
+## <font color="green">[Easy] </font>[2451. 差值数组不同的字符串](https://leetcode.cn/problems/odd-string-difference/description/)
+
+### 分析
+
+依次对所有字符串计算相邻两个字符之间的差值，找到差值不同的那一个
+
+- 计算第一个字符串的差值，寻找第一个与其不同的字符串
+  - 若第一个与其不一样的字符串下标大于1，则[0, j-1]是相同的，j为与其他不同的字符串
+  - 若等于1
+    - words总长度为2，则0，1两串不同，返回任意一个即可
+    - 总长度大于2，查看字符串2的差值，若与1相同则返回0，否则返回1
+
+### 代码
+```c++
+class Solution {
+public:
+    string oddString(vector<string>& words) {
+        int len = words[0].size();
+        int n = words.size();
+        for(int i = 1; i < len; i++) {
+            int diff = words[0][i] - words[0][i-1];
+            int j = 1;
+            while(j < n && words[j][i] - words[j][i-1] == diff) {
+                j++;
+            }
+            if(j == n) {
+                continue;
+            }
+            if(j > 1 || n == 2) {
+                return words[j];
+            } else {
+                if(words[2][i] - words[2][i-1] == diff) {
+                    return words[1];
+                } else {
+                    return words[0];
+                }
+            }
+        }
+        return words[0];
+    }
+};
+```
+
+## <font color="green">[Easy] </font> [LCP 33. 蓄水](https://leetcode.cn/problems/o8SXZn/)
+
+### 分析
+
+实际难度应该是hard吧，好难
+
+直接抄答案
+
+### 代码
+```c++
+class Solution {
+public:
+    int storeWater(vector<int>& bucket, vector<int>& vat) {
+        int n = bucket.size();
+        int maxx = 0;
+        for(int i = 0; i < n; i++) {
+            maxx = max(maxx, vat[i]);
+        }
+        if(maxx == 0) return 0;
+        int res = INT_MAX;
+        for(int k = 1; k <= maxx && k < res; k++) {
+            int t = 0;
+            for(int i = 0; i < n; i++) {
+                t += max(0, (vat[i] + k - 1) / k - bucket[i]);
+            }
+            res = min(res, t+k);
+        }
+        return res;
+    }
+};
+```
+
+## <font color="red">[Hard] </font> [1373. 二叉搜索子树的最大键值和](https://leetcode.cn/problems/maximum-sum-bst-in-binary-tree/description/)
+
+### 分析
+对于每个节点 $ node $， 首先要判断其是否为bst，如果是bst计算以node为根的子树之和
+
+用bst函数的返回值返回是否为bst，三个参数分别返回子树之和，子树的最大值，子树的最小值
+
+子树的最大值即，左子树的子树最大值，右子树子树最大值，根节点的值三者最大值
+
+子树最小值即，左子树的子树最小值，右子树子树最小值，根节点的值三者最小值
+
+- 题目中的不合理：
+
+```c
+输入：root = [-4,-2,-5]
+输出：0
+解释：所有节点键值都为负数，和最大的二叉搜索树为空。
+```
+
+这个输入的输出应该是-2，而非0。定义中只要求左子树小于根，右子树大于根，并未要求正负。
+
+```c
+输入：root = [4,3,null,1,2]
+输出：2
+解释：键值为 2 的单节点子树是和最大的二叉搜索树。
+```
+
+根据这个输入知道，单节点也算是二叉搜索树，那2算最大子树，-2也应该算最大子树
+
+### 代码
+```c++
+class Solution {
+public:
+    int maxx = INT_MIN;
+    int maxSumBST(TreeNode* root) {
+        int sum = 0, lmax, rmin;
+        bool ok = bst(root, sum, lmax, rmin);
+        if(ok) {
+            maxx = max(maxx, sum);
+        }
+        return max(0, maxx);
+    }
+    bool bst(TreeNode *root, int& sum, int& leftMax, int& rightMin) {
+        if(root == nullptr) return true;
+        int lsum = 0, rsum = 0;
+        int llMax = INT_MIN, lrMin = INT_MAX;
+        int rlMax = INT_MIN, rrMin = INT_MAX;
+        bool lok = bst(root->left, lsum, llMax, lrMin);
+        bool rok = bst(root->right, rsum, rlMax, rrMin);
+        leftMax = max(root->val, max(llMax, rlMax));
+        rightMin = min(root->val, min(lrMin, rrMin));
+        if(lok && rok) {
+            bool ok = (!root->left || llMax < root->val) && (!root->right || rrMin > root->val);
+            if(ok) {
+                sum += root->val + lsum + rsum;
+                maxx = max(maxx, sum);
+            }
+            return ok;
+        }
+        return false;
+    }
+};
+```
+
+## 1079. 活字印刷
+
+### 分析
+
+状态压缩+bfs
+总长度最大只有7，最多7个不同字符，直接暴力枚举所有情况
+
+需要记录当前有哪些位使用了，哪些没有使用，用int的最后7位表示
+
+不需要真的生成字符串，只要对每个字符编码，计算一个8进制数就好了
+
+### code
+
+```c++
+class Solution {
+public:
+    set<int> strset;
+    vector<int> tiles_int;
+    int n;
+    int numTilePossibilities(string tiles) {
+        this->n = tiles.length();
+        tiles_int = vector<int>(n, 0);
+        int tile_count = 1;
+        tiles_int[0] = 1;
+        sort(tiles.begin(), tiles.end());
+        for(int i = 1; i < n; i++) {
+            if(tiles[i] == tiles[i-1]) {
+                tiles_int[i] = tile_count;
+            } else {
+                tiles_int[i] = ++tile_count;
+            }
+        }
+        dfs(0, 0);
+        return strset.size();
+    }
+    void dfs(int state, int s) {
+        int mask = 1;
+        for(int i = 0; i < n; i++) {
+            if(!(mask & state)) {
+                int next_str = (s << 3) + tiles_int[i];
+                strset.insert(next_str);
+                dfs(state | mask, next_str);
+            }
+            mask <<= 1;
+        }
+    }
+
+};
+```
+
+> 时间 40 ms 击败 27.67%
+> 内存 12.1 MB 击败 32.56%
+
+### 优化
+
+既然排序了，那相同字符就不用重复考虑了
+```c++
+class Solution {
+public:
+    set<int> strset;
+    vector<int> tiles_int;
+    int n;
+    int numTilePossibilities(string tiles) {
+        int len = tiles.length();
+        int tile_count = 1;
+        n = 1;
+        sort(tiles.begin(), tiles.end());
+        for(int i = 1; i < len; i++) {
+            if(tiles[i] != tiles[i-1]) {
+                tiles_int.push_back(tile_count);
+                tile_count = 1;
+                n++;
+            } else {
+                ++tile_count;
+            }
+        }
+        tiles_int.push_back(tile_count);
+        dfs(0);
+        return strset.size();
+    }
+    void dfs(int s) {
+        for(int i = 0; i < n; i++) {
+            if(tiles_int[i]) {
+                int next_str = (s << 3) + i + 1;
+                strset.insert(next_str);
+                tiles_int[i]--;
+                dfs(next_str);
+                tiles_int[i]++;
+            }
+        }
+    }
+};
+```
+
+### 继续优化
+
+参考题解，同时结合上面的分析，既然排序后不存在重复了，那可以直接计数，不需要set了
+```c++
+class Solution {
+public:
+    vector<int> tiles_int;
+    int n;
+    int numTilePossibilities(string tiles) {
+        int len = tiles.length();
+        int tile_count = 1;
+        n = 1;
+        sort(tiles.begin(), tiles.end());
+        for(int i = 1; i < len; i++) {
+            if(tiles[i] != tiles[i-1]) {
+                tiles_int.push_back(tile_count);
+                tile_count = 1;
+                n++;
+            } else {
+                ++tile_count;
+            }
+        }
+        tiles_int.push_back(tile_count);
+        return dfs(0);
+    }
+    int dfs(int s) {
+        int ret = 0;
+        for(int i = 0; i < n; i++) {
+            if(tiles_int[i]) {
+                int next_str = (s << 3) + i + 1;
+                tiles_int[i]--;
+                ret += dfs(next_str) + 1;
+                tiles_int[i]++;
+            }
+        }
+        return ret;
+    }
+};
+```
