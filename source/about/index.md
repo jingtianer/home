@@ -38,6 +38,8 @@ tag: resume
 ## leetcode题解
 
 - <font color="red">[hard]</font> [1255. 得分最高的单词集合](https://leetcode.cn/problems/maximum-score-words-formed-by-letters/solutions/2134779/zhuang-tai-ya-suo-jian-zhi-by-tian-tian-dsv8c/) 状态压缩+剪枝
+- <font color="orange">[Medium] </font>[1073. 负二进制数相加](https://leetcode.cn/problems/adding-two-negabinary-numbers/solutions/2284503/shu-shi-zhao-gui-lu-yi-ci-suan-liang-wei-g0j5/)
+
 
 ## 其他信息
 欢迎相互学习&交流!

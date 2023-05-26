@@ -391,7 +391,7 @@ public:
 };
 ```
 
-## 1079. 活字印刷
+## <font color="orange">[Medium] </font>[1079. 活字印刷](https://leetcode.cn/problems/letter-tile-possibilities/)
 
 ### 分析
 
@@ -524,3 +524,209 @@ public:
     }
 };
 ```
+
+## <font color="orange">[Medium] </font>[1091. 二进制矩阵中的最短路径](https://leetcode.cn/problems/shortest-path-in-binary-matrix/description/)
+
+
+### 分析
+
+一眼BFS，但是一直超时
+
+### 超时
+
+```c++
+class Solution {
+public:
+    int shortestPathBinaryMatrix(vector<vector<int>>& grid) {
+        int n = grid.size();
+        queue<pair<int, int>> q;
+        if(!grid[0][0] && !grid[n-1][n-1])
+            q.push(make_pair(0, 1));
+        vector<bool> visited = vector<bool>(n * n, false);
+        while(!q.empty()) {
+            auto [pos, len] = q.front();
+            q.pop();
+            if(len > n*n) continue;
+            visited[pos] = true;
+            int x = pos / n, y = pos % n;
+            if(x == n-1 & y == n-1) {
+                return len;
+            }
+            for(int dx = -1; dx <= 1; dx++) {
+                for(int dy = -1; dy <= 1; dy++) {
+                    pos = pos2int(x + dx, y + dy, n);
+                    if(!checkpos(x+dx, y+dy, n) || grid[x+dx][y+dy] || visited[pos]) continue;
+                    q.push({pos, len+1});
+                }
+            }
+        }
+        return -1;
+    }
+    inline bool checkpos(int x, int y, int n) {
+        return x >= 0 && y >= 0 && x < n && y < n;
+    }
+    inline int pos2int(int x, int y, int n) {
+        return x*n + y;
+    }
+};
+```
+
+在入队时就应该吧visited置为true
+
+### 代码
+
+```c++
+class Solution {
+public:
+    int shortestPathBinaryMatrix(vector<vector<int>>& grid) {
+        int n = grid.size();
+        vector<bool> visited = vector<bool>(n * n, false);
+        queue<pair<int, int>> q;
+        if(!grid[0][0] && !grid[n-1][n-1]){
+            q.push(make_pair(0, 1));
+            visited[0] = true;
+        }
+        while(!q.empty()) {
+            auto [pos, len] = q.front();
+            q.pop();
+            int x = pos / n, y = pos % n;
+            if(x == n-1 & y == n-1) {
+                return len;
+            }
+            for(int dx = -1; dx <= 1; dx++) {
+                for(int dy = -1; dy <= 1; dy++) {
+                    pos = pos2int(x + dx, y + dy, n);
+                    if(!checkpos(x+dx, y+dy, n) || grid[x+dx][y+dy] || visited[pos]) continue;
+                    q.push({pos, len+1});
+                    visited[pos] = true;
+                }
+            }
+        }
+        return -1;
+    }
+    inline bool checkpos(int x, int y, int n) {
+        return x >= 0 && y >= 0 && x < n && y < n;
+    }
+    inline int pos2int(int x, int y, int n) {
+        return x*n + y;
+    }
+};
+```
+
+> 时间 44 ms 击败 91.20%
+> 内存 18.8 MB 击败 68.63%
+
+## <font color="orange">[Medium] </font>[1073. 负二进制数相加](https://leetcode.cn/problems/adding-two-negabinary-numbers/description/)
+
+### 分析
+
+#### 找规律
+首先分析其相加的规律
+```c
+
+// 1 + 1 = 110
+
+// 00 + 00 = 00,00
+// 10 + 10 = 11,00
+// 11 + 11 = 00,10
+// 10 + 00 = 00,10
+// 00 + 10 = 00,10
+// 11 + 00 = 00,11
+// 11 + 10 = 11,01
+// 10 + 11 = 11,01
+// 01 + 11 = 00,00
+
+// 100 + 100 = 11000
+// 101 + 101 = 11000 + 110 = 11110
+// 110 + 110 = 100
+// 111 + 111 = 11010
+// 1111 + 1111 = 1010
+```
+
+发现，1位，3位的结果相当于前面补0后偶数位的结果
+
+#### 总结转换矩阵
+以相邻两位为单位，有如下转换关系
+```c++
+vector<vector<int>> transform = {
+    {0b0000, 0b0001, 0b0010, 0b0011}, // 00 + xx
+    {0b0001, 0b0110, 0b0011, 0b0000}, // 01 + xx
+    {0b0010, 0b0011, 0b1100, 0b1101}, // 10 + xx
+    {0b0011, 0b0000, 0b1101, 0b0010}  // 11 + xx
+};
+```
+
+将多出来的高两位视为进位，低两位视为相加结果
+
+#### 进位
+考虑到进位，以及进位的进位，需要比最长数字多四位
+
+$$
+\begin{equation*}
+\begin{aligned}
+&&&&&&x_1&x_0&\\
++&&&&&&y_1&y_0&\\
+=&&&&t_{13}&t_{12}&t_{11}&t_{10}&\\
++&&&&&&c_{1}&c_{0}&\\
+=&&&&t_{23}&t_{22}&t_{21}&t_{20}&\\
++&&&&t_{13}&t_{12}&&&&\\
+=&&t_{33}&t_{32}&t_{31}&t_{30}&t_{21}&t_{20}&\\
+\end{aligned}
+\end{equation*}
+$$
+
+c代表进位，t代表相加后的结果
+
+### 代码
+
+```c++
+class Solution {
+public:
+    vector<vector<int>> transform = {
+        {0b0000, 0b0001, 0b0010, 0b0011}, // 00 + xx
+        {0b0001, 0b0110, 0b0011, 0b0000}, // 01 + xx
+        {0b0010, 0b0011, 0b1100, 0b1101}, // 10 + xx
+        {0b0011, 0b0000, 0b1101, 0b0010}  // 11 + xx
+    };
+    vector<int> addNegabinary(vector<int>& arr1, vector<int>& arr2) {
+        int len1 = arr1.size() - 1, len2 = arr2.size() - 1;
+        if(len1 % 2 == 0) {
+            arr1.insert(arr1.begin(), 0);
+            len1++;
+        }
+        if(len2% 2 == 0) {
+            arr2.insert(arr2.begin(), 0);
+            len2++;
+        }
+        // 补成偶数
+        vector<int> summ = vector<int>(max(len1, len2) + 5, 0); //多分配四位
+        int len_res = max(len1, len2) + 5 - 1;
+        for(int i = len_res; len1 > 0 || len2 > 0; len1-=2, len2-=2, i-=2) {
+            int x = len1 > 0 ? (arr1[len1-1]<<1) + (arr1[len1]) : 0;
+            int y = len2 > 0 ? (arr2[len2-1]<<1) + (arr2[len2]) : 0;
+            int carry = (summ[i-1]<<1) + (summ[i]);
+            
+            int trans1 = transform[x][y]; // x + y
+            int trans2 = transform[trans1&0b0011][carry]; // 低二位(x + y) + carry
+            int trans3 = transform[(trans1&0b1100) >> 2][(trans2&0b1100) >> 2]; // 高二位
+
+            summ[i]   =  trans2&0b0001;
+            summ[i-1] = (trans2&0b0010) >> 1;
+            summ[i-2] = (trans3&0b0001);
+            summ[i-3] = (trans3&0b0010) >> 1;
+            summ[i-4] = (trans3&0b0100) >> 2;
+            summ[i-5] = (trans3&0b1000) >> 3;
+        } //计算
+        vector<int> ret;
+        int i = 0;
+        while(i <= len_res && summ[i] == 0) i++;
+        while(i <= len_res) ret.push_back(summ[i++]);
+        if(ret.size() == 0) ret = {0};
+        // 删除前导0
+        return ret;
+    }
+};
+```
+
+> 时间 4 ms 击败 90.75%
+> 内存 19.3 MBn 击败 5.2%
