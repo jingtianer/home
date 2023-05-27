@@ -701,32 +701,91 @@ public:
         // 补成偶数
         vector<int> summ = vector<int>(max(len1, len2) + 5, 0); //多分配四位
         int len_res = max(len1, len2) + 5 - 1;
-        for(int i = len_res; len1 > 0 || len2 > 0; len1-=2, len2-=2, i-=2) {
+        for(int i = 0; len1 > 0 || len2 > 0; len1-=2, len2-=2, i+=2) {
             int x = len1 > 0 ? (arr1[len1-1]<<1) + (arr1[len1]) : 0;
             int y = len2 > 0 ? (arr2[len2-1]<<1) + (arr2[len2]) : 0;
-            int carry = (summ[i-1]<<1) + (summ[i]);
+            int carry = (summ[i+1]<<1) + (summ[i]);
             
             int trans1 = transform[x][y]; // x + y
             int trans2 = transform[trans1&0b0011][carry]; // 低二位(x + y) + carry
             int trans3 = transform[(trans1&0b1100) >> 2][(trans2&0b1100) >> 2]; // 高二位
 
             summ[i]   =  trans2&0b0001;
-            summ[i-1] = (trans2&0b0010) >> 1;
-            summ[i-2] = (trans3&0b0001);
-            summ[i-3] = (trans3&0b0010) >> 1;
-            summ[i-4] = (trans3&0b0100) >> 2;
-            summ[i-5] = (trans3&0b1000) >> 3;
+            summ[i+1] = (trans2&0b0010) >> 1;
+            summ[i+2] = (trans3&0b0001);
+            summ[i+3] = (trans3&0b0010) >> 1;
+            summ[i+4] = (trans3&0b0100) >> 2;
+            summ[i+5] = (trans3&0b1000) >> 3;
         } //计算
-        vector<int> ret;
-        int i = 0;
-        while(i <= len_res && summ[i] == 0) i++;
-        while(i <= len_res) ret.push_back(summ[i++]);
-        if(ret.size() == 0) ret = {0};
+        while(!summ.empty() && summ.back() == 0) summ.pop_back();
+        if(summ.size() == 0) summ = {0};
         // 删除前导0
-        return ret;
+        reverse(summ.begin(), summ.end());
+        return summ;
     }
 };
 ```
 
 > 时间 4 ms 击败 90.75%
 > 内存 19.3 MBn 击败 5.2%
+
+## <font color="orange">[Medium] </font> [1093. 大样本统计](https://leetcode.cn/problems/statistics-from-a-large-sample/description/)
+
+### 分析
+
+
+看起来很简单的题目，还是错了两次
+
+1. 计算总数偶数个中位数，且中位数两个数不相等时，没有考虑到两个数直接相差可能大于1，既第 $ summ/2 $ 与 $ summ/2 + 1 $ 之间有很多数为0的情况
+
+2. 对`0-255`加权求和时，右边应该先转`double`再计算，防止`int`溢出
+
+### 代码
+```c++
+class Solution {
+public:
+    vector<double> sampleStats(vector<int>& count) {
+        int minmum = 255;
+        int maximum = 0;
+        double mean = 0;
+        double mode  = 0;
+        double medium = 0;
+        int summ = 0;
+        for(int i = 0; i < 256; i++) {
+            if(count[i] > 0) {
+                minmum = min(minmum, i);
+                maximum = max(maximum, i);
+                summ += count[i];
+                mean += 1.0*i*count[i];
+            }
+            if(count[i] > count[mode]) {
+                mode = i;
+            }
+        }
+        mean /= summ;
+        {   
+            int i = 0, c = count[0];
+            for(; c<summ/2; c+=count[++i])continue;
+            if(summ%2 == 0) medium = i;
+            for(; c<=summ/2; c+=count[++i])continue;
+            medium += i;
+            if(summ%2 == 0) {
+                medium /= 2;
+            }
+        }
+        return {(double)minmum, (double)maximum, mean, medium, mode};
+    }
+};
+```
+<!-- 
+thought1
+jobDifficulty =
+[186,398,479,206,885,423,805,112,925,656,16,932,740,292,671,360]
+d =
+4
+
+thought2
+jobDifficulty =
+[380,302,102,681,863,676,243,671,651,612,162,561,394,856,601,30,6,257,921,405,716,126,158,476,889,699,668,930,139,164,641,801,480,756,797,915,275,709,161,358,461,938,914,557,121,964,315]
+d =
+10 -->
