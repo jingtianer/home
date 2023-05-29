@@ -30,23 +30,23 @@ aflgo在AFL的基础上优化了种子选取。把给定的源码位置设置为
 
 #### 编译期间静态计算
 - 函数级的距离，LLVM可以在CG中算出两个函数中最短（边数量最少）的距离
-![fuction  level](/home/images/aflgo/aflgo-formular1.webp)
+![fuction  level](/images/aflgo/aflgo-formular1.webp)
 - 基本块级距离，计算出函数级距离后，根据如下公式，计算基本块级距离
-![bb  level](/home/images/aflgo/aflgo-formular2.webp)
+![bb  level](/images/aflgo/aflgo-formular2.webp)
 
 #### 种子距离的动态计算
 
 在fuzz过程中，根据已经访问过的BB，动态计算种子的距离
-![seed distance](/home/images/aflgo/aflgo-formular3.webp)
+![seed distance](/images/aflgo/aflgo-formular3.webp)
 并对该距离进行归一化
-![seed distance uniformization](/home/images/aflgo/aflgo-formular4.webp)
+![seed distance uniformization](/images/aflgo/aflgo-formular4.webp)
 
 ### aflgo种子调度：基于模拟退火的调度算法
 
 模拟退火算法用于在一个很大的、通常是离散的搜索空间中，在一个可接受的时间预算内逼近全局最优。
 该算法在最开始，处于exploration（探索）阶段，会一致对待所有的种子，给予最大的随机可能性。当大于时间阈值后，进入exploitation（利用）时期，对favor（偏好）的种子更多的变异能量。
 
-![](/home/images/aflgo/aflgo-formular5.webp)
+![](/images/aflgo/aflgo-formular5.webp)
 
 这个图说明了随着时间的增加，距离越大的种子被赋予的能量也更大
 
@@ -57,14 +57,14 @@ aflgo在AFL的基础上优化了种子选取。把给定的源码位置设置为
 AFL本身的调度算法基于种子的运行时间、种子的大小、种子的发现时间、种子的生成代数。
 
 aflgo的调度算法如下
-![](/home/images/aflgo/aflgo-formular6.png)
+![](/images/aflgo/aflgo-formular6.png)
 也就是在AFL的基础上乘了一个系数，不会过度弱化种子其他维度的重要性也可以强化目标位置的导向型。
 
 在exploitation（利用）时期，当时间足够长时，可以得到
 对于距离较远的种子，其能量值趋近于afl能量的1/32
-![](/home/images/aflgo/aflgo-formular7.png)
+![](/images/aflgo/aflgo-formular7.png)
 对于距离较近的种子，其能量值趋近于afl能量的32倍
-![](/home/images/aflgo/aflgo-formular8.png)
+![](/images/aflgo/aflgo-formular8.png)
 
 ## 漏洞挖掘情况
 
