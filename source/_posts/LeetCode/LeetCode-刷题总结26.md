@@ -309,3 +309,81 @@ public:
     }
 };
 ```
+
+## <font color="orange">[Medium] </font>[1156. 单字符重复子串的最大长度](https://leetcode.cn/problems/swap-for-longest-repeated-character-substring/description/)
+
+### 分析
+
+#### 观察样例
+
+```c
+输入：text = "ababa"
+输出：3
+```
+
+把这一类拓展，归类为`单层汉堡`类型也就是
+$ XX...XyXX...X $
+
+用`cnt[alpha]`表示字符alpha在整个字符串中出现的次数
+
+这类情况会有两种解决方法
+- 若y左边有连续`a1`个X，右边有`a2`个X
+  - 若`a1 + a2 < cnt[X]`，则将y与`a1,a2`之外的另一个X交换，X总长度为`a1 + a2 + 1`
+  - 若`a1 + a2 == cnt[X]`，则将y与`a1`中第一个X交换，X总长度为`a1 + a2 = cnt[X]`
+
+把这在单层汉堡的情况下继续拓展，若遇到多层汉堡，即夹心`y`(可能为：生菜* $ n_1 $，牛肉饼*$n_2$，番茄酱*$n_3$，酸黄瓜*$n_4 $等多种类型的)的个数大于1
+$ XX...Xy_1y_2...y_nXX...X $
+
+
+这类情况会有两种解决方法
+- 若y左边有连续`a1`个X，右边有`a2`个X
+  - 若`a1 >= a2`，则将$ y_1 $与`a2`之中的一个X交换，X总长度为`a1 + 1`
+  - 若`a1 <= a2`，则将$ y_n $于`a1`中的一个X交换，X总长度为`a2 + 1`
+
+上面两种情况统称汉堡类型，即至少三层
+- 对于两层的披萨模型以及一层的饼干模型
+- 只要统计每种字符的个数即可取最大值即可
+
+### 代码
+
+```c++
+class Solution {
+public:
+    int maxRepOpt1(string text) {
+        int cnt[26] = {0};
+        int n = text.length();
+        for(int i = 0; i < n; i++) {
+            text[i] -= 'a';
+            cnt[text[i]]++;
+        }
+        int i = 0;
+        int last_end[26] = {-1}, last_cnt[26] = {0};
+        int ret = 0;
+        while(i < n) {
+            int counti = 0;
+            int j = i;
+            while(j < n && text[i] == text[j]) {
+                j++;
+                counti++;
+            }
+            if(last_cnt[text[i]] != 0) {
+                if(i - last_end[text[i]] == 2) {
+                    if(cnt[text[i]] == counti + last_cnt[text[i]]) {
+                        ret = max(ret, counti + last_cnt[text[i]]);
+                    } else {
+                        ret = max(ret, 1 + counti + last_cnt[text[i]]);
+                    }
+                } else {
+                    ret = max(ret, 1 + max(counti, last_cnt[text[i]]));
+                }
+            } else {
+                ret = max(ret, counti);
+            }
+            last_end[text[i]] = j-1;
+            last_cnt[text[i]] = counti;
+            i = j;
+        }
+        return ret;
+    }
+};
+```

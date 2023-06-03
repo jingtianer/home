@@ -126,6 +126,82 @@ int main(int argc, char **argv) {
 }
 ```
 
+### 2023年6月3日更新
+
+之前没有考虑到目录也可以有软链接
+```c
+//
+// Created by root on 5/20/23.
+//
+
+#include <unistd.h>
+#include <errno.h>
+#include <stdio.h>
+#include <sys/stat.h>
+#include <string.h>
+#include <stdlib.h>
+#include <limits.h>
+
+
+
+void parse(char *path, char *realpath, char *buff) {
+    char *end = NULL;
+    while (path != NULL && *path) {
+        end = strchr(path, '/');
+        if(end) *end = 0;
+        if(end == path) {
+        } else if (strcmp(path, ".") == 0) {
+        } else if (strcmp(path, "..") == 0) {
+            char *tmp = strrchr(realpath, '/');
+            if (tmp) {
+                *tmp = 0;
+            }
+        } else {
+            strcat(realpath, "/");
+            strcat(realpath, path);
+            struct stat stat1;
+            if(lstat(realpath, &stat1) == -1) {
+                fprintf(stderr, "%s:%s\n", strerror(errno), realpath);
+                exit(1);
+            }
+            if(S_ISLNK(stat1.st_mode)) {
+                ssize_t readsize = readlink(realpath, buff, NAME_MAX);
+                buff[readsize] = 0;
+//                printf("%s is link to: %s\n", realpath, buff);
+                if(buff[0] == '/') {
+                    realpath[0] = 0;
+                } else {
+                    char *tmp = strrchr(realpath, '/');
+                    if (tmp) {
+                        *tmp = 0;
+                    } else {
+                        realpath[0] = 0; //不需要，相对路径已经变成绝对路径了
+                    }
+                }
+                parse(buff, realpath, buff);
+            }
+        }
+        if(end) path = end + 1;
+        else path = NULL;
+    }
+}
+
+int main(int argc, char **argv) {
+    char *realpath = (char *) malloc(PATH_MAX + 1);
+    char *buff = (char *) malloc(PATH_MAX + 1);
+    char *cwd = (char *) malloc(PATH_MAX + 1);
+    cwd[0] = 0;
+    realpath[0] = 0;
+    buff[0] = 0;
+    char *argpath = strdup(argv[1]);
+    if(argpath[0] != '/') getcwd(cwd, NAME_MAX);
+    parse(cwd, realpath, buff);
+    parse(argpath, realpath, buff);
+    printf("%s\n", realpath);
+    return 0;
+}
+```
+
 ## 18.4
 
 把18.4换成readdir_r
