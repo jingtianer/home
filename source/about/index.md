@@ -6,6 +6,25 @@ language: zh-CN
 tag: resume
 ---
 
+<style type="text/css">
+.Label, .label {
+    border: max(1px, 0.0625rem) solid #30363d;
+    border-radius: 2em;
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 500;
+    line-height: 18px;
+    padding: 0 7px;
+    white-space: nowrap;
+}
+
+.Label--secondary {
+    border-color: #30363d;
+    color: #7d8590;
+}
+</style>
+
+
 ## 基本信息
 |项目|值|
 |-|-|
@@ -38,12 +57,12 @@ tag: resume
 ### AFLGO挖掘项目【涉密】
 - 对AFLGO修改，添加代码访问次数统计功能
   - keywords: llvm
-  - [repo(secret)](https://github.com/jingtianer/aflgo-dns) 
+  - <span class="Label Label--secondary v-align-middle mr-1">Private</span>[repo](https://github.com/jingtianer/aflgo-dns) 
 - 对某些软件进行fuzz
-  - keywords: socket编程
+  - keywords: socket编程, pthread, asan
 - 对AFLGO修改，添加目标块命中次数统计
   - keywords: 系统调用, I/O, llvm IR插装, 共享内存
-  - [repo(secret)](https://github.com/jingtianer/aflgo_distance)
+  - <span class="Label Label--secondary v-align-middle mr-1">Private</span>[repo](https://github.com/jingtianer/aflgo_distance)
 
 ## leetcode题解
 
