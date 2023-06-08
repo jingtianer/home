@@ -35,6 +35,16 @@ tag: resume
 - notes for leetcode and other oj
 - [repo](https://github.com/jingtianer/algorithm)
 
+### AFLGO挖掘项目【涉密】
+- 对AFLGO修改，添加代码访问次数统计功能
+  - keywords: llvm
+  - [repo(secret)](https://github.com/jingtianer/aflgo-dns) 
+- 对某些软件进行fuzz
+  - keywords: socket编程
+- 对AFLGO修改，添加目标块命中次数统计
+  - keywords: 系统调用, I/O, llvm IR插装, 共享内存
+  - [repo(secret)](https://github.com/jingtianer/aflgo_distance)
+
 ## leetcode题解
 
 - <font color="red">[hard]</font> [1255. 得分最高的单词集合](https://leetcode.cn/problems/maximum-score-words-formed-by-letters/solutions/2134779/zhuang-tai-ya-suo-jian-zhi-by-tian-tian-dsv8c/) 状态压缩+剪枝

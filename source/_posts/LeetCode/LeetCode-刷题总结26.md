@@ -387,3 +387,314 @@ public:
     }
 };
 ```
+
+## <font color="orange">[Medium] </font>[2352. 相等行列对](https://leetcode.cn/problems/equal-row-and-column-pairs/description/)
+
+### 暴力
+
+```c++
+class Solution {
+public:
+    int equalPairs(vector<vector<int>>& grid) {
+        int n = grid.size();
+        int cnt = 0;
+        for(int i = 0; i < n; i++) {
+            for(int j = 0; j < n; j++) {
+                bool flag = true;
+                for(int k = 0; k < n; k++) {
+                    if(grid[i][k] != grid[k][j]) {
+                        flag = false;
+                        break;
+                    }
+                }
+                if(flag) {
+                    cnt++;
+                }
+            }
+        }
+        return cnt;
+    }
+};
+```
+
+### 优化
+
+排序+二分
+
+```c++
+class Solution {
+public:
+    int equalPairs(vector<vector<int>>& grid) {
+        int n = grid.size();
+        int cnt = 0;
+        vector<vector<int>> grid1(n, vector<int>(n, 0));
+        for(int i = 0; i < n; i++) {
+            for(int j = 0; j < n; j++) {
+                grid1[i][j] = grid[j][i];
+            }
+        }
+        
+        int l = 0;
+        sort(grid1.begin(), grid1.end());
+        sort(grid.begin(), grid.end());
+        for(int i = 0; i < n; i++) {
+            int r = n-1;
+            while(l <= r) {
+                int mid = (r - l) / 2 + l;
+                if(grid1[mid] == grid[i]) {
+                    cnt++;
+                    for(int k = mid-1; k >= 0; k--) {
+                        if(grid1[k] == grid[i]) {
+                            cnt++;
+                        } else {
+                            break;
+                        }
+                    }
+                    
+                    for(int k = mid + 1; k < n; k++) {
+                        if(grid1[k] == grid[i]) {
+                            cnt++;
+                        } else {
+                            break;
+                        }
+                    }
+                    l = mid;
+                    break;
+                } else if(grid1[mid] > grid[i]) {
+                    r = mid - 1;
+                } else {
+                    l = mid + 1;
+                }
+            }
+        }
+        return cnt;
+    }
+};
+```
+
+### 再优化
+排序+二分+计数
+```c++
+class Solution {
+public:
+    int equalPairs(vector<vector<int>>& grid) {
+        int n = grid.size();
+        int cnt = 0;
+        vector<vector<int>> grid1(n, vector<int>(n, 0));
+        map<vector<int>, int> vec2cnt;
+        for(int i = 0; i < n; i++) {
+            for(int j = 0; j < n; j++) {
+                grid1[i][j] = grid[j][i];
+            }
+            vec2cnt[grid1[i]]++;
+        }
+        int l = 0;
+        sort(grid1.begin(), grid1.end());
+        sort(grid.begin(), grid.end());
+        for(int i = 0; i < n; i++) {
+            int r = n-1;
+            while(l <= r) {
+                int mid = (r - l) / 2 + l;
+                if(grid1[mid] == grid[i]) {
+                    cnt += vec2cnt[grid1[mid]];
+                    l = mid;
+                    break;
+                } else if(grid1[mid] > grid[i]) {
+                    r = mid - 1;
+                } else {
+                    l = mid + 1;
+                }
+            }
+        }
+        return cnt;
+    }
+};
+```
+
+### 再再优化
+
+用vector计数
+```c++
+class Solution {
+public:
+    int equalPairs(vector<vector<int>>& grid) {
+        int n = grid.size();
+        int cnt = 0;
+        vector<vector<int>> grid1(n, vector<int>(n, 0));
+        vector<int> index_cnt(n, 1);
+        for(int i = 0; i < n; i++) {
+            for(int j = 0; j < n; j++) {
+                grid1[i][j] = grid[j][i];
+            }
+        }
+        int l = 0;
+        sort(grid1.begin(), grid1.end());
+        sort(grid.begin(), grid.end());
+        for(int i = 1; i < n; i++) {
+            if(grid1[i] == grid1[i-1]) {
+                index_cnt[i] = index_cnt[i-1] + 1;
+            }
+        }
+        for(int i = n-1; i > 0; i--) {
+            if(grid1[i] == grid1[i-1]) {
+                index_cnt[i-1] = index_cnt[i];
+            }
+        }
+        for(int i = 0; i < n; i++) {
+            int r = n-1;
+            while(l <= r) {
+                int mid = (r - l) / 2 + l;
+                if(grid1[mid] == grid[i]) {
+                    cnt += index_cnt[mid];
+                    l = mid;
+                    break;
+                } else if(grid1[mid] > grid[i]) {
+                    r = mid - 1;
+                } else {
+                    l = mid + 1;
+                }
+            }
+        }
+        return cnt;
+    }
+};
+```
+
+### hash
+
+```c++
+class Solution {
+public:
+    int equalPairs(vector<vector<int>>& grid) {
+        int n = grid.size();
+        int cnt = 0;
+        vector<vector<int>> grid1(n, vector<int>(n, 0));
+        map<vector<int>, int> vec2cnt;
+        for(int i = 0; i < n; i++) {
+            for(int j = 0; j < n; j++) {
+                grid1[i][j] = grid[j][i];
+            }
+            vec2cnt[grid1[i]]++;
+        }
+        for(int i = 0; i < n; i++) {
+            if(vec2cnt.count(grid[i]) > 0) {
+                cnt += vec2cnt[grid[i]];
+            }
+        }
+        return cnt;
+    }
+};
+```
+
+## <font color="orange">[Medium] </font>[2611. 老鼠和奶酪](https://leetcode.cn/problems/mice-and-cheese/description/)
+
+
+### 分析
+如果要找全局最优，即没有第一只老鼠吃k只的限制，那么只要让reward更大的老鼠吃掉第i块奶酪即可
+
+现在希望对老鼠吃掉的数目进行限制，对两个reward差值由大到小进行排序
+
+由小鼠1吃掉前k个，这样
+- 假如reward1 > reward2 的奶酪数目等于k，则刚好是全局最优
+- 假如reward1 > reward2 的奶酪数目大于k，则老鼠2吃掉了原属于小鼠1的奶酪，但前k个差值最大，能获得最大得分
+- 假如reward1 > reward2 的奶酪数目小于k，则老鼠1吃掉了原属于小鼠2的奶酪，但后n-k个差值最大，能获得最大得分
+
+### 代码
+```c++
+class Solution {
+public:
+    int miceAndCheese(vector<int>& reward1, vector<int>& reward2, int k) {
+        int n = reward1.size(), rwd = 0;
+        vector<int> index(n);
+        iota(index.begin(), index.end(), 0);
+        sort(index.begin(), index.end(), [&](int a, int b){
+            return reward1[a] - reward2[a] > reward1[b] - reward2[b];
+        });
+        int i = 0;
+        for(;i < k; i++) {
+            rwd += reward1[index[i]];
+        }
+        for(;i < n; i++) {
+            rwd += reward2[index[i]];
+        }
+        return rwd;
+    }
+};
+```
+
+### 就是找前k大
+
+#### 快排
+```c++
+class Solution {
+public:
+    int miceAndCheese(vector<int>& reward1, vector<int>& reward2, int k) {
+        if(k == 0) return accumulate(reward2.begin(), reward2.end(), 0);
+        int n = reward1.size();
+        int l = 0, r = n - 1, pivx;
+        while((pivx = partition(reward1, reward2, l, r)) != k-1) {
+            if(pivx > k-1) {
+                r = pivx - 1;
+            } else {
+                l = pivx + 1;
+            }
+        }
+        int rwd = 0;
+        for(l = 0;l < k; l++) {
+            rwd += reward1[l];
+        }
+        for(;l < n; l++) {
+            rwd += reward2[l];
+        }
+        return rwd;
+    }
+    int partition(vector<int>& reward1, vector<int>& reward2, int l, int r) {
+        int pivx1 = reward1[l];
+        int pivx2 = reward2[l];
+        while(l < r) {
+            while(l < r && reward1[r] - reward2[r] <= pivx1 - pivx2) {
+                r--;
+            }
+            reward1[l] = reward1[r];
+            reward2[l] = reward2[r];
+            while(l < r && reward1[l] - reward2[l] >= pivx1 - pivx2) {
+                l++;
+            }
+            reward1[r] = reward1[l];
+            reward2[r] = reward2[l];
+        }
+        reward1[l] = pivx1;
+        reward2[l] = pivx2;
+        return l;
+    }
+};
+```
+
+> 超时，因为已经有序的情况会导致其下降为O(n^2)
+
+#### 优先队列
+
+```c++
+class Solution {
+public:
+    int miceAndCheese(vector<int>& reward1, vector<int>& reward2, int k) {
+        int rwd = 0;
+        int n = reward1.size(), q_size = 0;
+        priority_queue<int, vector<int>, greater<int>> q;
+        for (int i = 0; i < n; i++) {
+            rwd += reward2[i];
+            q.emplace(reward1[i] - reward2[i]);
+            if (q_size == k) {
+                q.pop();
+            } else {
+                q_size++;
+            }
+        }
+        while (k--) {
+            rwd += q.top();
+            q.pop();
+        }
+        return rwd;
+    }
+};
+```
