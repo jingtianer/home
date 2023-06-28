@@ -1,6 +1,6 @@
 ---
 title: cha30.线程：线程同步
-date: 2023-6-27 18:05:00
+date: 2023-6-29 18:05:00
 tags:
     - Linux/UNIX系统编程手册
 categories: linux
@@ -358,6 +358,8 @@ valgrind跑了很多次，正常情况下全部内存都被free了，没有泄�
 
 ### asan
 asan跑了几次，每次都有错误。用gdb也看不到调用栈，后来clion很给力，打印出了调用栈
+
+![](./images/concurrent_tree_asan.png)
 
 不是实现有问题，是在输出log的时候出错了，原理如下
 > A线程给树里加入一个节点，然后A打印他的值。但在这之前B又把他删除，他的key，value都被free了，这个时候就不对了。
