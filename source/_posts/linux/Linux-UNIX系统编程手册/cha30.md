@@ -133,7 +133,7 @@ int del(ConcurrentTree tree, K *key) {
     ConcurrentTreeNode treeNode = tree->dummy->left;
 
     while(treeNode) {
-        printf("cmp %d, %d\n", *key, *treeNode->key);
+//        printf("cmp %d, %d\n", *key, *treeNode->key);
         int cmp = tree->compare(key, treeNode->key);
         if(cmp == 0) {
             if(treeNode->left) CHECKERR(pthread_mutex_lock(&treeNode->left->mutex) == 0, exit(5));
@@ -262,7 +262,7 @@ void *threadfn(void *args) {
     struct ThreadRet *ret = malloc(sizeof(struct ThreadRet));
     CHECKERR(ret, return NULL);
     ret->read = ret->add = ret->del = 0;
-    int opNum = 100 + rand() % 101;
+    int opNum = 1000 + rand() % 1001;
     int *key = (int *)malloc(sizeof(int));
     while (opNum--) {
         int *val;
@@ -308,7 +308,7 @@ void *threadfn(void *args) {
                     printf("Thread-%d, del (%d)\n", tid, *key);
                     CHECKERR(pthread_mutex_lock(&mutex_mk) == 0,return ret);
                     maxKey--;
-                    CHECKERR(pthread_mutex_unlock(&mutex_mk) == 0,return ret);
+                    CHECKERR(pthread_mutex_unlock(&mutex_mk) == 0, return ret);
                 }
                 else printf("Thread-%d, fail to del (%d)\n", tid, *key);
                 ret->del++;
@@ -334,9 +334,19 @@ int main(int argc, char *argv[]) {
         CHECKERR(pthread_create(&thread[i], NULL, threadfn, args) == 0,return 1);
     }
     for(int i = 0; i < threadCnt; i++) {
-        CHECKERR(pthread_join(thread[i], NULL) == 0,return 1);
+        struct ThreadRet *ret;
+        CHECKERR(pthread_join(thread[i], (void **)&ret) == 0,return 1);
+        if(!ret) {
+            printf("Summary: Thread-%d occured error, returned NULL\n", i+1);
+        } else {
+            printf("Summary: Thread-%d add=%d, read=%d, del=%d\n", i+1, ret->add, ret->read, ret->del);
+            free(ret);
+        }
     }
     CHECKERR(pthread_mutex_destroy(&mutex_mk) == 0,return 3);
+    destroyCTree(tree);
+    free(tree);
+    free(thread);
     return 0;
 }
 ```
