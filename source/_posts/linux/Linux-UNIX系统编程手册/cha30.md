@@ -1,6 +1,6 @@
 ---
 title: cha30.线程：线程同步
-date: 2023-6-29 18:05:00
+date: 2023-6-29 2:05:00
 tags:
     - Linux/UNIX系统编程手册
 categories: linux
@@ -8,7 +8,50 @@ toc: true
 language: zh-CN
 ---
 
-## 
+## 读书笔记
+
+### 条件变量
+一般搭配一个条件和一个互斥量使用
+
+经典的使用方式如下
+- 对于需要在某某条件下运行的线程，先对`mutex`加锁，以读取`condition`
+  - 若满足，则在预期状态下执行后续操作，结束后对`mutex`解锁
+  - 若不满足，则`pthread_cond_wait`
+      - 此时该函数会先解锁`mutex`（允许其他进程获取`mutex`以修改状态）
+      - 陷入阻塞，直到其他线程调用`pthread_cond_signal`或`pthread_cond_broadcast`唤醒
+      - 唤醒后，获取mutex锁，以检查条件是否满足，满足则执行后续，不满足继续调用`wait`阻塞（故此处需要用`while`）
+- 对于可以改变某某条件的线程
+  - 获取`mutex`
+  - 改变`condition`
+  - `signal/broadcast`
+  - `unlock`(unlock与上一步顺序可调换)
+
+```c
+// one thread
+pthread_mutex_lock(&mutex);
+while(!condition)
+    pthread_cond_wait(&cond, &mutex);
+/* condition matched, execute task */
+pthread_mutex_unlock(&mutex);
+
+// other thread
+pthread_mutex_lock(&mutex);
+condition = xxxx; // change condition
+pthread_cond_signal(&cond); // or pthread_cond_broadcast(&cond);
+pthread_mutex_unlock(&mutex); // 以上两行顺序任意，
+```
+
+- `broadcast`与`signal`的选择
+  - 如果所有线程都需要在同一条件下互斥的执行，那么选择`signal`，`broadcast`会唤醒所有线程且大家条件都相同，所有只会有一个线程获得`mutex`
+  - 如果条件不同，如一个线程为`condition == STAT1`，另一个为`condition == STAT2`，那么适合broadcast
+  - **条件变量的作用是通知某某条件的改变**
+
+## 30.1
+
+30-1.修改程序清单30-1 ( thread_incr.c）中的程序，以便线程起始函数在每次循环中都
+能输出 glob 的当前值以及能对线程做唯一标识的标识符。可将线程的这一唯一标识指定为创建线程的函数pthread_create()的调用参数。对于这一程序，需要将线程起始函数的参数改为指针，指向包含线程唯一标识和循环次数限制的数据结构。运行该程序，将输出重定向至一文件，查看内核在调度两线程交替执行时glob 的变化情况。
+
+> ok，无聊捏
 
 ## 30.2
 
