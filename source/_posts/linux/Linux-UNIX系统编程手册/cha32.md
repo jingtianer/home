@@ -1,5 +1,5 @@
 ---
-title: cha31.线程安全和每线程存储
+title: cha32.线程取消
 date: 2023-6-29 20:05:00
 tags:
     - Linux/UNIX系统编程手册
