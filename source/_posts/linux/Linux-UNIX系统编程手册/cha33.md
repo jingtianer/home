@@ -162,3 +162,5 @@ int main() {
     pthread_exit(NULL);
 }
 ```
+
+不一定相同，前面书中正文也说过了
