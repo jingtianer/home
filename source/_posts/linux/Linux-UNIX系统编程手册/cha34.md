@@ -180,7 +180,7 @@ int main(int argc, char **argv) {
 }
 ```
 
-### 总结
+### 小结
 嗯，确实是这样
 
 - 复习知识
@@ -192,3 +192,207 @@ int main(int argc, char **argv) {
 ## 34.5
 
 假设将程序清单34-6中的信号处理器中解除阻塞SIGTSTP信号的代码移动到处理器的开头部分。这样做会导致何种竞争条件?
+
+### 知识补漏
+
+- `SIGTSTP`和`SIGSTOP`
+  - 两个信号的作用都是让进程暂停，区别是`SIGSTOP`不可以捕获。
+- `wait`和`waitpid`
+  - `wait`当进程停止时返回
+  - waitpid可通过options参数等待停止的子进程
+> waitflags.h中的部分宏定义
+```c
+/* Bits in the third argument to `waitpid'.  */
+#define	WNOHANG		1	/* Don't block waiting.  */
+#define	WUNTRACED	2	/* Report status of stopped children.  */
+
+/* Bits in the fourth argument to `waitid'.  */
+#if defined __USE_XOPEN_EXTENDED || defined __USE_XOPEN2K8
+# define WSTOPPED	2	/* Report stopped child (same as WUNTRACED). */
+# define WEXITED	4	/* Report dead child.  */
+# define WCONTINUED	8	/* Report continued child.  */
+# define WNOWAIT	0x01000000 /* Don't reap, just poll status.  */
+#endif
+
+#define __WNOTHREAD     0x20000000 /* Don't wait on children of other threads
+				      in this group */
+#define __WALL		0x40000000 /* Wait for any child.  */
+#define __WCLONE	0x80000000 /* Wait for cloned process.  */
+```
+
+> 等待暂停的进程
+
+```c
+#include <wait.h>
+#include <stdio.h>
+#include <errno.h>
+#include <string.h>
+#include <signal.h>
+#include <unistd.h>
+
+#define CHECK(x) do { if(!(x)) { fprintf(stderr, "CHECK: %s, %s:%d\n", strerror(errno), __FILE__, __LINE__); } } while(0)
+
+int main() {
+    pid_t pid;
+    CHECK((pid = fork()) != -1);
+    if(!pid) {
+//        raise(SIGABRT);
+        raise(SIGSTOP);
+    } else {
+        int status;
+//        CHECK(wait(&status) != (pid_t) -1);
+        CHECK(waitpid(pid, &status, WUNTRACED) != (pid_t) -1);
+        int term_sig = WTERMSIG(status);
+        printf("PID=%d terminated, terminate signal=%d(%s)\n", pid, term_sig, strsignal(term_sig));
+        kill(pid, SIGKILL);
+    }
+}
+```
+
+## 34.5
+
+假设将程序清单34-6中的信号处理器中解除阻塞SIGTSTP信号的代码移动到处理器的开头部分。这样做会导致何种竞争条件?
+
+可能会导致同时执行多个tstphandler？
+
+### 34.6
+编写一个程序来验证当位于孤儿进程组中的一个进程试图从控制终端调用read时会得到EIO的错误.
+
+```c
+#include <stdio.h>
+#include <errno.h>
+#include <string.h>
+#include <unistd.h>
+
+#define CHECK(file, x) do { if(!(x)) { fprintf(file, "CHECK: error:%d(%s), %s:%d\n", errno, strerror(errno), __FILE__, __LINE__); } } while(0)
+
+int main() {
+    int pid = fork();
+    CHECK(stdout, pid != -1);
+    if(!pid) {
+        CHECK(stdout, setpgid(0, 0) == 0);
+        char arr[4096] = {0};
+        CHECK(stdout, read(STDIN_FILENO, arr, sizeof(arr)) > 0);
+        fprintf(stdout, "EIO=%d\n", EIO);
+    }
+}
+```
+
+嗯，确实是这样
+```c
+CHECK: error:5(Input/output error), /root/linux/cha34/practice34.6.c:20
+EIO=5
+```
+
+## 34.7
+编写一个程序来验证当SIGTTIN、SIGTTOU或SIGTSTP三个信号中的一个信号被发送给孤儿进程组中的一个成员时，如果这个信号会停止该进程(即处理方式为SIG_DFL)，那么这个信号就会被丢弃(即不产生任何效果)，但如果该信号存在处理器，就会发送该信号。
+
+```c
+//
+// Created by root on 7/13/23.
+//
+#include <stdio.h>
+#include <errno.h>
+#include <string.h>
+#include <unistd.h>
+#include <wait.h>
+#include <stdlib.h>
+#include <sys/shm.h>
+#define CHECK(x) do { if(!(x)) { fprintf(stderr, "CHECK: error:%d(%s), %s:%d\n", errno, strerror(errno), __FILE__, __LINE__); } } while(0)
+void handler(int sig) {
+    int saveerrno = errno;
+    printf("pid=%d received signal=%d(%s)\n", getpid(), sig, strsignal(sig));
+    CHECK(signal(sig, SIG_DFL) != SIG_ERR);
+    sigset_t set, old;
+    CHECK(sigemptyset(&set) != -1);
+    CHECK(sigaddset(&set, sig) != -1);
+    CHECK(raise(sig) != -1);
+    CHECK(sigprocmask(SIG_UNBLOCK, &set, &old) != -1);
+    printf("continue\n");
+    CHECK(sigprocmask(SIG_SETMASK, &old, NULL) != -1);
+    CHECK(signal(sig, handler) != SIG_ERR);
+    errno = saveerrno;
+}
+
+#define SHM_KEY (key_t)5341
+int shmid;
+
+void ps(char *argpid){
+    pid_t pspid;
+    if((pspid = fork()) == 0) {
+        CHECK(execlp("ps", "ps", "-f", argpid, NULL) != -1);
+        _exit(0);
+    }
+    CHECK(pspid != (pid_t)-1);
+    CHECK(waitpid(pspid, NULL, 0) != (pid_t)-1);
+}
+
+int main(int argc, char **argv) {
+    CHECK(argc == 3);
+    CHECK(argv[1][0] == 'e' || argv[1][0] == 'd');
+    CHECK(argv[2][0] >= '0' || argv[2][0] <= '2');
+    int sigs[3] = {
+            SIGTTIN,
+            SIGTTOU,
+            SIGTSTP
+    };
+    if(argv[1][0] == 'e') {
+        CHECK(signal(sigs[argv[2][0] - '0'], handler) != SIG_ERR);
+    }
+    CHECK((shmid = shmget(SHM_KEY,  sizeof(pid_t), 0666|IPC_CREAT|IPC_EXCL)) != -1);
+
+    int pid = fork();
+    CHECK(pid != -1);
+    pid_t *grandson = shmat(shmid, (void*) 0, 0);
+    CHECK(grandson != (void *)-1);
+    if(!pid) {
+        int pid1 = fork();
+        CHECK(pid1 != -1);
+        if(!pid1) {
+            CHECK(setpgid(0, 0) != -1);
+            alarm(60);
+            for(;;) {
+//                printf("alive\n");
+//                sleep(1);
+//                    pause();
+            }
+        } else {
+            setpgid(pid1, 0);
+            *grandson = pid1;
+            CHECK(shmdt(grandson) != -1);
+            _exit(0);
+        }
+    } else {
+        CHECK(signal(sigs[argv[2][0] - '0'], SIG_IGN) != SIG_ERR);
+        CHECK(wait(NULL) != (pid_t)-1);
+        printf("grandson = %d\n", *grandson);
+        char argpid[128] = {0};
+        sprintf(argpid, "%d", *grandson);
+        ps(argpid);
+        kill(*grandson, sigs[argv[2][0] - '0']);
+        ps(argpid);
+        kill(*grandson, SIGCONT);
+        ps(argpid);
+        kill(*grandson, SIGKILL);
+        ps(argpid);
+        CHECK(shmdt(grandson) != -1);
+        CHECK(shmctl(shmid, IPC_RMID, 0) != -1);
+    }
+}
+
+```
+
+似乎还没成功，输出一直是R（运行中的后台进程组）
+```shell
+/root/linux/practice34.7 e 0
+grandson = 31406
+UID        PID  PPID  C STIME TTY      STAT   TIME CMD
+root     31406 15886  0 16:54 pts/5    R      0:00 /root/linux/practice34.7 e 0
+pid=31406 received signal=21(Stopped (tty input))
+continue
+UID        PID  PPID  C STIME TTY      STAT   TIME CMD
+root     31406 15886  0 16:54 pts/5    R      0:00 /root/linux/practice34.7 e 0
+UID        PID  PPID  C STIME TTY      STAT   TIME CMD
+root     31406 15886  0 16:54 pts/5    R      0:00 /root/linux/practice34.7 e 0
+UID        PID  PPID  C STIME TTY      STAT   TIME CMD
+```
