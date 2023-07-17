@@ -188,12 +188,7 @@ int main(int argc, char **argv) {
   - getpgrp是获取当前进程的进程组id，getpgid是获得参数pid指定进程的进程组id
   - signal函数失败时的返回值是`SIG_ERR`
 
-
-## 34.5
-
-假设将程序清单34-6中的信号处理器中解除阻塞SIGTSTP信号的代码移动到处理器的开头部分。这样做会导致何种竞争条件?
-
-### 知识补漏
+## 知识补漏
 
 - `SIGTSTP`和`SIGSTOP`
   - 两个信号的作用都是让进程暂停，区别是`SIGSTOP`不可以捕获。
@@ -396,3 +391,5 @@ UID        PID  PPID  C STIME TTY      STAT   TIME CMD
 root     31406 15886  0 16:54 pts/5    R      0:00 /root/linux/practice34.7 e 0
 UID        PID  PPID  C STIME TTY      STAT   TIME CMD
 ```
+
+> 可能发现能调用handler就可以了吧？
