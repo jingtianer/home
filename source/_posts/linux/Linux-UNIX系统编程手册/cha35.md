@@ -8,6 +8,55 @@ toc: true
 language: zh-CN
 ---
 
+## 读书笔记
+### nice
+nice值形象的说是一个进程的友好（nice）程度，越nice（nice值数值越大的）的进程越礼让，多个任务争用cpu的时候越礼让。（本书中高nice值表示nice值数值更低，更不nice
+
+- 取值范围为(-20(不友好，高优先级)-19(友好，低优先级))
+- fork、exec时继承nice值
+
+### RLIMIT_NICE
+资源限制，特权进程最高可以将nice值提升到`20-RLIMIT_NICE`
+
+### getpriority, setpriority
+获取/设置nice值，getpriority可能返回负值，调用前将`errno`置0，调用后结合`errno`判断是否失败
+
+### 实时调度
+这里的实时调度和本科时的知识有些出入
+- 为外部输入保证最大相应时间
+- 高优先级进程互斥访问cpu
+- 实时应用能精确控制其组件进程的调度顺序
+
+linux内核2.617开始，支持的硬实时
+
+### 几种调度策略
+|策略|特性|
+|-|-|
+|SCHED_RR|多级队列+时间片|
+|SCHED_FIFO|多级队列+先入先出+没有时间片|
+|SCHED_OTHER|非实时调度（默认）|
+|SCHED_BATCH||
+|SCHED_IDLE||
+感觉这本书有点老了，[这篇文章](https://blog.csdn.net/shulianghan/article/details/123835585)看起来和本科的很接近
+
+### 实时api
+
+|API|作用|
+|-|-|
+|sched_setscheduler|设置pid的调度策略，见上一节|
+|sched_setparam|将pid移动到指定优先级队列的队尾|
+|sched_getscheduler|获取pid的调度策略|
+|sched_getparam|获取pid的优先级|
+|sched_yield|释放CPU|
+|sched_rr_get_interval|获取rr时间片|
+
+### cpu亲和力
+多cpu系统中，为了减少因进程切换cpu导致的高速缓冲失效的情况，将进程绑定到一个/一组CPU中
+- API
+  - `sched_getaffinity`
+  - `sched_setaffinity`
+
+
 ## 35.1
 实现nice命令
 ```c
