@@ -129,7 +129,9 @@ int main(int argc, char **argv) {
 
 编写一个与nice(1)命令类似的实时调度程序set-user-ID-root程序。这个程序的命令
 行界面如下所示:
+```sh
 # ./rtsched policy priority command arg..
+```
 在上面的命令中，policy 中r表示SCHED RR，f表示SCHED FIFO。基于在9.7.1
 节和38.3 节中描述的原因，这个程序在执行命令前应该丢弃自己的特权ID。
 
