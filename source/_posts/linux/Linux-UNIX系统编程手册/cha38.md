@@ -90,7 +90,6 @@ douser程序使用给定的参数执行 program-file，就像是被user 运行�
 #include <pwd.h>
 #include <crypt.h>
 #include <shadow.h>
-#include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
@@ -98,7 +97,7 @@ douser程序使用给定的参数执行 program-file，就像是被user 运行�
 
 #define COND_RET(x, ret, msg...) \
         do {                     \
-            errno = 0;                     \
+            errno = 0;\
             if(!(x)) { \
                 if(errno == 0)fprintf(stderr, "%s:%d\nunmet condition:\"%s\"\n", __FILE__, __LINE__, #x); \
                 else fprintf(stderr, "%s:%d\nerror: %s\nunmet condition:\"%s\"\n", __FILE__, __LINE__,strerror(errno), #x); \
@@ -128,16 +127,16 @@ int main(int argc, char *argv[]) {
             username = argv[2];
             exec = &argv[3];
         }
-        struct passwd *usrpwd = getpwnam(username);
-        CHECK_EXIT(usrpwd != NULL, "");
+        struct passwd *usrpwd;
+        CHECK_EXIT((usrpwd = getpwnam(username)) != NULL, "username:%s not found", username);
         user = usrpwd->pw_uid;
         shadow = usrpwd->pw_passwd;
         printf("shaowd=%s\n", shadow);
         char *pass = getpass("password:");
-        CHECK_EXIT(setuid(0) != -1, "");
+        CHECK_EXIT(setuid(0) != -1, "execute 'su; sudo chmod u+s %s' may fix this problem", argv[0]);
         if(!strcmp(shadow, "x")) {
-            struct spwd *shadowpwd = getspnam(username);
-            CHECK_EXIT(shadowpwd != NULL, "");
+            struct spwd *shadowpwd;
+            CHECK_EXIT((shadowpwd = getspnam(username)) != NULL, "shadowpwd not found");
             shadow = shadowpwd->sp_pwdp;
             pass = crypt(pass, shadow);
         }
@@ -151,13 +150,12 @@ int main(int argc, char *argv[]) {
         if(argc > 1) {
             char *end = NULL;
             uid = strtoul(argv[1], &end, 10);
-            CHECK_EXIT(end != NULL && end != argv[1], "%s is not a number\n", argv[1]);
+            CHECK_EXIT((end != NULL && end != argv[1]), "%s is not a number\n", argv[1]);
         }
         else {
             uid = getuid();
         }
-        pwd = getpwuid(uid);
-        CHECK_EXIT(pwd != NULL, "uid:%u not found", uid);
+        CHECK_EXIT((pwd = getpwuid(uid)) != NULL, "uid:%u not found", uid);
         printf("uid:%u, user:%s\n", pwd->pw_uid, pwd->pw_name);
     }
     return 0;
