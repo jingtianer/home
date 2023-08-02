@@ -97,7 +97,8 @@ douser程序使用给定的参数执行 program-file，就像是被user 运行�
 #include <string.h>
 
 #define COND_RET(x, ret, msg...) \
-        do {     \
+        do {                     \
+            errno = 0;                     \
             if(!(x)) { \
                 if(errno == 0)fprintf(stderr, "%s:%d\nunmet condition:\"%s\"\n", __FILE__, __LINE__, #x); \
                 else fprintf(stderr, "%s:%d\nerror: %s\nunmet condition:\"%s\"\n", __FILE__, __LINE__,strerror(errno), #x); \
@@ -120,19 +121,23 @@ int main(int argc, char *argv[]) {
     if(!strcmp(filename, "sudo")) {
         CHECK_EXIT(argc >= 2, "Usage: %s [-u user] exec [args...]", argv[0]);
         uid_t user = 0;
+        char *username = "root";
         char **exec = &argv[1];
         char *shadow = NULL;
         if (argv[1][0] == '-') {
-            struct passwd *usrpwd = getpwnam(argv[2]);
-            CHECK_EXIT(usrpwd != NULL, "");
-            user = usrpwd->pw_uid;
+            username = argv[2];
             exec = &argv[3];
-            shadow = usrpwd->pw_passwd;
         }
+        struct passwd *usrpwd = getpwnam(username);
+        CHECK_EXIT(usrpwd != NULL, "");
+        user = usrpwd->pw_uid;
+        shadow = usrpwd->pw_passwd;
+        printf("shaowd=%s\n", shadow);
         char *pass = getpass("password:");
-        
+        CHECK_EXIT(setuid(0) != -1, "");
         if(!strcmp(shadow, "x")) {
-            struct spwd *shadowpwd = getspnam(argv[2]);
+            struct spwd *shadowpwd = getspnam(username);
+            CHECK_EXIT(shadowpwd != NULL, "");
             shadow = shadowpwd->sp_pwdp;
             pass = crypt(pass, shadow);
         }
