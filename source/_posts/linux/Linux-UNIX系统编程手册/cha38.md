@@ -81,3 +81,83 @@ $ ./douser[ -u user ] program-file arg1 arg2
 douser程序使用给定的参数执行 program-file，就像是被user 运行一样。(如果省略了-u选项，那么user 默认为root。)在执行 program-file之前，douser 应该请求 use
 的密码并将密码与标准密码文件进行比较(参见程序清单8-2)，接着将进程的用户和组ID设置为与该用户对应的值。
 
+```c
+//
+// Created by root on 8/2/23.
+//
+
+#include <unistd.h>
+#include <pwd.h>
+#include <crypt.h>
+#include <shadow.h>
+#include <fcntl.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <errno.h>
+#include <string.h>
+
+#define COND_RET(x, ret, msg...) \
+        do {     \
+            if(!(x)) { \
+                if(errno == 0)fprintf(stderr, "%s:%d\nunmet condition:\"%s\"\n", __FILE__, __LINE__, #x); \
+                else fprintf(stderr, "%s:%d\nerror: %s\nunmet condition:\"%s\"\n", __FILE__, __LINE__,strerror(errno), #x); \
+                fprintf(stderr, msg);                                                                                  \
+                fprintf(stderr, "\n");\
+                ret \
+            }    \
+        } while(0)
+
+#define CHECK(x, msg...) COND_RET(x, return -1;, msg)
+#define CHECK_EXIT(x, msg...) COND_RET(x, exit(1);, msg)
+
+int main(int argc, char *argv[]) {
+    char *filename = strrchr(argv[0], '/');
+    if(filename == NULL) {
+        filename = argv[0];
+    } else {
+        filename++;
+    }
+    if(!strcmp(filename, "sudo")) {
+        CHECK_EXIT(argc >= 2, "Usage: %s [-u user] exec [args...]", argv[0]);
+        uid_t user = 0;
+        char **exec = &argv[1];
+        char *shadow = NULL;
+        if (argv[1][0] == '-') {
+            struct passwd *usrpwd = getpwnam(argv[2]);
+            CHECK_EXIT(usrpwd != NULL, "");
+            user = usrpwd->pw_uid;
+            exec = &argv[3];
+            shadow = usrpwd->pw_passwd;
+        }
+        char *pass = getpass("password:");
+        
+        if(!strcmp(shadow, "x")) {
+            struct spwd *shadowpwd = getspnam(argv[2]);
+            shadow = shadowpwd->sp_pwdp;
+            pass = crypt(pass, shadow);
+        }
+        printf("shaowd=%s, pass=%s\n", shadow, pass);
+        CHECK_EXIT(!strcmp(shadow, pass), "password not match!");
+        CHECK_EXIT(setuid(user) != -1, "");
+        CHECK_EXIT(execvp(exec[0], exec) != -1, "");
+    } else {
+        struct passwd *pwd = NULL;
+        uid_t uid = 0;
+        if(argc > 1) {
+            char *end = NULL;
+            uid = strtoul(argv[1], &end, 10);
+            CHECK_EXIT(end != NULL && end != argv[1], "%s is not a number\n", argv[1]);
+        }
+        else {
+            uid = getuid();
+        }
+        pwd = getpwuid(uid);
+        CHECK_EXIT(pwd != NULL, "uid:%u not found", uid);
+        printf("uid:%u, user:%s\n", pwd->pw_uid, pwd->pw_name);
+    }
+    return 0;
+}
+```
+
+
+> 太笨了，以前学的都忘了
