@@ -119,3 +119,10 @@ int main(int argc, char **argv) {
 
 不及丢为什么，syslog.conf中配置的东西打印不出来
 
+> 2023年8月23日更新
+
+wsl下syslog确实不行，换一个环境，安装syslog后，重新允许，可以正常打印log
+```sh
+Aug 23 16:13:34 localhost syslogd (GNU inetutils 1.9.4): restart
+Aug 23 16:13:39 localhost meow[6279]: a b c
+```
