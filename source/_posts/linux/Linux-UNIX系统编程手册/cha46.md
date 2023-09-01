@@ -538,7 +538,7 @@ void client(const char *filename, int msgType) {
 void waitChild(int sig, siginfo_t *info, void *buf) {
     logger(LOG_DEBUG, "SERVER: received sig:%d(%s)", sig, strsignal(sig));
     int savedErrno = errno;
-    if(sig == SIGCHLD)CHECK_LOG(waitpid(-1, NULL, 0) != -1, ""); // 等所有吧
+    if(sig == SIGCHLD)CHECK_LOG(waitpid(-1, NULL, WNOHANG) != -1, ""); // 等所有吧
     errno = savedErrno;
 }
 char *execute(char *cmd, bool *success) {
