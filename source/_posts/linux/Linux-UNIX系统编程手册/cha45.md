@@ -113,3 +113,35 @@ int main(int argc, char *argv[]) {
 ```
 
 > index获取的不对，没办法直接读内核内存中的那个数据
+
+### 更新
+
+获取index的方法,`msgctl`的cmd使用`IPC_INFO`
+
+```c
+
+#define _GNU_SOURCE          /* See feature_test_macros(7) */
+
+#include <stdio.h>
+#include <dlfcn.h>
+#include <stdlib.h>
+#include <sys/ipc.h>
+#include <sys/msg.h>
+
+#define IPCMNI 32768
+
+int main(int argc, char *argv[]) {
+    key_t key = ftok(argv[0], 0x6a);
+    int id = msgget(key, IPC_CREAT | 0666), calid;
+    struct msqid_ds msqidDs;
+    int index = msgctl(id, IPC_INFO, &msqidDs);
+    msgctl(id, IPC_STAT, &msqidDs);
+    calid = index + msqidDs.msg_perm.__seq * IPCMNI;
+    if (calid == id) {
+        printf("true!\n");
+    } else {
+        printf("false?\n");
+    }
+    msgctl(id, IPC_RMID, &msqidDs);
+}
+```
