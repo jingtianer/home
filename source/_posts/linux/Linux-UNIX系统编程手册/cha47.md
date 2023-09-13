@@ -1,5 +1,5 @@
 ---
-title: cha46.System V 信号量
+title: cha47.System V 信号量
 date: 2023-9-13 19:05:00
 tags:
     - Linux/UNIX系统编程手册
@@ -669,5 +669,324 @@ int main(int argc, char **argv) {
     } else {
         consumer(NULL);
     }
+}
+```
+
+
+## 47.5
+
+在VMS操作系统上，Digital提供了一种类似于二元信号量的同步方法，它被称为事件标记(event flag)。一个事件标记可以取两个值clear和set,并且在其之上可以执行下面4种操作：setEventFlag来设置标记；clearEventFlag来清除标记；waitForEventFlag阻塞直到标记被设置；getFlagState获取标记的当前状态。使用System V信号量为事件标记设计一种实现。这个实现要求上面每个函数都接收两个参数：一个是信号量标识符，一个是信号量序号。（在考虑waitForEventFlag操作时将会发现为clear和set状态取值不是一件容易的事情。)
+
+```c
+//
+// Created by root on 9/13/23.
+//
+
+#include <stdio.h>
+#include <string.h>
+#include <errno.h>
+#include <stdlib.h>
+#include <fcntl.h>
+#include <pthread.h>
+#include <unistd.h>
+#include <signal.h>
+#include <stdbool.h>
+#include <stddef.h>
+#include <syslog.h>
+#include <wait.h>
+#include <sys/stat.h>
+#include <sys/ipc.h>
+#include <sys/sem.h>
+
+
+#define DEBUG_LEVEL LOG_DEBUG
+
+#ifndef DEBUG_LEVEL
+#define DEBUG_LEVEL LOG_INFO
+#endif
+#define STRING_MSG "MSG"
+FILE *logfile = NULL;
+bool syslog_enable = false;
+void __attribute__ ((constructor)) init() {
+    logfile = stderr;
+}
+
+#define alloc_sprintf(__alloc_sprintf_str, __format...) do { \
+    int __alloc_sprintf_len = snprintf(NULL, 0, __format); \
+    (__alloc_sprintf_str) = malloc(__alloc_sprintf_len+1);                     \
+    if(__alloc_sprintf_str != NULL) \
+        snprintf(__alloc_sprintf_str, __alloc_sprintf_len+1, __format); \
+} while(0)
+
+#define logger(level, msg...) do { \
+    if(level <= DEBUG_LEVEL) {     \
+        fprintf(logfile, "[%ld] ", (long) getpid()); \
+        fprintf(logfile, msg); \
+        fprintf(logfile, "\n"); \
+    } \
+    if(syslog_enable) { \
+        char *data; \
+        alloc_sprintf(data, msg); \
+        syslog(level, "%s", data); \
+        safe_free(data); \
+    } \
+} while(0)
+
+#define COND_RET(x, ret, msg...) \
+        do {                     \
+            if(!(x)) { \
+                if(errno == 0)logger(LOG_ERR, "%s:%d\nunmet condition:\"%s\"\n", __FILE__, __LINE__, #x); \
+                else logger(LOG_ERR, "%s:%d\nerror: %s\nunmet condition:\"%s\"\n", __FILE__, __LINE__,strerror(errno), #x); \
+                logger(LOG_ERR, msg);                                                                                  \
+                logger(LOG_ERR, "\n");                                                                    \
+                ret \
+            }    \
+        } while(0)
+
+#define CHECK(x, msg...) COND_RET(x, return -1;, msg)
+#define CHECK_EXIT(x, msg...) COND_RET(x, exit(EXIT_FAILURE);, msg)
+#define CHECK_LOG(x, msg...) COND_RET(x, ;, msg)
+
+#define safe_free(__safe_free_ptr) do { if(__safe_free_ptr) { free(__safe_free_ptr); (__safe_free_ptr) = NULL;} } while(0)
+
+#define BUFFER_SIZE 4096
+
+union semun {
+    int val;
+    struct semid_ds *buf;
+    unsigned short *array;
+#if defined(__linux__)
+    struct seminfo *__buf;
+#endif
+};
+
+typedef struct {
+    int semid;
+}EventFlag_t;
+
+int incrsem(int sem_id, int semnum, short incr, short flg) {
+    struct sembuf sembuf;
+    sembuf = (struct sembuf){
+            .sem_num=semnum,
+            .sem_flg=flg,
+            .sem_op=incr
+    };
+    return semop(sem_id, &sembuf, 1);
+}
+
+int P(int sem_id) {
+    return incrsem(sem_id, 0, -1, 0);
+}
+
+int V(int sem_id) {
+    return incrsem(sem_id, 0, 1, 0);
+}
+
+int waitFor(int sem_id) {
+    return incrsem(sem_id, 1, 0, 0);
+}
+
+int getsem(int sem_id, int semnum, short *n) {
+    union semun arg;
+    int ret = semctl(sem_id, semnum, GETVAL, arg);
+    *n = ret;
+    return ret;
+}
+
+int setsem(int sem_id, int semnum, short n) {
+    union semun arg;
+    arg.val = n;
+    return semctl(sem_id, semnum, SETVAL, arg);
+}
+
+int notifyAll(int sem_id) {
+    return setsem(sem_id, 1, 0);
+}
+EventFlag_t *newEventFlag(const char *file, char x) {
+    EventFlag_t *eventFlag = malloc(sizeof(EventFlag_t));
+    key_t key = ftok(file, x);
+    eventFlag->semid = semget(key, 4, IPC_CREAT | IPC_EXCL | 0666); // sem[0] as mutex, sem[1] as notifier, sem[2]|sem[3] as flag
+    union semun arg;
+    if(eventFlag->semid == -1) {
+        if(errno == EEXIST) {
+            eventFlag->semid = semget(key, 4, 0666);
+            struct semid_ds ds;
+            arg.buf = &ds;
+            if(semctl(eventFlag->semid, 0, IPC_STAT, arg) == -1) {
+                CHECK_LOG(false, STRING_MSG);
+                return NULL;
+            }
+            while (ds.sem_otime == 0) {
+                logger(LOG_INFO, "waiting for sem init");
+                sleep(1);
+                if(semctl(eventFlag->semid, 0, IPC_STAT, arg) == -1) {
+                    CHECK_LOG(false, STRING_MSG);
+                    free(eventFlag);
+                    return NULL;
+                }
+            }
+            logger(LOG_INFO, "semget get old");
+        } else {
+            CHECK_LOG(false, STRING_MSG);
+            free(eventFlag);
+            return NULL;
+        }
+    } else {
+        arg.array = (unsigned  short  *)&(unsigned short[]){0, 0, 0, 0}; // sem[0] = 1, sem[1] = 0
+        if(semctl(eventFlag->semid, 0, SETALL, arg) == -1) {
+            semctl(eventFlag->semid, 0, IPC_RMID);
+            CHECK_LOG(false, STRING_MSG);
+            free(eventFlag);
+            return NULL;
+        }
+        if(incrsem(eventFlag->semid, 0,1,0) == -1) {
+            semctl(eventFlag->semid, 0, IPC_RMID);
+            CHECK_LOG(false, STRING_MSG);
+            free(eventFlag);
+            return NULL;
+        }
+        logger(LOG_INFO, "semget create new");
+    }
+    return eventFlag;
+}
+
+int setEventFlag(EventFlag_t *eventFlag, int flag) {
+    CHECK(P(eventFlag->semid) != -1, STRING_MSG);
+    short currentFlag;
+
+    CHECK(getsem(eventFlag->semid, 2, &currentFlag) != -1, STRING_MSG);
+    CHECK(setsem(eventFlag->semid, 2, currentFlag | (flag & 0xffff)) != -1, STRING_MSG);
+
+    CHECK(getsem(eventFlag->semid, 3, &currentFlag) != -1, STRING_MSG);
+    CHECK(setsem(eventFlag->semid, 3, currentFlag | ((flag >> 16) & 0xffff)) != -1, STRING_MSG);
+
+    CHECK(notifyAll(eventFlag->semid) != -1, STRING_MSG);
+    CHECK(V(eventFlag->semid) != -1, STRING_MSG);
+    return 0;
+}
+
+int clearEventFlag(EventFlag_t *eventFlag, int flag) {
+    CHECK(P(eventFlag->semid) != -1, STRING_MSG);
+    short currentFlag;
+
+    CHECK(getsem(eventFlag->semid, 2, &currentFlag) != -1, STRING_MSG);
+    CHECK(setsem(eventFlag->semid, 2, currentFlag & ~(flag & 0xffff)) != -1, STRING_MSG);
+
+    CHECK(getsem(eventFlag->semid, 3, &currentFlag) != -1, STRING_MSG);
+    CHECK(setsem(eventFlag->semid, 3, currentFlag & ~((flag >> 16) & 0xffff)) != -1, STRING_MSG);
+//    CHECK(notifyAll(eventFlag->semid) != -1, STRING_MSG);
+    CHECK(V(eventFlag->semid) != -1, STRING_MSG);
+    return 0;
+}
+
+int __getEventFlag(EventFlag_t *eventFlag, int *flag) {
+    if(flag) {
+        short currentFlag = 0;
+        int ret = 0;
+        CHECK(getsem(eventFlag->semid, 2, &currentFlag) != -1, STRING_MSG);
+        ret |= currentFlag;
+        CHECK(getsem(eventFlag->semid, 3, &currentFlag) != -1, STRING_MSG);
+        ret |= currentFlag << 16;
+        *flag = ret;
+        return 0;
+    }
+    return -1;
+}
+
+int getEventFlag(EventFlag_t *eventFlag, int *flag) {
+    CHECK(P(eventFlag->semid) != -1, STRING_MSG);
+    CHECK_LOG(__getEventFlag(eventFlag, flag) != -1, STRING_MSG);
+    CHECK(V(eventFlag->semid) != -1, STRING_MSG);
+    return 0;
+}
+#define waitForMethod(eventFlag, flag, method) do { \
+        int currentFlag;\
+    CHECK(P(eventFlag->semid) != -1, STRING_MSG);\
+    __getEventFlag(eventFlag, &currentFlag); \
+    while (method) {\
+        CHECK(V(eventFlag->semid) != -1, STRING_MSG);\
+        CHECK(waitFor(eventFlag->semid) != -1, STRING_MSG);\
+        CHECK(P(eventFlag->semid) != -1, STRING_MSG);\
+        __getEventFlag(eventFlag, &currentFlag); \
+    }\
+    CHECK(V(eventFlag->semid) != -1, STRING_MSG);\
+} while(0)
+
+int waitForAny(EventFlag_t *eventFlag, int flag) {
+    waitForMethod(eventFlag, flag, (currentFlag & flag) == 0);
+    return 0;
+}
+int waitForAll(EventFlag_t *eventFlag, int flag) {
+    waitForMethod(eventFlag, flag, (currentFlag & flag) != flag);
+    return 0;
+}
+void destroyEventFlag(EventFlag_t **eventFlag) {
+    if(eventFlag) {
+        if(*eventFlag) {
+            semctl((*eventFlag)->semid, 0, IPC_RMID);
+        }
+        safe_free(*eventFlag);
+    }
+}
+EventFlag_t *eventFlag = NULL;
+
+int safe_atoi(const char *str) {
+    if(!str) {
+        CHECK_LOG(false, "safe atoi, str is null");
+        raise(SIGABRT);
+    }
+    const char *p = str;
+    while(*p) {
+        if(*p > '9' || *p < '0') {
+            CHECK_LOG(false, "safe atoi, not valid char: %c", *p);
+            raise(SIGABRT);
+        }
+        p++;
+    }
+    return atoi(str);
+}
+
+
+void printFlag(int flag) {
+    logger(LOG_INFO, "printFlag");
+    int mask = 1;
+    if(mask & flag) logger(LOG_INFO, "%d", 0);
+    for(int cnt = 1; cnt < 32; cnt++) {
+        mask <<= 1;
+        if(mask & flag) logger(LOG_INFO, "%d", cnt);
+    }
+}
+
+int main(int argc, char **argv) {
+    CHECK_EXIT(argc > 1, "Usage: %s destroy|waitAny|waitAll|add|clear|get [flag]", argv[0]);
+    eventFlag = newEventFlag(argv[0], 'x');
+    CHECK_EXIT(eventFlag != NULL, STRING_MSG);
+    int flag = 0, currentFlag = 0;
+    for(int i = 2; i < argc; i++) {
+        flag |= (1 << safe_atoi(argv[i]));
+    }
+    logger(LOG_INFO, "start %s", argv[1]);
+    CHECK_LOG(getEventFlag(eventFlag, &currentFlag) != -1, STRING_MSG);
+    printFlag(currentFlag);
+    if(!strcmp(argv[1], "waitAny")) {
+        CHECK_LOG(waitForAny(eventFlag, flag) != -1, STRING_MSG);
+    } else if(!strcmp(argv[1], "waitAll")) {
+        waitForAll(eventFlag, flag);
+    } else if(!strcmp(argv[1], "add")) {
+        CHECK_LOG(setEventFlag(eventFlag, flag) != -1, STRING_MSG);
+    } else if(!strcmp(argv[1], "clear")) {
+        CHECK_LOG(clearEventFlag(eventFlag, flag) != -1, STRING_MSG);
+    } else if(!strcmp(argv[1], "get")) {
+        CHECK_LOG(getEventFlag(eventFlag, &flag) != -1, STRING_MSG);
+        printFlag(flag);
+    } else if(!strcmp(argv[1], "destroy")) {
+        destroyEventFlag(&eventFlag);
+        return 0;
+    } else  {
+        CHECK_EXIT(false, "Usage: %s waitAny|waitAll|add|clear|get [flag]", argv[0]);
+    }
+    CHECK_LOG(getEventFlag(eventFlag, &currentFlag) != -1, STRING_MSG);
+    printFlag(currentFlag);
+    logger(LOG_INFO, "end %s", argv[1]);
 }
 ```
