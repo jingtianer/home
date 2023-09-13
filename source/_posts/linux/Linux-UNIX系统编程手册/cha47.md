@@ -933,12 +933,14 @@ EventFlag_t *eventFlag = NULL;
 int safe_atoi(const char *str) {
     if(!str) {
         CHECK_LOG(false, "safe atoi, str is null");
+        fflush(NULL);
         raise(SIGABRT);
     }
     const char *p = str;
     while(*p) {
         if(*p > '9' || *p < '0') {
             CHECK_LOG(false, "safe atoi, not valid char: %c", *p);
+            fflush(NULL);
             raise(SIGABRT);
         }
         p++;
@@ -957,36 +959,64 @@ void printFlag(int flag) {
     }
 }
 
+#define printIt(info, x) logger(LOG_INFO, "("#info")."#x": %d", (info).x)
+
+int printInfo(int id) {
+    union semun arg;
+    struct seminfo info;
+    arg.__buf = &info;
+    CHECK(semctl(id, 0, SEM_INFO, arg) != -1, STRING_MSG);
+    printIt(info, semmap);
+    printIt(info, semmni);
+    printIt(info, semmns);
+    printIt(info, semmnu);
+    printIt(info, semmsl);
+    printIt(info, semopm);
+    printIt(info, semume);
+    printIt(info, semusz);
+    printIt(info, semvmx);
+    printIt(info, semaem);
+    return 0;
+}
+
+int wrapPrintFlag(int flag, int (*func)(EventFlag_t *, int)) {
+    int currentFlag = 0;
+    CHECK_LOG(getEventFlag(eventFlag, &currentFlag) != -1, STRING_MSG);
+    printFlag(currentFlag);
+    CHECK_LOG((*func)(eventFlag, flag) != -1, STRING_MSG);
+    CHECK_LOG(getEventFlag(eventFlag, &currentFlag) != -1, STRING_MSG);
+    printFlag(currentFlag);
+    return 0;
+}
+
 int main(int argc, char **argv) {
     CHECK_EXIT(argc > 1, "Usage: %s destroy|waitAny|waitAll|add|clear|get [flag]", argv[0]);
     eventFlag = newEventFlag(argv[0], 'x');
     CHECK_EXIT(eventFlag != NULL, STRING_MSG);
-    int flag = 0, currentFlag = 0;
+    int flag = 0;
     for(int i = 2; i < argc; i++) {
-        flag |= (1 << safe_atoi(argv[i]));
+        int bit = safe_atoi(argv[i]);
+        CHECK_LOG((16 < bit && bit < 31) || (0 < bit && bit < 16), "Usage: (15 < flag < 31) or (0 < flag < 15)");
+        flag |= (1 << bit);
     }
+    printInfo(eventFlag->semid);
     logger(LOG_INFO, "start %s", argv[1]);
-    CHECK_LOG(getEventFlag(eventFlag, &currentFlag) != -1, STRING_MSG);
-    printFlag(currentFlag);
     if(!strcmp(argv[1], "waitAny")) {
-        CHECK_LOG(waitForAny(eventFlag, flag) != -1, STRING_MSG);
+        CHECK_LOG(wrapPrintFlag(flag, waitForAny) != -1, STRING_MSG);
     } else if(!strcmp(argv[1], "waitAll")) {
-        waitForAll(eventFlag, flag);
+        CHECK_LOG(wrapPrintFlag(flag, waitForAll) != -1, STRING_MSG);
     } else if(!strcmp(argv[1], "add")) {
-        CHECK_LOG(setEventFlag(eventFlag, flag) != -1, STRING_MSG);
+        CHECK_LOG(wrapPrintFlag(flag, setEventFlag) != -1, STRING_MSG);
     } else if(!strcmp(argv[1], "clear")) {
-        CHECK_LOG(clearEventFlag(eventFlag, flag) != -1, STRING_MSG);
+        CHECK_LOG(wrapPrintFlag(flag, clearEventFlag) != -1, STRING_MSG);
     } else if(!strcmp(argv[1], "get")) {
         CHECK_LOG(getEventFlag(eventFlag, &flag) != -1, STRING_MSG);
         printFlag(flag);
     } else if(!strcmp(argv[1], "destroy")) {
         destroyEventFlag(&eventFlag);
-        return 0;
     } else  {
         CHECK_EXIT(false, "Usage: %s waitAny|waitAll|add|clear|get [flag]", argv[0]);
     }
-    CHECK_LOG(getEventFlag(eventFlag, &currentFlag) != -1, STRING_MSG);
-    printFlag(currentFlag);
     logger(LOG_INFO, "end %s", argv[1]);
 }
 ```
