@@ -1,6 +1,6 @@
 ---
 title: cha46.System V 消息队列
-date: 2023-8-30 19:05:00
+date: 2023-9-2 19:05:00
 tags:
     - Linux/UNIX系统编程手册
 categories: linux
