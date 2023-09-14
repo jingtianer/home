@@ -390,3 +390,374 @@ for (xfrs =0; shmp->cnt != 0; xfrs++) {
 
 编写一个目录服务使之使用一个共享内存段来发布名称-值对。程序需要提供一个API来允许调用者创建新名称、修改一个既有名称、删除一个既有名称以及获取与个名称相关联的值。使用信号量来确保一个执行共享内存段更新操作的进程能够互斥地访问段。
 
+```c
+//
+// Created by root on 9/14/23.
+//
+#include <stdio.h>
+#include <string.h>
+#include <errno.h>
+#include <stdlib.h>
+#include <fcntl.h>
+#include <pthread.h>
+#include <unistd.h>
+#include <signal.h>
+#include <stdbool.h>
+#include <stddef.h>
+#include <syslog.h>
+#include <wait.h>
+#include <sys/stat.h>
+#include <sys/ipc.h>
+#include <sys/sem.h>
+#include <sys/shm.h>
+
+#define DEBUG_LEVEL LOG_DEBUG
+
+#ifndef DEBUG_LEVEL
+#define DEBUG_LEVEL LOG_INFO
+#endif
+#define STRING_MSG "MSG"
+FILE *logfile = NULL;
+bool syslog_enable = false;
+void __attribute__ ((constructor)) init() {
+    syslog_enable = false;
+    logfile = stderr;
+}
+
+#define alloc_sprintf(__alloc_sprintf_str, __format...) do { \
+    int __alloc_sprintf_len = snprintf(NULL, 0, __format); \
+    (__alloc_sprintf_str) = malloc(__alloc_sprintf_len+1);                     \
+    if(__alloc_sprintf_str != NULL) \
+        snprintf(__alloc_sprintf_str, __alloc_sprintf_len+1, __format); \
+} while(0)
+
+#define logger(level, msg...) do { \
+    if(level <= DEBUG_LEVEL) {     \
+        fprintf(logfile, "[%ld] ", (long) getpid()); \
+        fprintf(logfile, msg); \
+        fprintf(logfile, "\n"); \
+    } \
+    if(syslog_enable) { \
+        char *__syslog_enable__data; \
+        alloc_sprintf(__syslog_enable__data, msg); \
+        syslog(level, "%s", __syslog_enable__data); \
+        safe_free(__syslog_enable__data); \
+    } \
+} while(0)
+
+#define COND_RET(x, ret, msg...) \
+        do {                     \
+            if(!(x)) {           \
+                if(errno != 0) logger(LOG_ERR, "Error(%d): %s", errno, strerror(errno)); \
+                logger(LOG_ERR, "%s:%d", __FILE__, __LINE__);   \
+                logger(LOG_ERR, "unmet condition:\"%s\"", #x); \
+                logger(LOG_ERR, msg);        \
+                ret; \
+            }    \
+            errno = 0; \
+        } while(0)
+
+#define CHECK(x, msg...) COND_RET(x, return -1;, msg)
+#define CHECK_EXIT(x, msg...) COND_RET(x, exit(EXIT_FAILURE);, msg)
+#define CHECK_LOG(x, msg...) COND_RET(x, ;, msg)
+
+#define safe_free(__safe_free_ptr) do { if(__safe_free_ptr) { free(__safe_free_ptr); (__safe_free_ptr) = NULL;} } while(0)
+
+#define BUFFER_SIZE 4096*4096
+
+union semun {
+    int val;
+    struct semid_ds *buf;
+    unsigned short *array;
+#if defined(__linux__)
+    struct seminfo *__buf;
+#endif
+};
+
+
+int incrsem(int sem_id, int semnum, short incr, short flg) {
+    struct sembuf sembuf;
+    sembuf = (struct sembuf){
+            .sem_num=semnum,
+            .sem_flg=flg,
+            .sem_op=incr
+    };
+    return semop(sem_id, &sembuf, 1);
+}
+
+int P(int sem_id, int semnum) {
+    return incrsem(sem_id, semnum, -1, 0);
+}
+
+int V(int sem_id, int semnum) {
+    return incrsem(sem_id, semnum, 1, 0);
+}
+
+int getsem(int sem_id, int semnum, short *n) {
+    union semun arg;
+    int ret = semctl(sem_id, semnum, GETVAL);
+    *n = ret;
+    return ret;
+}
+
+int setsem(int sem_id, int semnum, short n) {
+    union semun arg;
+    arg.val = n;
+    return semctl(sem_id, semnum, SETVAL, arg);
+}
+
+int newMutex(const char *file, char x, int semcnt) {
+    key_t key = ftok(file, x);
+    int semid = semget(key, semcnt, IPC_CREAT | IPC_EXCL | 0666); // sem[0] as mutex, sem[1] as notifier, sem[2]|sem[3] as flag
+    union semun arg;
+    if(semid == -1) {
+        if(errno == EEXIST) {
+            semid = semget(key, semcnt, 0666);
+            CHECK(semid != -1, STRING_MSG);
+            struct semid_ds ds;
+            arg.buf = &ds;
+            CHECK(semctl(semid, 0, IPC_STAT, arg) != -1, STRING_MSG);
+            while (ds.sem_otime == 0) {
+                logger(LOG_INFO, "waiting for sem init");
+                sleep(1);
+                CHECK(semctl(semid, 0, IPC_STAT, arg) != -1, STRING_MSG);
+            }
+            logger(LOG_INFO, "semget get old: %d", semid);
+        } else {
+            CHECK_LOG(false, STRING_MSG);
+            return -1;
+        }
+    } else {
+        arg.array = (unsigned  short  *)malloc(sizeof(unsigned short) * semcnt); // sem[0] = 0, sem[1] = 1, sem[2] = 1, ...
+        for(int i = 0; i < semcnt; i++) {
+            arg.array[i] = 1;
+        }
+        arg.array[0] = 0;
+        if(semctl(semid, 0, SETALL, arg) == -1) {
+            CHECK_LOG(false, STRING_MSG);
+            CHECK_LOG(semctl(semid, 0, IPC_RMID) != -1, STRING_MSG);
+            return -1;
+        }
+        safe_free(arg.array);
+        if(incrsem(semid, 0,1,0) == -1) {
+            CHECK_LOG(false, STRING_MSG);
+            CHECK_LOG(semctl(semid, 0, IPC_RMID) != -1, STRING_MSG);
+            return -1;
+        }
+        logger(LOG_INFO, "semget create new: %d", semid);
+    }
+    return semid;
+}
+void handler(int sig) {
+    logger(LOG_INFO, "received signal(%d):%s", sig, strsignal(sig));
+    exit(0);
+}
+
+#define KVMax 1024*8
+#define KMax 1024
+#define VMax 1024
+struct KVData {
+    char key[KMax];
+    char val[VMax];
+};
+void *initshm(int argc, char *argv[], int *shmid) {
+    signal(SIGINT, handler);
+    signal(SIGTERM, handler);
+    signal(SIGHUP, handler);
+    key_t key = ftok(argv[0], 'c');
+    CHECK_EXIT(key != -1, STRING_MSG);
+    *shmid = shmget(key, BUFFER_SIZE, IPC_CREAT | IPC_EXCL | 0666);
+    int savedErrno = errno;
+    CHECK_EXIT(*shmid != -1 || errno == EEXIST, STRING_MSG);
+    bool creator = false;
+    if(*shmid == -1) {
+        if(savedErrno == EEXIST) {
+            *shmid = shmget(key, BUFFER_SIZE, 0666);
+        } else {
+            CHECK_EXIT(false, "code will never reach");
+        }
+    } else {
+        creator = true;
+    }
+    void *shmp = shmat(*shmid, NULL, 0);
+    CHECK_EXIT(shmp != NULL, STRING_MSG);
+    if(creator) memset(shmp, 0, BUFFER_SIZE);
+    return shmp;
+}
+
+int getValue(int semid, char *head, char* key, char *value) {
+    CHECK(head != NULL, "head should not be null");
+    CHECK(key != NULL, "key should not be null");
+    CHECK(value != NULL, "value should not be null");
+    bool ok = false;
+    for(int i = 0; i < KVMax && !ok; i++) {
+        CHECK(P(semid, i) != -1, STRING_MSG);
+        struct KVData *data = (struct KVData *)head;
+        if(!strcmp(key, data->key)) {
+            logger(DEBUG_LEVEL, "data->key = %s", data->key);
+            logger(DEBUG_LEVEL, "data->val = %s", data->val);
+            strncpy(value, data->val, VMax);
+            value[VMax-1] = 0;
+            ok = true;
+        } else {
+            head += sizeof(struct KVData);
+        }
+        CHECK(V(semid, i) != -1, STRING_MSG);
+    }
+    if(!ok) return -1;
+    return 0;
+}
+int setValue(int semid, char *head, char* key, char *value) {
+    CHECK(head != NULL, "head should not be null");
+    CHECK(key != NULL, "key should not be null");
+    CHECK(value != NULL, "value should not be null");
+    bool ok = false;
+    for(int i = 0; i < KVMax && !ok; i++) {
+        CHECK(P(semid, i) != -1, STRING_MSG);
+        struct KVData *data = (struct KVData *)head;
+        logger(DEBUG_LEVEL, "data = %p, key = %s, val = %s", data, data->key, data->val);
+        if(!strcmp(key, data->key)) {
+            strncpy(data->val, value, VMax);
+            data->val[VMax-1] = 0;
+            ok = true;
+        } else {
+            head += sizeof(struct KVData);
+        }
+        CHECK(V(semid, i) != -1, STRING_MSG);
+    }
+    if(!ok) return -1;
+    return 0;
+}
+
+int addKV(int semid, char *head, char* key, char *value) {
+    CHECK(head != NULL, "head should not be null");
+    CHECK(key != NULL, "key should not be null");
+    CHECK(value != NULL, "value should not be null");
+    bool ok = false;
+    for(int i = 0; i < KVMax && !ok; i++) {
+        CHECK(P(semid, i) != -1, STRING_MSG);
+        struct KVData *data = (struct KVData *)head;
+        if(!*data->key) {
+            logger(DEBUG_LEVEL, "i = %d, data = %p", i, data);
+            strncpy(data->key, key, KMax);
+            strncpy(data->val, value, VMax);
+            data->key[KMax-1] = 0;
+            data->val[VMax-1] = 0;
+            ok = true;
+        } else {
+            head += sizeof(struct KVData);
+        }
+        CHECK(V(semid, i) != -1, STRING_MSG);
+    }
+    if(!ok) return -1;
+    return 0;
+}
+
+int getAll(int semid, char *head, char *value) {
+    CHECK(head != NULL, "head should not be null");
+    CHECK(value != NULL, "value should not be null");
+    char *ret = value;
+    for(int i = 0; i < KVMax; i++) {
+        CHECK(P(semid, i) != -1, STRING_MSG);
+        struct KVData *data = (struct KVData *)head;
+        if(*data->key) {
+            strncpy(ret, data->key, KMax);
+            ret = strchr(ret, '\0');
+            strcpy(ret, ":");
+            ret++;
+            strncpy(ret, data->val, VMax);
+            ret = strchr(ret, '\0');
+            strcpy(ret, "\n");
+            ret++;
+        }
+        head += sizeof(struct KVData);
+        CHECK(V(semid, i) != -1, STRING_MSG);
+    }
+    return 0;
+}
+
+int rmKV(int semid, char *head, char* key, char *value) {
+    CHECK(key != NULL, "key should not be null");
+    CHECK(head != NULL, "head should not be null");
+    CHECK(value != NULL, "value should not be null");
+    bool ok = false;
+    for(int i = 0; i < KVMax && !ok; i++) {
+        CHECK(P(semid, i) != -1, STRING_MSG);
+        struct KVData *data = (struct KVData *)head;
+        if(!strcmp(key, data->key)) {
+            strncpy(value, data->val, VMax);
+            value[VMax-1] = 0;
+            data->key[0] = 0;
+            data->val[0] = 0;
+            ok = true;
+        } else {
+            head += sizeof(struct KVData);
+        }
+        CHECK(V(semid, i) != -1, STRING_MSG);
+    }
+    if(!ok) return -1;
+    return 0;
+}
+
+
+int main(int argc, char *argv[]) {
+    CHECK_EXIT(argc > 1, "Usage: %s add|get|set|getAll|rm|destroy", argv[0]);
+    int shmid;
+    char *shmp = initshm(argc, argv, &shmid);
+    int mutexid = newMutex(argv[0], 'a', KVMax+1);
+    CHECK_EXIT(mutexid != -1, STRING_MSG);
+    if(!strcmp("get", argv[1])) {
+        CHECK_EXIT(argc > 2, "Usage: %s set [key]", argv[0]);
+        char *value = malloc(VMax);
+        for(int i = 2; i < argc; i++) {
+            getValue(mutexid, shmp, argv[i], value);
+            logger(LOG_INFO, "value for \"%s\" is %s", argv[i], value);
+        }
+        safe_free(value);
+    } else if(!strcmp("set", argv[1])) {
+        CHECK_EXIT(argc > 2, "Usage: %s set [key:value]", argv[0]);
+        for(int i = 2; i < argc; i++) {
+            char *value = strchr(argv[i], ':');
+            if(!value) {
+                CHECK_EXIT(false, "Usage: %s set [key:value]", argv[0]);
+            }
+            *value = 0;
+            value++;
+            setValue(mutexid, shmp, argv[i], value);
+            logger(LOG_INFO, "value for \"%s\" is %s", argv[i], value);
+        }
+    } else if(!strcmp("add", argv[1])) {
+        CHECK_EXIT(argc > 2, "Usage: %s add [key:value]", argv[0]);
+        for(int i = 2; i < argc; i++) {
+            char *value = strchr(argv[i], ':');
+            if(!value) {
+                CHECK_EXIT(false, "Usage: %s set [key:value]", argv[0]);
+            }
+            *value = 0;
+            value++;
+            addKV(mutexid, shmp, argv[i], value);
+            logger(LOG_INFO, "value for \"%s\" is %s", argv[i], value);
+        }
+    } else if(!strcmp("rm", argv[1])) {
+        CHECK_EXIT(argc > 2, "Usage: %s add [key:value]", argv[0]);
+        char *value = malloc(VMax);
+        for(int i = 2; i < argc; i++) {
+            rmKV(mutexid, shmp, argv[i], value);
+            logger(LOG_INFO, "value for \"%s\" is %s", argv[i], value);
+        }
+        safe_free(value);
+    } else if(!strcmp("getAll", argv[1])) {
+        char *value = malloc((VMax + KMax) * KVMax);
+        getAll(mutexid, shmp, value);
+        logger(LOG_INFO, "getAll");
+        logger(LOG_INFO, "%s", value);
+        safe_free(value);
+    } else if(!strcmp("destroy", argv[1])) {
+        CHECK_LOG(semctl(mutexid, 0, IPC_RMID) != -1, STRING_MSG);
+        CHECK_LOG(shmctl(shmid, IPC_RMID, NULL) != -1, STRING_MSG);
+    } else {
+        CHECK_EXIT(false, "unknown operator: %s", argv[1]);
+    }
+    return 0;
+}
+```
