@@ -708,6 +708,7 @@ int main(int argc, char **argv) {
 FILE *logfile = NULL;
 bool syslog_enable = false;
 void __attribute__ ((constructor)) init() {
+    syslog_enable = false;
     logfile = stderr;
 }
 
@@ -734,13 +735,14 @@ void __attribute__ ((constructor)) init() {
 
 #define COND_RET(x, ret, msg...) \
         do {                     \
-            if(!(x)) { \
-                if(errno == 0)logger(LOG_ERR, "%s:%d\nunmet condition:\"%s\"\n", __FILE__, __LINE__, #x); \
-                else logger(LOG_ERR, "%s:%d\nerror: %s\nunmet condition:\"%s\"\n", __FILE__, __LINE__,strerror(errno), #x); \
-                logger(LOG_ERR, msg);                                                                                  \
-                logger(LOG_ERR, "\n");                                                                    \
-                ret \
+            if(!(x)) {           \
+                if(errno != 0) logger(LOG_ERR, "Error(%d): %s", errno, strerror(errno)); \
+                logger(LOG_ERR, "%s:%d", __FILE__, __LINE__);   \
+                logger(LOG_ERR, "unmet condition:\"%s\"", #x); \
+                logger(LOG_ERR, msg);        \
+                ret; \
             }    \
+            errno = 0; \
         } while(0)
 
 #define CHECK(x, msg...) COND_RET(x, return -1;, msg)
@@ -803,51 +805,42 @@ int notifyAll(int sem_id) {
     return setsem(sem_id, 1, 0);
 }
 EventFlag_t *newEventFlag(const char *file, char x) {
-    EventFlag_t *eventFlag = malloc(sizeof(EventFlag_t));
+    EventFlag_t eventFlag;
     key_t key = ftok(file, x);
-    eventFlag->semid = semget(key, 4, IPC_CREAT | IPC_EXCL | 0666); // sem[0] as mutex, sem[1] as notifier, sem[2]|sem[3] as flag
+    eventFlag.semid = semget(key, 4, IPC_CREAT | IPC_EXCL | 0666); // sem[0] as mutex, sem[1] as notifier, sem[2]|sem[3] as flag
     union semun arg;
-    if(eventFlag->semid == -1) {
+    if(eventFlag.semid == -1) {
         if(errno == EEXIST) {
-            eventFlag->semid = semget(key, 4, 0666);
+            eventFlag.semid = semget(key, 4, 0666);
+            COND_RET(eventFlag.semid != -1, return NULL, STRING_MSG);
             struct semid_ds ds;
             arg.buf = &ds;
-            if(semctl(eventFlag->semid, 0, IPC_STAT, arg) == -1) {
-                CHECK_LOG(false, STRING_MSG);
-                return NULL;
-            }
+            COND_RET(semctl(eventFlag.semid, 0, IPC_STAT, arg) != -1, return NULL, STRING_MSG);
             while (ds.sem_otime == 0) {
                 logger(LOG_INFO, "waiting for sem init");
                 sleep(1);
-                if(semctl(eventFlag->semid, 0, IPC_STAT, arg) == -1) {
-                    CHECK_LOG(false, STRING_MSG);
-                    free(eventFlag);
-                    return NULL;
-                }
+                COND_RET(semctl(eventFlag.semid, 0, IPC_STAT, arg) != -1, return NULL, STRING_MSG);
             }
             logger(LOG_INFO, "semget get old");
         } else {
             CHECK_LOG(false, STRING_MSG);
-            free(eventFlag);
             return NULL;
         }
     } else {
         arg.array = (unsigned  short  *)&(unsigned short[]){0, 0, 0, 0}; // sem[0] = 1, sem[1] = 0
-        if(semctl(eventFlag->semid, 0, SETALL, arg) == -1) {
-            semctl(eventFlag->semid, 0, IPC_RMID);
+        if(semctl(eventFlag.semid, 0, SETALL, arg) == -1) {
             CHECK_LOG(false, STRING_MSG);
-            free(eventFlag);
+            CHECK_LOG(semctl(eventFlag.semid, 0, IPC_RMID) != -1, STRING_MSG);
             return NULL;
         }
-        if(incrsem(eventFlag->semid, 0,1,0) == -1) {
-            semctl(eventFlag->semid, 0, IPC_RMID);
+        if(incrsem(eventFlag.semid, 0,1,0) == -1) {
             CHECK_LOG(false, STRING_MSG);
-            free(eventFlag);
+            CHECK_LOG(semctl(eventFlag.semid, 0, IPC_RMID) != -1, STRING_MSG);
             return NULL;
         }
         logger(LOG_INFO, "semget create new");
     }
-    return eventFlag;
+    return memcpy(malloc(sizeof(EventFlag_t)), &eventFlag, sizeof(EventFlag_t));
 }
 
 int setEventFlag(EventFlag_t *eventFlag, int flag) {
@@ -959,23 +952,31 @@ void printFlag(int flag) {
     }
 }
 
-#define printIt(info, x) logger(LOG_INFO, "("#info")."#x": %d", (info).x)
+#define printINT(info, x) logger(LOG_INFO, "("#info")."#x": %d", (info).x)
+#define printUINT(info, x) logger(LOG_INFO, "("#info")."#x": %ld", (info).x)
+#define printTIME(ds, x) logger(LOG_INFO, "("#ds")."#x": %s", ctime(&(ds).x))
 
 int printInfo(int id) {
     union semun arg;
     struct seminfo info;
+    struct semid_ds ds;
     arg.__buf = &info;
     CHECK(semctl(id, 0, SEM_INFO, arg) != -1, STRING_MSG);
-    printIt(info, semmap);
-    printIt(info, semmni);
-    printIt(info, semmns);
-    printIt(info, semmnu);
-    printIt(info, semmsl);
-    printIt(info, semopm);
-    printIt(info, semume);
-    printIt(info, semusz);
-    printIt(info, semvmx);
-    printIt(info, semaem);
+    printINT(info, semmap);
+    printINT(info, semmni);
+    printINT(info, semmns);
+    printINT(info, semmnu);
+    printINT(info, semmsl);
+    printINT(info, semopm);
+    printINT(info, semume);
+    printINT(info, semusz);
+    printINT(info, semvmx);
+    printINT(info, semaem);
+    arg.buf = &ds;
+    CHECK(semctl(id, 0, IPC_STAT, arg) != -1, STRING_MSG);
+    printUINT(ds, sem_nsems);
+    printTIME(ds, sem_otime);
+    printTIME(ds, sem_ctime);
     return 0;
 }
 
@@ -989,15 +990,22 @@ int wrapPrintFlag(int flag, int (*func)(EventFlag_t *, int)) {
     return 0;
 }
 
+#define FLAG_RANGE(flg) ((16 <= (flg) && (flg) < 31) || (0 <= (flg) && (flg) < 15))
+#define XXSTRING(s) XSTRING(s) //与层数相关
+#define XSTRING(s) STRING(s)
+#define STRING(s) #s
 int main(int argc, char **argv) {
     CHECK_EXIT(argc > 1, "Usage: %s destroy|waitAny|waitAll|add|clear|get [flag]", argv[0]);
     eventFlag = newEventFlag(argv[0], 'x');
     CHECK_EXIT(eventFlag != NULL, STRING_MSG);
     int flag = 0;
     for(int i = 2; i < argc; i++) {
-        int bit = safe_atoi(argv[i]);
-        CHECK_LOG((16 < bit && bit < 31) || (0 < bit && bit < 16), "Usage: (15 < flag < 31) or (0 < flag < 15)");
-        flag |= (1 << bit);
+        int flg = safe_atoi(argv[i]);
+        if(!FLAG_RANGE(flg)){
+            CHECK_LOG(false, "Usage: %s", XXSTRING(FLAG_RANGE(flg)));
+            continue;
+        }
+        flag |= (1 << flg);
     }
     printInfo(eventFlag->semid);
     logger(LOG_INFO, "start %s", argv[1]);
