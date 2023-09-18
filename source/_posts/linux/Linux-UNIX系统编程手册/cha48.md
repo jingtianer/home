@@ -8,6 +8,9 @@ toc: true
 language: zh-CN
 ---
 
+## 读书笔记
+shmat/mmap时可以指定虚拟内存地址，指定其位置，这个位置是需要提前malloc或sbrk创建出来的吗？
+
 ## 48.1
 
 使用事件标记来替换程序清单48-2(svshm_xfr_writerc)和程序清单48-3(svshm_xfr_reader.c)中的二元信号量。(就是27节的event flag)
