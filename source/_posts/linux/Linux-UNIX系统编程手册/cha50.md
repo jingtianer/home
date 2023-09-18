@@ -16,7 +16,7 @@
 #define USER 10087
 
 void test(__rlimit_resource_t res, const char *name,void (*task)(__rlimit_resource_t res, struct rlimit *)) {
-    printf("test: %d(%s)\n", res, name);
+    logger(LOG_INFO, "test: %d(%s)", res, name);
     pid_t pid;
     CHECK_RET((pid = fork()) != -1, return;);
     if(!pid) {
