@@ -478,3 +478,78 @@ int main(int argc, char *argv[]) {
 ```
 
 > 不知道为什么，本应出现`sigsegv`的地方并没有收到信号，只有分配一个页面后越界的情况会产生`sigsegv`
+
+### 2023年9月18日更新
+
+产生`sigsegv`的根本原因是试图访问无法访问的内存地址，现在的`mmap`实现可能为了速度与安全的考虑，会多分配一部分内存。只要分配时多分配一页，再将多分配的部分回收，就可以触发`sigsegv`了
+```c
+
+#include "utils.h"
+#define BUFFER_SIZE 2048
+void handler(int sig) {
+    logger(LOG_INFO, "received: signal(%d):%s", sig, strsignal(sig));
+    CHECK_LOG(signal(sig, SIG_DFL) != SIG_ERR);
+    fflush(NULL);
+    raise(sig);
+    return;
+}
+int offalign(int off, int size) {
+    return (off%size > 0 ? (size - off%size) : 0);
+} // 令off与size对其所需的调整量
+
+long pagesize;
+void testcase(const char *file, int filesize, int mmapsize, int access) {
+    pid_t pid;
+    CHECK_RET((pid = fork()) != -1, return;);
+    if(!pid) {
+        CHECK_EXIT(signal(SIGBUS, handler) != SIG_ERR);
+        CHECK_EXIT(signal(SIGSEGV, handler) != SIG_ERR);
+        logger(LOG_INFO, "filesize=%d, mmapsize=%d, access=%d", filesize, mmapsize, access);
+        int fd = open(file, O_RDWR | O_CREAT | O_SYNC, 0666);
+        // CHECK_EXIT(ftruncate(fd, 0) != -1);
+        // CHECK_EXIT(fsync(fd) != -1);
+        CHECK_EXIT(ftruncate(fd, filesize) != -1);
+        CHECK_EXIT(fsync(fd) != -1);
+        CHECK_EXIT(fd != -1);
+        char *mmapP = mmap(NULL, mmapsize+pagesize, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
+        if(offalign(mmapsize,pagesize) > 0) 
+            CHECK_LOG(munmap(mmapP+offalign(mmapsize,pagesize) + mmapsize, pagesize - offalign(mmapsize,pagesize)) != -1);
+            //mmap多分配一页，然后把多分配的部分去掉
+        CHECK_EXIT(mmapP != MAP_FAILED);
+        CHECK_EXIT(close(fd) != -1);
+        logger(LOG_INFO, "mmapP=%p, access:%p", mmapP, (mmapP + access));
+        mmapP[access] = 'b';
+        CHECK_LOG(munmap(mmapP, mmapsize) != -1);
+        exit(0);
+    }
+    int status;
+    CHECK_RET(waitpid(pid, &status, 0) != -1, return;);
+    logger(LOG_INFO, "exit status=%d, exit sig=(%d)%s", WEXITSTATUS(status), WSTOPSIG(status), strsignal(WSTOPSIG(status)));
+}
+int main(int argc, char *argv[]) {
+    setbuf(stderr, NULL);
+    setbuf(stdout, NULL);
+    pagesize = sysconf(_SC_PAGESIZE);
+    if(argc == 2) {
+        logger(LOG_INFO, "pagesize = %ld", pagesize);
+        testcase(argv[1], pagesize*3, pagesize / 2+pagesize, 0);
+        testcase(argv[1], pagesize*3, pagesize / 2+pagesize, pagesize / 2+pagesize);
+        testcase(argv[1], pagesize*3, pagesize / 2+pagesize, pagesize*2); // sigsegv but do not receive it here
+
+        testcase(argv[1], pagesize/2, pagesize*2, 0);
+        testcase(argv[1], pagesize/2, pagesize*2, pagesize / 2);
+        testcase(argv[1], pagesize/2, pagesize*2, pagesize); // sigbus
+        testcase(argv[1], pagesize/2, pagesize*2, pagesize*2); // sigsegv but do not receive it here
+        
+        testcase(argv[1], pagesize/2, pagesize, pagesize); // sigsegv
+
+    } else {
+        CHECK_EXIT_MSG(argc == 5, "Usage: %s filename filesize mmapsize access", argv[0]);
+        int filesize, mmapsize, access;
+        CHECK_EXIT_MSG(safe_atoi(argv[2], &filesize) != -1, "safe_atoi filesize=%s", argv[2]);
+        CHECK_EXIT_MSG(safe_atoi(argv[3], &mmapsize) != -1, "safe_atoi mmapsize=%s", argv[3]);
+        CHECK_EXIT_MSG(safe_atoi(argv[4], &access) != -1, "safe_atoi access=%s", argv[4]);
+        testcase(argv[1], filesize, mmapsize, access);
+    }
+}
+```
