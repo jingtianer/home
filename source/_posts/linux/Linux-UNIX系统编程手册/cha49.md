@@ -48,7 +48,7 @@ extern bool syslog_enable;
 #ifndef DEBUG_LEVEL
 #define DEBUG_LEVEL LOG_DEBUG
 #endif
-#define STRING_MSG "\n"
+#define STRING_MSG "ERROR OCCURED!"
 
 #define alloc_sprintf(__alloc_sprintf_str, __format...) do { \
     int __alloc_sprintf_len = snprintf(NULL, 0, __format); \
@@ -71,28 +71,29 @@ extern bool syslog_enable;
     } \
 } while(0)
 
-#define CHECK_RET_MSG(x, ret, msg...) \
-        logger(LOG_DEBUG, "checking: \"%s\"", #x); \
+#define CHECK_RET_MSG_IMPL(x, strx, ret, msg...) \
+        logger(LOG_DEBUG, "checking: \"%s\"", strx); \
         do {                     \
             if(!(x)) {           \
                 if(errno != 0) logger(LOG_ERR, "Error(%d): %s", errno, strerror(errno)); \
                 logger(LOG_ERR, "%s:%d", __FILE__, __LINE__);   \
-                logger(LOG_ERR, "unmet condition:\"%s\"", #x); \
+                logger(LOG_ERR, "unmet condition:\"%s\"", strx); \
                 logger(LOG_ERR, msg);        \
                 ret; \
             }    \
             errno = 0; \
         } while(0)
 
+#define CHECK_RET_MSG(x, ret, msg...) CHECK_RET_MSG_IMPL(x, #x, ret, msg...)
+#define CHECK_MSG(x, msg...) CHECK_RET_MSG_IMPL(x, #x, return -1;, msg)
+#define CHECK_EXIT_MSG(x, msg...) CHECK_RET_MSG_IMPL(x, #x, exit(EXIT_FAILURE);, msg)
+#define CHECK_LOG_MSG(x, msg...) CHECK_RET_MSG_IMPL(x, #x, ;, msg)
 
-#define CHECK_MSG(x, msg...) CHECK_RET_MSG(x, return -1;, msg)
-#define CHECK_EXIT_MSG(x, msg...) CHECK_RET_MSG(x, exit(EXIT_FAILURE);, msg)
-#define CHECK_LOG_MSG(x, msg...) CHECK_RET_MSG(x, ;, msg)
+#define CHECK_RET(x, ret) CHECK_RET_MSG_IMPL(x, #x, ret;, STRING_MSG)
+#define CHECK(x) CHECK_RET_MSG_IMPL(x, #x, return -1;, STRING_MSG)
+#define CHECK_EXIT(x) CHECK_RET_MSG_IMPL(x, #x, exit(EXIT_FAILURE);, STRING_MSG)
+#define CHECK_LOG(x) CHECK_RET_MSG_IMPL(x, #x, ;, STRING_MSG)
 
-#define CHECK_RET(x, ret) CHECK_RET_MSG(x, ret;, STRING_MSG)
-#define CHECK(x) CHECK_RET_MSG(x, return -1;, STRING_MSG)
-#define CHECK_EXIT(x) CHECK_RET_MSG(x, exit(EXIT_FAILURE);, STRING_MSG)
-#define CHECK_LOG(x) CHECK_RET_MSG(x, ;, STRING_MSG)
 int safe_atoi(const char *num, int *ret);
 #define safe_free(__safe_free_ptr) do { if(__safe_free_ptr) { free(__safe_free_ptr); (__safe_free_ptr) = NULL;} } while(0)
 #endif
@@ -513,7 +514,7 @@ void testcase(const char *file, int filesize, int mmapsize, int access) {
         CHECK_EXIT(fd != -1);
         char *mmapP = mmap(NULL, mmapsize+pagesize, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
         if(offalign(mmapsize,pagesize) > 0) 
-            CHECK_LOG(munmap(mmapP+offalign(mmapsize,pagesize) + mmapsize, pagesize - offalign(mmapsize,pagesize)) != -1);
+            CHECK_LOG(munmap(mmapP+offalign(mmapsize,pagesize) + mmapsize, pagesize) != -1);
             //mmap多分配一页，然后把多分配的部分去掉
         CHECK_EXIT(mmapP != MAP_FAILED);
         CHECK_EXIT(close(fd) != -1);
