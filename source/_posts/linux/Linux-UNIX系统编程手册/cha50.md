@@ -1,3 +1,13 @@
+---
+title: cha50.虚拟内存操作
+date: 2023-9-19 11:05:00
+tags:
+    - Linux/UNIX系统编程手册
+categories: linux
+toc: true
+language: zh-CN
+---
+
 ## 50.1
 编写一个程序使其为RLIMITMEMLOCK资源限制设置一个值之后将数量超过这个限制的内存锁进内存来验证RLIMITMEMLOCK资源限制的作用。
 ```c
