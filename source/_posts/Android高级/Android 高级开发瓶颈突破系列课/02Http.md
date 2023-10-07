@@ -68,7 +68,6 @@ language: zh-CN
 - 5xx: 服务器出错
 
 ## Header
-
 请求的数据的元数据
 
 - Host: 服务器主机(作用是区分多个域名对应同一个ip的情况，在发送之前已经解析出ip了)
@@ -121,3 +120,7 @@ language: zh-CN
 
 ### REST
 - [REST](https://en.wikipedia.org/wiki/REST)
+
+
+
+> [更多http相关资源](https://cloud.tencent.com/developer/chapter/13539)
