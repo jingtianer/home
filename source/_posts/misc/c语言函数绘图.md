@@ -36,31 +36,31 @@ void logger(int level, const char *format, ...) {
     fprintf(stderr, "%s\n", str);
     free(str);
 }
-const static double PI = 3.14;
 double x1, x2, _y1, _y2, s1, s2;
 
 #define PUSH(s, n) (s[s##_ptr++] = (n))
 #define POP(s, n) (n = s[--s##_ptr])
 #define TOP(s, n) (n = s[s##_ptr-1])
 #define EMPTY(s) (s##_ptr == 0)
-#define op_acos     48
-#define op_asin     49
-#define op_atan     50
-#define op_cos      51
-#define op_cosh     52
-#define op_sin      53
-#define op_sinh     54
-#define op_tan      55
-#define op_tanh     56
-#define op_exp      57
-#define op_log      58
-#define op_floor    59
-#define op_sqrt     60
-#define op_fabs     61
-#define op_ceil     62
-
-#define op_min op_acos
-#define op_max op_ceil
+enum {
+    op_acos     = 48,
+    op_asin     = 49,
+    op_atan     = 50,
+    op_cos      = 51,
+    op_cosh     = 52,
+    op_sin      = 53,
+    op_sinh     = 54,
+    op_tan      = 55,
+    op_tanh     = 56,
+    op_exp      = 57,
+    op_log      = 58,
+    op_floor    = 59,
+    op_sqrt     = 60,
+    op_fabs     = 61,
+    op_ceil     = 62
+};
+const static int op_min = op_acos;
+const static int op_max = op_ceil;
 
 static double stack[1024];
 static char op_stack[1024];
@@ -117,6 +117,10 @@ void pushOP(char cur_op) {
                 res = n1 * n2;
                 break;
             case '/':
+                if(n2 == 0) {
+                    logger(ERR_LOG, "divisor is zeor!");
+                    exit(1);
+                }
                 res = n1 / n2;
                 break;
             case '^':
@@ -238,7 +242,7 @@ double eval(double y, double x, const char *expr) {
                 break;
             case 'p': // p1 = 3.14
                 if(i + 1 < len && expr[i + 1] == 'i') {
-                    PUSH(stack, 3.14);
+                    PUSH(stack, M_PI);
                     i++;
                 } else {
                     logger(ERR_LOG, "Error 'pi': unknown char(%c)", expr[i]);
@@ -246,7 +250,7 @@ double eval(double y, double x, const char *expr) {
                 }
                 break;
             case 'e': // e = 2.7
-                PUSH(stack, 2.7);
+                PUSH(stack, M_E);
                 break;
             case '0':case '1':case '2':case '3':case '4':case '5':case '6':case '7':case '8':case '9':case '.':
                 {
@@ -346,12 +350,12 @@ void INIT(char **argv) {
     x1 = eval(0, 0, argv[i++]);
     x2 = eval(0, 0, argv[i++]);
     s2 = eval(0, 0, argv[i++]);
-    logger(ERR_LOG, "%lf, %lf, %lf, %lf, %lf, %lf\n", _y1, _y2, s1, x1, x2, s2);
+    logger(DEBUG_LOG, "%lf, %lf, %lf, %lf, %lf, %lf\n", _y1, _y2, s1, x1, x2, s2);
 
 }
 int main(int argc, char **argv) {
     if(argc < 8) {
-        logger(INFO_LOG, "Usage: %s op-number", argv[0]);
+        logger(INFO_LOG, "Usage: %s y1 y2 sy x1 x2 sy expression", argv[0]);
         logger(INFO_LOG, "example: %s -1 1 0.1 -1 1 0.05 \"x*x+y*y-1\" 2>errs.log 1>out", argv[0]);
         logger(INFO_LOG, "example: %s \"-pi/2\" \"pi/2\" 0.1 0 \"5*pi\" 0.05 \"y^2-SIN(x+y)^2\" 2>errs.log 1>out", argv[0]);
         logger(INFO_LOG, "example: %s \"-pi/2\" \"pi/2\" 0.1 0 \"5*pi\" 0.05 \"y^2-SIN(x)^2\" 2>errs.log 1>out", argv[0]);
