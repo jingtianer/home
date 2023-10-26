@@ -10,8 +10,12 @@ language: zh-CN
 
 ## 代码
 
+- [github](https://github.com/jingtianer/cplot)
+
+
 ```c
 #define _XOPEN_SOURCE 500
+#define _C99_SOURCE
 #include <stdio.h>
 #include <math.h>
 #include <stdbool.h>
@@ -19,6 +23,7 @@ language: zh-CN
 #include <string.h>
 #include <stdarg.h>
 #include <float.h>
+//#define LOG_LEVEL DEBUG_LOG
 #define DEBUG_LOG 7
 #define INFO_LOG 5
 #define ERR_LOG 4
@@ -52,20 +57,20 @@ double x1, x2, _y1, _y2, s1, s2;
 #define EMPTY(s) (s##_ptr == 0)
 enum {
     op_acos     = 48,
-    op_asin     = 49,
-    op_atan     = 50,
-    op_cos      = 51,
-    op_cosh     = 52,
-    op_sin      = 53,
-    op_sinh     = 54,
-    op_tan      = 55,
-    op_tanh     = 56,
-    op_exp      = 57,
-    op_log      = 58,
-    op_floor    = 59,
-    op_sqrt     = 60,
-    op_fabs     = 61,
-    op_ceil     = 62
+    op_asin         ,
+    op_atan         ,
+    op_cos          ,
+    op_cosh         ,
+    op_sin          ,
+    op_sinh         ,
+    op_tan          ,
+    op_tanh         ,
+    op_exp          ,
+    op_log          ,
+    op_floor        ,
+    op_sqrt         ,
+    op_fabs         ,
+    op_ceil
 };
 const static int op_min = op_acos;
 const static int op_max = op_ceil;
@@ -73,18 +78,18 @@ const static int op_max = op_ceil;
 static double stack[1024];
 static char op_stack[1024];
 static int priv[128] = {
-    [0 ... 39] = 0,
-    ['('] = 1,
-    [')'] = 2,
-    ['*'] = 3,
-    ['+'] = 2,
-    [44] = 0,
-    ['-'] = 2,
-    [46] = 0,
-    ['/'] = 3,
-    [48 ... 93] = 0,
-    ['^'] = 4,
-    [95 ... 127] = 0
+        [0 ... 39] = 0,
+        ['('] = 1,
+        [')'] = 2,
+        ['*'] = 3,
+        ['+'] = 2,
+        [44] = 0,
+        ['-'] = 2,
+        [46] = 0,
+        ['/'] = 3,
+        [48 ... 93] = 0,
+        ['^'] = 4,
+        [95 ... 127] = 0
 };
 static int stack_ptr = 0;
 static int op_stack_ptr = 0;
@@ -127,7 +132,7 @@ void pushOP(char cur_op) {
             case '/':
                 if(n2 == 0) {
                     logger(ERR_LOG, "divisor is zeor!");
-                    exit(1);
+//                    exit(1);
                 }
                 res = n1 / n2;
                 break;
@@ -166,84 +171,90 @@ double eval(double y, double x, const char *expr) {
                 PUSH(op_stack, '(');
                 break;
             case ')': {
-                    double n1, n2;
-                    char op;
-                    if(EMPTY(op_stack)) {
-                        logger(ERR_LOG, "no match ')'");
+                double n1, n2;
+                char op;
+                if(EMPTY(op_stack)) {
+                    logger(ERR_LOG, "no match ')'");
+                    exit(1);
+                }
+                pushOP(')');
+                POP(op_stack, op);
+                if(TOP(op_stack, op) >= op_min && TOP(op_stack, op) <= op_max) {
+                    POP(op_stack, op);
+                    double n;
+                    if(!EMPTY(stack)) {
+                        POP(stack, n);
+                    } else {
+                        logger(ERR_LOG, "Error : no opvalue");
                         exit(1);
                     }
-                    pushOP(')');
-                    POP(op_stack, op);
-                    if(TOP(op_stack, op) >= op_min && TOP(op_stack, op) <= op_max) {
-                        POP(op_stack, op);
-                        double n;
-                        if(!EMPTY(stack)) {
-                            POP(stack, n);
-                        } else {
-                            logger(ERR_LOG, "Error : no opvalue");
-                            exit(1);
-                        }
-                        double (*op_func)(double);
-                        switch(op) {
-                            case op_acos:
+                    double (*op_func)(double);
+                    switch(op) {
+                        case op_acos:
                             if(n > 1 || n < -1) return DBL_MAX;
                             op_func = acos;
                             break;
-                            case op_asin:
+                        case op_asin:
                             if(n > 1 || n < -1) return DBL_MAX;
                             op_func = asin;
                             break;
-                            case op_atan:
+                        case op_atan:
                             op_func = atan;
                             break;
-                            case op_cos:
+                        case op_cos:
                             op_func = cos;
                             break;
-                            case op_cosh:
+                        case op_cosh:
                             op_func = cosh;
                             break;
-                            case op_sin:
+                        case op_sin:
                             op_func = sin;
                             break;
-                            case op_sinh:
+                        case op_sinh:
                             op_func = sinh;
                             break;
-                            case op_tan:
+                        case op_tan:
                             op_func = tan;
                             break;
-                            case op_tanh:
+                        case op_tanh:
                             op_func = tanh;
                             break;
-                            case op_exp:
+                        case op_exp:
                             op_func = exp;
                             break;
-                            case op_log:
+                        case op_log:
                             if(n < 0) return DBL_MAX;
                             op_func = log;
                             break;
-                            case op_sqrt:
+                        case op_sqrt:
                             if(n < 0) return DBL_MAX;
                             op_func = sqrt;
                             break;
-                            case op_fabs:
+                        case op_fabs:
                             op_func = fabs;
                             break;
-                            case op_ceil:
+                        case op_ceil:
                             op_func = ceil;
                             break;
-                            case op_floor:
+                        case op_floor:
                             op_func = floor;
                             break;
-                        }
-                        PUSH(stack, op_func(n));
                     }
+                    PUSH(stack, op_func(n));
                 }
+            }
                 break;
             case '+':case '-': {
+                if((i > 0 && expr[i-1] != '(')) { // fix： a-(-b)
+                    // if stack is empty or last op is '(', ‘-’ is an Unary operator
+                    // else it's a Binary operator
+                    biCheck();
                     pushOP(expr[i]);
-                if(EMPTY(stack)) PUSH(stack, 0);
-                PUSH(op_stack, expr[i]);
+                } else {
+                    PUSH(stack, 0);
                 }
+                PUSH(op_stack, expr[i]);
+            }
                 break;
             case '*':
             case '/':
@@ -265,34 +276,34 @@ double eval(double y, double x, const char *expr) {
                 PUSH(stack, M_E);
                 break;
             case '0':case '1':case '2':case '3':case '4':case '5':case '6':case '7':case '8':case '9':case '.':
-                {
-                    double n = 0;
-                    double n1 = 1;
-                    while(i < len) {
+            {
+                double n = 0;
+                double n1 = 1;
+                while(i < len) {
+                    if(expr[i] < '0' || expr[i] > '9') {
+                        break;
+                    }
+                    n *= 10;
+                    n += expr[i] - '0';
+                    i++;
+                }
+                if(expr[i] == '.') {
+                    i++;
+                    while(i < len && expr[i] != '.') {
                         if(expr[i] < '0' || expr[i] > '9') {
                             break;
                         }
-                        n *= 10;
-                        n += expr[i] - '0';
+                        n1 /= 10.0;
+                        n += n1 * (expr[i] - '0');
                         i++;
                     }
-                    if(expr[i] == '.') {
-                        i++;    
-                        while(i < len && expr[i] != '.') {
-                            if(expr[i] < '0' || expr[i] > '9') {
-                                break;
-                            }
-                            n1 /= 10.0;
-                            n += n1 * (expr[i] - '0');
-                            i++;
-                        }
-                    }if(expr[i] == '.') {
-                        logger(ERR_LOG, "error : two '.' in one number");
-                        exit(1);
-                    }
-                    PUSH(stack, n);
-                    i--;
+                }if(expr[i] == '.') {
+                    logger(ERR_LOG, "error : two '.' in one number");
+                    exit(1);
                 }
+                PUSH(stack, n);
+                i--;
+            }
                 break;
             default:
                 if(!len_strncmp(expr + i, "ACOS")) {
@@ -380,12 +391,13 @@ int main(int argc, char **argv) {
         logger(INFO_LOG, "example: %s \"-2\" \"ACOS(1/2)-pi/4\" 0.125 \"-pi/2\" \"pi/2\" 0.0625 \"y*y+x*x+y-SQRT(y*y+x*x)\" 2>errs.log", argv[0]);
         logger(INFO_LOG, "example: %s \"-pi\" \"1\" 0.125 \"-2\" \"2\" 0.0625 \"(ACOS(1-FABS(x))-pi)-y\" \"y-SQRT(1-(FABS(x)-1)^2)\" 2>errs.log", argv[0]);
         logger(INFO_LOG, "example: %s \"-1\" \"pi/2\" 0.125 \"-1\" \"1\" 0.0625 \"x*x+(y-FABS(x)^(2.0/3.0))^2-1\" 2>errs.log", argv[0]);
+
         exit(0);
     }
     INIT(argv + 1);
-    for(double i = _y2; i >= _y1; i-=s1) {
-        for(double j = x1; j <= x2; j+=s2) {
-            logger(DEBUG_LOG, "x = %d, y = %d", j, i);
+    for(double i = _y2; i >= _y1; ) {
+        for(double j = x1; j <= x2; ) {
+            logger(DEBUG_LOG, "x = %lf, y = %lf", j, i);
             bool ok = true;
             for(char **expr = argv + 7; *expr; expr++) {
                 if(eval(i, j, *expr) >= 0) {
@@ -398,8 +410,10 @@ int main(int argc, char **argv) {
             } else {
                 printf("%c", GREATER_CHAR);
             }
+            j+=s2;
         }
         printf("\n");
+        i-=s1;
     }
 }
 ```
@@ -633,3 +647,24 @@ paste `for i in $(seq $N | tr ' ' '\n'| tac | tr '\n' ' '); do echo out.$i; done
                                   	                                                	                                                                   	                                                                                               	                                                                                                                                      	                                                                                               	                                                                   	                                                	                                  
 
 ```
+
+## 支持生成png
+
+支持生成图片，精确度大大提高了，可以考虑绘制曲线而不是区域了
+
+设置一个精确度，计算结果绝对值小于他的都被认为是0，就可以画曲线了
+
+### 问题1
+
+$y-sqrt(x)=0$在$x=0$附近断断续续
+
+实际上是这个地方变化率太高，x、y的轻微变化导致超出了精确度，有些地方$\frac{dz}{dy}$过大而$\frac{dz}{dx}$不大时（或二者都很大时），也会断断续续，然而当计算时的xy坐标选取在当前像素点内的某个位置时，可能就可以小于精确度。
+令$z=y-sqrt(x)$，分别计算z对x，y的偏导，计算上下左右四个方向的取最大值。
+计算点$(x+i/max(\frac{dz}{dx},\frac{dz}{dy}),y+i/max(\frac{dz}{dx},\frac{dz}{dy}))$处的函数值，若小于精确度，对该像素点绘制，否则不绘制
+其中$1<i<max(\frac{dz}{dx},\frac{dz}{dy})$
+
+### 问题2
+
+在某些曲线的交点处，如$y^2-sin(x)^2=0$，当$x=k*pi$时，线条很粗
+
+实际上是这个地方变化率太低，x或y的变化无法引起z的变化超过设定的变化率时，就会出现这种情况，令$z=y^2-sin(x)^2$，分别计算z对x，y的变化量的绝对值$|z(x_0+dx,y_0) - z(x_0,y_0)$,$|z(x_0,y_0+dy) - z(x_0,y_0)$,$|z(x_0-dx,y_0) - z(x_0,y_0)$,$|z(x_0,y_0-dy) - z(x_0,y_0)$，将精确度设置为变化量绝对值的最大值即可,对于导数非常大的位置，会导致精确度被无限放大，此时精确度不许大于$max(dx,dy)$
