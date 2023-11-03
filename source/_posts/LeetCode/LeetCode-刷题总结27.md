@@ -476,3 +476,217 @@ public:
     }
 };
 ```
+
+## 117. 填充每个节点的下一个右侧节点指针 II
+
+### 思路
+- 首先想到的就是层次遍历，非常简单
+- 对于进阶使用`O(1)`空间的算法，一直没想到利用已有的next指针
+  - 树每层最左侧节点找parent，把同层都连起来就好
+```c++
+class Solution {
+public:
+    Node* levelConnect(Node* root) {
+        queue<Node *> q;
+        if(root) q.push(root);
+        while(!q.empty()) {
+            Node *node = nullptr;
+            int n = q.size();
+            while(n--) {
+                if(node) node->next = q.front();
+                node = q.front();
+                if(node->left) q.push(node->left);
+                if(node->right) q.push(node->right);
+                q.pop();
+            }
+        }
+        return root;
+    }
+    Node* connect(Node* root) {
+        // return levelConnect(root);
+        if(root) recursiveConnect(root, new Node(0, root, nullptr, nullptr), true);
+        return root;
+    }
+    void recursiveConnect(Node* root, Node *parent, bool isLeft) {
+        Node *move = root;
+        while(move && !move->next) {
+            Node *to = nullptr;
+            if(isLeft && parent->right) {
+                to = parent->right;
+                isLeft = false;
+            } else {
+                Node *pMove = parent->next;
+                while(pMove && !pMove->left && !pMove->right) pMove = pMove->next;
+                if(pMove) {
+                    if(pMove->left) {
+                        isLeft = true;
+                        to = pMove->left;
+                    } else if(pMove->right) {
+                        isLeft = false;
+                        to = pMove->right;
+                    }
+                    parent = pMove;
+                }
+            }
+            move->next = to;
+            move = to;
+        }
+        if(root->right) recursiveConnect(root->right, root, false);
+        if(root->left) recursiveConnect(root->left, root, true);
+    }
+};
+```
+
+### 整理下代码
+```c++
+class Solution {
+public:
+    Node* levelConnect(Node* root) {
+        queue<Node *> q;
+        if(root) q.push(root);
+        while(!q.empty()) {
+            Node *node = nullptr;
+            int n = q.size();
+            while(n--) {
+                if(node) node->next = q.front();
+                node = q.front();
+                if(node->left) q.push(node->left);
+                if(node->right) q.push(node->right);
+                q.pop();
+            }
+        }
+        return root;
+    }
+    Node* connect(Node* root) {
+        // return levelConnect(root);
+        if(root) recursiveConnect(root, new Node(0, root, nullptr, nullptr));
+        return root;
+    }
+    void recursiveConnect(Node* root, Node *parent) {
+        Node *move = root;
+        while(move && !move->next) {
+            Node *to = nullptr;
+            if(move != parent->left || !parent->right) {
+                parent = parent->next;
+            }
+            Node *pMove = parent;
+            while(pMove && !pMove->left && !pMove->right) pMove = pMove->next;
+            to = pMove 
+                ? (pMove->left == move 
+                ? pMove->right 
+                : pMove->left 
+                ? pMove->left 
+                : pMove->right)
+                : nullptr; // 你就猜吧，一猜一个不吱声
+            parent = pMove;
+            move->next = to;
+            move = to;
+        }
+        if(root->right) recursiveConnect(root->right, root);
+        if(root->left) recursiveConnect(root->left, root);
+    }
+};
+```
+
+## [2127. 参加会议的最多员工数](https://leetcode.cn/problems/maximum-employees-to-be-invited-to-a-meeting/description/?envType=daily-question&envId=2023-11-01)
+> 时间 1848 ms 击败 5.2% 
+> 内存 98.4 MB 击败 35.8%
+```c++
+class Solution {
+public:
+    int maxRing = 0;
+    vector<int> visited;
+    vector<int> addtional_len;
+    vector<int> dSet;
+    vector<bool> dSetVisited;
+    vector<int> dSetSize;
+    vector<bool> isRing;
+    vector<bool> is2;
+    vector<int> degree;
+    int find(int i) {
+        return i == dSet[i] ? i : (dSet[i] = find(dSet[i])); 
+    }
+    int maximumInvitations(vector<int>& favorite) {
+        int n = favorite.size();
+        visited = move(vector<int>(n, 0));
+        dSetVisited = move(vector<bool>(n, false));
+        isRing = move(vector<bool>(n, true));
+        is2 = move(vector<bool>(n, false));
+        addtional_len = move(vector<int>(n, 0));
+        degree = move(vector<int>(n, 0));
+        dSet = move(vector<int>(n, 0));
+        iota(dSet.begin(), dSet.end(), 0);
+        dSetSize = move(vector<int>(n, 0));
+        for(int i = 0; i < n; i++) {
+            degree[favorite[i]]++;
+            dSet[find(i)] = find(favorite[i]);
+        }
+        for(int i = 0; i < n; i++) {
+            dSetSize[find(i)]++;
+            if(degree[i] == 0) isRing[dSet[i]] = false;
+        }
+        int maxNumber = 0;
+        for(int i = 0; i < n; i++) {
+            int len = 1;
+            int ringNode = -1;
+            if(isRing[dSet[i]]) {
+                if(!dSetVisited[dSet[i]]) {
+                    dSetVisited[dSet[i]] = true;
+                    int ring = dSetSize[dSet[i]]++;
+                    if(ring > 2) {
+                        maxRing = max(maxRing, ring);
+                    } else {
+                        maxNumber += ring;
+                    }
+                }
+            } else {
+                if(!dSetVisited[dSet[i]] && degree[i] == 0) {
+                    dSetVisited[dSet[i]] = true;
+                    int ring = findMaxRing(favorite, i, len, ringNode);
+                    if(ring > 2) {
+                        maxRing = max(maxRing, ring);
+                    } else {
+                        // addtional_len[ringNode] = max(len - ring, addtional_len[ringNode]);
+                        int move = i;
+                        while(move != ringNode) {
+                            visited[move] = false;
+                            move = favorite[move];
+                        }
+                        is2[dSet[i]] = true;
+                        maxNumber += ring;
+                    }
+                }
+            }
+        }
+        for(int i = 0; i < n; i++) {
+            if(is2[dSet[i]] && degree[i] == 0) {
+                int move = i;
+                int len = 0;
+                while(!visited[move]) {
+                    len++;
+                    move = favorite[move];
+                }
+                addtional_len[move] = max(addtional_len[move], len);
+            }
+        }
+        for(int i = 0; i < n; i++) {
+            // cout << i << ", " << addtional_len[i] << endl;
+            if(addtional_len[i] > 0) {
+                maxNumber += addtional_len[i];
+            }
+        }
+        return max(maxNumber, maxRing);
+    }
+
+    int findMaxRing(const vector<int>& favorite, int node, int &len, int &ringNode) {
+        visited[node] = len;
+        int child = favorite[node];
+        if(visited[child]) {
+            ringNode = child;
+            return len - visited[child] + 1;
+        }
+        len++;
+        return findMaxRing(favorite, child, len, ringNode);
+    }
+};
+```
