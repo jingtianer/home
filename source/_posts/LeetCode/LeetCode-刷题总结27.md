@@ -589,6 +589,31 @@ public:
 ```
 
 ## [2127. 参加会议的最多员工数](https://leetcode.cn/problems/maximum-employees-to-be-invited-to-a-meeting/description/?envType=daily-question&envId=2023-11-01)
+
+### 并查集
+- 一个重要结论，图中一定有环（n个节点，大于n-1条边）
+- 如果环的大小大于2，则只能将环上的节点上桌，支链上的点无法上桌
+- 如果环的大小不大于2，则环上节点的最长支链也可以跟着上桌
+- 多个环长为2的子图（不论是否有支链），都可以全部上桌
+
+> 故，统计所有环长大于2的最大环长，为maxRing
+> 统计所有环长不大于2的环长之和，以及环上各节点的最大之链长度之和，为maxNumber
+> 返回max(maxRing, maxNumber)
+
+#### 步骤
+- 并查集将节点分类
+- degree统计每个节点的入度
+- dSetSize统计每个集合的大小
+- 按照是否存在入度为0的点，将子图划分两类
+  - 存在，则图含有支链，计算环的长度(findMaxRing)
+    - 大于2，统计最大环长（maxRing）
+    - 不大于2，从任意度为0的节点开始遍历，将环上节点的visited变成非0，并标记该子图为`is2`，累加maxNumber（环长为2，都可以上桌）
+  - 不存在，则图不含有支链，计算环的长度(findMaxRing)
+    - 大于2，统计最大环长（maxRing）
+    - 不大于2，累加如maxNumber（环长为2，都可以上桌）
+- 对所有入度为0，且所在子图是`is2`的节点，计算该点到环上点的距离为支链长度，记录最大支链长度
+- 所有最大支链长度累加maxNumber
+- 返回max(maxNumber, maxRing)
 > 时间 1848 ms 击败 5.2% 
 > 内存 98.4 MB 击败 35.8%
 ```c++
@@ -687,6 +712,259 @@ public:
         }
         len++;
         return findMaxRing(favorite, child, len, ringNode);
+    }
+};
+```
+
+- 优化
+
+上面的代码在遇到有公共部分的支链，（会分叉的支链时），会导致重叠部分反复被访问
+
+使用arcFav统计被喜欢图，根据被喜欢图从环上开始寻找最大支链，可以避免，速度也得到了极大的优化
+
+> 时间 284ms 击败 12.78% 使用 C++ 的用户
+> 内存 166.84MB 击败 25.57% 使用 C++ 的用户
+
+
+```c++
+class Solution {
+public:
+    int maxRing = 0;
+    vector<int> visited;
+    vector<int> addtional_len;
+    vector<vector<int>> arcFav;
+    vector<int> dSet;
+    vector<bool> dSetVisited;
+    vector<int> dSetSize;
+    vector<bool> isRing;
+    vector<int> degree;
+    int find(int i) {
+        return i == dSet[i] ? i : (dSet[i] = find(dSet[i])); 
+    }
+    int maximumInvitations(vector<int>& favorite) {
+        int n = favorite.size();
+        visited = move(vector<int>(n, 0));
+        arcFav = move(vector<vector<int>>(n, vector<int>()));
+        dSetVisited = move(vector<bool>(n, false));
+        isRing = move(vector<bool>(n, true));
+        addtional_len = move(vector<int>(n, 0));
+        degree = move(vector<int>(n, 0));
+        dSet = move(vector<int>(n, 0));
+        iota(dSet.begin(), dSet.end(), 0);
+        dSetSize = move(vector<int>(n, 0));
+        for(int i = 0; i < n; i++) {
+            degree[favorite[i]]++;
+            dSet[find(i)] = find(favorite[i]);
+            arcFav[favorite[i]].push_back(i);
+        }
+        for(int i = 0; i < n; i++) {
+            dSetSize[find(i)]++;
+            if(degree[i] == 0) isRing[dSet[i]] = false;
+        }
+        int maxNumber = 0;
+        for(int i = 0; i < n; i++) {
+            int len = 1;
+            int ringNode = -1;
+            if(isRing[dSet[i]]) {
+                if(!dSetVisited[dSet[i]]) {
+                    dSetVisited[dSet[i]] = true;
+                    int ring = dSetSize[dSet[i]]++;
+                    if(ring > 2) {
+                        maxRing = max(maxRing, ring);
+                    } else {
+                        maxNumber += ring;
+                    }
+                }
+            } else {
+                if(!dSetVisited[dSet[i]] && degree[i] == 0) {
+                    dSetVisited[dSet[i]] = true;
+                    int ring = findMaxRing(favorite, i, len, ringNode);
+                    if(ring > 2) {
+                        maxRing = max(maxRing, ring);
+                    } else {
+                        int move = i;
+                        while(move != ringNode) {
+                            visited[move] = 0;
+                            move = favorite[move];
+                        }
+                        addtional_len[ringNode] = searchArcFav(ringNode);
+                        move = favorite[ringNode];
+                        while(move != ringNode) {
+                            addtional_len[move] = searchArcFav(move);
+                            move = favorite[move];
+                        }
+                        maxNumber += ring;
+                    }
+                }
+            }
+        }
+        for(int i = 0; i < n; i++) {
+            if(addtional_len[i] > 0) {
+                maxNumber += addtional_len[i];
+            }
+        }
+        return max(maxNumber, maxRing);
+    }
+    int searchArcFav(int move) {
+        visited[move] = 1;
+        int ret = 0;
+        for(int child : arcFav[move]) {
+            if(!visited[child]) {
+                ret = max(searchArcFav(child)+1, ret);
+            }
+        }
+        return ret;
+    }
+    int findMaxRing(const vector<int>& favorite, int node, int &len, int &ringNode) {
+        visited[node] = len;
+        int child = favorite[node];
+        if(visited[child]) {
+            ringNode = child;
+            return len - visited[child] + 1;
+        }
+        len++;
+        return findMaxRing(favorite, child, len, ringNode);
+    }
+};
+```
+
+#### 并查集+拓扑排序
+```c++
+class Solution {
+public:
+    int maxRing = 0;
+    vector<int> visited;
+    vector<int> addtional_len;
+    vector<vector<int>> arcFav;
+    vector<int> dSet;
+    vector<int> degree;
+    int find(int i) {
+        return i == dSet[i] ? i : (dSet[i] = find(dSet[i])); 
+    }
+    int maximumInvitations(vector<int>& favorite) {
+        int n = favorite.size();
+        visited = move(vector<int>(n, 0));
+        arcFav = move(vector<vector<int>>(n, vector<int>()));
+        addtional_len = move(vector<int>(n, 0));
+        degree = move(vector<int>(n, 0));
+        dSet = move(vector<int>(n, 0));
+        iota(dSet.begin(), dSet.end(), 0);
+        vector<int> ringNodes;
+        unordered_map<int, int> ringSize;
+        for(int i = 0; i < n; i++) {
+            degree[favorite[i]]++;
+            dSet[find(i)] = find(favorite[i]);
+            arcFav[favorite[i]].push_back(i);
+        }
+        queue<int> topologyQueue;
+        for(int i = 0; i < n; i++) {
+            if(degree[i] == 0) {
+                topologyQueue.push(i);
+            }
+        }
+        while(!topologyQueue.empty()) {
+            int front = topologyQueue.front();
+            topologyQueue.pop();
+            if((--degree[favorite[front]]) == 0) {
+                topologyQueue.push(favorite[front]);
+            }
+        }
+        unordered_set<int> ring2set;
+        for(int i = 0; i < n; i++) {
+            if(degree[i] > 0) {
+                ringNodes.push_back(i);
+                ringSize[find(i)]++;
+            }
+        }
+        for(int i = 0; i < n; i++) {
+            if(ringSize[find(i)] <= 2) {
+                ring2set.insert(find(i));
+            }
+        }
+        int maxNumber = 0;
+        for(int ringNode : ringNodes) {
+            int ring = ringSize[dSet[ringNode]];
+            if(ring > 2) {
+                maxRing = max(maxRing, ring);
+            } else {
+                addtional_len[ringNode] = searchArcFav(ringNode);
+            }
+        }
+        for(int i = 0; i < n; i++) {
+            if(addtional_len[i] > 0) {
+                maxNumber += addtional_len[i]; // add ring number
+            }
+        }
+        return max(maxNumber + (ring2set.size() << 1), (size_t)maxRing);
+    }
+    int searchArcFav(int move) {
+        visited[move] = 1; // 判断， not in ring
+        int ret = 0;
+        for(int child : arcFav[move]) {
+            if(!visited[child] && degree[child] == 0) {
+                ret = max(searchArcFav(child)+1, ret);
+            }
+        }
+        return ret;
+    }
+};
+```
+
+更慢了，原因是不能在拓扑排序的同时计算最大支链长度
+
+#### 优化掉并查集
+- 在拓扑排序中寻找最长支链，为每个节点定义f(x)
+- $ f(x) = max_{i=0}^j(f(aFav(x)_i) + 1) $
+- 每个节点初始为0，拓扑排序时，每次i将j的degree被减小，其值为max(f(i)+1, f(j))
+```c++
+class Solution {
+public:
+    int maxRing = 0;
+    vector<bool> visited;
+    vector<int> degree;
+    vector<int> f;
+    int maximumInvitations(vector<int>& favorite) {
+        int n = favorite.size();
+        visited = move(vector<bool>(n, false));
+        degree = move(vector<int>(n, 0));
+        f = move(vector<int>(n, 0));
+        vector<int> ringNodes;
+        unordered_map<int, int> ringSize;
+        for(int i = 0; i < n; i++) {
+            degree[favorite[i]]++;
+        }
+        queue<int> topologyQueue;
+        for(int i = 0; i < n; i++) {
+            if(degree[i] == 0) {
+                topologyQueue.push(i);
+            }
+        }
+        while(!topologyQueue.empty()) {
+            int front = topologyQueue.front();
+            topologyQueue.pop();
+            f[favorite[front]] = max(f[favorite[front]], f[front] + 1);
+            visited[front] = true;
+            if((--degree[favorite[front]]) == 0) {
+                topologyQueue.push(favorite[front]);
+            }
+        }
+        int maxNumber = 0;
+        for(int i = 0; i < n; i++) {
+            if(!visited[i])
+                if(favorite[favorite[i]] == i) {
+                    maxNumber += f[i] + 1;
+                } else {
+                    int ring = 1;
+                    int move = favorite[i];
+                    while(!visited[move] && move != i) {
+                        visited[move] = true;
+                        move = favorite[move];
+                        ring++;
+                    }
+                    maxRing = max(maxRing, ring);
+                }
+        }
+        return max(maxNumber, maxRing);
     }
 };
 ```
