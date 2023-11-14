@@ -737,3 +737,231 @@ public:
 };
 ```
 
+## [371. 两整数之和](https://leetcode.cn/problems/sum-of-two-integers/description/)
+- 复习一下数电的知识就好啦
+
+```c++
+// 0 0 0 0 0
+// 0 0 1 1 0
+// 0 1 0 1 0
+// 0 1 1 0 1 ~abc
+// 1 0 0 1 0
+// 1 0 1 0 1 a~bc
+// 1 1 0 0 1 ab~c
+// 1 1 1 1 1 abc
+// ~abc + a~bc + ab~c + abc
+// bc + a(~bc+b~c)
+// bc + a(b^c)
+```
+
+```c++
+class Solution {
+public:
+    int getSum(int a, int b) {
+        int carry = 0;
+        int sum = 0;
+        int mask = 1;
+        for(int i = 0; i < 32; i++) {
+            sum |= (a ^ b ^ carry) & mask;
+            carry = (b&carry) | (a & (b ^ carry));
+            carry <<= 1;
+            mask <<= 1;
+        }
+        return sum;
+    }
+};
+```
+
+## [389. 找不同](https://leetcode.cn/problems/find-the-difference/description/)
+居然没想到，长大后再试试吧
+
+## [393. UTF-8 编码验证](https://leetcode.cn/problems/utf-8-validation/description/)
+主要是应用位运算，还是关系不大
+
+```c++
+class Solution {
+public:
+    bool validUtf8(vector<int>& data) {
+        int n = data.size();
+        for(int i = 0; i < n; i++) {
+            int cnt = (0xf8 & data[i]) >> 3;
+            // printf("%x, %x\n", cnt, data[i]);
+            if(cnt < 0x10) {
+                cnt = 0;
+            } else if(cnt >= 0x18 && cnt < 0x1c) {
+                cnt = 1;
+            } else if(cnt >= 0x1c && cnt < 0x1e) {
+                cnt = 2;
+            } else if(cnt == 0x1e) {
+                cnt = 3;
+            } else {
+                return false;
+            }
+            while(cnt--) {
+                i++;
+                if(i >= n) return false;
+                if((data[i] & 0xc0) != 0x80) return false;
+            }
+        }
+        return true;
+    }
+};
+```
+
+## [397. 整数替换](https://leetcode.cn/problems/integer-replacement/description/)
+
+### 暴力+记忆优化
+
+```c++
+class Solution {
+    unordered_map<int, int> cnt;
+public:
+    int integerReplacement(int n) {
+        if(cnt.count(n)) return cnt[n];
+        if(n == 1) cnt[n] = 0;
+        else if(n&1) cnt[n] =  2 + min(integerReplacement(n>>1), integerReplacement((n>>1) + 1));
+        else cnt[n] =  1 + integerReplacement(n >> 1);
+        return cnt[n];
+    }
+};
+```
+
+### 贪心
+
+- 偶数，直接除以2
+- 奇数，除以4余数为1，-1，相当于尽量避免奇数的出现，延迟奇数的出现，因为奇数操作数是2，偶数是1
+- 奇数，除以4余数为3，+1，相当于尽量避免奇数的出现，延迟奇数的出现，因为奇数操作数是2，偶数是1
+```c++
+class Solution {
+    unordered_map<int, int> cnt;
+public:
+    int integerReplacement(int n) {
+        cnt[3] = 2;
+        if(cnt.count(n)) return cnt[n];
+        int nn = n;
+        while(n > 1) {
+            int add = 0;
+            if(!(n&1)) {
+                add = 1;
+                n >>= 1;
+            } else {
+                add = 2;
+                if((n >> 1) & 1) {
+                    n >>= 1;
+                    n++;
+                } else {
+                    n >>= 1;
+                }
+            }
+            if(cnt.count(n)) {
+                cnt[nn] += add + cnt[n];
+                break;
+            }
+            cnt[nn] += add;
+        }
+        return cnt[nn];
+    }
+};
+```
+
+## [401. 二进制手表](https://leetcode.cn/problems/binary-watch/)
+利用二进制做状态
+
+### 状态+检查bitCount
+```c++
+class Solution {
+public:
+    int bitCount(int n) {
+        int cnt = 0;
+        while(n) {
+            if(n & 1) cnt++;
+            n >>= 1;
+        }
+        return cnt;
+    }
+    vector<string> readBinaryWatch(int turnedOn) {
+        vector<string> res;
+        for(int h = 0; h < 16; h++) {
+            for(int m = 0; m < 64; m++) {
+                if(bitCount(h) + bitCount(m) != turnedOn) continue;
+                char time[6];
+                if(h >= 0 && h < 12 && m >= 0 && m < 60) {
+                    sprintf(time, "%d:%02d", h, m);
+                    res.push_back(time);
+                }
+            }
+        }
+        return res;
+    }
+};
+```
+
+### 格雷码
+
+用格雷码的特性，bitcount每次只会加1或减一，省去bitcounts的计算
+
+```c++
+class Solution {
+public:
+    vector<string> readBinaryWatch(int turnedOn) {
+        vector<string> res;
+        int hBitCount = 0;
+        int H = 0;
+        int lastH = 0, lastM = 0;
+        for(int h = 0; h < 16; h++) {
+            int M = 0;
+            int mBitCount = 0;
+            lastH = H;
+            H =  h^(h >> 1);
+            if(H & (lastH ^ H)) hBitCount++;
+            else if(h) hBitCount--;
+            // printf("H=%x, hBitCount=%d\n", H, hBitCount);
+            for(int m = 0; m < 64; m++) {
+                lastM = M;
+                M = m^(m >> 1);
+                if(M & (lastM ^ M)) mBitCount++;
+                else if(m) mBitCount--;
+                // printf("M=%x, mBitCount=%d\n", M, mBitCount);
+                if(hBitCount + mBitCount != turnedOn) continue;
+                char time[6];
+                if(H >= 0 && H < 12 && M >= 0 && M < 60) {
+                    sprintf(time, "%d:%02d", H, M);
+                    res.push_back(time);
+                }
+            }
+        }
+        return res;
+    }
+};
+```
+
+## [405. 数字转换为十六进制数](https://leetcode.cn/problems/convert-a-number-to-hexadecimal/description/)
+
+```c++
+class Solution {
+    static constexpr int m[16] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
+public:
+    string toHex(int num) {
+        int cnt = 8;
+        string res;
+        while(cnt-- && !(0xf & (num >> (cnt * 4))));
+        if(cnt >= 0) do {
+            res.push_back(m[0xf & (num >> (cnt * 4))]);
+        } while(cnt--);
+        else return "0";
+        return res;
+    }
+};
+```
+
+## [421. 数组中两个数的最大异或值](https://leetcode.cn/problems/maximum-xor-of-two-numbers-in-an-array/)
+
+没写出来，题解也是一位一位的算
+
+## 总结
+- 技巧一：利用二进制做状态码
+- 技巧二：计科基础，加法器、数电
+- 技巧三：利用二进制减少计算量，对状态少的数据进行编码，用位运算一次计算多个数据
+- 技巧四：考察[常用技巧](#位运算常见技巧)
+- 技巧五：利用格雷码优化
+- 技巧六：逐位计算结果
