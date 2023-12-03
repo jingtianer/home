@@ -449,12 +449,13 @@ public:
 ```
 
 ## [307. 区域和检索 - 数组可修改](https://leetcode.cn/problems/range-sum-query-mutable/description/?envType=daily-question&envId=2023-11-13)
-### 思路
+### 分块
+#### 思路
 把数组分成`sqrt(n)`份，存储每份的和
 更新时，找到对应区间把值更新，`O(1)`
 求值时，把left到right对应区间的和加起来，加上right右边的不足一个区间的，减去左侧超过一个区间的，三个运算都在`sqrt(n)`内完成, `O(sqrt(n))`
 
-### 代码
+#### 代码
 ```c++
 class NumArray {
     vector<int> data;
@@ -500,4 +501,170 @@ public:
  * obj->update(index,val);
  * int param_2 = obj->sumRange(left,right);
  */
+```
+
+### 线段树
+- 构造一棵树
+  - 根节点代表`[0, n-1]`的和
+  - 两个子节点分别代表`[0,(n-1)/2]`和`[(n-1)/2+1, n-1]`的和
+  - 如果区间为0，则不继续细分
+- 更新
+  - 根据index在树中查找，同时更新所有父节点的值
+- 查询
+  - 对于一个查询，
+    - 如果查询范围刚好等于节点代表的范围，则返回该节点的值
+    - 如果不同，则将查询一分为两个子查询，分别交给子节点处理，直到遇到子查询与子节点代表的范围相同，将所有子查询相加
+
+```c++
+class NumArray {
+private:
+    vector<int> tree;
+    int n;
+    int build(int node, int l, int r, const vector<int>& nums) {
+        if(l == r) tree[node] = nums[l];
+        else {
+            int mid = (r - l) / 2 + l;
+            tree[node] = build(2*node+1, l, mid, nums) + build(2*node+2, mid+1, r, nums);
+        }
+        return tree[node];
+    }
+    void updateTree(int node, int index, int l, int r, int val) {
+        if(l == r) tree[node] = val;
+        else {
+            int mid = (r - l) / 2 + l;
+            if(index <= mid) {
+                updateTree(node*2+1, index, l, mid, val);
+            } else {
+                updateTree(node*2+2, index, mid+1, r, val);
+            }
+            tree[node] = tree[2*node+1] + tree[2*node+2];
+        }
+    }
+    int sumTree(int node, int left, int right, int l, int r) {
+        if(left == l && right == r) {
+            return tree[node];
+        }
+        int mid = (r - l) / 2 + l;
+        if(left > mid) {
+            return sumTree(node*2+2, left, right, mid+1, r);
+        } else if(right <= mid) {
+            return sumTree(node*2+1, left, right, l, mid);
+        } else {
+            return sumTree(node*2+1, left, mid, l, mid) + sumTree(2*node+2, mid+1, right, mid+1, r);
+        }
+    }
+public:
+    NumArray(vector<int>& nums) {
+        n = nums.size();
+        tree = vector<int>(n * 4);
+        build(0, 0, n-1, nums);
+    }
+    
+    void update(int index, int val) {
+        updateTree(0, index, 0, n-1, val);
+    }
+    
+    int sumRange(int left, int right) {
+        return sumTree(0, left, right, 0, n-1);
+    }
+};
+
+/**
+ * Your NumArray object will be instantiated and called as such:
+ * NumArray* obj = new NumArray(nums);
+ * obj->update(index,val);
+ * int param_2 = obj->sumRange(left,right);
+ */
+```
+
+## [765. 情侣牵手](https://leetcode.cn/problems/couples-holding-hands/description/?envType=daily-question&envId=2023-11-11)
+
+### 思路
+看了下面的提示：
+> Say there are N two-seat couches. For each couple, draw an edge from the couch of one partner to the couch of the other partner.
+
+让我画出座位上的人到其伴侣的箭头
+- 如果箭头在同一个沙发上，就无需交换
+- 如果不在同一个沙发上，就让另一个人与其交换
+- 对每个沙发执行相同的任务
+### 代码
+```c++
+class Solution {
+    int n;
+    int min_swap_cnt = INT_MAX;
+    unordered_map<int, int> pos;
+public:
+    int minSwapsCouples(vector<int>& row) {
+        n = row.size();
+        for(int i = 0; i < n; i++) {
+            pos[row[i]] = i;
+        }
+        search(0, 0, row);
+        return min_swap_cnt;
+    }
+    void print(const vector<int>& nums) {
+        cout << nums[0];
+        for(int i = 1; i < n; i++) cout  << ", " << nums[i];
+        cout << "\n";
+    }
+    bool check(const vector<int>& nums) {
+        for(int i = 0; i < n; i+=2) {
+            if(abs(nums[i] - nums[i+1]) != 1) return false;
+        }
+        return true;
+    }
+    void search(int s, int cnt, vector<int> &nums) {
+        // print(nums);
+        if(check(nums)) {
+            min_swap_cnt = min(min_swap_cnt, cnt);
+            return;
+        }
+        if(s >= n) return;
+        int i = s;
+        for(int i = s; i < n; i++) {
+            int target = nums[i] + ((nums[i] & 1) ? -1 : 1);
+            int j = pos[target];
+            if(i/2 != j/2) {
+                int x = (i&1) ? -1 : 1;
+                pos[target] = i + x;
+                pos[nums[i + x]] = j;
+                swap(nums[i + x], nums[j]);
+                search(i + 2, cnt+1, nums);
+                // swap(nums[i + x], nums[j]);
+                // pos[target] = j;
+                // pos[nums[i + x]] = i + x;
+                // search(i + 2, cnt, nums);
+                break;
+            }
+        }
+    }
+};
+```
+
+> emm,一点点蒙对的，居然对了
+
+### 简化代码
+
+```c++
+class Solution {
+public:
+    int minSwapsCouples(vector<int>& row) {
+        int swap_cnt = 0;
+        int n = row.size();
+        vector<int> pos(n);
+        for(int i = 0; i < n; i++) {
+            pos[row[i]] = i;
+        }
+        for(int i = 0; i < n; i+=2) {
+            int target = row[i] + ((row[i] & 1) ? -1 : 1);
+            int j = pos[target];
+            if(i/2 != j/2) {
+                swap(pos[target], pos[row[i + 1]]);
+                swap(row[i + 1], row[j]);
+                swap_cnt++;
+            }
+        }
+        return swap_cnt;
+    }
+};
 ```
