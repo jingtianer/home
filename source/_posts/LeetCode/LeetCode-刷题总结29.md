@@ -298,3 +298,192 @@ public:
     }
 };
 ```
+
+## [1038. 从二叉搜索树到更大和树](https://leetcode.cn/problems/binary-search-tree-to-greater-sum-tree/description/?envType=daily-question&envId=2023-12-04)
+
+```c++
+class Solution {
+    vector<int> arr;
+public:
+    TreeNode* bstToGst(TreeNode* root) {
+        _bstToGst(root);
+        int len = arr.size();
+        for(int i = len - 2; i >= 0; i--) {
+            arr[i] += arr[i+1];
+        }
+        int index = 0;
+        setGst(root, index);
+        return root;
+    }
+    void _bstToGst(TreeNode* root) {
+        if(!root) return;
+        _bstToGst(root->left);
+        arr.push_back(root->val);
+        _bstToGst(root->right);
+    }
+    void setGst(TreeNode* root, int& index) {
+        if(!root) return;
+        setGst(root->left, index);
+        root->val = arr[index++];
+        setGst(root->right, index);
+    }
+};
+```
+
+```c++
+class Solution {
+    int sum = 0;
+public:
+    TreeNode* bstToGst(TreeNode* root) {
+        if(!root) return root;
+        bstToGst(root->right);
+        sum += root->val;
+        root->val = sum;
+        bstToGst(root->left);
+        return root;
+    }
+};
+```
+
+## [828. 统计子串中的唯一字符](https://leetcode.cn/problems/count-unique-characters-of-all-substrings-of-a-given-string/description/?envType=daily-question&envId=2023-11-26)
+
+```c++
+class Solution {
+public:
+    int uniqueLetterString(string s) {
+        vector<vector<int>> vec(26, vector<int>(1, -1));
+        int len = s.length(), ret = 0;
+        for(int i = 0; i < len; i++) {
+            vec[s[i] - 'A'].push_back(i);
+        }
+        for(int i = 0; i < 26; i++) {
+            vector<int> &arr = vec[i];
+            arr.push_back(len);
+            int arr_len = arr.size();
+            for(int j = 1; j < arr_len - 1; j++) {
+                ret += (arr[j] - arr[j-1]) * (arr[j + 1] - arr[j]);
+            }
+        }
+        return ret;
+    }
+};
+```
+
+## [1457. 二叉树中的伪回文路径](https://leetcode.cn/problems/pseudo-palindromic-paths-in-a-binary-tree/description/?envType=daily-question&envId=2023-11-25)
+
+```c++
+class Solution {
+    vector<int> m;
+    int odd_cnt = 0;
+public:
+    Solution():m(10) {}
+    int pseudoPalindromicPaths (TreeNode* root) {
+        if(!root) {
+            return 0;
+        }
+        int ret = 0;
+        m[root->val]++;
+        if(m[root->val] % 2 == 1) odd_cnt++;
+        else odd_cnt--;
+        if(!root->left && !root->right) {
+            if(odd_cnt <= 1)ret = 1;
+        }
+        if(root->left) ret += pseudoPalindromicPaths(root->left);
+        if(root->right) ret += pseudoPalindromicPaths(root->right);
+        m[root->val]--;
+        if(m[root->val] % 2 == 1) odd_cnt++;
+        else odd_cnt--;
+        return ret;
+    }
+};
+```
+
+## [2824. 统计和小于目标的下标对数目](https://leetcode.cn/problems/count-pairs-whose-sum-is-less-than-target/description/?envType=daily-question&envId=2023-11-24)
+
+```c++
+class Solution {
+public:
+    int countPairs(vector<int>& nums, int target) {
+        sort(nums.begin(), nums.end());
+        int n = nums.size();
+        int ret = 0, pos = n - 1;
+        int i = 0;
+        while(i < pos) {
+            while(pos > i && nums[pos] + nums[i] >= target) pos--;
+            ret += pos - i;
+            i++;
+        }
+        return ret;
+    }
+};
+```
+
+```c++
+class Solution {
+public:
+    int countPairs(vector<int>& nums, int target) {
+        sort(nums.begin(), nums.end());
+        int n = nums.size();
+        int ret = 0;
+        for(int i = 0; i < n - 1; i++) {
+            if(nums[i+1] >= target - nums[i]) break;
+            int pos = upper_bound(nums.begin() + i + 1, nums.end(), target - nums[i] - 1) - nums.begin();
+            ret += pos - i - 1;
+        }
+        return ret;
+    }
+};
+```
+
+## [1410. HTML 实体解析器](https://leetcode.cn/problems/html-entity-parser/description/?envType=daily-question&envId=2023-11-23)
+
+```c++
+class Solution {
+public:
+    bool strneq(const string& str, int index, int strlen, const char *cmp, int len) {
+        if(strlen - index < len) return false;
+        for(int i = 0; i < len; i++) {
+            if(str[index + i] != cmp[i]) return false;
+        }
+        return true;
+    }
+    string entityParser(string text) {
+        string res;
+        int len = text.length(), i = 0;
+        while(i < len) {
+            if(text[i] != '&') res.push_back(text[i]);
+            else {
+                if(strneq(text, i, len, "&quot;", 6)) {
+                    i += 6;
+                    res.push_back('"');
+                    continue;
+                } else if(strneq(text, i, len, "&apos;", 6)) {
+                    i += 6;
+                    res.push_back('\'');
+                    continue;
+                } else if(strneq(text, i, len, "&amp;", 5)) {
+                    i += 5;
+                    res.push_back('&');
+                    continue;
+                } else if(strneq(text, i, len, "&gt;", 4)) {
+                    i += 4;
+                    res.push_back('>');
+                    continue;
+                } else if(strneq(text, i, len, "&lt;", 4)) {
+                    i += 4;
+                    res.push_back('<');
+                    continue;
+                } else if(strneq(text, i, len, "&frasl;", 7)) {
+                    i += 7;
+                    res.push_back('/');
+                    continue;
+                } else {
+                    res.push_back(text[i]);
+                }
+            }
+            i++;
+        }
+        return res;
+    }
+};
+```
