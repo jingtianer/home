@@ -487,3 +487,78 @@ public:
     }
 };
 ```
+
+## [2304. 网格中的最小路径代价](https://leetcode.cn/problems/minimum-path-cost-in-a-grid/description/?envType=daily-question&envId=2023-11-22)
+```c++
+class Solution {
+public:
+    int minPathCost(vector<vector<int>>& grid, vector<vector<int>>& moveCost) {
+        int m = grid.size(), n = grid[0].size();
+        vector<vector<int>> g(m, vector<int>(n, INT_MAX / 2));
+        for(int j = 0; j < n; j++) {
+            g[0][j] = 0;
+        }
+        for(int i = 0; i < m - 1; i++) {
+            for(int j = 0; j < n; j++) {
+                for(int k = 0; k < n; k++) {
+                    g[i+1][k] = min(g[i+1][k], g[i][j] + grid[i][j] + moveCost[grid[i][j]][k]);
+                }
+            }
+        }
+        int minCost = INT_MAX;
+        for(int k = 0; k < n; k++) {
+            minCost = min(minCost, g[m-1][k] + grid[m-1][k]);
+        }
+        return minCost;
+    }
+};
+```
+
+## [2216. 美化数组的最少删除数](https://leetcode.cn/problems/minimum-deletions-to-make-array-beautiful/description/?envType=daily-question&envId=2023-11-21)
+
+```c++
+class Solution {
+public:
+    int minDeletion(vector<int>& nums) {
+        int len = nums.size();
+        int i = 0;
+        bool odd = false;
+        int deleteCnt = 0;
+        while(i < len) {
+            int j = i + 1;
+            while(!odd && j < len && nums[j] == nums[i]) j++;
+            deleteCnt += j - i - 1;
+            i = j;
+            odd = !odd;
+        }
+        if((len - deleteCnt) % 2 == 1) {
+            deleteCnt++;
+        }
+        return deleteCnt;
+    }
+};
+```
+
+## [53. 最大子数组和](https://leetcode.cn/problems/maximum-subarray/description/?envType=daily-question&envId=2023-11-20)
+
+写过，记住答案了，还是不太懂
+
+```c++
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums) {
+        int subSum = 0, maxSubSum = INT_MIN;
+        for(int n : nums) {
+            if(subSum <= 0) subSum = n;
+            else subSum += n;
+            maxSubSum = max(maxSubSum, subSum);
+        }
+        return maxSubSum;
+    }
+};
+```
+
+### 思考
+可以把前缀和的折线图画出来，发现，如果遇到负数，曲线会从最高值降低，
+如果在变成0之前遇到正数，则此时在原来的基础上加上该正数，就可以得到目前为止，局部的最大值
+如果在变成0之后遇到正数，则此时不在原来的基础上加上该正数，这样正数就不会被前面的负数和儿抵消，从而获得当前的局部最大值
