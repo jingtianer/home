@@ -562,3 +562,185 @@ public:
 可以把前缀和的折线图画出来，发现，如果遇到负数，曲线会从最高值降低，
 如果在变成0之前遇到正数，则此时在原来的基础上加上该正数，就可以得到目前为止，局部的最大值
 如果在变成0之后遇到正数，则此时不在原来的基础上加上该正数，这样正数就不会被前面的负数和儿抵消，从而获得当前的局部最大值
+
+## [2477. 到达首都的最少油耗](https://leetcode.cn/problems/minimum-fuel-cost-to-report-to-the-capital/description/?envType=daily-question&envId=2023-12-05)
+- 只要总路程最小就好了，需要对车辆座位的最大化利用
+- 如果一条线路的长度不足以坐满一辆车，可以把多个线路的乘客先聚集在最近的公共祖先上，然后统一发车
+
+```c++
+class Solution {
+public:
+    long long minimumFuelCost(vector<vector<int>>& roads, int seats) {
+        int n = roads.size() + 1;
+        vector<vector<int>> g(n);
+        vector<int> parent(n, 0);
+        vector<int> len(n, 0);
+        vector<int> deg(n, 0);
+        vector<bool> visited(n, false);
+        for(vector<int> & vec : roads) {
+            g[vec[1]].push_back(vec[0]);
+            g[vec[0]].push_back(vec[1]);
+        }
+        queue<int> q;
+        q.push(0);
+        int depth = 0;
+        while(!q.empty()) {
+            int node = q.front();
+            q.pop();
+            depth++;
+            visited[node] = true;
+            for(int child : g[node]) {
+                if(visited[child]) continue;
+                parent[child] = node;
+                deg[node]++;
+                q.push(child);
+            }
+        }
+        visited = vector<bool>(n, false);
+        for(int i = 1; i < n; i++) {
+            if(deg[i] == 0) {
+                q.push(i);
+            }
+        }
+        long long ret = 0;
+        while(!q.empty()) {
+            int city = q.front();
+            q.pop();
+            len[parent[city]] += len[city] + 1;
+            ret += (len[city] + 1) / seats + ((len[city] + 1)%seats ? 1 : 0);
+            deg[parent[city]]--;
+            city = parent[city];
+            if(deg[city] == 0 && city != 0) {
+                q.push(city);
+            }
+        }
+        return ret;
+    }
+};
+```
+
+## 2342. 数位和相等数对的最大和
+
+```c++
+class Solution {
+public:
+    int maximumSum(vector<int>& nums) {
+        int n = nums.size();
+        unordered_map<int, int> bitSumMapMax;
+        unordered_map<int, int> bitSumMapSecondMax;
+        int maxSum = -1;
+        for(int i = 0; i < n; i++) {
+            int num = nums[i];
+            int sum = 0;
+            while(num) {
+                sum += num % 10;
+                num /= 10;
+            }
+            if(!bitSumMapMax.count(sum)) {
+                bitSumMapMax[sum] = nums[i];
+            } else {
+                if(nums[i] >= bitSumMapMax[sum]) {
+                    bitSumMapSecondMax[sum] = bitSumMapMax[sum];
+                    bitSumMapMax[sum] = nums[i];
+                    maxSum = max(maxSum, bitSumMapSecondMax[sum] + bitSumMapMax[sum]);
+                } else if(!bitSumMapSecondMax.count(nums[i])) {
+                    bitSumMapSecondMax[sum] = nums[i];
+                    maxSum = max(maxSum, bitSumMapSecondMax[sum] + bitSumMapMax[sum]);
+                } else if(nums[i] > bitSumMapSecondMax[sum]) {
+                    bitSumMapMax[sum] = nums[i];
+                    maxSum = max(maxSum, bitSumMapSecondMax[sum] + bitSumMapMax[sum]);
+                }
+            }
+        }
+        return maxSum;
+    }
+};
+```
+
+```c++
+class Solution {
+public:
+    int maximumSum(vector<int>& nums) {
+        int n = nums.size();
+        unordered_map<int, int> bitSumMapMax;
+        int maxSum = -1;
+        for(int i = 0; i < n; i++) {
+            int num = nums[i];
+            int sum = 0;
+            while(num) {
+                sum += num % 10;
+                num /= 10;
+            }
+            if(!bitSumMapMax.count(sum)) {
+                bitSumMapMax[sum] = nums[i];
+            } else {
+                maxSum = max(maxSum, nums[i] + bitSumMapMax[sum]);
+                if(nums[i] >= bitSumMapMax[sum]) {
+                    bitSumMapMax[sum] = nums[i];
+                }
+            }
+        }
+        return maxSum;
+    }
+};
+```
+
+## [1466. 重新规划路线](https://leetcode.cn/problems/reorder-routes-to-make-all-paths-lead-to-the-city-zero/description/?envType=daily-question&envId=2023-12-07)
+
+```c++
+class Solution {
+public:
+    int minReorder(int n, vector<vector<int>>& connections) {
+        vector<vector<int>> g(n), parent(n);
+        vector<bool> visited(n, false);
+        int ret = 0;
+        for(int i = 0; i < n - 1; i++) {
+            g[connections[i][0]].push_back(connections[i][1]);
+            g[connections[i][1]].push_back(connections[i][0]);
+            parent[connections[i][0]].push_back(connections[i][1]);
+        }
+        stack<int> q;
+        q.push(0);
+        while(!q.empty()) {
+            int node = q.top();
+            q.pop();
+            visited[node] = true;
+            for(int child : g[node]) {
+                if(visited[child]) continue;
+                if(find(parent[node].begin(), parent[node].end(), child) != parent[node].end()) {
+                    ret++;
+                }
+                q.push(child);
+            }
+        }
+        return ret;
+    }
+};
+```
+
+```c++
+class Solution {
+public:
+    int minReorder(int n, vector<vector<int>>& connections) {
+        vector<vector<pair<int, int>>> g(n);
+        int ret = 0;
+        for(int i = 0; i < n - 1; i++) {
+            g[connections[i][0]].push_back(make_pair(connections[i][1], 1));
+            g[connections[i][1]].push_back(make_pair(connections[i][0], 0));
+        }
+        stack<int> q;
+        q.push(0);
+        while(!q.empty()) {
+            int node = q.top();
+            q.pop();
+            visited[node] = true;
+            for(auto& child : g[node]) {
+                if(visited[child.first]) continue;
+                ret += child.second;
+                q.push(child.first);
+            }
+        }
+        return ret;
+    }
+};
+```
