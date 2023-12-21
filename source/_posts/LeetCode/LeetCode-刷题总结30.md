@@ -196,3 +196,224 @@ public:
     }
 };
 ```
+
+## [LCR 078. 合并 K 个升序链表](https://leetcode.cn/problems/vvXgSW/description/)
+
+- 方法和和并两个升序链表相同，k个链表每次从k个指针中选择出值最小的一个插入到总链表中
+- 使用优先队列可以把算法优化到`O(k*log(k))`
+
+```c++
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        auto cmp = [](ListNode *a, ListNode *b) {
+            return a->val > b->val;
+        };
+        priority_queue<ListNode*, vector<ListNode*>, decltype(cmp)> q(cmp);
+        ListNode dummyNode;
+        ListNode *dummyPtr = &dummyNode;
+        int k = lists.size();
+        for(int i = 0; i < k; i++) {
+            if(lists[i]) q.push(lists[i]);
+        }
+        while(!q.empty()) {
+            ListNode *node = q.top();
+            q.pop();
+            dummyPtr->next = node;
+            dummyPtr = node;
+            node = node->next;
+            if(node) {
+                q.push(node);
+            }
+        }
+        return dummyNode.next;
+    }
+};
+```
+
+## [2866. 美丽塔 II](https://leetcode.cn/problems/beautiful-towers-ii/description/?envType=daily-question&envId=2023-12-21)
+
+### 枚举山峰
+
+```c++
+class Solution {
+private:
+    int len;
+    void toHill(const vector<int>& arr, int& index, int endIndex) const {
+        while(index + 1 < endIndex && arr[index] <= arr[index+1]) index++;
+    }
+    void toValley(const vector<int>& arr, int& index, int endIndex) const {
+        while(index + 1 < endIndex && arr[index] >= arr[index+1]) index++;
+    }
+public:
+    long long maximumSumOfHeights(vector<int>& maxHeights) {
+        len = maxHeights.size();
+        int index = 0;
+        toHill(maxHeights, index, len);
+        long long res = 0;
+        while(index < len) {
+            int val = maxHeights[index];
+            long long sum = 0;
+            for(int i = index; i >= 0; i--) {
+                val = min(val, maxHeights[i]);
+                sum += val;
+            }
+            val = maxHeights[index];
+            for(int i = index + 1; i < len; i++) {
+                val = min(val, maxHeights[i]);
+                sum += val;
+            }
+            res = max(sum, res);
+            index++;
+            toValley(maxHeights, index, len);
+            toHill(maxHeights, index, len);
+        }
+        return res;
+    }
+}; 
+```
+
+### 单调栈
+
+- 还是不会单调栈，明天开学单调栈！
+
+
+## 2048. 下一个更大的数值平衡数
+
+### 排列组合
+
+- 若平衡数为d位数，将d拆成若干个不相等的数
+  - 如：6可以拆成，`6`, `2+4`, `1+5`, `1+2+3`
+  - 他们分别对应，`666666`, `224444`, `155555`, `122333`以及他们的排列组合
+- 求出所有排列组合，找到大于n的最小排列
+- 由于一个数的下一个平衡数的位数可能大于他，需要考虑相邻两位的情况
+
+```c++
+class Solution {
+    vector<vector<string>> origin = {
+        {"1"}, 
+        {"22"},
+        {"122",     "333"},
+        {"1333",    "4444"},
+        {"22333",   "14444",    "55555"},
+        {"122333",  "155555",   "224444",   "666666"},
+        {"1224444"/*, "1666666",  "7777777"*/},
+        {"88888888"} // dummy for 1000000
+    };
+    int n;
+    int ret = INT_MAX;
+    int len;
+public:
+    int nextBeautifulNumber(int n) {
+        if(n == 0) return 1;
+        this->n = n;
+        len = digitCnt(n);
+        
+        for(string s : origin[len-1]) {
+            permutaion(s, 0);
+        }
+        len++;
+        for(string s : origin[len-1]) {
+            permutaion(s, 0);
+        }
+        return ret;
+    }
+    void permutaion(string &arr, int start) {
+        if(start == len) {
+            int number = 0;
+            for(int i = 0; i < len; i++) {
+                number *= 10;
+                number += arr[i] - '0';
+            }
+            if(number > n) ret = min(ret, number);
+        }
+        for(int i = start; i < len; i++) {
+            bool flag = false;
+            for (int j = start; j < i; j++) {
+                if (arr[i] == arr[j]) {
+                    flag = true;
+                    break;
+                }
+            }
+            if(!flag) {
+                swap(arr[i], arr[start]);
+                permutaion(arr, start+1);
+                swap(arr[i], arr[start]);
+            }
+        }
+    }
+
+    int digitCnt(int n) {
+        int digit = 0;
+        while(n) {
+            n /= 10;
+            digit++;
+        }
+        return digit;
+    }
+};
+```
+
+### 打表
+
+- 生成所有满足条件的数
+```c++
+#include <stdio.h>
+#include <limits.h>
+#include <stdbool.h>
+
+bool check(int i) {
+    int cnt[10] = {0};
+    char digits[128] = {0};
+    sprintf(digits, "%d", i);
+    char *ptr = digits;
+    while(*ptr) {
+        cnt[*ptr - '0']++;
+        ptr++;
+    }
+    bool flag = cnt[0] == 0;
+    for(int i = 1; i < 10; i++) {
+        if(cnt[i] && cnt[i] != i) {
+            flag = false;
+            break;
+        }
+    }
+    return flag;
+}
+
+int main() {
+    printf("{");
+    for(int i = 0; i < 1000000; i++) {
+        if(check(i)) printf("%d,", i);
+    }
+    for(int i = 1000000 + 1; i < INT_MAX; i++) {
+        if(check(i)) {
+            printf("%d}\n", i);
+            break;
+        }
+    }
+    return 0;
+}
+```
+
+```c++
+class Solution {
+    vector<int> origin = {
+        1,22,122,212,221,333,1333,3133,3313,3331,4444,14444,22333,23233,23323,23332,32233,32323,32332,33223,33232,33322,41444,44144,44414,44441,55555,122333,123233,123323,123332,132233,132323,132332,133223,133232,133322,155555,212333,213233,213323,213332,221333,223133,223313,223331,224444,231233,231323,231332,232133,232313,232331,233123,233132,233213,233231,233312,233321,242444,244244,244424,244442,312233,312323,312332,313223,313232,313322,321233,321323,321332,322133,322313,322331,323123,323132,323213,323231,323312,323321,331223,331232,331322,332123,332132,332213,332231,332312,332321,333122,333212,333221,422444,424244,424424,424442,442244,442424,442442,444224,444242,444422,515555,551555,555155,555515,555551,666666,1224444
+    };
+public:
+    int nextBeautifulNumber(int n) {
+        return *upper_bound(origin.begin(), origin.end(), n);
+    }
+};
+```
