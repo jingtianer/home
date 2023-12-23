@@ -157,7 +157,7 @@ public:
 };
 ```
 
-## 优化
+### 优化
 dijkstra需要用优先队列优化一下
 ```c++
 class Solution {
@@ -414,6 +414,156 @@ class Solution {
 public:
     int nextBeautifulNumber(int n) {
         return *upper_bound(origin.begin(), origin.end(), n);
+    }
+};
+```
+
+## [1671. 得到山形数组的最少删除次数](https://leetcode.cn/problems/minimum-number-of-removals-to-make-mountain-array/description/?envType=daily-question&envId=2023-12-22)
+
+### dp
+- 不会，抄答案
+- `arr1[i]`表示`0..(i-1)`中小于`nums[i]`的元素个数
+- `arr2[i]`表示`(i+1)..(len)`中小于`nums[i]`的元素个数
+- `arr1[i] + arr2[i] + 1`表示以`i`为山峰的山状数组长度
+
+```c++
+class Solution {
+    int n = 0;
+    vector<int> getLISArray(const vector<int>& nums) {
+        vector<int> dp(n, 1);
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < i; ++j) {
+                if (nums[j] < nums[i]) {
+                    dp[i] = max(dp[i], dp[j] + 1);
+                }
+            }
+        }
+        return dp;
+    }
+public:
+    int minimumMountainRemovals(vector<int>& nums) {
+        n = nums.size();
+        vector<int> pre = getLISArray(nums);
+        vector<int> suf = getLISArray({nums.rbegin(), nums.rend()});
+        reverse(suf.begin(), suf.end());
+        int ans = 0;
+        for (int i = 0; i < n; ++i) {
+            if (pre[i] > 1 && suf[i] > 1) {
+                ans = max(ans, pre[i] + suf[i] - 1);
+            }
+        }
+
+        return n - ans;
+    }
+};
+```
+
+## [1962. 移除石子使总数最小](https://leetcode.cn/problems/remove-stones-to-minimize-the-total/description/?envType=daily-question&envId=2023-12-23)
+
+### 模拟
+
+#### ac代码
+```c++
+class Solution {
+public:
+    int minStoneSum(vector<int>& piles, int k) {
+        priority_queue<int> q;
+        int ret = 0;
+        for(int rock : piles) {
+            if(rock) q.push(rock);
+        }
+        while(!q.empty() && k--) {
+            int rock = q.top();
+            q.pop();
+            if(rock - rock / 2) q.push(rock - rock / 2);
+        }
+        while(!q.empty()) {
+            int rock = q.top();
+            q.pop();
+            ret += rock;
+        }
+        return ret;
+    }
+};
+```
+
+#### 优化模拟
+
+- 一边减少一边算最终结果
+
+```c++
+class Solution {
+public:
+    int minStoneSum(vector<int>& piles, int k) {
+        priority_queue<int> q(piles.begin(), piles.end());
+        int ret = accumulate(piles.begin(), piles.end(), 0);
+        while(k--) {
+            int rock = q.top();
+            q.pop();
+            if(rock - rock / 2) q.push(rock - rock / 2);
+            ret -= rock / 2;
+        }
+        return ret;
+    }
+};
+```
+
+### 时间100%
+
+- 看了时间100%的方法，由于数字最大是10000，可以创建一个长度为10000+1的bool数组
+- 从下标最大到最小，选择存在于原数组的下标（bool数组置为true），除二，并把剩余部分设置为true
+- 这样就可以起到和优先队列一样的效率
+
+#### 代码
+
+
+```c++
+class Solution {
+public:
+    int minStoneSum(vector<int>& piles, int k) {
+        bool buck[10000] = {false};
+        int ret = 0, max_rock = INT_MIN;
+        for(int rock : piles) {
+            max_rock = max(max_rock, rock);
+            buck[rock-1] = true;
+            ret += rock;
+        }
+        while(max_rock--) {
+            if(!buck[max_rock]) continue;
+            if(k--) {
+                int diff = (max_rock + 1) / 2;
+                buck[max_rock - diff] = true;
+                ret -= diff;
+            } else {
+                break;
+            }
+        }
+        return ret;
+    }
+};
+```
+
+这个代码跑是错的，因为没有考虑同一个数出现多次的情况，所以不能使用bool数组
+
+```c++
+class Solution {
+public:
+    int minStoneSum(vector<int>& piles, int k) {
+        int buck[10000+1] = {false};
+        int ret = 0, max_rock = INT_MIN;
+        for(int rock : piles) {
+            max_rock = max(max_rock, rock);
+            buck[rock]++;
+            ret += rock;
+        }
+        for(;max_rock && k; max_rock--) {
+            int width = min(buck[max_rock], k);
+            int diff = (max_rock) / 2;
+            ret -= diff * width;
+            buck[max_rock - diff] += width;
+            k -= width;
+        }
+        return ret;
     }
 };
 ```
