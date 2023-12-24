@@ -433,7 +433,7 @@ public:
 
 ## [2865. 美丽塔 I](https://leetcode.cn/problems/beautiful-towers-i/description/)
 
-这道题与[2866. 美丽塔 II](https://jingtianer.github.io/home/2023/12/19/LeetCode/LeetCode-%E5%88%B7%E9%A2%98%E6%80%BB%E7%BB%9330/#2866-%E7%BE%8E%E4%B8%BD%E5%A1%94-II)相同，只是数据规模更小一点，当时用枚举山峰做的，这次用单调栈
+这道题与[2866. 美丽塔 II](/home/2023/12/19/LeetCode/LeetCode-刷题总结30/#2866-美丽塔-II)相同，只是数据规模更小一点，当时用枚举山峰做的，这次用单调栈
 
 ### 思路
 
