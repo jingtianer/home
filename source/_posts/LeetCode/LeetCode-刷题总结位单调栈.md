@@ -502,3 +502,65 @@ public:
     }
 };
 ```
+
+## [496. 下一个更大元素 I](https://leetcode.cn/problems/next-greater-element-i/description/)
+
+- emm，其实就是找nums2中每个元素右侧第一个比它大的元素，只是要映射到nums1中
+- 需求真的很绕，看清这一点这题就很简单，用一个map映射元素到nums1中的下标即可
+
+```c++
+class Solution {
+public:
+    vector<int> nextGreaterElement(vector<int>& nums1, vector<int>& nums2) {
+        unordered_map<int, int> m;
+        int len1 = nums1.size(), len2 = nums2.size();
+        vector<int> monoStack(len2), ret(len1, -1);
+        int stackPtr = 0;
+        for(int i = 0; i < len1; i++) {
+            m[nums1[i]] = i;
+        }
+        for(int i = 0; i < len2; i++) {
+            while(stackPtr > 0 && nums2[monoStack[stackPtr - 1]] < nums2[i]) {
+                int top = monoStack[stackPtr - 1];
+                if(m.count(nums2[top])) {
+                    int index = m[nums2[top]];
+                    ret[index] = nums2[i];
+                }
+                stackPtr--;
+            }
+            monoStack[stackPtr++] = i;
+        }
+        return ret;
+    }
+};
+```
+
+## [503. 下一个更大元素 II](https://leetcode.cn/problems/next-greater-element-ii/description/)
+
+这个比[上一题](#496-下一个更大元素-i)更简单了？只是多一个需要循环比较而已
+根据以前的经验，需要循环寻找的一般可以将数组扩大一倍，并复制一份
+
+```c++
+class Solution {
+public:
+    vector<int> nextGreaterElements(vector<int>& nums) {
+        int len = nums.size();
+        vector<int> monoStack(2*len), ret(len, -1);
+        nums.resize(2*len);
+        for(int i = 0; i < len; i++) {
+            nums[i+len] = nums[i];
+        }
+        int stackPtr = 0;
+        for(int i = 0; i < 2*len; i++) {
+            while(stackPtr > 0 && nums[monoStack[stackPtr - 1]] < nums[i]) {
+                int top = monoStack[stackPtr - 1];
+                if(top >= len) top -= len;
+                ret[top] = nums[i];
+                stackPtr--;
+            }
+            monoStack[stackPtr++] = i;
+        }
+        return ret;
+    }
+};
+```
