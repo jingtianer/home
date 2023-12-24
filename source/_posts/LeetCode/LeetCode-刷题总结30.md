@@ -567,3 +567,85 @@ public:
     }
 };
 ```
+
+## [1954. 收集足够苹果的最小花园周长](https://leetcode.cn/problems/minimum-garden-perimeter-to-collect-enough-apples/description/?envType=daily-question&envId=2023-12-24)
+
+### 枚举
+- 刚开始看错题了，认为只计算正方形的边上的苹果数
+- 推导出当边长为`2*radius`时，边上的苹果数目为
+  - `4*radius + 8*radius + 4*3*radius*(radius-1)`
+- 枚举边长并将边上的苹果加起来，直到超过需要的苹果即可
+#### 公式推导
+
+- bfs的思想
+- 边长为0的所有点`(0,0)` 的子节点，分为两类是 
+  - `|x| + |y| = 1` (1, 0), (0, 1), (-1, 0), (0, -1)
+  - `|x| + |y| = 2` (1, 1), (1, -1), (-1, 1), (-1, -1)
+- 点可能存在两种子节点，一种节点会让`|x| + |y|`增大1，另一种会增大2
+  - 四个角上的子节点会增大二，四个角上的子节点有增大2和增大1的
+  - 非四个角上的子节点只会增大1
+- 四个角上的节点的`|x| + |y| = 2*radius`孵化子代
+  - 产生4个增大2的，也就是公差为2的，也就是`4*2*radius`
+  - 产生8个增大1的
+- 剩余节点孵化子代
+  - 只会产生一个公差为1的
+- 再统计边长为1的所有点的子节点，可以发现，当半径为`radius`时：
+  - `|x| + |y| = radius` 的有 4 个
+  - `|x| + |y| = radius + i`, `i = 1, 2, ..., radius-1`的各有8个
+  - `|x| + |y| = 2*radius`的有4个
+- 总和为：
+  - `4*radius`
+  - $ 8 \times \sum_{i=radius+1}^{2*radius-1}{i} = \frac{(3 \times radius)\times(radius-1)}{2} \times 8$ 
+  - `4*2*radius`
+  - 将以上三部分求和，得到 $ 4*radius + 8*radius +  12*radius*(radius - 1)$
+
+#### 代码
+
+```c++
+class Solution {
+public:
+    long long minimumPerimeter(long long neededApples) {
+        long long radius = 0, apple = 0;
+        while(apple < neededApples) {
+            radius++;
+            apple += 4*radius + 8*radius + 4*3*radius*(radius-1);
+        }
+        return 8 * radius;
+    }
+};
+```
+
+### 二分
+
+- 将上面的公式再次推导，即可得到对于半径为radius的正方形上以及其内部，共有苹果
+  - $ 2*radius*(radius+1)*(2*radius+1) $
+- 然后就能愉快的二分啦
+
+```c++
+class Solution {
+public:
+    long long minimumPerimeter(long long neededApples) {
+        long long mid = 0, apple = 0;
+        int l = 0, r = 500000;
+        while(l < r) {
+            // [l, r]
+            // f(l) < target
+            // f(r) >= target
+            mid = (r - l) / 2 + l;
+            apple = 2*mid*(mid+1)*(2*mid+1);
+            if(apple < neededApples) {
+                l = mid + 1;
+            } else {
+                r = mid;
+            }
+        }
+        // [r, l)
+        return 8 * l;
+    }
+};
+
+// l = mid + 1, r = mid - 1, 闭区间
+// r = mid, l = mid, 开区间
+// l <= r // 双闭区间(对应区间没有数)
+```
+

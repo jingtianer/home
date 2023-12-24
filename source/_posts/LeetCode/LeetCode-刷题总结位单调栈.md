@@ -430,3 +430,75 @@ public:
     }
 };
 ```
+
+## [2865. 美丽塔 I](https://leetcode.cn/problems/beautiful-towers-i/description/)
+
+这道题与[2866. 美丽塔 II](https://jingtianer.github.io/home/2023/12/19/LeetCode/LeetCode-%E5%88%B7%E9%A2%98%E6%80%BB%E7%BB%9330/#2866-%E7%BE%8E%E4%B8%BD%E5%A1%94-II)相同，只是数据规模更小一点，当时用枚举山峰做的，这次用单调栈
+
+### 思路
+
+- 根据提示，每一个位置都有可能是山峰（其实只有局部最大值有可能），那么假设i为山峰时，要计算出总和，需要三个数据：
+  - i左侧上升的最大和
+  - i右侧下降（反过来看也是上升）的最大和
+  - i的最大值
+  - 将以上三个值相加，就是最终结果
+- 所以需要两个数据，存放所有i对应的左侧山坡最大和，右侧山峰最大和
+- 使用单调栈的思想，创建一个递增栈，当栈顶元素大于当前元素时，弹出其中元素
+- 将数组想想成一座座山峰
+  - 如果当前元素没有弹出栈中元素，说明当前处于上升阶段，那么其左侧/右侧的最大和就可以是左侧/右侧的元素的值
+  - 如果弹出了元素，且栈被弹空了，说明当前元素是从左/右开始到当前最小的元素，那么到目前为止的所有元素都只能取最小值
+  - 如果弹出了元素，且栈没有被弹空，当前栈顶元素就是当前元素与其之间能建造的最大值，都取该栈顶元素建造塔，就能满足这个区间内的和最大，而且由于是递增栈，取栈顶元素为这个区间的值也不会破坏山脉的递增/递减性质，那么这个区间的和加上栈顶元素的高度和栈顶元素之和的最大和，就是到当前元素的最大和
+
+### 代码
+
+```c++
+class Solution {
+    int monoStack[1000 + 1];
+    int stackPtr;
+    void initStack() {
+        stackPtr = 0;
+    }
+    int pop() {
+        return monoStack[--stackPtr];
+    }
+    int top() {
+        return monoStack[stackPtr - 1];
+    }
+    void push(int val) {
+        monoStack[stackPtr++] = val;
+    }
+    bool empty() {
+        return stackPtr == 0;
+    }
+public:
+    long long maximumSumOfHeights(vector<int>& maxHeights) {
+        int len = maxHeights.size();
+        long long ans = INT_MIN;
+        vector<long long> leftHill(len), rightHill(len);
+        initStack();
+        for(int i = 0; i < len; i++) {
+            int topVal = len;
+            while(!empty() && maxHeights[top()] > maxHeights[i]) {
+                topVal = pop();
+            }
+            if(empty()) leftHill[i] = (i + 0ll) * maxHeights[i] + leftHill[0];
+            else if(topVal  < len) leftHill[i] = (i - top() - 1ll) * maxHeights[i] + maxHeights[top()] + leftHill[top()];
+            else if(i > 0) leftHill[i] = leftHill[i-1] + maxHeights[i-1];
+            push(i);
+        }
+        initStack();
+        for(int i = len - 1; i >= 0; i--) {
+            int topVal = len;
+            while(!empty() && maxHeights[top()] > maxHeights[i]) {
+                topVal = pop();
+            }
+            if(empty()) rightHill[i] = (len - 1ll - i) * maxHeights[i] + rightHill[len - 1];
+            else if(topVal  < len) rightHill[i] = (top() - i - 1ll) * maxHeights[i] + maxHeights[top()] + rightHill[top()];
+            else if(i < len - 1) rightHill[i] = rightHill[i+1] + maxHeights[i+1];
+            push(i);
+            ans = max(ans, leftHill[i] + rightHill[i] + maxHeights[i]);
+        }
+        return ans;
+    }
+};
+```
