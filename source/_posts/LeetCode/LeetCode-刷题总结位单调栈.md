@@ -637,74 +637,151 @@ int init_io = []() {
 }();
 
 class Solution {
-    class Stack { // 先自定义一个
-        int *stack = nullptr;
-        int stackPtr;
-        void init(size_t len, int val) {
-            stackPtr = 0;
-            if(len > 0) {
-                stack = new int[len];
-                fill(stack, stack + len, val);
-            }
-        }
+    class Stack { // 用数组，快一点
+        int stack[100000 + 1] = {0};
+        int stackPtr = 0;
         public:
-        Stack() {
-            init(0, 0);
+        Stack() { }
+        Stack(size_t len, int val) { 
+            if(len > 0) fill(stack, stack + len, val); 
         }
-        Stack(size_t len)  {
-            init(len, 0);
-        }
-        Stack(size_t len, int val) {
-            init(len, val);
-        }
-        ~Stack() {
-            if(stack) delete[] stack;
-        }
-        void clear() {
-            stackPtr = 0;
-        }
-        bool empty() {
-            return stackPtr == 0;
-        }
-        int top() {
-            return stack[stackPtr - 1];
-        }
-        int pop() {
-            return stack[--stackPtr];
-        }
-        void push(int val) {
-            stack[stackPtr++] = val;
-        }
-        int ptr() {
-            return stackPtr;
-        }
-        int get(int index) {
-            return stack[index];
-        }
+        void clear() { stackPtr = 0; }
+        bool empty() { return stackPtr == 0; }
+        int top() { return stack[stackPtr - 1]; }
+        int pop() { return stack[--stackPtr]; }
+        void push(int val) { stack[stackPtr++] = val; }
+        int ptr() { return stackPtr; }
+        int get(int index) { return stack[index]; }
     };
 public:
     vector<int> secondGreaterElement(vector<int>& nums) {
         int len = nums.size();
         vector<int> res(len, -1);
-        Stack monoStack(len);
-        Stack seen(len);
+        Stack monoStack;
+        Stack seen;
         for(int i = 0; i < len; i++) {
-            while(!seen.empty() && nums[seen.top()] < nums[i]) {
-                int top = seen.top();
-                seen.pop();
-                res[top] = nums[i];
-            }
+            while(!seen.empty() && nums[seen.top()] < nums[i])
+                res[seen.pop()] = nums[i];
             int ptr = monoStack.ptr();
-            while(!monoStack.empty() && nums[monoStack.top()] < nums[i]) {
-                int top = monoStack.top();
+            while(!monoStack.empty() && nums[monoStack.top()] < nums[i])
                 monoStack.pop();
-            }
-            for(int j = monoStack.ptr(); j < ptr; j++) {
+            for(int j = monoStack.ptr(); j < ptr; j++)
                 seen.push(monoStack.get(j));
-            }
             monoStack.push(i);
         }
         return res;
+    }
+};
+```
+
+## 85. 最大矩形
+
+### 转化为单调栈问题
+- 直接在图内搜索矩形的复杂度是`m*m*n*n`
+- 可以计算每个点`(i, j)`的右侧有几个连续的1
+- 对于某一列，右侧分别有`[2,3,1]`个连续的1，那么可能的矩形为`2`, `3`, `1`, `2+2`, `1+1+1`
+- 1. 构建一个递增栈，弹出所有大于当前元素的值后，以当前元素为高度的矩形就确定了
+- 2. 每个点入栈后，栈內元素是递增的，计算两两之间形成的矩形面积
+- 复杂度`O(n*m*m)`
+
+### 思路1
+
+
+
+```c++
+class Solution {
+public:
+    int maximalRectangle(vector<vector<char>>& matrix) {
+        int m = matrix.size(), n = matrix[0].size();
+        vector<vector<int>> left1Cnt(m, vector<int>(n, 0));
+        for(int i = 0; i < m; i++) {
+            left1Cnt[i][n - 1] = matrix[i][n - 1] - '0';
+            for(int j = n - 2; j >= 0; j--) {
+                if(matrix[i][j] == '1') left1Cnt[i][j] = 1 + left1Cnt[i][j+1];
+            }
+        }
+        int ret = INT_MIN;
+        for(int j = 0; j < n; j++) {
+            vector<int> monoStack(m);
+            vector<int> left(m, 0);
+            int stackPtr = 0;
+            int minCnt = INT_MAX;
+            for(int i = 0; i < m; i++) {
+                int top = -1;
+                left[i] = i;
+                minCnt = min(minCnt, left1Cnt[i][j]);
+                ret = max(ret, (i + 1) * minCnt);
+                while(stackPtr != 0 && left1Cnt[monoStack[stackPtr - 1]][j] > left1Cnt[i][j]) {
+                    top = monoStack[stackPtr - 1];
+                    stackPtr--;
+                }
+
+                if(top != -1) {
+                    ret = max(ret, (i - left[top] + 1) * left1Cnt[i][j]);
+                    left[i] = left[top];
+                }
+                monoStack[stackPtr++] = i;
+                for(int ptr = 0; ptr < stackPtr; ptr++) {
+                    ret = max(ret, (i - left[monoStack[ptr]] + 1) * left1Cnt[monoStack[ptr]][j]);
+                }
+            }
+        }
+        return ret;
+    }
+};
+```
+- 参考[907. 子数组的最小值之和](https://leetcode.cn/problems/sum-of-subarray-minimums/description/)，找到每个节点作为最小值的区间长度，计算矩形面积，取最大值
+- 复杂度,`m*n`
+
+### 思路2
+
+```c++
+class Solution {
+public:
+    int maximalRectangle(vector<vector<char>>& matrix) {
+        int m = matrix.size(), n = matrix[0].size();
+        vector<vector<int>> left1Cnt(m, vector<int>(n, 0));
+        for(int i = 0; i < m; i++) {
+            left1Cnt[i][n - 1] = matrix[i][n - 1] - '0';
+            for(int j = n - 2; j >= 0; j--) {
+                if(matrix[i][j] == '1') left1Cnt[i][j] = 1 + left1Cnt[i][j+1];
+            }
+        }
+        int ret = INT_MIN;
+        for(int j = 0; j < n; j++) {
+            vector<int> monoStack(m);
+            vector<int> left(m, 0), right(m, 0);
+            int stackPtr = 0;
+            for(int i = 0; i < m; i++) {
+                int top = -1;
+                while(stackPtr != 0 && left1Cnt[monoStack[stackPtr - 1]][j] >= left1Cnt[i][j]) {
+                    top = monoStack[--stackPtr];
+                }
+                if(stackPtr == 0) left[i] = i;
+                else {
+                    top = monoStack[stackPtr - 1];
+                    left[i] = i - top - 1;
+                }
+                monoStack[stackPtr++] = i;
+            }
+            stackPtr = 0;
+            for(int i = m-1; i >= 0; i--) {
+                int top = -1;
+                while(stackPtr != 0 && left1Cnt[monoStack[stackPtr - 1]][j] >= left1Cnt[i][j]) {
+                    top = monoStack[--stackPtr];
+                }
+                if(stackPtr == 0) right[i] = m-1 - i;
+                else  {
+                    top = monoStack[stackPtr - 1];
+                    right[i] = top - i - 1;
+                }
+                monoStack[stackPtr++] = i;
+            }
+            for(int i = 0; i < m; i++) {
+                ret = max(ret, (left[i] + right[i] + 1) * left1Cnt[i][j]);
+            }
+        }
+        return ret;
     }
 };
 ```
