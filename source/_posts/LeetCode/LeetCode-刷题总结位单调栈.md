@@ -564,3 +564,147 @@ public:
     }
 };
 ```
+
+## [1019. 链表中的下一个更大节点](https://leetcode.cn/problems/next-greater-node-in-linked-list/)
+
+- 没意思，链表
+
+```c++
+class Solution {
+public:
+    vector<int> nextLargerNodes(ListNode* head) {
+        stack<pair<int, int>> monoStack;
+        vector<int> res;
+        int index = 0;
+        while(head) {
+            res.push_back(0);
+            while(!monoStack.empty() && monoStack.top().first < head->val) {
+                res[monoStack.top().second] = head->val;
+                monoStack.pop();
+            }
+            monoStack.emplace(head->val, index);
+            index++;
+            head = head->next;
+        }
+        return res;
+    }
+};
+```
+
+
+## [2454. 下一个更大元素 IV](https://leetcode.cn/problems/next-greater-element-iv/description/)
+
+### 单调栈+小顶堆
+
+- 构造单调递减栈，当一个数被弹栈时，说明遇到了比他大的第一个数，此时被弹出元素放入一个小顶堆中
+- 每个元素入栈前，先查看小顶堆中有没有比自己小的元素，如果有，则第二个比他大的数就找到了
+
+```c++
+class Solution {
+public:
+    vector<int> secondGreaterElement(vector<int>& nums) {
+        int len = nums.size();
+        vector<int> res(len, -1);
+        stack<int> monoStack;
+        auto cmp = [&nums](int i, int j) { return nums[i] > nums[j]; };
+        priority_queue<int, vector<int>, decltype(cmp)> monoQueue(cmp);
+        for(int i = 0; i < len; i++) {
+            while(!monoQueue.empty() && nums[monoQueue.top()] < nums[i]) {
+                int top1 = monoQueue.top();
+                monoQueue.pop();
+                res[top1] = nums[i];
+            }
+            while(!monoStack.empty() && nums[monoStack.top()] < nums[i]) {
+                int top = monoStack.top();
+                monoStack.pop();
+                monoQueue.push(top);
+            }
+            monoStack.push(i);
+        }
+        return res;
+    }
+};
+```
+
+### 单调栈+栈
+
+- 其实不必用小顶堆，被弹出的元素反序插入另一个栈即可
+
+```c++
+int init_io = []() {
+    cin.tie(nullptr)->sync_with_stdio(false);
+    return 0;
+}();
+
+class Solution {
+    class Stack { // 先自定义一个
+        int *stack = nullptr;
+        int stackPtr;
+        void init(size_t len, int val) {
+            stackPtr = 0;
+            if(len > 0) {
+                stack = new int[len];
+                fill(stack, stack + len, val);
+            }
+        }
+        public:
+        Stack() {
+            init(0, 0);
+        }
+        Stack(size_t len)  {
+            init(len, 0);
+        }
+        Stack(size_t len, int val) {
+            init(len, val);
+        }
+        ~Stack() {
+            if(stack) delete[] stack;
+        }
+        void clear() {
+            stackPtr = 0;
+        }
+        bool empty() {
+            return stackPtr == 0;
+        }
+        int top() {
+            return stack[stackPtr - 1];
+        }
+        int pop() {
+            return stack[--stackPtr];
+        }
+        void push(int val) {
+            stack[stackPtr++] = val;
+        }
+        int ptr() {
+            return stackPtr;
+        }
+        int get(int index) {
+            return stack[index];
+        }
+    };
+public:
+    vector<int> secondGreaterElement(vector<int>& nums) {
+        int len = nums.size();
+        vector<int> res(len, -1);
+        Stack monoStack(len);
+        Stack seen(len);
+        for(int i = 0; i < len; i++) {
+            while(!seen.empty() && nums[seen.top()] < nums[i]) {
+                int top = seen.top();
+                seen.pop();
+                res[top] = nums[i];
+            }
+            int ptr = monoStack.ptr();
+            while(!monoStack.empty() && nums[monoStack.top()] < nums[i]) {
+                int top = monoStack.top();
+                monoStack.pop();
+            }
+            for(int j = monoStack.ptr(); j < ptr; j++) {
+                seen.push(monoStack.get(j));
+            }
+            monoStack.push(i);
+        }
+        return res;
+    }
+};
+```
