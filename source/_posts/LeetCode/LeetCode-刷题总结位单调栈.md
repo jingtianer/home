@@ -785,3 +785,61 @@ public:
     }
 };
 ```
+
+## [1504. 统计全 1 子矩形](https://leetcode.cn/problems/count-submatrices-with-all-ones/description/)
+
+### 笨蛋栈(两次单调栈)
+- 参考[907. 子数组的最小值之和](https://leetcode.cn/problems/sum-of-subarray-minimums/description/)，找到每个节点作为最小值的左右两侧区间长度
+- 以当前元素i为最小值区间范围为[l, r]，则正方形个数是
+  - `(r - i + 1) * (i - l + 1) * mat[i][j]`
+
+```c++
+class Solution {
+public:
+    int numSubmat(vector<vector<int>>& mat) {
+        int m = mat.size(), n = mat[0].size();
+        int ret = 0;
+        for(int i = 0; i < m; i++) {
+            for(int j = n - 2; j >= 0; j--) {
+                if(mat[i][j]) mat[i][j] = mat[i][j+1] + mat[i][j];
+            }
+        }
+        vector<int> monoStack(m);
+        vector<int> left(m), right(m);
+        int stackTop = 0;
+        for(int j = 0; j < n; j++) {
+            stackTop = 0;
+            for(int i = 0; i < m; i++) {
+                int top = m;
+                while(stackTop != 0 
+                    && mat[monoStack[stackTop - 1]][j] >= mat[i][j]) {
+                    top = monoStack[--stackTop];
+                }
+                if(top < m) left[i] = left[top];
+                else if(stackTop != 0) left[i] = i;
+                else left[i] = 0;
+                monoStack[stackTop++] = i;
+            }
+            stackTop = 0;
+            for(int i = m - 1; i >= 0; i--) {
+                int top = m;
+                while(stackTop != 0 
+                    && mat[monoStack[stackTop - 1]][j] > mat[i][j]) {
+                    top = monoStack[--stackTop];
+                }
+                if(top < m) right[i] = right[top];
+                else if(stackTop != 0) right[i] = i;
+                else right[i] = m-1;
+                monoStack[stackTop++] = i;
+                ret += ((right[i] - i + 1) * (i - left[i] + 1)) * mat[i][j];
+            }
+        }
+        return ret;
+    }
+}; 
+```
+
+### 聪明栈(一次单调栈)
+
+- 题解，看不懂
+
