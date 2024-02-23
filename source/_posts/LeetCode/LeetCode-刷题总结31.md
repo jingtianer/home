@@ -1056,3 +1056,154 @@ public:
 ```
 
 - 避免stl会快
+
+## [993. 二叉树的堂兄弟节点](https://leetcode.cn/problems/cousins-in-binary-tree/description/?envType=daily-question&envId=2024-02-08)
+
+### 非递归
+
+```c++
+class Solution {
+public:
+    bool isCousins(TreeNode* root, int x, int y) {
+        TreeNode *xFather = nullptr, *yFather = nullptr;
+        int xDepth = 0, yDepth = 0;
+        bool findX = false, findY = false;
+        TreeNode* s[101] = {nullptr};
+        int stack_ptr = 0;
+        TreeNode *cur = root, *prev = nullptr;
+        while(!(stack_ptr==0) || cur) {
+            while(cur) {
+                s[stack_ptr++] = cur;
+                cur = cur->left;
+            }
+            cur = s[stack_ptr-1];
+            if(cur->right && cur->right != prev) {
+                cur = cur->right;
+            } else {
+                if(cur->val == x) {
+                    xFather = stack_ptr-2 >= 0 ? s[stack_ptr-2] : nullptr;;
+                    xDepth = stack_ptr;
+                    findX = true;
+                }
+                if(cur->val == y) {
+                    yFather = stack_ptr-2 >= 0 ? s[stack_ptr-2] : nullptr;;
+                    yDepth = stack_ptr;
+                    findY = true;
+                }
+                if(findX && findY) break;
+                stack_ptr--;
+                prev = cur;
+                cur = nullptr;
+            }
+        }
+        return xFather && yFather && xFather != yFather && xDepth == yDepth;
+    }
+};
+```
+
+### 递归
+```c++
+class Solution {
+    int xDepth = 0, yDepth = 0;
+    TreeNode *xFather = nullptr, *yFather = nullptr;
+    void postorder(TreeNode *root, TreeNode *parent, int x, int y, int dep) {
+        if(!root) return;
+        postorder(root->left, root, x, y, dep+1);
+        postorder(root->right, root, x, y, dep+1);
+        if(root->val == x) {
+            xDepth = dep;
+            xFather = parent;
+        }
+        if(root->val == y) {
+            yDepth = dep;
+            yFather = parent;
+        }
+    }
+public:
+    bool isCousins(TreeNode* root, int x, int y) {
+        postorder(root, nullptr, x, y, 0);
+        return xFather && yFather && xFather != yFather && xDepth == yDepth;
+    }
+};
+```
+
+- leetcode真奇怪，递归算法反而会更快
+
+## [2641. 二叉树的堂兄弟节点 II](https://leetcode.cn/problems/cousins-in-binary-tree-ii/description/?envType=daily-question&envId=2024-02-07)
+
+### ac
+
+```c++
+class Solution {
+public:
+    TreeNode* replaceValueInTree(TreeNode* root) {
+        if(!root) return nullptr;
+        queue<pair<TreeNode*, TreeNode*>> q;
+        q.emplace(root, nullptr);
+        while(!q.empty()) {
+            vector<pair<TreeNode *, TreeNode *>> level;
+            int q_size = q.size(), level_sum = 0;
+            int q_size_cnt = q_size;
+            while(q_size_cnt--) {
+                auto [node, p] = q.front();
+                q.pop();
+                level_sum += node->val;
+                level.emplace_back(node, p);
+                if(node->left) q.emplace(node->left, node);
+                if(node->right) q.emplace(node->right, node);
+            }
+            for(int i = 0; i < q_size;) {
+                if(i + 1 < q_size && level[i].second == level[i+1].second) {
+                    level[i].first->val = level[i+1].first->val = level_sum - level[i].first->val - level[i+1].first->val;
+                    i += 2;
+                } else {
+                    level[i].first->val = level_sum - level[i].first->val;
+                    i += 1;
+                }
+            }
+        }
+        return root;
+    }
+};
+```
+
+### 优化
+- 层次遍历
+- 计算子节点（下一层节点）的和
+- 父节点对子节点修改，改为两兄弟之和
+- 获得当前层的和（`prev_level_sum`），将当前节点值(`node->val`)改为`prev_level_sum` `-` `node->val`
+
+```c++
+class Solution {
+public:
+    TreeNode* replaceValueInTree(TreeNode* root) {
+        if(!root) return nullptr;
+        queue<TreeNode*> q;
+        q.push(root);
+        int prev_level_sum = root->val;
+        int q_size = 1;
+        while(q_size > 0) {
+            int level_sum = 0;
+            while(q_size--) {
+                auto node = q.front();
+                q.pop();
+                if(node->left) {
+                    q.push(node->left);
+                    level_sum += node->left->val;
+                }
+                if(node->right) {
+                    q.push(node->right);
+                    level_sum += node->right->val;
+                }
+                if(node->left && node->right) {
+                    node->left->val = node->right->val = node->left->val + node->right->val;
+                }
+                node->val = prev_level_sum - node->val;
+            }
+            prev_level_sum = level_sum;
+            q_size = q.size();
+        }
+        return root;
+    }
+};
+```
