@@ -180,4 +180,54 @@ public:
 };
 ```
 
-## 
+## [2476. 二叉搜索树最近节点查询](https://leetcode.cn/problems/closest-nodes-queries-in-a-binary-search-tree/description/?envType=daily-question&envId=2024-02-24)
+
+### 中序+二分
+
+```c++
+class Solution {
+    void inorder(TreeNode *root, vector<int>& ans) {
+        if(!root) return;
+        inorder(root->left, ans);
+        ans.push_back(root->val);
+        inorder(root->right, ans);
+    }
+public:
+    vector<vector<int>> closestNodes(TreeNode* root, vector<int>& queries) {
+        vector<int> v;
+        vector<vector<int>> ans;
+        auto miniCmp = [](int x, int y) { return x >= y;};
+        auto maxiCmp = [](int x, int y) { return x <= y;};
+        inorder(root, v);
+        for(int query : queries) {
+            auto mini = upper_bound(v.rbegin(), v.rend(), query, miniCmp);
+            auto maxi = upper_bound(v.begin(), v.end(), query, maxiCmp);
+            ans.push_back({mini == v.rend() ? -1 : *mini, maxi == v.end() ? -1 : *maxi});
+        }
+        return ans;
+    }
+};
+```
+
+### [235. 二叉搜索树的最近公共祖先](https://leetcode.cn/problems/lowest-common-ancestor-of-a-binary-search-tree/description/?envType=daily-question&envId=2024-02-25)
+
+- 这道题与[236. 二叉树的最近公共祖先](https://jingtianer.github.io/home/2023/12/25/LeetCode/LeetCode-%E5%88%B7%E9%A2%98%E6%80%BB%E7%BB%9331/#236-%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%9C%80%E8%BF%91%E5%85%AC%E5%85%B1%E7%A5%96%E5%85%88)不同，这道题是在二叉搜索树上寻找
+- 对于根节点，如果两个数分别大于等于和小于等于这个节点，说明当前根节点就是公共祖先
+- 如果都大于或小于当前根节点，说明要向左子树或右子树移动，继续寻找
+```c++
+class Solution {
+    TreeNode* _lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        if(root->val >= p->val && root->val <= q->val) return root;
+        else if(root->val > p->val) {
+            return lowestCommonAncestor(root->left, p, q);
+        } else {
+            return lowestCommonAncestor(root->right, p, q);
+        }
+    }
+public:
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) { // p q一定在root中，root一定不空
+        if(p->val > q->val) swap(p, q); //保证p < q;
+        return _lowestCommonAncestor(root, p, q);
+    }
+};
+```
