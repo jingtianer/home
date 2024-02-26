@@ -1,5 +1,5 @@
 ---
-title: LeetCode-31
+title: LeetCode-32
 date: 2023-2-23 11:14:34
 tags: LeetCode
 categories: LeetCode
@@ -228,6 +228,27 @@ public:
     TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) { // p q一定在root中，root一定不空
         if(p->val > q->val) swap(p, q); //保证p < q;
         return _lowestCommonAncestor(root, p, q);
+    }
+};
+```
+
+## [938. 二叉搜索树的范围和](https://leetcode.cn/problems/range-sum-of-bst/description/)
+
+- 如果当前节点大于high，则不考虑右子树和当前节点，直接转移到左子树，小于low同理
+- 如果当前节点在high和low之间，则返回当前节点值加上左右两棵子树的和
+
+```c++
+class Solution {
+public:
+    int rangeSumBST(TreeNode* root, int low, int high) {
+        if(!root) return 0;
+        if(root->val > high) {
+            return rangeSumBST(root->left, low, high);
+        } else if(root->val < low) {
+            return rangeSumBST(root->right, low, high);
+        } else {
+            return root->val + rangeSumBST(root->left, low, high) + rangeSumBST(root->right, low, high);
+        }
     }
 };
 ```
