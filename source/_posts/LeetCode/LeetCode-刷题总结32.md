@@ -1,6 +1,6 @@
 ---
 title: LeetCode-32
-date: 2023-2-23 11:14:34
+date: 2024-2-23 11:14:34
 tags: LeetCode
 categories: LeetCode
 toc: true
@@ -249,6 +249,79 @@ public:
         } else {
             return root->val + rangeSumBST(root->left, low, high) + rangeSumBST(root->right, low, high);
         }
+    }
+};
+```
+
+## [2867. 统计树中的合法路径数目](https://leetcode.cn/problems/count-valid-paths-in-a-tree/description/)
+
+### 思路
+
+- 首先题目说是树，所以要考虑最广泛的n叉树的情况
+- 涉及到素数，所以可以先素数筛把需要用到的素数缓存起来
+- 最笨的方法是，依次从所有素数出发，dfs直到遇到下一个素数或者遇到没有未访问节点位置，统计总共的路线数
+  - 一个素数的所有孩子可以看成一个子树，到达每个节点的路径数就是节点数
+  - 总路线数就是
+    - N个子树按照上面的要求dfs时所遇到的节点数之和($\sum_{i=1}^N(A_i)$)
+    - 考虑到dfs过程中遇到的都是非素数，那么任意两个子树之间的任意两点之间的路径也是题目所求路径，总数为N个子树节点数两两相乘再相加($\sum_{i=1}^N\sum_{j=i+1}^N(A_i \times A_j)$)
+- 为了减少重复的统计，使用并查集，将素数节点去除得到X个子树，计算X个子树的节点个数
+- 根据公式$(\sum_{i=1}^N(A_i))^2 - \sum_{i=1}^N(A_i^2) = 2 \times \sum_{i=1}^N\sum_{j=i+1}^N(A_i \times A_j)$，可以将二重循环简化为一重循环
+
+### 代码
+
+```c++
+class Solution {
+    int find(int x, vector<int>& arr) {
+        return arr[x] != x ? (arr[x] = find(arr[x], arr)) : x;
+    }
+    void Union(int x, int y, vector<int>& arr) {
+        arr[find(x, arr)] = find(y, arr);
+    }
+    unordered_set<int> primeSet{2};
+    bool is_prime(int val) {
+        return primeSet.count(val) != 0;
+    }
+    long long ans = 0;
+public:
+    long long countPaths(int n, vector<vector<int>>& edges) {
+        if(n <= 1) return 0;
+        for(int i = 3; i <= n; i+=2) {
+            bool flag = true;
+            for(int j = 3; j*j<=i; j+=2) {
+                if(i % j == 0) {
+                    flag = false;
+                    break;
+                }
+            }
+            if(flag) {
+                primeSet.insert(i);
+            }
+        }
+        vector<int> disjointSet(n+1), cnt(n+1);
+        iota(disjointSet.begin(), disjointSet.end(), 0);
+        vector<vector<int>> g(n+1);
+        for(auto& edge:edges) {
+            bool is_prime0 = is_prime(edge[0]), is_prime1 = is_prime(edge[1]);
+            if(!is_prime0 && !is_prime1) { // 两个节点都不是素数，合并到同一个集合
+                Union(edge[0], edge[1], disjointSet);
+            }
+            if(is_prime0 ^ is_prime1) { // 两个节点中一个素数，一个非素数，记录非素数子树
+                g[edge[0]].push_back(edge[1]);
+                g[edge[1]].push_back(edge[0]);
+            }
+        }
+        for(int i = 1; i <= n; i++) {
+            cnt[find(i, disjointSet)]++;
+        }
+        for(auto ite = primeSet.begin(); ite != primeSet.end(); ite++) {
+            long long cntSum = 0, cntSquareSum = 0;
+            for(int child : g[*ite]) {
+                cntSum += (long long)cnt[disjointSet[child]];
+                cntSquareSum += (long long)cnt[disjointSet[child]] * cnt[disjointSet[child]]; // 防止溢出
+            }
+            ans += (cntSum * cntSum - cntSquareSum) / 2 + cntSum;
+        }
+        return ans;
     }
 };
 ```
