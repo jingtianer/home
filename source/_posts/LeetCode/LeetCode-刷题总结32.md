@@ -325,3 +325,246 @@ public:
     }
 };
 ```
+
+## [2673. 使二叉树所有路径值相等的最小代价](https://leetcode.cn/problems/make-costs-of-paths-equal-in-a-binary-tree/description/)
+
+### 思路
+- 计算每个节点从根到当前节点的路径和
+- 计算每个节点的子路径的最大值
+- 对每个节点，计算两个子节点的子路径最大值之差，给较小的节点增加这个差值
+### 代码
+```c++
+class Solution {
+    int ans = 0;
+    void solve(int n, int node, int extra, vector<int>& childMax) {
+        int parentMax = childMax[(node+1)/2-1];
+        ans += parentMax - childMax[node];
+        extra += parentMax - childMax[node];
+        if(2*(node+1)-1 < n) solve(n, 2*(node+1)-1, extra, childMax);
+        if(2*(node+1) < n) solve(n, 2*(node+1), extra, childMax);
+    }
+public:
+    int minIncrements(int n, vector<int>& cost) {
+        vector<int> pathSum(n), childMax(n);
+        pathSum[0] = cost[0];
+        for(int i = 1; i < n; i++) {
+            pathSum[i] = cost[i] + pathSum[(i+1)/2-1];
+        }
+        for(int i = n-1; i >= n/2; i--) {
+            childMax[i] = pathSum[i]; 
+        }
+        for(int i = n/2 - 1; i >= 0; i--) {
+            childMax[i] = max(
+                (i+1)*2-1 < n ? childMax[(i+1)*2-1] : 0, 
+                (i+1)*2 < n ? childMax[(i+1)*2] : 0); 
+        }
+        solve(n, 1, 0, childMax);
+        solve(n, 2, 0, childMax);
+        return ans;
+    }
+};
+```
+
+- 去掉不必要的判断
+
+```c++
+inline int leftChildOf(int node) { return ((node + 1) << 1) - 1; }
+inline int rightChildOf(int node) { return ((node + 1) << 1); }
+inline int parentOf(int node) { return ((node + 1) >> 1) - 1; }
+class Solution {
+    int solve(int n, int node, vector<int>& childMax) {
+        int ans = childMax[parentOf(node)] - childMax[node];
+        if(leftChildOf(node) < n /*&& rightChildOf(node) < n*/) {
+            ans += solve(n, leftChildOf(node), childMax) + solve(n, rightChildOf(node), childMax);
+        }
+        return ans;
+    }
+public:
+    int minIncrements(int n, vector<int>& cost) {
+        vector<int> pathSum(n), childMax(n);
+        pathSum[0] = cost[0];
+        for(int i = 1; i < n; i++) {
+            pathSum[i] = cost[i] + pathSum[parentOf(i)];
+        }
+        for(int i = n-1; i >= n/2; i--) {
+            childMax[i] = pathSum[i]; 
+        }
+        for(int i = n/2 - 1; i >= 0; i--) {
+            childMax[i] = max(childMax[leftChildOf(i)], childMax[rightChildOf(i)]); 
+        }
+        return solve(n, 1, childMax) + solve(n, 2, childMax);
+    }
+};
+```
+
+### 一行流
+
+```c++
+inline int leftChildOf(int node) { return ((node + 1) << 1) - 1; } inline int rightChildOf(int node) { return ((node + 1) << 1); } inline int parentOf(int node) { return ((node + 1) >> 1) - 1; } class Solution { int solve(int n, int node, vector<int>& childMax) { return childMax[parentOf(node)] - childMax[node] + (leftChildOf(node) < n ? solve(n, leftChildOf(node), childMax) + solve(n, rightChildOf(node), childMax) : 0);} public: int minIncrements(int n, vector<int>& cost) { vector<int> pathSum(n), childMax(n); pathSum[0] = cost[0]; for(int i = 1; i < n; i++) pathSum[i] = cost[i] + pathSum[parentOf(i)]; for(int i = n-1; i >= n/2; i--) childMax[i] = pathSum[i]; for(int i = n/2 - 1; i >= 0; i--) childMax[i] = max(childMax[leftChildOf(i)], childMax[rightChildOf(i)]); return solve(n, 1, childMax) + solve(n, 2, childMax); }};
+```
+
+## [2487. 从链表中移除节点](https://leetcode.cn/problems/remove-nodes-from-linked-list/description/?envType=daily-question&envId=2024-01-03)
+
+### 单调栈
+
+```c++
+class Solution {
+public:
+    ListNode* removeNodes(ListNode* head) {
+        ListNode dummy, *move = head;
+        stack<ListNode*> monoStack;
+        monoStack.push(&dummy);
+        while(move) {
+            while(!monoStack.empty() && monoStack.top()->val < move->val) {
+                monoStack.pop();
+            }
+            monoStack.push(move);
+            move = move->next;
+        }
+        while(!monoStack.empty()) {
+            ListNode *node = monoStack.top();
+            monoStack.pop();
+            node->next = dummy.next;
+            dummy.next = node;
+        }
+        return dummy.next;
+    }
+};
+```
+
+### 不用stack
+```c++
+class Solution {
+public:
+    ListNode* removeNodes(ListNode* head) {
+        ListNode dummy, *move = head;
+        int len = 0;
+        while(move) {
+            while(dummy.next != nullptr && dummy.next->val < move->val) {
+                dummy.next = dummy.next->next;
+                len--;
+            }
+            ListNode *tmp = move->next;
+            move->next = dummy.next;
+            dummy.next = move;
+            move = tmp;
+            len++;
+        }
+        move = dummy.next;
+        dummy.next = nullptr;
+        while(len--) {
+            ListNode *node = move->next;
+            move->next = dummy.next;
+            dummy.next = move;
+            move = node;
+        }
+        return dummy.next;
+    }
+};
+```
+
+## [2397. 被列覆盖的最多行数](https://leetcode.cn/problems/maximum-rows-covered-by-columns/description/?envType=daily-question&envId=2024-01-04)
+
+### 状态压缩
+```c++
+class Solution {
+    int m, n, ans = 0;
+    vector<int> row;
+    void checker(int x) {
+        int cnt = 0;
+        for(int i = 0; i < m; i++) {
+            if((row[i] & ~x) == 0) cnt++;
+        }
+        ans = max(ans, cnt);
+    }
+    int toInt(vector<int>& vec, int len) {
+        int x = 0;
+        for(int i = 0; i < len; i++) {
+            x <<= 1;
+            x += vec[i];
+        }
+        return x;
+    }
+public:
+    int maximumRows(vector<vector<int>>& matrix, int numSelect) {
+        m = matrix.size(), n = matrix[0].size();
+        vector<int> vec(n);
+        fill(vec.rbegin(), vec.rbegin() + numSelect, 1);
+        for(int i = 0; i < m; i++) {
+            row.push_back(toInt(matrix[i], n));
+        }
+        for(int x = 0; x < (1 << n); x++) {
+            if (__builtin_popcount(x) != numSelect) {
+                continue;
+            }
+            checker(x);
+        }
+        return ans;
+    }
+};
+```
+
+### 全排列
+
+```c++
+class Solution {
+    int toInt(vector<int>& vec, int len) {
+        int x = 0;
+        for(int i = 0; i < len; i++) {
+            x <<= 1;
+            x += vec[i];
+        }
+        return x;
+    }
+    int setZero(int x, int i) {
+        return x & (~(1 << i));
+    }
+    int setOne(int x, int i) {
+        return x | (1 << i);
+    }
+    int swap(int x, int i, int j) {
+        int a = (x >> i) & 1;
+        int b = (x >> j) & 1;
+        x = a ? setOne(x, j) : setZero(x, j);
+        x = b ? setOne(x, i) : setZero(x, i);
+        return x;
+    }
+    bool swapOK(int x, int i, int n) {
+        int lastBit = (x & (1 << (n-1))) >> (n-1);
+        for(int j = i; j < n-1; j++) {
+            if(((x & (1 << j)) >> j) == lastBit) return false;
+        }
+        return true;
+    }
+    void permutation(int x, int j, int n, function<void(int)> checker) {
+        if(j == n-1) {
+            checker(x);
+            return;
+        }
+        for(int i = j; i < n; i++) {
+            if(!swapOK(x, j, i+1)) continue;
+            x = swap(x, i, j);
+            permutation(x, j + 1, n, checker);
+            x = swap(x, i, j);
+        }
+    }
+public:
+    int maximumRows(vector<vector<int>>& matrix, int numSelect) {
+        int m = matrix.size(), n = matrix[0].size(), ans = 0;
+        vector<int> row(m), vec(n);
+        fill(vec.rbegin(), vec.rbegin() + numSelect, 1);
+        for(int i = 0; i < m; i++) {
+            row[i] = toInt(matrix[i], n);
+        }
+        auto checker = [&row, &m, &ans](int x) {
+            int cnt = 0;
+            for(int i = 0; i < m; i++) {
+                if((row[i] & ~x) == 0) cnt++;
+            }
+            ans = max(ans, cnt);
+        };
+        permutation(toInt(vec, n), 0, n, checker);
+        return ans;
+    }
+};
+```
