@@ -568,3 +568,266 @@ public:
     }
 };
 ```
+
+## [2581. 统计可能的树根数目](https://leetcode.cn/problems/count-number-of-possible-root-nodes/description/)
+- 看题解的思路
+- 树形dp
+
+```c++
+class Solution {
+    vector<vector<int>> g;
+    vector<unordered_set<int>> guessesGraph;
+    vector<bool> visited;
+    int k, ans = 0;
+    void dfs(int root, int cnt) {
+        if(cnt >= k) ans++;
+        visited[root] = true;
+        for(int child : g[root]) {
+            if(visited[child]) continue;
+            int newCnt = cnt;
+            if(guessesGraph[root].count(child)) {
+                newCnt--;
+            }
+            if(guessesGraph[child].count(root)) {
+                newCnt++;
+            }
+            dfs(child, newCnt);
+        }
+    }
+public:
+    int rootCount(vector<vector<int>>& edges, vector<vector<int>>& guesses, int k) {
+        int n = edges.size() + 1;
+        this->k = k;
+        g = vector<vector<int>>(n);
+        guessesGraph = vector<unordered_set<int>>(n);
+        for(auto& edge : edges) {
+            g[edge[0]].push_back(edge[1]);
+            g[edge[1]].push_back(edge[0]);
+        }
+        visited = vector<bool>(n, false);
+        vector<int> parent(n, -1);
+        queue<int> q;
+        q.push(0);
+        while(!q.empty()) {
+            int node = q.front();
+            q.pop();
+            visited[node] = true;
+            for(int child : g[node]) {
+                if(visited[child]) continue;
+                parent[child] = node;
+                q.push(child);
+            }
+        }
+        int cnt = 0;
+        for(auto& guesse:guesses) {
+            if(guesse[0] == parent[guesse[1]]) cnt++;
+            guessesGraph[guesse[0]].insert(guesse[1]);
+        }
+        fill(visited.begin(), visited.end(), false);
+        dfs(0, cnt);
+        return ans;
+    }
+};
+```
+
+## [1944. 队列中可以看到的人数](https://leetcode.cn/problems/number-of-visible-people-in-a-queue/description/?envType=daily-question&envId=2024-01-05)
+
+- 还好，就是单调栈的简单应用
+```c++
+class Solution {
+public:
+    vector<int> canSeePersonsCount(vector<int>& heights) {
+        int n = heights.size();
+        vector<int> ans(n);
+        stack<int> monoStack;
+        for(int i = 0; i < n; i++) {
+            while(!monoStack.empty() && heights[monoStack.top()] < heights[i]) {
+                int top = monoStack.top();
+                monoStack.pop();
+                ans[top]++;
+            }
+            if(!monoStack.empty()) {
+                ans[monoStack.top()]++;
+            }
+            monoStack.push(i);
+        }
+        return ans;
+    }
+};
+```
+
+## [2807. 在链表中插入最大公约数](https://leetcode.cn/problems/insert-greatest-common-divisors-in-linked-list/description/?envType=daily-question&envId=2024-01-06)
+
+```c++
+class Solution {
+public:
+    ListNode* insertGreatestCommonDivisors(ListNode* head) {
+        ListNode* move = head;
+        while(move->next) {
+            move->next = new ListNode(gcd(move->val, move->next->val), move->next);
+            move = move->next->next;
+        }
+        return head;
+    }
+};
+```
+
+## [383. 赎金信](https://leetcode.cn/problems/ransom-note/description/?envType=daily-question&envId=2024-01-07)
+
+```c++
+class Solution {
+public:
+    bool canConstruct(string ransomNote, string magazine) {
+        int cnt[26] = {0};
+        for(char c : magazine) {
+            cnt[c - 'a']++;
+        }
+        for(char c : ransomNote) {
+            if(cnt[c - 'a']-- == 0) return false;
+        }
+        return true;
+    }
+};
+```
+
+## [447. 回旋镖的数量](https://leetcode.cn/problems/number-of-boomerangs/description/?envType=daily-question&envId=2024-01-08)
+
+```c++
+class Solution {
+public:
+    int numberOfBoomerangs(vector<vector<int>>& points) {
+        int n = points.size();
+        vector<unordered_map<int, int>> data(n);
+        for(int i = 0; i < n; i++) {
+            for(int j = i + 1; j < n; j++) {
+                int distance = 
+                    (points[i][0] - points[j][0])*(points[i][0] - points[j][0])
+                    + 
+                    (points[i][1] - points[j][1]) * (points[i][1] - points[j][1]);
+                data[i][distance]++;
+                data[j][distance]++;
+            }
+        }
+        int ans = 0;
+        for(int i = 0; i < n; i++) {
+            for(auto ite = data[i].begin(); ite != data[i].end(); ite++) {
+                ans += ite->second * (ite->second - 1);
+            }
+        }
+        return ans;
+    }
+};
+```
+
+## [2707. 字符串中的额外字符](https://leetcode.cn/problems/extra-characters-in-a-string/description/)
+- 很常规的dp
+```c++
+class Solution {
+public:
+    int minExtraChar(string s, vector<string>& dictionary) {
+        int len = s.length();
+        unordered_set<string> dict;
+        for(auto& d : dictionary) {
+            dict.insert(d);
+        }
+        vector<int> dp(len + 1, INT_MAX);
+        dp[0] = 0;
+        for(int i = 1; i <= len; i++) {
+            for(int j = 0; j < i; j++) {
+                dp[i] = min(dp[j] + (dict.count(s.substr(j, i - j)) ? 0 : i-j), dp[i]);
+            }
+        }
+        return dp[len];
+    }
+};
+```
+
+## [2696. 删除子串后的字符串最小长度](https://leetcode.cn/problems/minimum-string-length-after-removing-substrings/description/)
+
+- 括号匹配的思路
+
+```c++
+class Solution {
+public:
+    int minLength(string s) {
+        int length = s.length();
+        stack<char> stk;
+        for(int i = 0; i < length; i++) {
+            if(!stk.empty()) {
+                char top = stk.top();
+                if((top == 'A' && s[i] == 'B') || (top == 'C' && s[i] == 'D')) {
+                    stk.pop();
+                    continue;
+                }
+            }
+            stk.push(s[i]);
+        }
+        return stk.size();
+    }
+};
+```
+
+## [2645. 构造有效字符串的最少插入数](https://leetcode.cn/problems/minimum-additions-to-make-valid-string/description/)
+
+```c++
+class Solution {
+public:
+    int addMinimum(string word) {
+        int len = word.length();
+        int ans = 0;
+        for(int i = 0; i < len; i++) {
+            switch(word[i]) {
+                case 'a' : {
+                    if(!(i + 1 < len && word[i+1] == 'b')) {
+                        ans++;
+                    } else {
+                        i++;
+                    }
+                    if(!(i + 1 < len && word[i+1] == 'c')) {
+                        ans++;
+                    } else {
+                        i++;
+                    }
+                }
+                break;
+                case 'b' : {
+                    ans++;
+                    if(!(i + 1 < len && word[i+1] == 'c')) {
+                        ans++;
+                    } else {
+                        i++;
+                    }
+                }
+                break;
+                case 'c' : {
+                    ans += 2;
+                }
+                break;
+            }
+        }
+        return ans;
+    }
+};
+```
+
+## [2085. 统计出现过一次的公共字符串](https://leetcode.cn/problems/count-common-words-with-one-occurrence/description/)
+
+```c++
+class Solution {
+public:
+    int countWords(vector<string>& words1, vector<string>& words2) {
+        unordered_map<string, int> cnt1, cnt2;
+        int ans = 0;
+        for(auto& s : words1) {
+            cnt1[s]++;
+        }
+        for(auto& s : words2) {
+            cnt2[s]++;
+        }
+        for(auto ite = cnt1.begin(); ite != cnt1.end(); ite++) {
+            if(ite->second == 1 && cnt2[ite->first] == 1) ans++;
+        }
+        return ans;
+    }
+};
+```
