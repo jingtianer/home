@@ -831,3 +831,242 @@ public:
     }
 };
 ```
+
+## [2182. 构造限制重复的字符串](https://leetcode.cn/problems/construct-string-with-repeat-limit/description/?envType=daily-question&envId=2024-01-13)
+
+```c++
+class Solution {
+public:
+    string repeatLimitedString(string s, int repeatLimit) {
+        int cnt[26] = {0};
+        string ans;
+        for(char c : s) {
+            cnt[c - 'a']++;
+        }
+        char cur = 'z' - 'a', next;
+        while(cur >= 0) {
+            while(cur >= 0 && cnt[cur] == 0) cur--;
+            if(cur < 0) break;
+            next = cur - 1;
+            while(next >= 0 && cnt[next] == 0) next--;
+            int cost = min(cnt[cur], repeatLimit);
+            cnt[cur] -= cost;
+            ans += string(cost, cur + 'a');
+            if(cnt[cur] > 0) {
+                if(next < 0) break;
+                ans += next + 'a';
+                cnt[next]--;
+            }
+        }
+        return ans;
+    }
+};
+```
+
+## [83. 删除排序链表中的重复元素](https://leetcode.cn/problems/remove-duplicates-from-sorted-list/description/?envType=daily-question&envId=2024-01-14)
+
+```c++
+class Solution {
+public:
+    ListNode* deleteDuplicates(ListNode* head) {
+        if(!head) return nullptr;
+        ListNode *move = head;
+        while(move->next) {
+            if(move->val == move->next->val) {
+                move->next = move->next->next;
+            } else {
+                move = move->next;
+            }
+        }
+        return head;
+    }
+};
+```
+
+## [82. 删除排序链表中的重复元素 II](https://leetcode.cn/problems/remove-duplicates-from-sorted-list-ii/description/?envType=daily-question&envId=2024-01-15)
+
+```c++
+class Solution {
+public:
+    ListNode* deleteDuplicates(ListNode* head) {
+        if(!head) return nullptr;
+        ListNode dummy(0, head), *move = &dummy;
+        while(move->next && move->next->next) {
+            if(move->next->val == move->next->next->val) {
+                ListNode *cur = move->next;
+                while(cur->next && cur->val == cur->next->val) {
+                    cur = cur->next;
+                }
+                cur = cur->next;
+                move->next = cur;
+            } else {
+                move = move->next;
+            }
+        }
+        return dummy.next;
+    }
+};
+```
+
+## [2368. 受限条件下可到达节点的数目](https://leetcode.cn/problems/reachable-nodes-with-restrictions/description/?envType=daily-question&envId=2024-03-02)
+
+### dfs
+- 我的评价是，平平无奇
+
+```c++
+class Solution {
+public:
+    int reachableNodes(int n, vector<vector<int>>& edges, vector<int>& restricted) {
+        vector<vector<int>> g(n);
+        vector<bool> restricted_map(n, false);
+        int ans = 0;
+        for(int i = 0; i < n-1; i++) {
+            g[edges[i][0]].push_back(edges[i][1]);
+            g[edges[i][1]].push_back(edges[i][0]);
+        }
+        for(int rest_node : restricted) {
+            restricted_map[rest_node] = true;
+        }
+        function<void(int,int)> visitTree = [&](int grandpa, int father) {
+            ans++;
+            for(int child : g[father]) {
+                if(restricted_map[child] || child == grandpa) continue;
+                visitTree(father, child);
+            }
+        };
+        visitTree(-1, 0);
+        return ans;
+    }
+};
+```
+### 非递归dfs
+```c++
+class Solution {
+public:
+    int reachableNodes(int n, vector<vector<int>>& edges, vector<int>& restricted) {
+        vector<vector<int>> g(n);
+        vector<bool> restricted_map(n, false);
+        int ans = 0;
+        for(int i = 0; i < n-1; i++) {
+            g[edges[i][0]].push_back(edges[i][1]);
+            g[edges[i][1]].push_back(edges[i][0]);
+        }
+        for(int rest_node : restricted) {
+            restricted_map[rest_node] = true;
+        }
+        queue<pair<int, int>> q;
+        q.emplace(-1, 0);
+        while(!q.empty()) {
+            auto [parent, node] = q.front();
+            q.pop();
+            ans++;
+            for(int child : g[node]) {
+                if(restricted_map[child] || child == parent)
+                    continue;
+                q.emplace(node, child);
+            }
+        }
+        return ans;
+    }
+};
+```
+
+### 并查集
+
+```c++
+class Solution {
+    class UFDSet {
+        vector<int> vec;
+    public:
+        UFDSet(int n) : vec(n) {
+            iota(vec.begin(), vec.end(), 0);
+        }
+        int find(int x) {
+            return vec[x] == x ? x : (vec[x] = find(vec[x]));
+        }
+        void Union(int x, int y) {
+            vec[find(x)] = find(y);
+        }
+
+    };
+public:
+    int reachableNodes(int n, vector<vector<int>>& edges, vector<int>& restricted) {
+        int ans = 0;
+        UFDSet ufdSet(n);
+        vector<bool> isRestricted(n, false);
+        for(int restricted_node : restricted) {
+            isRestricted[restricted_node] = true;
+        }
+        for(int i = 0; i < n-1; i++) {
+            if(!isRestricted[edges[i][0]] && !isRestricted[edges[i][1]])
+                ufdSet.Union(edges[i][0], edges[i][1]);
+        }
+        for(int i = 0; i < n; i++) {
+            if(ufdSet.find(0) == ufdSet.find(i)) {
+                ans++;
+            }
+        }
+        return ans;
+    }
+};
+```
+
+## [238. 除自身以外数组的乘积](https://leetcode.cn/problems/product-of-array-except-self/description/)
+
+- 虽然但是，空间`O(1)`不是应该原地修改吗？
+
+```c++
+class Solution {
+public:
+    vector<int> productExceptSelf(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> res(n, 1);
+        for(int i = n-2; i >= 0; i--) {
+            res[i] = nums[i+1] * res[i+1];
+        }
+        int left = 1;
+        for(int i = 0; i < n; i++) {
+            res[i] *= left;
+            left *= nums[i];
+        }
+        return res;
+    }
+};
+```
+
+## [225. 用队列实现栈](https://leetcode.cn/problems/implement-stack-using-queues/description/?envType=daily-question&envId=2024-03-03)
+
+```c++
+class MyStack {
+    queue<int> q;
+    int len;
+public:
+    MyStack() : len(0) {
+
+    }
+    
+    void push(int x) {
+        q.push(x);
+        for(int i = 0; i < len; i++) {
+            q.push(q.front());
+            q.pop();
+        }
+        len++;
+    }
+    
+    int pop() {
+        int ret = q.front();
+        q.pop();
+        len--;
+        return ret;
+    }
+    
+    int top() {
+        return q.front();
+    }
+    
+    bool empty() {
+        return len == 0;
+    }
+};
+```
