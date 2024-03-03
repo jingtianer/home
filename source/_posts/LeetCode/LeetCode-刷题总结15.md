@@ -1,8 +1,12 @@
 ---
 title: LeetCode-15
 date: 2022-10-22 21:15:36
-tags: LeetCode
-categories: LeetCode
+tags: 
+    - LeetCode
+    - 算法
+categories: 
+    - LeetCode
+    - 算法
 toc: true
 language: zh-CN
 ---

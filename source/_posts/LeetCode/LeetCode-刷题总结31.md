@@ -1,8 +1,12 @@
 ---
 title: LeetCode-31
 date: 2023-12-25 11:14:34
-tags: LeetCode
-categories: LeetCode
+tags: 
+    - LeetCode
+    - 算法
+categories: 
+    - LeetCode
+    - 算法
 toc: true
 language: zh-CN
 ---

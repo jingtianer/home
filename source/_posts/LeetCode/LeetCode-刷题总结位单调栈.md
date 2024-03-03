@@ -1,8 +1,13 @@
 ---
 title: LeetCode-单调栈
 date: 2023-12-22 11:14:34
-tags: LeetCode
-categories: LeetCode
+tags: 
+    - LeetCode
+    - 算法
+    - LeetCode 101
+categories: 
+    - LeetCode
+    - 算法
 toc: true
 language: zh-CN
 ---

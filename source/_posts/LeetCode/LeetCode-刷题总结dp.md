@@ -5,7 +5,10 @@ tags:
     - LeetCode 
     - 动态规划
     - LeetCode 101
-categories: LeetCode
+    - 算法
+categories: 
+    - LeetCode
+    - 算法
 toc: true
 language: zh-CN
 ---

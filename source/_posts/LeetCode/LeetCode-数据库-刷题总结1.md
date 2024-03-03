@@ -2,10 +2,10 @@
 title: LeetCode-数据库-1
 date: 2024-3-3 11:14:34
 tags: 
-    - LeetCode-数据库
+    - LeetCode
     - 数据库
 categories: 
-    - LeetCode-数据库
+    - LeetCode
     - 数据库
 toc: true
 language: zh-CN

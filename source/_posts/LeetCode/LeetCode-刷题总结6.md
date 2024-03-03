@@ -1,8 +1,12 @@
 ---
 title: LeetCode-6
 date: 2019-02-12 21:15:36
-tags: LeetCode
-categories: LeetCode
+tags: 
+    - LeetCode
+    - 算法
+categories: 
+    - LeetCode
+    - 算法
 toc: true
 language: zh-CN
 ---
