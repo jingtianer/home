@@ -68,6 +68,7 @@ WHERE O.customerId IS NULL;
 - 依照email进行group by
 - 使用min找到每个email的最小值
 - 将上面的结果作为子查询，若id不在其中，则删除
+- 不允许删除表时对表作查询，需要再嵌套一层子查询
 
 ### 知识点
 - 子查询必须指定别名`紧跟在子查询的括号后面`
@@ -77,6 +78,11 @@ WHERE O.customerId IS NULL;
 DELETE FROM Person
 WHERE 
 id NOT IN (SELECT T.id FROM (SELECT MIN(id) as id FROM Person GROUP BY email) T);
+
+-- 不允许删除与查询在同一个表上
+DELETE FROM Person
+WHERE 
+id NOT IN (SELECT MIN(id) as id FROM Person GROUP BY email);
 ```
 
 ## [197. 上升的温度](https://leetcode.cn/problems/rising-temperature/description/)
@@ -351,3 +357,85 @@ AND T.request_at
 BETWEEN DATE("2013-10-01") AND DATE("2013-10-03")
 GROUP BY T.request_at
 ```
+
+## SQL性能优化
+
+- [神奇的 SQL 之性能优化 → 让 SQL 飞起来](https://www.cnblogs.com/youzhibing/p/11909821.html)
+
+### 用`EXISTS`代替`IN`
+- 使用`IN`会产生一张临时表（内联视图），且在匹配时会扫描全表
+- 使用`IN`不会产生临时表，在匹配时不会扫描全表，满足条件则停止
+
+### 用连接替代IN
+- 在有索引时，连接与`EXISTS`性能相近
+- 没有索引，`EXISTS`更好
+
+### 避免排序
+- 很多关键字都存在排序的过程
+  - ORDER BY
+  - GROUP BY
+  - DISTINCT
+  - 聚合函数(MIN,MAX,SUM,AVG,COUNT)
+  - 集合函数(UNION,INTERSECT,EXCEPT)
+    - 为了去重而排序
+    - 使用(UNION ALL,INTERSECT ALL,EXCEPT ALL)不去重
+  - 窗口函数(row_number, rank等)
+
+#### 使用 `EXISTS` 代替 `DISTINCT`
+
+#### 能写在`where`中的条件不要写在`having`里
+
+#### 在极值函数中使用索引
+- min，max会全表扫描+排序
+- 对需要求min,max的列创建索引，加快查找速度
+#### 在 `GROUP BY` 子句和 `ORDER BY` 子句中使用索引
+
+### 使用索引
+
+- [神奇的 SQL 之擦肩而过 → 真的用到索引了吗](https://www.cnblogs.com/youzhibing/p/14175374.html)
+
+### 减少临时表
+- 临时表会消耗内存资源
+- 临时表有时无法继承索引，导致效率低下
+
+#### 尽量使用`having`而不是临时表
+
+#### 需要对多个字段使用`IN`谓词时，将它们汇总到一处
+
+```sql
+select A
+from tableA A1
+where col1 in (
+  select col1 
+  from tableA A2
+  where A1.xxx = A2.xxx
+) and col2 in (
+  select col2 
+  from tableA A2
+  where A1.xxx = A2.xxx
+) and col3 in (
+  select col2 
+  from tableA A2
+  where A1.xxx = A2.xxx
+)
+-- 可以优化为
+select A
+from tableA A1
+where col1 || col2 || col3
+in (
+  select col1 || col2 || col3
+  from tableA A2
+)
+-- or
+select A
+from tableA A1
+where (col1, col2, col3)
+in (
+  select col1, col2, col3
+  from tableA A2
+)
+```
+
+#### 先进行连接再进行聚合
+
+#### 定义视图时避免集合函数和聚合函数
