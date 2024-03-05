@@ -1,6 +1,6 @@
 ---
 title: LeetCode-数据库-2
-date: 2024-3-4 11:14:34
+date: 2024-3-4 21:14:34
 tags: 
     - LeetCode
     - 数据库
@@ -282,4 +282,23 @@ GROUP BY
 ORDER BY
     SUM(num) DESC
 LIMIT 1
+```
+
+## [1661. 每台机器的进程平均运行时间](https://leetcode.cn/problems/average-time-of-process-per-machine/description/)
+
+```sql
+SELECT
+    A1.machine_id,
+    ROUND(AVG(A2.timestamp - A1.timestamp), 3) AS processing_time
+FROM
+    Activity A1
+    JOIN
+    Activity A2
+    ON 
+        A1.machine_id = A2.machine_id AND
+        A1.process_id = A2.process_id AND
+        A1.activity_type = 'start' AND
+        A2.activity_type = 'end'
+GROUP BY
+    A1.machine_id
 ```

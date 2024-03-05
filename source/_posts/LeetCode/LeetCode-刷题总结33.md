@@ -56,3 +56,49 @@ public:
     }
 };
 ```
+
+## 1976. 到达目的地的方案数
+
+### dijkstra
+- 数据范围很大，枚举所有路径是不现实的
+- 由于我们只要求两点之间的最短路，所以用dijkstra就好
+- 应该是dp吧，每次选取最小路径的点更新邻接节点
+  - 若使其路径变小了，则到达该节点最短路径数等于根节点到达当前节点的最短路径数
+  - 若路径长度等于该节点，则到达该节点最短路径数在原来数量上加上根节点到达当前节点的最短路径数
+```c++
+class Solution {
+public:
+    int countPaths(int n, vector<vector<int>>& roads) {
+        vector<bool> visited(n, false);
+        int ans = 0;
+        vector<vector<pair<int, int>>> g(n);
+        for(auto& road : roads) {
+            g[road[0]].emplace_back(road[1], road[2]);
+            g[road[1]].emplace_back(road[0], road[2]);
+        }
+        vector<long long> minCostArr(n, 0x7fffffffffffffff);
+        vector<int> costCnt(n, 0);
+        minCostArr[0] = 0;
+        costCnt[0] = 1;
+        for(int i = 0; i < n; i++) {
+            int node = -1;
+            for(int j = 0; j < n; j++) {
+                if(!visited[j] && (node == -1 || minCostArr[j] < minCostArr[node])) {
+                    node = j;
+                }
+            }
+            if(node == -1) break;
+            visited[node] = true;
+            for(auto [child, childCost] : g[node]) {
+                if(minCostArr[child] > minCostArr[node] + childCost) {
+                    costCnt[child] = costCnt[node];
+                    minCostArr[child] = minCostArr[node] + childCost;
+                } else if (minCostArr[child] == minCostArr[node] + childCost) {
+                    costCnt[child] = (costCnt[node] + costCnt[child]) % 1000000007;
+                }
+            }
+        }
+        return costCnt[n-1];
+    }
+};
+```
