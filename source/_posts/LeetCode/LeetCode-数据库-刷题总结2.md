@@ -286,6 +286,8 @@ LIMIT 1
 
 ## [1661. 每台机器的进程平均运行时间](https://leetcode.cn/problems/average-time-of-process-per-machine/description/)
 
+- union前后必须加括号
+
 ```sql
 SELECT
     A1.machine_id,
@@ -301,4 +303,170 @@ FROM
         A2.activity_type = 'end'
 GROUP BY
     A1.machine_id
+```
+
+## 1341. 电影评分
+
+```sql
+(
+    SELECT 
+        name AS results
+    FROM
+        Users
+        JOIN 
+            MovieRating
+        ON 
+            Users.user_id = MovieRating.user_id
+    GROUP BY
+        Users.user_id
+    ORDER BY
+        COUNT(rating) DESC,name
+    LIMIT 1
+)
+UNION ALL
+(
+    SELECT
+        title AS results
+    FROM
+        Movies
+        JOIN
+            MovieRating
+        ON
+            Movies.movie_id = MovieRating.movie_id
+    WHERE
+        created_at BETWEEN DATE("2020-02-01") AND DATE("2020-02-29")
+    GROUP BY
+        Movies.movie_id
+    ORDER BY
+        AVG(rating) DESC, title
+    LIMIT 1
+)
+```
+
+## [1141. 查询近30天活跃用户数](https://leetcode.cn/problems/user-activity-for-the-past-30-days-i/description/)
+
+- 笨蛋，最近30天是往前数29天
+
+```sql
+SELECT
+    activity_date AS 'day',
+    COUNT(DISTINCT user_id) AS 'active_users'
+FROM
+    Activity
+WHERE
+    activity_date 
+    BETWEEN 
+        DATE_SUB("2019-07-27", INTERVAL 29 DAY) 
+    AND
+        DATE("2019-07-27")
+GROUP BY
+    activity_date
+```
+
+## [1731. 每位经理的下属员工数量](https://leetcode.cn/problems/the-number-of-employees-which-report-to-each-employee/description/)
+
+```sql
+# Write your MySQL query statement below
+SELECT
+    E1.employee_id,
+    E1.name,
+    COUNT(E2.reports_to) AS reports_count,
+    ROUND(AVG(E2.age), 0) AS average_age
+FROM
+    Employees E1
+    JOIN
+        Employees E2
+    ON
+        E1.employee_id = E2.reports_to
+GROUP BY
+    employee_id
+ORDER BY
+    employee_id
+```
+
+## [1527. 患某种疾病的患者](https://leetcode.cn/problems/patients-with-a-condition/description/)
+
+### LIKE
+
+```sql
+# Write your MySQL query statement below
+SELECT
+    patient_id,
+    patient_name,
+    conditions
+FROM
+    Patients
+WHERE
+    conditions LIKE '% DIAB1%'
+    OR
+    conditions LIKE 'DIAB1%'
+```
+
+### REGEXP
+
+- 写不出这个正则
+- `\b`:匹配一个单词边界，也就是指单词和空格间的位置。例如， 'er\b' 可以匹配"never" 中的 'er'，但不能匹配 "verb" 中的 'er'。
+- `\B`:匹配非单词边界。'er\B' 能匹配 "verb" 中的 'er'，但不能匹配 "never" 中的 'er'
+
+```sql
+# Write your MySQL query statement below
+SELECT
+    patient_id,
+    patient_name,
+    conditions
+FROM
+    Patients
+WHERE
+    conditions REGEXP '\\bDIAB1'
+```
+
+## [1070. 产品销售分析 III](https://leetcode.cn/problems/product-sales-analysis-iii/)
+
+```sql
+SELECT
+    Sales.product_id,
+    T.first_year,
+    Sales.quantity,
+    Sales.price
+FROM
+    Sales
+    JOIN
+    (
+        SELECT
+            product_id,
+            MIN(year) AS first_year
+        FROM
+            Sales
+        GROUP BY
+            product_id
+    ) T
+    ON
+        Sales.year = T.first_year
+        AND
+        Sales.product_id = T.product_id
+```
+
+## rank
+
+- over里面既能partition by, 也能order by
+
+```sql
+SELECT
+    T.product_id,
+    T.first_year,
+    T.quantity,
+    T.price
+FROM
+    (
+        SELECT
+            product_id,
+            year AS first_year,
+            quantity,
+            price,
+            rank() OVER(PARTITION BY product_id ORDER BY year) AS 'year_rank'
+        FROM
+            Sales
+    ) T
+WHERE
+    T.year_rank = 1
 ```

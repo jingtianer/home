@@ -57,7 +57,7 @@ public:
 };
 ```
 
-## 1976. 到达目的地的方案数
+## [1976. 到达目的地的方案数](https://leetcode.cn/problems/number-of-ways-to-arrive-at-destination/?envType=daily-question&envId=2024-03-05)
 
 ### dijkstra
 - 数据范围很大，枚举所有路径是不现实的
@@ -65,6 +65,8 @@ public:
 - 应该是dp吧，每次选取最小路径的点更新邻接节点
   - 若使其路径变小了，则到达该节点最短路径数等于根节点到达当前节点的最短路径数
   - 若路径长度等于该节点，则到达该节点最短路径数在原来数量上加上根节点到达当前节点的最短路径数
+
+
 ```c++
 class Solution {
 public:
@@ -101,4 +103,22 @@ public:
         return costCnt[n-1];
     }
 };
+```
+
+## [2917. 找出数组中的 K-or 值](https://leetcode.cn/problems/find-the-k-or-of-an-array/description/)
+
+```java
+class Solution {
+    public int findKOr(int[] nums, int k) {
+        int[] bitCnt = new int[32];
+        int ans = 0;
+        for(int i = 0, mask = 1; i < 32; i++, mask <<= 1) {
+            for(int n : nums) {
+                if((mask & n) != 0)bitCnt[i]++;
+            }
+            if(bitCnt[i] >= k) ans |= mask;
+        }
+        return ans;
+    }
+}
 ```

@@ -552,3 +552,238 @@ class DiningPhilosophers {
     }
 }
 ```
+
+## 1279. 红绿灯路口
+- 睾贵的会员题，不过本科的时候学过
+
+```java
+package leetcode;
+
+import java.util.Random;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
+class TrafficLight {
+    private int road = 0;
+    private final Semaphore lockNS;
+    private final Semaphore lockSW;
+    private static final int NS = 1;
+    private static final int SW = 2;
+    private int carNumber = 0;
+    public TrafficLight() {
+        lockNS = new Semaphore(1);
+        lockSW = new Semaphore(1);
+    }
+
+    public void carArrived(int carId, // ID of the car
+                                        int roadId, // ID of the road the car travels on. Can be 1 (road A) or 2 (road B)
+                                        int direction, // Direction of the car
+                                        Runnable turnGreen, // Use turnGreen.run() to turn light to green on current road
+                                        Runnable crossCar // Use crossCar.run() to make car cross the intersection
+    ) {
+        Semaphore lockOur, lockOther;
+        if(roadId == NS) {
+            lockOur = lockNS;
+            lockOther = lockSW;
+        } else {
+            lockOur = lockSW;
+            lockOther = lockNS;
+        }
+        try {
+            lockOur.acquire();
+            if(roadId != road) {
+                lockOther.acquire();
+                road = roadId;
+                turnGreen.run();
+            }
+            carNumber++;
+            lockOur.release();
+
+            crossCar.run();
+
+            lockOur.acquire();
+            carNumber--;
+            if(carNumber == 0) {
+                lockOther.release();
+            }
+            lockOur.release();
+        } catch (InterruptedException e) {
+
+        }
+    }
+}
+
+public class TestTrafficLight {
+    public static void main(String[] args) {
+        final TrafficLight trafficLight = new TrafficLight();
+        Random random = new Random(System.currentTimeMillis());
+        int carNumber = random.nextInt(100, 200);
+        try(ExecutorService executor = Executors.newCachedThreadPool()) {
+            for(int i = 0; i < carNumber; i++) {
+                final int carId = i;
+                final int roadId = random.nextInt(1,3);
+                final int direction = random.nextInt(1,3);
+                executor.submit(()->trafficLight.carArrived(
+                        carId,
+                        roadId,
+                        direction,
+                        ()-> System.out.printf("car:%d, onRoad:%d, direction:%d, turn traffic light green\n", carId, roadId, direction),
+                        ()-> System.out.printf("car:%d, onRoad:%d, direction:%d, running\n", carId, roadId, direction)
+                ));
+            }
+        }
+    }
+}
+```
+
+## 1188. 设计有限阻塞队列
+- 又是睾贵的会员题目
+- 生产者消费者模型
+
+```java
+package leetcode;
+import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
+import static leetcode.Tools.printf;
+import static leetcode.Tools.runCatching;
+
+class BoundedBlockingQueue {
+    Semaphore consumer, producer;
+    Lock mutex;
+    final private int capacity;
+    private LinkedList<Integer> q = new LinkedList<>();
+
+    public BoundedBlockingQueue(int capacity) {
+        this.capacity = capacity;
+        consumer = new Semaphore(0);
+        producer = new Semaphore(capacity);
+        mutex = new ReentrantLock();
+    }
+
+    public void enqueue(int element) {
+        try {
+            producer.acquire();
+            mutex.lock();
+            q.add(element);
+        } catch (Exception e) {
+            producer.release();
+            throw new RuntimeException(e);
+        } finally {
+            mutex.unlock();
+            consumer.release();
+        }
+    }
+
+    public int dequeue() {
+        int ret;
+        try {
+            consumer.acquire();
+            mutex.lock();
+            ret = q.remove(0);
+        } catch (Exception e) {
+            consumer.release();
+            throw new RuntimeException(e);
+        } finally {
+            mutex.unlock();
+            producer.release();
+        }
+        return ret;
+    }
+
+    public int size() {
+        return q.size();
+    }
+}
+public class TestBoundedBlockingQueue {
+    static final int MIN_THREAD_NUM = 2;
+    static final int MAX_THREAD_NUM = 50;
+    static final int MIN_CAPACITY = 1;
+    static final int MAX_CAPACITY = 50;
+    static final int MIN_OP_NUM = 20;
+    static final int MAX_OP_NUM = 100;
+
+    static
+    Random random = new Random(System.currentTimeMillis());
+    static int produceTotal; // 生产者生产总数
+    static int consumerTotal; // 消费者总数
+    static void getOps(int[] producerNum, int[] consumerNum, int maxRemainNum) {
+        produceTotal = consumerTotal = 0;
+        for(int i = 0; i < producerNum.length; i++){
+            int opNum = random.nextInt(MIN_OP_NUM, MAX_OP_NUM + 1);
+            producerNum[i] = opNum;
+            produceTotal += opNum;
+        }
+        for(int i = consumerNum.length-1; produceTotal - maxRemainNum - consumerTotal > 0; i--) {
+            int opNum = random.nextInt((produceTotal - maxRemainNum - consumerTotal) / (i*i + 1), (produceTotal - maxRemainNum - consumerTotal) / (i + 1) + 1);
+            consumerNum[i] = opNum;
+            consumerTotal += opNum;
+        }
+    }
+    public static void main(String[] args) {
+        int threadNum = random.nextInt(MIN_THREAD_NUM, MAX_THREAD_NUM + 1);
+        int capacity = random.nextInt(MIN_CAPACITY, MAX_CAPACITY + 1);
+        int maxRemainNum = random.nextInt(0, capacity + 1);
+        int[] producerNum = new int[random.nextInt(1, threadNum)];
+        int[] consumerNum = new int[threadNum - producerNum.length];
+        getOps(producerNum, consumerNum, maxRemainNum);
+        System.out.printf("producerNum=%s\nconsumerNum=%s\nthreadNum=%d\ncapacity=%d\nproducerTotal=%d\nconsumerTotal=%d\nsize=%d\nmaxRemainNum=%d\n",
+                Arrays.toString(producerNum), Arrays.toString(consumerNum), threadNum, capacity, produceTotal, consumerTotal, produceTotal - consumerTotal, maxRemainNum);
+        BoundedBlockingQueue boundedBlockingQueue = new BoundedBlockingQueue(capacity);
+        try(ExecutorService executorService = Executors.newFixedThreadPool(threadNum)) {
+            for(int i = 0; i < producerNum.length; i++) {
+                final int id = i;
+                executorService.submit(runCatching(() -> {
+                    for(int j = 0; j < producerNum[id]; j++) {
+                        System.out.printf("%s, enqueue\n", Thread.currentThread().getName());
+                        boundedBlockingQueue.enqueue(id);
+                    }
+                }));
+            }
+            for(int i = 0; i < consumerNum.length; i++) {
+                final int id = i;
+                executorService.submit(runCatching(() -> {
+                    for(int j = 0; j < consumerNum[id]; j++) {
+                        int front = boundedBlockingQueue.dequeue();
+                        System.out.printf("%s, dequeue, front = %d\n", Thread.currentThread().getName(), front);
+                    }
+                }));
+            }
+        }
+        if(produceTotal - consumerTotal == boundedBlockingQueue.size()) {
+            System.out.printf("ok!, size = %d\n", produceTotal - consumerTotal);
+        } else {
+            throw new RuntimeException(printf("fail, you are foolish, correct size = %d, q.size = %d\n", produceTotal - consumerTotal, boundedBlockingQueue.size()));
+        }
+    }
+}
+```
+
+```java
+package leetcode;
+
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
+public class Tools {
+    interface ExceptionRunnable {
+        void run() throws Exception;
+    }
+    static Runnable runCatching(ExceptionRunnable r) {
+        return () -> {try {r.run();} catch (Exception e) { e.printStackTrace(); }};
+    }
+    static public String printf(String format, Object ... args) {
+        ByteArrayOutputStream byteArrayOutputStream;
+        PrintStream printStream = new PrintStream((byteArrayOutputStream = new ByteArrayOutputStream()));
+        printStream.printf(format, args);
+        return byteArrayOutputStream.toString();
+    }
+}
+```
