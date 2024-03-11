@@ -26,19 +26,19 @@ tag: resume
 
 
 ## 基本信息
-|项目|值|
-|-|-|
-|姓名|刘景天|
-|昵称|刘喵喵|
-|出生年月|2000/02|
-|邮箱|[jingtian.liu@foxmail.com](mailto:jingtian.liu@foxmail.com)|
-|qq|[点击这里](https://jingtianer.github.io/home/2022/10/22/social/qq/)|
+| 项目     | 值                                                                  |
+| -------- | ------------------------------------------------------------------- |
+| 姓名     | 刘景天                                                              |
+| 昵称     | 刘喵喵                                                              |
+| 出生年月 | 2000/02                                                             |
+| 邮箱     | [jingtian.liu@foxmail.com](mailto:jingtian.liu@foxmail.com)         |
+| qq       | [点击这里](https://jingtianer.github.io/home/2022/10/22/social/qq/) |
 
 ## 教育经历
-|起始时间|结束时间|学校|专业|
-|-|-|-|-|
-|2018.09|2022.06|东北大学(秦皇岛)|计算机科学与技术|
-|2022.09|2025.06(预计)|北京邮电大学|计算机技术(区块链方向)|
+| 起始时间 | 结束时间      | 学校             | 专业                   |
+| -------- | ------------- | ---------------- | ---------------------- |
+| 2018.09  | 2022.06       | 东北大学(秦皇岛) | 计算机科学与技术       |
+| 2022.09  | 2025.06(预计) | 北京邮电大学     | 计算机技术(区块链方向) |
 
 ## 项目信息
 ### fedml:
@@ -79,3 +79,45 @@ tag: resume
 <iframe width="560" height="315" src="https://www.youtube.com/embed/Shonzh8EgNk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 <blockquote class="twitter-tweet"><p lang="ko" dir="ltr">🎁🎄Merry Christmas🐺 메리 크리스마스 ⛓️<a href="https://twitter.com/hashtag/Wriothesley?src=hash&amp;ref_src=twsrc%5Etfw">#Wriothesley</a> <br>。゜・❄️・。・。 ・ 。。゜・。 ❅゜ ・。゜・ ❄️゜ ・。❄️゜ ゜ ・。゜ ・・❄️ ゜・ 。 ゜❅゜ ゜゜。 。 ゜・。 。゜ ・ 。 ❄️゜・ 。 ❅゜ ゜。・゜ ❄️。 ❅・。・。 ゜・ 。゜ ・ 。。゜。 ゜・ 。゜・ ❄️・ 。 ゜❅゜ ゜゜。 。 <a href="https://t.co/5HSjrdZRBB">pic.twitter.com/5HSjrdZRBB</a></p>&mdash; ✨NP✨ (@1231_0720) <a href="https://twitter.com/1231_0720/status/1738182848635379811?ref_src=twsrc%5Etfw">December 22, 2023</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+## 健身 
+
+| 动作         | 推荐哑铃大小 | 推荐重量（单只） |
+| ------------ | ------------ | ---------------- |
+| 箭弓步       | 大           | 17.5kg           |
+| 单臂划船     | 大           | 17.5kg           |
+| 坐姿推举     | 大           | 17.5kg           |
+| 哑铃深蹲     | 大           | 17.5kg           |
+| 侧平举       | 小           | 7kg              |
+| 二头弯举     | 小           | 7kg              |
+| 飞鸟+俯卧撑  | 小           | 7kg              |
+| 碎颅者       | 小           | 7kg              |
+| 负重抬腿卷腹 | 小           | 7kg              |
+
+## 2024年2月26日 （第一周）
+
+| 动作         | 当前配重 | 是否能承受 |
+| ------------ | -------- | ---------- |
+| 箭弓步       | 2.5kg    | 能         |
+| 单臂划船     | 2.5kg    | 能         |
+| 坐姿推举     | 2.5kg    | 能         |
+| 哑铃深蹲     | 2.5kg    | 能         |
+| 侧平举       | 2.5kg    | 能         |
+| 二头弯举     | 2.5kg    | 能         |
+| 飞鸟+俯卧撑  | 2.5kg    | 能         |
+| 碎颅者       | 2.5kg    | 能         |
+| 负重抬腿卷腹 | 2.5kg    | 能         |
+## 2024年3月4日
+
+| 动作         | 当前配重 | 是否能承受 |
+| ------------ | -------- | ---------- |
+| 箭弓步       | 4kg      | 能         |
+| 单臂划船     | 4kg      | 能         |
+| 坐姿推举     | 4kg      | 能         |
+| 哑铃深蹲     | 4kg      | 能         |
+| 侧平举       | 4kg      | 极限       |
+| 二头弯举     | 4kg      | 能         |
+| 飞鸟+俯卧撑  | 4kg      | 能         |
+| 碎颅者       | 4kg      | 刚好       |
+| 负重抬腿卷腹 | 4kg      | 能         |

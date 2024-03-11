@@ -122,3 +122,48 @@ class Solution {
     }
 }
 ```
+
+
+## [2575. 找出字符串的可整除数组](https://leetcode.cn/problems/find-the-divisibility-array-of-a-string/description/?envType=daily-question&envId=2024-03-07)
+- 题解
+
+```c++
+class Solution {
+public:
+    vector<int> divisibilityArray(string word, int m) {
+        int len = word.length();
+        vector<int> res(len, 0);
+        long long number = 0;
+        for(int i = 0; i < len; i++) {
+            number = (number * 10 + word[i] - '0') % m;
+            if(number == 0) {
+                res[i] = 1;
+            }
+        }
+        return res;
+    }
+};
+```
+
+## [299. 猜数字游戏](https://leetcode.cn/problems/bulls-and-cows/description/?envType=daily-question&envId=2024-03-10)
+
+```c
+char* getHint(char* secret, char* guess) {
+    int ACnt = 0, ABCnt = 0;
+    int cntSecret[10] = {0}, cntGuess[10] = {0};
+    while(*secret) {
+        if(*secret == *guess) ACnt++;
+        cntSecret[*secret - '0']++;
+        cntGuess[*guess - '0']++;
+        secret++;
+        guess++;
+    }
+    for(int i = 0; i < 10; i++) {
+        ABCnt += (cntSecret[i] > cntGuess[i] ? cntGuess[i] : cntSecret[i]);
+    }
+    int len = snprintf(NULL, 0, "%dA%dB", ACnt, ABCnt - ACnt) + 1;
+    char *ret = malloc(sizeof(char) * (len));
+    snprintf(ret, len, "%dA%dB", ACnt, ABCnt - ACnt);
+    return ret;
+}
+```
