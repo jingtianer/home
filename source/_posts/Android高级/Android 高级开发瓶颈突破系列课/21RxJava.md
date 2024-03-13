@@ -27,3 +27,29 @@ language: zh-CN
 
 - subscribOn(schedualer): 通过schedualer创建一个有上游的observable，在上级通过observer返回观察结果时切换线程
 - observeOn(schedualer): 通过schedualer创建一个有上游的observable，在subscribe时切换线程，并执行上游的subscribe
+
+
+### 设计模式
+
+- 观察者模式
+  - Rxjava、kotlin的 observer代理
+  - LiveData，TextWatcher
+  - 各种listener
+- 工厂模式 
+  - ThreadFactory，OkHttp的RequestFactory
+- Builder
+  - OkHttp，Retrofit
+- 单例模式
+  - Handler的mainLooper
+  - Application
+  - Toast
+  - LayoutInflator
+  - SharedPrefrence
+  - ActivityManager
+- 适配器模式
+  - 各种Adator： ArrayAdaptor，BaseAdaptor，RecyclerView.Adaptor
+  - Okhttp的CallAdapter
+- 代理模式
+  - Android提供的各种Service
+  - 动态代理：Retrofit
+  - ContentResolver，ContentProvider
