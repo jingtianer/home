@@ -256,3 +256,113 @@ public:
 ### [3072. 将元素分配到两个数组中 II](https://leetcode.cn/problems/distribute-elements-into-two-arrays-ii/description/)
 
 - 离散化 + 树状数组
+
+
+## [第 381 场周赛](https://leetcode.cn/contest/weekly-contest-381)
+
+### [3014. 输入单词需要的最少按键次数 I](https://leetcode.cn/problems/minimum-number-of-pushes-to-type-word-i/description/)
+
+#### 思路1
+
+- 按照字符出现次数分配按键的位置
+
+```c++
+class Solution {
+public:
+    int minimumPushes(string word) {
+        int alpha_cnt[26] = {0};
+        int key_cnt[8] = {0};
+        int cur_key = 0;
+        auto cmp = [&alpha_cnt](int i, int j) {
+            return alpha_cnt[i] < alpha_cnt[j];
+        };
+        priority_queue<int, vector<int>, decltype(cmp)> q(cmp);
+        for(char c : word) {
+            alpha_cnt[c - 'a']++;
+        }
+        for(int i = 0; i < 26; i++) {
+            if(alpha_cnt[i]) q.push(i);
+        }
+        int ans = 0;
+        while(!q.empty()) {
+            int top = q.top();
+            q.pop();
+            key_cnt[cur_key]++;
+            ans += key_cnt[cur_key] * alpha_cnt[top];
+            cur_key = (cur_key + 1) % 8;
+        }
+        return ans;
+    }
+};
+```
+
+#### 思路2
+- 没看到题目说所有字母都是不同的，可以简化
+
+```c++
+class Solution {
+public:
+    int minimumPushes(string word) {
+        int n = word.length();
+        int div8 = n >> 3;
+        int mod8 = n & 0b111;
+        return (((div8 + 1) * div8) << 2) + (div8 + 1) * mod8;
+    }
+};
+```
+
+
+### [3015. 按距离统计房屋对数目 I](https://leetcode.cn/problems/count-the-number-of-houses-at-a-certain-distance-i/description/)
+
+```c++
+class Solution {
+public:
+    vector<int> countOfPairs(int n, int x, int y) {
+        vector<int> ans(n);
+        for(int i = 1; i <= n; i++) {
+            for(int j = 1; j <= n; j++) {
+                if(i == j) continue;
+                int dis = min(abs(i - j), abs(min(i, j) - min(x, y)) + abs(max(x, y) - max(i, j)) + 1);
+                ans[dis - 1]++;
+            }
+        }
+        return ans;
+    }
+};
+```
+
+### [3016. 输入单词需要的最少按键次数 II](https://leetcode.cn/problems/minimum-number-of-pushes-to-type-word-ii/description/)
+
+```c++
+class Solution {
+public:
+    int minimumPushes(string word) {
+        int alpha_cnt[26] = {0};
+        int key_cnt[8] = {0};
+        int cur_key = 0;
+        auto cmp = [&alpha_cnt](int i, int j) {
+            return alpha_cnt[i] < alpha_cnt[j];
+        };
+        priority_queue<int, vector<int>, decltype(cmp)> q(cmp);
+        for(char c : word) {
+            alpha_cnt[c - 'a']++;
+        }
+        for(int i = 0; i < 26; i++) {
+            if(alpha_cnt[i]) q.push(i);
+        }
+        int ans = 0;
+        while(!q.empty()) {
+            int top = q.top();
+            q.pop();
+            key_cnt[cur_key]++;
+            ans += key_cnt[cur_key] * alpha_cnt[top];
+            cur_key = (cur_key + 1) % 8;
+        }
+        return ans;
+    }
+};
+```
+
+### [3017. 按距离统计房屋对数目 II](https://leetcode.cn/problems/count-the-number-of-houses-at-a-certain-distance-ii/description/)
+
+- 想分类计算，但是没算出来
