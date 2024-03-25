@@ -456,6 +456,90 @@ class Foo {
 
 ## [1226. 哲学家进餐](https://leetcode.cn/problems/the-dining-philosophers/description/)
 
+### 调整拿筷子的顺序
+- 奇数序号：先拿左手再拿右手
+- 偶数序号：先拿右手再拿左手
+
+```java
+class DiningPhilosophers {
+    Lock[] lock;
+    public DiningPhilosophers() {
+        lock = new Lock[5];
+        for(int i = 0; i < 5; i++) {
+            lock[i] = new ReentrantLock();
+        }
+    }
+
+    // call the run() method of any runnable to execute its code
+    public void wantsToEat(int philosopher,
+                           Runnable pickLeftFork,
+                           Runnable pickRightFork,
+                           Runnable eat,
+                           Runnable putLeftFork,
+                           Runnable putRightFork) throws InterruptedException {
+        if(philosopher % 2 == 0) {
+            lock[philosopher].lock();
+            lock[(philosopher+1)%5].lock();
+        } else {
+            lock[(philosopher+1)%5].lock();
+            lock[philosopher].lock();
+        }
+        try {
+            pickLeftFork.run();
+            pickRightFork.run();
+
+            eat.run();
+
+            putLeftFork.run();
+            putRightFork.run();
+        } finally {
+            lock[philosopher].unlock();
+            lock[(philosopher+1)%5].unlock();
+        }
+
+    }
+}
+```
+
+```java
+class DiningPhilosophers {
+    Object[] lock;
+    public DiningPhilosophers() {
+        lock = new Object[5];
+        for(int i = 0; i < 5; i++) {
+            lock[i] = new Object();
+        }
+    }
+
+    // call the run() method of any runnable to execute its code
+    public void wantsToEat(int philosopher,
+                           Runnable pickLeftFork,
+                           Runnable pickRightFork,
+                           Runnable eat,
+                           Runnable putLeftFork,
+                           Runnable putRightFork) throws InterruptedException {
+        Object obj1, obj2;
+        if(philosopher % 2 == 0) {
+            obj1 = lock[philosopher];
+            obj2 = lock[(philosopher+1)%5];
+        } else {
+            obj1 = lock[(philosopher+1)%5];
+            obj2 = lock[philosopher];
+        }
+        synchronized(obj1) {
+            synchronized(obj2) {
+                pickLeftFork.run();
+                pickRightFork.run();
+
+                eat.run();
+
+                putLeftFork.run();
+                putRightFork.run();
+            }
+        }
+    }
+}
+```
 
 ### 条件
 - 一个数组保存每个筷子是否使用
@@ -552,6 +636,8 @@ class DiningPhilosophers {
     }
 }
 ```
+
+> 烦死了，这五个哲学家吃饭就不能准备10根筷子吗
 
 ## 1279. 红绿灯路口
 - 睾贵的会员题，不过本科的时候学过
