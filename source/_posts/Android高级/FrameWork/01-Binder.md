@@ -276,11 +276,14 @@ int binder_write(struct binder_state *bs, void *data, size_t len) {
 // thread->looper |= BINDER_LOOPER_STATE_ENTERED;
 ```
 
-##### binder_parse
 
-```c
-int binder_parse(struct binder_state *bs, struct binder_io *bio,
-                 uintptr_t ptr, size_t size, binder_handler func) {
-   // 分析binder的返回值
-}
+> 提供功能：注册服务、添加服务
+
+## BBinder和BpBinder
+
+```c++
+virtual BBinder* localBinder();
+virtual BpBinder* remoteBinder();
 ```
+
+BpBinder负责传输数据，BBinder负责接收数据和处理数据。
