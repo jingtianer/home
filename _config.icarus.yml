@@ -48,6 +48,7 @@ navbar:
         分类: /categories
         标签: /tags
         关于我: /about
+        相册: /tags/gallery
     links:
         Download on GitHub:
             icon: fab fa-github
