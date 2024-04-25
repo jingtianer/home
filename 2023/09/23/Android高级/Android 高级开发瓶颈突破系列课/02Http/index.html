@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>02-http - Jingtianer</title><link rel="manifest" href="/home/manifest.json"><meta name="application-name" content="Jingtianer"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Jingtianer"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="格式  报文格式(Request)  请求行 eg: GET &amp;#x2F;users?id&amp;#x3D;xxxx HTTP&amp;#x2F;1.1  method path(包括参数部分) Http version   headers (Host在这里) body   报文格式(Response)  状态行 eg: HTTP&amp;#x2F;1.1 200 OK  Http Version status code status message"><meta property="og:type" content="blog"><meta property="og:title" content="02-http"><meta property="og:url" content="https://jingtianer.github.io/home/2023/09/23/Android%E9%AB%98%E7%BA%A7/Android%20%E9%AB%98%E7%BA%A7%E5%BC%80%E5%8F%91%E7%93%B6%E9%A2%88%E7%AA%81%E7%A0%B4%E7%B3%BB%E5%88%97%E8%AF%BE/02Http/"><meta property="og:site_name" content="Jingtianer"><meta property="og:description" content="格式  报文格式(Request)  请求行 eg: GET &amp;#x2F;users?id&amp;#x3D;xxxx HTTP&amp;#x2F;1.1  method path(包括参数部分) Http version   headers (Host在这里) body   报文格式(Response)  状态行 eg: HTTP&amp;#x2F;1.1 200 OK  Http Version status code status message"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://jingtianer.github.io/home/img/og_image.png"><meta property="article:published_time" content="2023-09-23T13:15:36.000Z"><meta property="article:modified_time" content="2024-04-23T10:49:15.897Z"><meta property="article:author" content="Meow Meow Liu"><meta property="article:tag" content="Android 高级开发瓶颈突破系列课"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://jingtianer.github.io/home/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://jingtianer.github.io/home/2023/09/23/Android%E9%AB%98%E7%BA%A7/Android%20%E9%AB%98%E7%BA%A7%E5%BC%80%E5%8F%91%E7%93%B6%E9%A2%88%E7%AA%81%E7%A0%B4%E7%B3%BB%E5%88%97%E8%AF%BE/02Http/"},"headline":"02-http","image":["https://jingtianer.github.io/home/img/og_image.png"],"datePublished":"2023-09-23T13:15:36.000Z","dateModified":"2024-04-23T10:49:15.897Z","author":{"@type":"Person","name":"Meow Meow Liu"},"publisher":{"@type":"Organization","name":"Jingtianer","logo":{"@type":"ImageObject","url":{"text":"Meow!!"}}},"description":"格式  报文格式(Request)  请求行 eg: GET &#x2F;users?id&#x3D;xxxx HTTP&#x2F;1.1  method path(包括参数部分) Http version   headers (Host在这里) body   报文格式(Response)  状态行 eg: HTTP&#x2F;1.1 200 OK  Http Version status code status message"}</script><link rel="canonical" href="https://jingtianer.github.io/home/2023/09/23/Android%E9%AB%98%E7%BA%A7/Android%20%E9%AB%98%E7%BA%A7%E5%BC%80%E5%8F%91%E7%93%B6%E9%A2%88%E7%AA%81%E7%A0%B4%E7%B3%BB%E5%88%97%E8%AF%BE/02Http/"><link rel="alternate" href="/home/atom.xml" title="Jingtianer" type="application/atom+xml"><link rel="icon" href="/home/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/vs.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/home/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>02-http - Jingtianer</title><link rel="manifest" href="/home/manifest.json"><meta name="application-name" content="Jingtianer"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Jingtianer"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="格式 报文格式(Request) 请求行 eg: GET &amp;#x2F;users?id&amp;#x3D;xxxx HTTP&amp;#x2F;1.1 method path(包括参数部分) Http version   headers (Host在这里) body   报文格式(Response) 状态行 eg: HTTP&amp;#x2F;1.1 200 OK Http Version status code status message   header"><meta property="og:type" content="blog"><meta property="og:title" content="02-http"><meta property="og:url" content="https://jingtianer.github.io/home/2023/09/23/Android%E9%AB%98%E7%BA%A7/Android%20%E9%AB%98%E7%BA%A7%E5%BC%80%E5%8F%91%E7%93%B6%E9%A2%88%E7%AA%81%E7%A0%B4%E7%B3%BB%E5%88%97%E8%AF%BE/02Http/"><meta property="og:site_name" content="Jingtianer"><meta property="og:description" content="格式 报文格式(Request) 请求行 eg: GET &amp;#x2F;users?id&amp;#x3D;xxxx HTTP&amp;#x2F;1.1 method path(包括参数部分) Http version   headers (Host在这里) body   报文格式(Response) 状态行 eg: HTTP&amp;#x2F;1.1 200 OK Http Version status code status message   header"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://jingtianer.github.io/home/img/og_image.png"><meta property="article:published_time" content="2023-09-23T13:15:36.000Z"><meta property="article:modified_time" content="2024-04-23T10:49:15.897Z"><meta property="article:author" content="Meow Meow Liu"><meta property="article:tag" content="Android 高级开发瓶颈突破系列课"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://jingtianer.github.io/home/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://jingtianer.github.io/home/2023/09/23/Android%E9%AB%98%E7%BA%A7/Android%20%E9%AB%98%E7%BA%A7%E5%BC%80%E5%8F%91%E7%93%B6%E9%A2%88%E7%AA%81%E7%A0%B4%E7%B3%BB%E5%88%97%E8%AF%BE/02Http/"},"headline":"02-http","image":["https://jingtianer.github.io/home/img/og_image.png"],"datePublished":"2023-09-23T13:15:36.000Z","dateModified":"2024-04-23T10:49:15.897Z","author":{"@type":"Person","name":"Meow Meow Liu"},"publisher":{"@type":"Organization","name":"Jingtianer","logo":{"@type":"ImageObject","url":{"text":"Meow!!"}}},"description":"格式 报文格式(Request) 请求行 eg: GET &#x2F;users?id&#x3D;xxxx HTTP&#x2F;1.1 method path(包括参数部分) Http version   headers (Host在这里) body   报文格式(Response) 状态行 eg: HTTP&#x2F;1.1 200 OK Http Version status code status message   header"}</script><link rel="canonical" href="https://jingtianer.github.io/home/2023/09/23/Android%E9%AB%98%E7%BA%A7/Android%20%E9%AB%98%E7%BA%A7%E5%BC%80%E5%8F%91%E7%93%B6%E9%A2%88%E7%AA%81%E7%A0%B4%E7%B3%BB%E5%88%97%E8%AF%BE/02Http/"><link rel="alternate" href="/home/atom.xml" title="Jingtianer" type="application/atom+xml"><link rel="icon" href="/home/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/vs.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/home/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
   (function () {
       function switchTab() {
           if (!location.hash) {
@@ -28,12 +28,9 @@
       switchTab();
       window.addEventListener('hashchange', switchTab, false);
   })();
-  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/home/">Meow!!</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/home/">主页</a><a class="navbar-item" href="/home/archives">归档</a><a class="navbar-item" href="/home/categories">分类</a><a class="navbar-item" href="/home/tags">标签</a><a class="navbar-item" href="/home/about">关于我</a><a class="navbar-item" href="/home/tags/gallery">相册</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2023-09-23T13:15:36.000Z" title="2023/9/23 21:15:36">2023-09-23</time>发表</span><span class="level-item"><time dateTime="2024-04-23T10:49:15.897Z" title="2024/4/23 18:49:15">2024-04-23</time>更新</span><span class="level-item"><a class="link-muted" href="/home/categories/Android/">Android</a></span><span class="level-item">6 分钟读完 (大约826个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">02-http</h1><div class="content"><h2 id="格式"><a class="markdownIt-Anchor" href="#格式"></a> 格式</h2>
-<ul>
-<li>报文格式(Request)
-<ul>
-<li>请求行 eg: <code>GET /users?id=xxxx HTTP/1.1</code>
-<ul>
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/home/">Meow!!</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/home/">主页</a><a class="navbar-item" href="/home/archives">归档</a><a class="navbar-item" href="/home/categories">分类</a><a class="navbar-item" href="/home/tags">标签</a><a class="navbar-item" href="/home/about">关于我</a><a class="navbar-item" href="/home/tags/gallery">相册</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2023-09-23T13:15:36.000Z" title="2023/9/23 21:15:36">2023-09-23</time>发表</span><span class="level-item"><time dateTime="2024-04-23T10:49:15.897Z" title="2024/4/23 18:49:15">2024-04-23</time>更新</span><span class="level-item"><a class="link-muted" href="/home/categories/Android/">Android</a></span><span class="level-item">6 分钟读完 (大约826个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">02-http</h1><div class="content"><h2 id="格式"><a href="#格式" class="headerlink" title="格式"></a>格式</h2><ul>
+<li>报文格式(Request)<ul>
+<li>请求行 eg: <code>GET /users?id=xxxx HTTP/1.1</code><ul>
 <li>method</li>
 <li>path(包括参数部分)</li>
 <li>Http version</li>
@@ -43,10 +40,8 @@
 <li>body</li>
 </ul>
 </li>
-<li>报文格式(Response)
-<ul>
-<li>状态行 eg: <code>HTTP/1.1 200 OK</code>
-<ul>
+<li>报文格式(Response)<ul>
+<li>状态行 eg: <code>HTTP/1.1 200 OK</code><ul>
 <li>Http Version</li>
 <li>status code</li>
 <li>status message</li>
@@ -57,35 +52,28 @@
 </ul>
 </li>
 </ul>
-<h2 id="request"><a class="markdownIt-Anchor" href="#request"></a> Request</h2>
-<h3 id="method"><a class="markdownIt-Anchor" href="#method"></a> method</h3>
-<ul>
-<li>GET
-<ul>
+<h2 id="Request"><a href="#Request" class="headerlink" title="Request"></a>Request</h2><h3 id="method"><a href="#method" class="headerlink" title="method"></a>method</h3><ul>
+<li>GET<ul>
 <li>获取资源</li>
 <li>没有body</li>
 </ul>
 </li>
-<li>POST
-<ul>
-<li>增加/修改资源</li>
+<li>POST<ul>
+<li>增加&#x2F;修改资源</li>
 <li>有body</li>
 </ul>
 </li>
-<li>PUT
-<ul>
+<li>PUT<ul>
 <li>修改资源</li>
 <li>有body</li>
 </ul>
 </li>
-<li>DELETE
-<ul>
+<li>DELETE<ul>
 <li>删除资源</li>
 <li>没有body</li>
 </ul>
 </li>
-<li>HEAD
-<ul>
+<li>HEAD<ul>
 <li>获取资源</li>
 <li>没有body</li>
 <li>响应无body</li>
@@ -94,25 +82,20 @@
 </li>
 </ul>
 <p>幂等性：指重复的请求多次向服务器传送，对服务器的没有影响。如<code>GET</code>和<code>PUT</code>,<code>DELETE</code>。</p>
-<h2 id="response"><a class="markdownIt-Anchor" href="#response"></a> Response</h2>
-<h3 id="status-code"><a class="markdownIt-Anchor" href="#status-code"></a> status code</h3>
-<p>为了方便开发人员定位错误</p>
+<h2 id="Response"><a href="#Response" class="headerlink" title="Response"></a>Response</h2><h3 id="status-code"><a href="#status-code" class="headerlink" title="status code"></a>status code</h3><p>为了方便开发人员定位错误</p>
 <ul>
-<li>1xx: 临时性消息
-<ul>
+<li>1xx: 临时性消息<ul>
 <li>100 当客户端传送数据过大时，将其分段发送，在最后一个请求之前，服务器每收到一个请求，返回<code>100</code>表示收到，客户端再发送下一个。</li>
 <li>101 表示支持<code>http2</code>，浏览并尝试使用<code>http2</code>时，会先发送一个试探性的请求，如果返回<code>200</code>，说明服务器不支持<code>http2</code>，返回<code>101</code>则表示支持</li>
 </ul>
 </li>
 <li>2xx: 成功</li>
-<li>3xx: 重定向
-<ul>
+<li>3xx: 重定向<ul>
 <li>301 如，浏览器访问http时返回301，自动改用https访问</li>
 <li>304 内容未改变</li>
 </ul>
 </li>
-<li>4xx: 客户端错误
-<ul>
+<li>4xx: 客户端错误<ul>
 <li>400 请求有问题</li>
 <li>401 未登录</li>
 <li>404 没找到</li>
@@ -120,71 +103,54 @@
 </li>
 <li>5xx: 服务器出错</li>
 </ul>
-<h2 id="header"><a class="markdownIt-Anchor" href="#header"></a> Header</h2>
-<p>请求的数据的元数据</p>
+<h2 id="Header"><a href="#Header" class="headerlink" title="Header"></a>Header</h2><p>请求的数据的元数据</p>
 <ul>
 <li>Host: 服务器主机(作用是区分多个域名对应同一个ip的情况，在发送之前已经解析出ip了)</li>
 <li>Content-Length: 内容长度，作用是当传送二进制数据时，确定结束位置</li>
-<li>Content-type: 内容类型
-<ul>
-<li>text/html: 是html页面</li>
-<li>application/x-www-form-urlencoded: 普通表单(html里面那个)，encoded URL格式
-<ul>
+<li>Content-type: 内容类型<ul>
+<li>text&#x2F;html: 是html页面</li>
+<li>application&#x2F;x-www-form-urlencoded: 普通表单(html里面那个)，encoded URL格式<ul>
 <li>body中的内容和path中的参数一样，都是使用urlencoded编码的纯文本信息</li>
 </ul>
 </li>
-<li>multipart/form-data: 多部份，带文件的表单，二进制内容
-<ul>
+<li>multipart&#x2F;form-data: 多部份，带文件的表单，二进制内容<ul>
 <li>每个part通过boundary指定 分隔</li>
 </ul>
 </li>
-<li>application/json</li>
-<li>image/jpeg, application/zip 传送单个文件</li>
+<li>application&#x2F;json</li>
+<li>image&#x2F;jpeg, application&#x2F;zip 传送单个文件</li>
 </ul>
 </li>
-<li>Chunked Transfer Encoding: 分块传输，若响应量非常大，服务器相应非常耗时时，想要每查出一部分数据后就立即返回给客户端。
-<ul>
-<li>body格式</li>
+<li>Chunked Transfer Encoding: 分块传输，若响应量非常大，服务器相应非常耗时时，想要每查出一部分数据后就立即返回给客户端。<ul>
+<li>body格式<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;len1&gt;</span><br><span class="line">&lt;content1&gt;</span><br><span class="line">&lt;len2&gt;</span><br><span class="line">&lt;content1&gt;</span><br><span class="line">&lt;len3&gt;</span><br><span class="line">&lt;content1&gt;</span><br><span class="line">...more</span><br><span class="line">&lt;len_n&gt;</span><br><span class="line">&lt;content1&gt;</span><br><span class="line">0 <span class="comment">#结束</span></span><br></pre></td></tr></table></figure></li>
 </ul>
 </li>
-</ul>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;len1&gt;</span><br><span class="line">&lt;content1&gt;</span><br><span class="line">&lt;len2&gt;</span><br><span class="line">&lt;content1&gt;</span><br><span class="line">&lt;len3&gt;</span><br><span class="line">&lt;content1&gt;</span><br><span class="line">...more</span><br><span class="line">&lt;len_n&gt;</span><br><span class="line">&lt;content1&gt;</span><br><span class="line">0 <span class="comment">#结束</span></span><br></pre></td></tr></table></figure>
-<ul>
 <li>Location: 重定向的目标URL</li>
 <li>User-Agent: 标识用户使用的客户端</li>
-<li>Range / Accept-Range: 指定接收body的范围，断点续传时使用，多线程下载</li>
-<li>Cookie / set-Cookie: Cookie</li>
+<li>Range &#x2F; Accept-Range: 指定接收body的范围，断点续传时使用，多线程下载</li>
+<li>Cookie &#x2F; set-Cookie: Cookie</li>
 <li>Authorization: 授权信息</li>
 <li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers">more</a></li>
 </ul>
-<h3 id="cache-control"><a class="markdownIt-Anchor" href="#cache-control"></a> Cache-Control</h3>
-<ul>
-<li>
-<p>cache和buffer的区别</p>
+<h3 id="Cache-Control"><a href="#Cache-Control" class="headerlink" title="Cache-Control"></a>Cache-Control</h3><ul>
+<li><p>cache和buffer的区别</p>
 <ul>
 <li>Cache:  缓存，如cpu的Cache，Android的LRUCache。已经使用过的内存，未来可能还要用，暂时存起来</li>
-<li>Buffer: 缓冲，未来一定会用，来不及使用/预读提升速度。如视频缓冲</li>
+<li>Buffer: 缓冲，未来一定会用，来不及使用&#x2F;预读提升速度。如视频缓冲</li>
 </ul>
 </li>
-<li>
-<p>no-cache: 可以缓存，再次访问该页面时，重新请求</p>
+<li><p>no-cache: 可以缓存，再次访问该页面时，重新请求</p>
 </li>
-<li>
-<p>no-store: 不要缓存</p>
+<li><p>no-store: 不要缓存</p>
 </li>
-<li>
-<p>max-age: 请求结果具有生效时间</p>
+<li><p>max-age: 请求结果具有生效时间</p>
 </li>
-<li>
-<p>private/private: 消息链路上的其他路由节点是否可以缓存这个消息</p>
+<li><p>private&#x2F;private: 消息链路上的其他路由节点是否可以缓存这个消息</p>
 </li>
 </ul>
-<h3 id="last-modified"><a class="markdownIt-Anchor" href="#last-modified"></a> Last-Modified</h3>
-<p>资源最近一次更新的时间，若更新于请求之后，则资源失效</p>
-<h3 id="etag"><a class="markdownIt-Anchor" href="#etag"></a> Etag</h3>
-<p>类似hash值，若不一样则资源失效</p>
-<h3 id="rest"><a class="markdownIt-Anchor" href="#rest"></a> REST</h3>
-<ul>
+<h3 id="Last-Modified"><a href="#Last-Modified" class="headerlink" title="Last-Modified"></a>Last-Modified</h3><p>资源最近一次更新的时间，若更新于请求之后，则资源失效</p>
+<h3 id="Etag"><a href="#Etag" class="headerlink" title="Etag"></a>Etag</h3><p>类似hash值，若不一样则资源失效</p>
+<h3 id="REST"><a href="#REST" class="headerlink" title="REST"></a>REST</h3><ul>
 <li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/REST">REST</a></li>
 </ul>
 <blockquote>
@@ -206,7 +172,7 @@
             enableHotKey: true,
             language: "zh-CN",
         })
-        gitalk.render('comment-container')</script></div></div></div><!--!--><div class="column column-right is-4-tablet is-4-desktop is-4-widescreen  order-3 is-sticky"><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#格式"><span class="level-left"><span class="level-item">1</span><span class="level-item"> 格式</span></span></a></li><li><a class="level is-mobile" href="#request"><span class="level-left"><span class="level-item">2</span><span class="level-item"> Request</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#method"><span class="level-left"><span class="level-item">2.1</span><span class="level-item"> method</span></span></a></li></ul></li><li><a class="level is-mobile" href="#response"><span class="level-left"><span class="level-item">3</span><span class="level-item"> Response</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#status-code"><span class="level-left"><span class="level-item">3.1</span><span class="level-item"> status code</span></span></a></li></ul></li><li><a class="level is-mobile" href="#header"><span class="level-left"><span class="level-item">4</span><span class="level-item"> Header</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#cache-control"><span class="level-left"><span class="level-item">4.1</span><span class="level-item"> Cache-Control</span></span></a></li><li><a class="level is-mobile" href="#last-modified"><span class="level-left"><span class="level-item">4.2</span><span class="level-item"> Last-Modified</span></span></a></li><li><a class="level is-mobile" href="#etag"><span class="level-left"><span class="level-item">4.3</span><span class="level-item"> Etag</span></span></a></li><li><a class="level is-mobile" href="#rest"><span class="level-left"><span class="level-item">4.4</span><span class="level-item"> REST</span></span></a></li></ul></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/home/js/toc.js" defer></script></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/home/">Meow!!</a><p class="is-size-7"><span>&copy; 2024 Meow Meow Liu</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+        gitalk.render('comment-container')</script></div></div></div><!--!--><div class="column column-right is-4-tablet is-4-desktop is-4-widescreen  order-3 is-sticky"><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#格式"><span class="level-left"><span class="level-item">1</span><span class="level-item">格式</span></span></a></li><li><a class="level is-mobile" href="#Request"><span class="level-left"><span class="level-item">2</span><span class="level-item">Request</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#method"><span class="level-left"><span class="level-item">2.1</span><span class="level-item">method</span></span></a></li></ul></li><li><a class="level is-mobile" href="#Response"><span class="level-left"><span class="level-item">3</span><span class="level-item">Response</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#status-code"><span class="level-left"><span class="level-item">3.1</span><span class="level-item">status code</span></span></a></li></ul></li><li><a class="level is-mobile" href="#Header"><span class="level-left"><span class="level-item">4</span><span class="level-item">Header</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#Cache-Control"><span class="level-left"><span class="level-item">4.1</span><span class="level-item">Cache-Control</span></span></a></li><li><a class="level is-mobile" href="#Last-Modified"><span class="level-left"><span class="level-item">4.2</span><span class="level-item">Last-Modified</span></span></a></li><li><a class="level is-mobile" href="#Etag"><span class="level-left"><span class="level-item">4.3</span><span class="level-item">Etag</span></span></a></li><li><a class="level is-mobile" href="#REST"><span class="level-left"><span class="level-item">4.4</span><span class="level-item">REST</span></span></a></li></ul></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/home/js/toc.js" defer></script></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/home/">Meow!!</a><p class="is-size-7"><span>&copy; 2024 Meow Meow Liu</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
             article: {
                 highlight: {
                     clipboard: true,
