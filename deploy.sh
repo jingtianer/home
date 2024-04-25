@@ -1,3 +1,4 @@
+#!/bin/bash
 # cp -r ./source /mnt/d/jingtian/blog_back
 # cp *.yml /mnt/d/jingtian/blog_back/
 
