@@ -31,24 +31,30 @@
   </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/home/">Meow!!</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/home/">主页</a><a class="navbar-item" href="/home/archives">归档</a><a class="navbar-item" href="/home/categories">分类</a><a class="navbar-item" href="/home/tags">标签</a><a class="navbar-item" href="/home/about">关于我</a><a class="navbar-item" href="/home/tags/gallery">相册</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/"><i class="fab fa-github"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><div class="card-content"><nav class="breadcrumb" aria-label="breadcrumbs"><ul><li><a href="/home/tags">标签</a></li><li class="is-active"><a href="#" aria-current="page">Android FrameWork</a></li></ul></nav></div></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2024-03-24T13:15:36.000Z" title="2024/3/24 21:15:36">2024-03-24</time>发表</span><span class="level-item"><time dateTime="2024-04-23T10:49:15.899Z" title="2024/4/23 18:49:15">2024-04-23</time>更新</span><span class="level-item"><a class="link-muted" href="/home/categories/Android/">Android</a></span><span class="level-item">11 分钟读完 (大约1620个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/home/2024/03/24/Android%E9%AB%98%E7%BA%A7/FrameWork/01-Binder/">01-Binder</a></h1><div class="content"><blockquote>
 <p>看源码的时候可以用uml图辅助理解</p>
 </blockquote>
-<h2 id="多进程"><a href="#多进程" class="headerlink" title="多进程"></a>多进程</h2><h3 id="为什么多进程"><a href="#为什么多进程" class="headerlink" title="为什么多进程"></a>为什么多进程</h3><ul>
+<h2 id="多进程"><a class="markdownIt-Anchor" href="#多进程"></a> 多进程</h2>
+<h3 id="为什么多进程"><a class="markdownIt-Anchor" href="#为什么多进程"></a> 为什么多进程</h3>
+<ul>
 <li>突破内存限制：Android系统在内存不足时，会优先杀占用内存多的<strong>进程</strong></li>
 <li>功能稳定性：把一些功能放到独立的进程中，保证进程功能的纯粹性和稳定性</li>
 <li>规避系统内存泄漏：独立的WebView进程阻隔内存泄漏问题</li>
 <li>隔离风险：不稳定功能放到子进程，保证主进程的稳定性</li>
 </ul>
-<h2 id="Android中的进程间通信"><a href="#Android中的进程间通信" class="headerlink" title="Android中的进程间通信"></a>Android中的进程间通信</h2><ul>
-<li>Binder<ul>
+<h2 id="android中的进程间通信"><a class="markdownIt-Anchor" href="#android中的进程间通信"></a> Android中的进程间通信</h2>
+<ul>
+<li>Binder
+<ul>
 <li>aidl</li>
 </ul>
 </li>
 <li>Socket</li>
 <li>管道：handler</li>
-<li>共享内存<ul>
+<li>共享内存
+<ul>
 <li>fresco，mmkv（匿名）</li>
 </ul>
 </li>
-<li>信号：<ul>
+<li>信号：
+<ul>
 <li>ANR监控</li>
 <li>matrix、xcrash、友盟apm</li>
 </ul>
