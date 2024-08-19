@@ -4,6 +4,8 @@
 
 hexo clean
 
+# enable errexit
+set -e
 # cannot commit tokens to github
 git add .
 git commit -m "`date`"
@@ -18,7 +20,7 @@ else
     sed -i "s/<my token>/`cat token.txt`/g" _config.yml
 fi
 
-hexo d
+hexo d 2>&1 > deploy.log
 
 if [ `uname` == "Darwin" ]; then
     echo "MacOS"
