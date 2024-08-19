@@ -6,4 +6,5 @@ node_modules/
 public/
 .deploy*/
 _multiconfig.yml
+_config.yml.bak
 token.txt

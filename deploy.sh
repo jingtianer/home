@@ -7,10 +7,22 @@ hexo clean
 # cannot commit tokens to github
 git add .
 git commit -m "`date`"
-git push master
+git push origin master
 hexo g
 # sed -i 's/github.com\/jingtianer/jingtianer.github.io/g' public/atom.xml
 
-sed -i "s/<my token>/`cat token.txt`/g" _config.yml
+if [ `uname` == "Darwin" ]; then
+    echo "MacOS"
+    sed -i ".bak" "s/<my token>/`cat token.txt`/g" _config.yml
+else
+    sed -i "s/<my token>/`cat token.txt`/g" _config.yml
+fi
+
 hexo d
-sed -i "s/`cat token.txt`/<my token>/g" _config.yml
+
+if [ `uname` == "Darwin" ]; then
+    echo "MacOS"
+    mv _config.yml.bak _config.yml
+else
+    sed -i "s/<my token>/`cat token.txt`/g" _config.yml
+fi

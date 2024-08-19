@@ -64,6 +64,11 @@ tag: resume
   - keywords: 系统调用, I/O, llvm IR插装, 共享内存
   - <span class="Label Label--secondary v-align-middle mr-1">Private</span>[repo](https://github.com/jingtianer/aflgo_distance)
 
+## 实习经历
+### ***字节跳动*** 今日头条
+- 部门: 今日头条-架构
+> 负责基础组件的升级包括官方fragment,自研sdk
+
 ## leetcode题解
 
 - <font color="red">[hard]</font> [1255. 得分最高的单词集合](https://leetcode.cn/problems/maximum-score-words-formed-by-letters/solutions/2134779/zhuang-tai-ya-suo-jian-zhi-by-tian-tian-dsv8c/) 状态压缩+剪枝
