@@ -2426,4 +2426,3 @@ public fun matchDeepLinkExcludingChildren(request: NavDeepLinkRequest): DeepLink
     - 上面说到导航目的地有很多种类，`NavController`会根据导航目的地的类型，选择不同的`Navigator`来完成跳转任务，比如`FragmentNavigator`，`ActivityNavigator`，`DialogNavigator`
     - 每个`Navigator`都有`name`，是通过一个注解`Navigator.Name`指定的。
     - `NavController`中因此也维护了`_navigatorProvider`，他的作用类似于一个`map`,存储`Navigator`的`name`和`Navigator`的映射关系。
-    - 

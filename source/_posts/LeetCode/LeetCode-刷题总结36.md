@@ -235,3 +235,177 @@ public:
 哎，速度不是很快`279ms 击败13.48%`
 
 ### dp
+
+## [3151. 特殊数组 I](https://leetcode.cn/problems/special-array-i/description/?envType=daily-question&envId=2024-08-13)
+
+```c++
+class Solution {
+public:
+    bool isArraySpecial(vector<int>& nums) {
+        int len = nums.size();
+        int odd = nums[0] & 1;
+        for(int i = 1; i < len; i++) {
+            if((nums[i] & 1) == odd) {
+                return false;
+            }
+            odd = !odd;
+        }
+        return true;
+    }
+};
+```
+
+## [676. 实现一个魔法字典](https://leetcode.cn/problems/implement-magic-dictionary/description/?envType=daily-question&envId=2024-08-12)
+
+
+```c++
+class MagicDictionary {
+    vector<string> dictionary;
+public:
+    MagicDictionary() {
+
+    }
+    
+    void buildDict(vector<string> dictionary) {
+        this->dictionary = dictionary;
+    }
+    
+    bool search(string searchWord) {
+        for(auto& word : dictionary) {
+            if(word.size() != searchWord.size()) {
+                continue;
+            }
+            int diff = 0;
+            for(int i = 0; i < word.size(); i++) {
+                if(word[i] != searchWord[i]) {
+                    diff++;
+                }
+            }
+            if(diff == 1) {
+                return true;
+            }
+        }
+        return false;
+    }
+};
+```
+
+## [1035. 不相交的线](https://leetcode.cn/problems/uncrossed-lines/description/?envType=daily-question&envId=2024-08-11)
+
+```c++
+
+```
+
+## 3132. 找出与数组相加的整数 II
+
+```c++
+class Solution {
+public:
+    int minimumAddedInteger(vector<int>& nums1, vector<int>& nums2) {
+        sort(nums1.begin(), nums1.end());
+        sort(nums2.begin(), nums2.end());
+        int len2 = nums2.size();
+        int x = INT_MAX;
+        for(int start = 0; start < 3; start++) {
+            int skip = 2 - start;
+            int diff = nums2[0] - nums1[start];
+            bool flag = true;
+            for(int i = 1, j = 1; i < len2; j++) {
+                if(nums2[i] - nums1[start+j] != diff) {
+                    if(skip > 0) {
+                        skip--;
+                    } else {
+                        flag = false;
+                        break;
+                    }
+                } else {
+                    i++;
+                }
+            }
+            if(flag) {
+                x = min(x, diff);
+            }
+        }
+        return x;
+    }
+};
+```
+
+- 先排序，计算差值，看是否所有差值都相同
+- 由于数组1的长度比数组2长2，所以比时给数组1一个偏移
+- 由于需要删除两个，且删除的位置不同，比较时如果遇到不相等的情况，则根据情况跳过一个
+
+## 3131. 找出与数组相加的整数 I
+
+```c++
+class Solution {
+public:
+    int addedInteger(vector<int>& nums1, vector<int>& nums2) {
+        return *max_element(nums2.begin(), nums2.end()) - *max_element(nums1.begin(), nums1.end());
+    }
+};
+```
+
+## 3129. 找出所有稳定的二进制数组 I
+
+```c++
+class Solution {
+    const long long MOD = 1e9 + 7;
+public:
+    int numberOfStableArrays(int zero, int one, int limit) {
+        // 连续的0和1的个数不超过limit
+        vector<vector<vector<int>>> dp0 = vector<vector<vector<int>>>(zero + 1, vector<vector<int>>(one + 1, vector<int>(limit+1, 0)));
+        vector<vector<vector<int>>> dp1 = vector<vector<vector<int>>>(zero + 1, vector<vector<int>>(one + 1, vector<int>(limit+1, 0)));
+        for(int z = 1; z <= min(zero, limit); z++) {
+            dp0[z][0][z] = 1;
+        }
+        for(int o = 1; o <= min(one, limit); o++) {
+            dp1[0][o][o] = 1;
+        }
+        for(int z = 1; z <= zero; z++) {
+            for(int o = 1; o <= one; o++) {
+                int dp01 = 0;
+                int dp11 = 0;
+                for(int l = 1; l <= limit; l++) {
+                    dp01 = (dp01 + dp1[z-1][o][l]) % MOD; // 含有z-1个0，o个1，末尾连续1的个数为l，的数后面加一个0，变成z+1个0，o个1，末尾连续0的个数为1的数
+                    dp11 = (dp11 + dp0[z][o-1][l]) % MOD; // 含有z个0，o-1个1，末尾连续0的个数为l，的数后面加一个1，变成z个0，o+1个1，末尾连续1的个数为1的数
+                    dp0[z][o][l] += dp0[z-1][o][l-1]; // 含有z-1个0，o个1，末尾连续0的个数为l-1，的数后面再加一个0，变成z+1个0，o个1，末尾连续0的个数为l的数
+                    dp1[z][o][l] += dp1[z][o-1][l-1]; // 含有z-1个0，o个1，末尾连续0的个数为l-1，的数后面再加一个1，变成z个0，o+1个1，末尾连续1的个数为l的数
+                }
+                dp0[z][o][1] += dp01;
+                dp1[z][o][1] += dp11;
+            }
+        }
+        int ans = 0;
+        for(int l = limit; l >= 1; l--) {
+            ans = (ans + (dp0[zero][one][l] + dp1[zero][one][l]) % MOD) % MOD;
+        }
+        return ans;
+    }
+};
+```
+
+- 答案还可以降维
+
+## 600. 不含连续1的非负整数
+
+```c++
+class Solution {
+    int cnt = 0;
+    void search(int i, int n) {
+        if(i > n) {
+            return;
+        }
+        cnt++;
+        if(!(i & 1)) {
+            search((i << 1) | 1, n);
+        }
+        search((i << 1) | 0, n);
+    }
+public:
+    int findIntegers(int n) {
+        search(1, n);
+        return cnt + 1;
+    }
+};
+```
