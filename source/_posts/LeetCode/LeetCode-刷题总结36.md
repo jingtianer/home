@@ -409,3 +409,288 @@ public:
     }
 };
 ```
+
+## 572. 另一棵树的子树
+
+```c++
+class Solution {
+    void findNode(TreeNode* root, int val, vector<TreeNode*>& result) {
+        if(root == nullptr) {
+            return;
+        }
+        if(root->val == val) {
+            result.push_back(root);
+        }
+        findNode(root->left, val, result);
+        findNode(root->right, val, result);
+    }
+    bool _isSubTree(TreeNode *root, TreeNode* subRoot) {
+        if(root == nullptr || subRoot == nullptr) {
+            return root == subRoot;
+        }
+        if(root->val != subRoot->val) {
+            return false;
+        }
+        return _isSubTree(root->left, subRoot->left) && _isSubTree(root->right, subRoot->right);
+    }
+public:
+    bool isSubtree(TreeNode* root, TreeNode* subRoot) {
+        vector<TreeNode*> nodes;
+        findNode(root, subRoot->val, nodes);
+        for(TreeNode* node : nodes) {
+            if(_isSubTree(node, subRoot)) 
+                return true;
+        }
+        return false;
+    }
+};
+```
+
+## 3143. 正方形中的最多点数
+
+```c++
+class Solution {
+public:
+public:
+    int maxPointsInsideSquare(vector<vector<int>>& points, string s) {
+        auto getLineLen = [](const vector<int>& point) { // 点所在正方形的边长/2，用来代表一个正方形
+            return max(abs(point[0]), abs(point[1]));
+        };
+        int len = points.size();
+        vector<int> sortedIndex(len);
+        iota(sortedIndex.begin(), sortedIndex.end(), 0);
+        sort(sortedIndex.begin(), sortedIndex.end(), [&points, &getLineLen](int a, int b){ return getLineLen(points[a]) < getLineLen(points[b]); });
+        // 按照点所在正方形的边长排序
+        unordered_set<char> labelSet; // 记录出现过的label，不允许出现相同的label
+        int cnt = 0;
+        int maxcnt = 0;
+        int i = 0;
+        bool valid = true;
+        while(i < len && valid) {
+            int index = sortedIndex[i];
+            int lineLen = getLineLen(points[index]);
+            while(i < len && lineLen == getLineLen(points[index = sortedIndex[i]])) {
+                // 遍历所有相同边长的点
+                char label = s[index];
+                if(labelSet.count(label)) {
+                    valid = false; // 这个正方形的边上遇到了出现过的label，这个正方形失效，更大的正方形也失效
+                    break;
+                } else {
+                    cnt++;
+                }
+                labelSet.insert(label);
+                i++;
+            }
+            if(valid) { // 对于合法正方形，更新点数
+                maxcnt = cnt;
+            }
+        }
+        return maxcnt;
+    }
+};
+```
+
+## 3128. 直角三角形
+
+
+### 四次前缀和
+
+```c++
+class Solution {
+public:
+    long long numberOfRightTriangles(vector<vector<int>>& grid) {
+        long long number = 0;
+        int m = grid.size(), n = grid[0].size();
+        vector<int> verticalSum;
+        verticalSum = vector<int>(n);
+        for(int i = 0; i < m; i++) {
+            int horSum = 0;
+            for(int j = 0; j < n; j++) {
+                if(!grid[i][j]) continue;
+                verticalSum[j] += grid[i][j];
+                horSum += grid[i][j];
+                number += (horSum - 1) * (verticalSum[j] - 1);
+            }
+        }
+
+        verticalSum = vector<int>(n);
+        for(int i = m - 1; i >= 0; i--) {
+            int horSum = 0;
+            for(int j = 0; j < n; j++) {
+                if(!grid[i][j]) continue;
+                verticalSum[j] += grid[i][j];
+                horSum += grid[i][j];
+                number += (horSum - 1) * (verticalSum[j] - 1);
+            }
+        }
+
+        verticalSum = vector<int>(n);
+        for(int i = m - 1; i >= 0; i--) {
+            int horSum = 0;
+            for(int j = n - 1; j >= 0; j--) {
+                if(!grid[i][j]) continue;
+                verticalSum[j] += grid[i][j];
+                horSum += grid[i][j];
+                number += (horSum - 1) * (verticalSum[j] - 1);
+            }
+        }
+
+        verticalSum = vector<int>(n);
+        for(int i = 0; i < m; i++) {
+            int horSum = 0;
+            for(int j = n - 1; j >= 0; j--) {
+                if(!grid[i][j]) continue;
+                verticalSum[j] += grid[i][j];
+                horSum += grid[i][j];
+                number += (horSum - 1) * (verticalSum[j] - 1);
+            }
+        }
+        return number;
+    }
+};
+```
+
+## LCP 40. 心算挑战
+
+### 贪心
+
+```c++
+class Solution {
+public:
+    int maximumScore(vector<int>& cards, int cnt) {
+        vector<int> odd, even;
+        sort(cards.begin(), cards.end());
+        for(int card : cards) {
+            ((card & 1) ? odd : even).push_back(card);
+            // 三目运算符的这种用法终于被我用上了
+        }
+        int score = 0;
+        int odd_index = odd.size() - 1;
+        int even_index = even.size() - 1;
+        while(cnt) {
+            bool has2_odd = odd_index >= 1;
+            bool has2_even = even_index >= 1;
+            bool cnt_at_least_2 = cnt >= 2;
+            if(has2_odd && has2_even && cnt_at_least_2) {
+                if(even[even_index] >= odd[odd_index] + odd[odd_index - 1]) {
+                    goto do_even;
+                } else if(odd[odd_index] + odd[odd_index - 1] >= even[even_index] + even[even_index - 1]) {
+                    goto do_odd;
+                } else {
+                    goto do2_even;
+                }
+            } else {
+                if((cnt == 1 || odd_index == 0) && even_index >= 0) {
+                    // odd或cnt为1，even大于0, 取even
+                    goto do_even;
+                } else if(odd_index < 0 && even_index >= 0 && cnt > 1) {
+                    // odd为0，even不为0，cnt大于1，取even
+                    goto do_even;
+                } else if(even_index == 0 && odd_index >= 1 && cnt >= 2) {
+                    if(cnt == 2) {
+                        goto do_odd;
+                    } else if(even[even_index] > odd[odd_index] + odd[odd_index - 1]) {
+                        goto do_even;
+                    } else {
+                        goto do_odd;
+                    }
+                } else if(even_index < 0 && odd_index >= 1 && cnt >= 2) {
+                    goto do_odd;
+                }
+                break;
+            }
+            do_odd:
+            score += odd[odd_index] + odd[odd_index - 1];
+            cnt -= 2;
+            odd_index -= 2;
+            goto next;
+            do2_even:
+            score += even[even_index] + even[even_index - 1];
+            cnt -= 2;
+            even_index -= 2;
+            goto next;
+            do_even:
+            score += even[even_index];
+            cnt -= 1;
+            even_index -= 1;
+            next:
+        }
+        return cnt == 0 ? score : 0;
+    }
+};
+```
+
+- 先排序，然后按照奇偶性分成两个数组
+- 贪心，每次从奇数数组中取出两个奇数，或者从偶数数组中取数，直到取完数组，或者奇数数组剩一个，或者取够了cnt个数
+- 如何选取：
+  - 由于奇数数组每次取两个，占用两个cnt资源，而偶数数组可以取一个也可以取两个，导致前面的取法会影响后续cnt能否刚好取够。
+  - 是连续取两个偶数，还是取两个奇数，还是只取一个偶数？
+    - `odd=[...,3,7]`, `even=[...,12]`,由于偶数数组中`12`大于奇数数组的`3+7`，所以取`12`,`(一个偶数完胜)`
+    - `odd=[...,3,7]`, `even=[...,6,6]`,这次`6`小于`3+7`,可是连续取`两个6`的得分大于`3+7`，所以取`6+6`。`(两个奇数拉低了平均值)`
+    - `odd=[...,3,7]`, `even=[...,2,6]`,这次`6`小于`3+7`，连续两次都选择偶数`2+6`也比选择`3+7`两个奇数小，所以选两个奇数
+  - 以上选取策略需要`len(odd) >= 2` `and` `len(even) >= 2` `and` `ret >= 2`
+  - 下面讨论不满足以上情况，也就是`len(odd)`,`len(even)`,`ret`不会同时大于等于`2`的情况
+  - 由于可能的情况太多太复杂，列表讨论
+
+```c++
+/*
+odd     even    cnt     do
+// odd或cnt为1，even大于0,只能取even
+2+      2+      1       even
+2       2+      1       even
+1       2+      2+      even
+1       2+      2       even
+1       2+      1       even
+0       2+      1       even
+2+      2       1       even
+2       2       1       even
+1       2       2+      even
+1       2       2       even
+1       2       1       even
+0       2       1       even
+2+      1       1       even
+2       1       1       even
+1       1       2+      even
+1       1       2       even
+1       1       1       even
+0       1       1       even
+
+// odd为0，even不为0，cnt大于1，取even
+0       2+      2+      even
+0       2+      2       even
+0       2       2+      even
+0       2       2       even
+0       1       2+      even
+0       1       2       even
+
+// even只剩一个, cnt剩两个，不能取even，odd大于等于2个，取odd
+2+      1       2       odd
+2       1       2       odd
+
+// even只剩一个, cnt大于两个，可以取even，但需要和odd比较
+2+      1       2+      even, odd1+odd2比较
+2       1       2+      even, odd1+odd2比较
+
+// even用完了, odd还有两个以上, 取odd
+2+      0       2+      odd
+2+      0       2       odd
+2       0       2+      odd
+2       0       2       odd
+
+
+// even,odd都取完了，无法取够cnt，break
+0       0       2+      break
+0       0       2       break
+
+// cnt或odd为1，没有even可取，无法满足条件，break
+2+      0       1       break
+2       0       1       break
+1       0       2+      break
+1       0       2       break
+1       0       1       break
+0       0       1       break
+*/
+```
+
+> `2+`代表个数大于`2`
+
