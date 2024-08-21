@@ -694,3 +694,496 @@ odd     even    cnt     do
 
 > `2+`代表个数大于`2`
 
+### 排序
+```c++
+class Solution {
+public:
+    int maximumScore(vector<int>& cards, int cnt) {
+        int odd = -1, even = -1;
+        int tmp = 0;
+        int n = cards.size();
+        sort(cards.begin(), cards.end());
+        for(int i = n - 1; i > n - cnt - 1; i--) {
+            ((cards[i] & 1) ? odd : even) = cards[i];
+            tmp += cards[i];
+            cout << cards[i] << endl;
+        }
+        if(!(tmp & 1)) return tmp;
+        bool flag = false;
+        int ans = 0;
+        for(int i = n - cnt - 1; i >= 0; i--) {
+            if(cards[i] & 1) {
+                if(even != -1) {
+                    flag = true;
+                    ans = max(ans, tmp - even + cards[i]);
+                    
+                }
+            } else {
+                if(odd != -1) {
+                    ans = max(ans, tmp - odd + cards[i]);
+                    flag = true;
+                }
+            }
+        }
+        return ans;
+    }
+};
+```
+
+- 排序后前cnt个数加起来，如果是偶数，则是所求最大的情况，直接返回
+- 否则，前cnt个和加起来是奇数，用后面的数替换前面的数，使和变成偶数
+  - 如果后面的数是奇数，则减去最后一个偶数，这样和为偶数
+  - 如果后面的数是偶数，则减去最后一个奇数，这样和为奇数
+
+### 哈希
+
+和上一个想法思路一致，`1<=cards[i]<=1000`，可以把他映射到一个长度1000的数组中，记录下标早cards中出现的次数，可以避免排序。
+
+```c++
+class Solution {
+public:
+    int maximumScore(vector<int>& cards, int cnt) {
+        int hash[1001] = {0};
+        int n = cards.size();
+        for(int i = 0; i < n; i++) {
+            hash[cards[i]]++;
+        }
+        int i = 1000;
+        int tmp = 0;
+        int odd = -1, even = -1;
+        for(int j = 0; j < cnt && i > 0; j++) {
+            while(i > 0 && hash[i] == 0) i--;
+            if(i == 0) break; // will never happen
+            tmp += i;
+            hash[i]--;
+            ((i & 1) ? odd : even) = i;
+        }
+        if(!(tmp & 1)) return tmp;
+        int ans = 0;
+        while(i > 0) {
+            while(i > 0 && hash[i] == 0) i--;
+            if(i == 0) break;
+            if((i & 1) == 1 && even != -1) {
+                ans = max(ans, tmp - even + i);
+            } else if((i & 1) == 0 && odd != -1) {
+                ans = max(ans, tmp - odd + i);
+            }
+            hash[i]--;
+        }
+        return ans;
+    }
+};
+```
+
+## 3111. 覆盖所有点的最少矩形数目
+
+```c++
+class Solution {
+public:
+    int minRectanglesToCoverPoints(vector<vector<int>>& points, int w) {
+        sort(points.begin(), points.end(), [](const vector<int>& a, const vector<int>& b){ return a[0] < b[0]; });
+        int len = points.size();
+        int i = 1;
+        int cnt = 1;
+        int lastx = points[0][0];
+        while(i < len) {
+            while(i < len && points[i][0] - lastx <= w) i++;
+            if(i >= len) break;
+            cnt++;
+            lastx = points[i][0];
+        }
+        return cnt;
+    }
+};
+```
+
+- 啊?这是中等题吗
+
+## 3007. 价值和小于等于 K 的最大数字
+
+### 公式法
+```c++
+class Solution {
+    long long accumulatedValueOf(long long k, int x) {
+        long long value = 0;
+        for(int mask_off = 63; mask_off >= 1; mask_off--) {
+            long long mask = 1l << (mask_off - 1);
+            if(!(mask & k)) continue;
+            k = k & ~mask;
+            if(mask_off % x == 0) {
+                value += ((k|mask) - mask + 1);
+            }
+            value += mask / 2 * ((mask_off - 1) / x);
+        }
+        return value;
+    }
+public:
+    long long findMaximumNumber(long long k, int x) {
+        long long l = 1, r = 1e15;
+        while(l < r) {
+            long long mid = (r - l + 1) / 2 + l;
+            long long accuValue = accumulatedValueOf(mid, x);
+            if(accuValue <= k) {
+                l = mid;
+            } else {
+                r = mid - 1;
+            }
+        }
+        return l;
+    }
+};
+```
+#### 思路
+- 记$ price_n(x) = bit\_count(n, x) $ 
+- 记$ accumulated_n(x) = \sum_{i=1}^nprice_i(x) $ 
+- `bit_count`, `price`是n的价值，也就是下标被x整除的位数和
+- 对于`n>0`, 函数`bit_count`, 是恒大于零的。
+- 所以数列$ \{accumulated_n(x)\} $是单调递增的，如果能找到计算$ \{accumulated_n(x)\} $的公式，利用二分查找即可快速找到答案
+
+#### 公式推导
+
+- 以`n = 7`, `x = 1`为例
+
+```
+0000
+0001
+0010
+0011
+0100
+0101
+0110
+0111
+```
+
+可以观察到`0 + 7` = `1 + 6` = `2 + 5` = `3 + 4` = 二进制的`111`
+总价值为: `3*4=12`
+
+也就是对于$ n = 0 ... (2^i-1) $时，他们的总价值为$ i * 2^{i-1} $ 
+
+$ a_{2^i}(1) = i * 2^{i-1}$
+
+- 以`n = 10`, `x = 1`为例
+
+```
+0000
+0001
+0010
+0011
+0100
+0101
+0110
+0111
+1000
+1001
+1010
+```
+先计算`n = 0...7`的总价值，为`12`
+$ a_{2^i-1}(1) = i * 2^{i-1}$, $i = 3$的情况
+
+组成部分为`n = 0...7`和`n = 8...10`
+
+对于`n = 8...10`
+先数出最高位的情况，也就是$n - (2^i - 1)$，再去掉最高位，变成以下情况
+```
+00
+01
+10
+```
+也就是`n = 2`, `x = 1`的情况，重复上面的操作
+也就是 $ b_n(i) = n\%2^{i+1} - (2^i - 1) $
+- 对于更复杂的情况如: `n = 1001101`, `x = 1`
+总价值为
+$ a_{2^6-1}(1) + b_n(6) + $
+$ a_{2^3-1}(1) + b_n(3) + $
+$ a_{2^2-1}(1) + b_n(2) + $
+$ a_{2^0-1}(1) + b_n{0}$
+
+- 对于`x != 1`的情况，也就是
+$ a_{2^i}(x) =  \lfloor\frac{i}{x}\rfloor * 2^{i-1}$
+$ b_n(i, x) = n\%2^{i+1} - (2^i - 1) $ $(i \% x = 0)$ 
+$ b_n(i, x) = 0 $ $(i \% x \not ={0})$ 
+
+
+## 2961. 双模幂运算
+快速幂秒了！
+
+```c++
+class Solution {
+    int fastPow(int a, int n, int mod) {
+        int res = 1;
+        while(n) {
+            if(n&1) {
+                res = (res * a) % mod;
+            }
+            a = (a * a) % mod;
+            n >>= 1;
+        }
+        return res;
+    }
+public:
+    vector<int> getGoodIndices(vector<vector<int>>& variables, int target) {
+        vector<int> goodIndices;
+        int len = variables.size();
+        for(int i = 0; i < len; i++) {
+            int n = fastPow(variables[i][0], variables[i][1], 10);
+            n = fastPow(n, variables[i][2], variables[i][3]);
+            if(n == target) {
+                goodIndices.push_back(i);
+            }
+        }
+        return goodIndices;
+    }
+};
+```
+
+## 682. 棒球比赛
+
+```c++
+class Solution {
+public:
+    int calPoints(vector<string>& operations) {
+        int n = operations.size();
+        vector<int> scores;
+        int scoreCnt = 0;
+        for(int i = 0; i < n; i++) {
+            int score = 0;
+            if (operations[i] == "+") {
+                score = scores[scoreCnt - 1] + scores[scoreCnt - 2];
+            } else if (operations[i] == "D") {
+                score = scores[scoreCnt - 1] * 2;
+            } else if (operations[i] == "C") {
+                scores.pop_back();
+                scoreCnt--;
+                continue;
+            } else {
+                sscanf(operations[i].c_str(), "%d", &score);
+            }
+            scores.push_back(score);
+            scoreCnt++;
+        }
+        return accumulate(scores.begin(), scores.end(), 0);
+    }
+};
+```
+
+## 3106. 满足距离约束且字典序最小的字符串
+
+```c++
+class Solution {
+    public:
+    int charDistance(char a, char b) {
+        int d = abs(a - b);
+        return min(d, 26 - d);
+    }
+public:
+    string getSmallestString(string s, int k) {
+        int n = s.length();
+        for(int i = 0; i < n && k > 0; i++) {
+            int target = 'z';
+            if(k > 12) {
+                target = 'a';
+            } else {
+                for(int j = 0; j <= k; j++) {
+                    target = min(target, (s[i] + j - 'a') % 26 + 'a');
+                    target = min(target, (s[i] - j - 'a' + 26) % 26 + 'a');
+                }
+            }
+            k -= charDistance(s[i], target);
+            s[i] = target;
+        }
+        return s;
+    }
+};
+```
+
+- 实际上就是`26`进制数，在有限步骤内，将其转化为同位数下尽量小的数
+- 尽量多的将当前最高位变小，高位使用1步的减少量是地位使用一步的26倍
+- 简单计算可知，两个字母最大距离为12
+  - 当`k > 12`时，一定可以变成`a`
+  - 当`k <= 12`时，一定可以变成`a`，寻找k步内能实现的最小字符
+
+## 2740. 找出分区值
+
+```c++
+class Solution {
+public:
+    int findValueOfPartition(vector<int>& nums) {
+        sort(nums.begin(), nums.end());
+        int len = nums.size();
+        int minDiff = INT_MAX;
+        for(int i = 1; i < len; i++) {
+            minDiff = min(minDiff, abs(nums[i] - nums[i-1]));
+        }
+        return minDiff;
+    }
+};
+```
+
+## 2844. 生成特殊数字的最少操作
+
+```c++
+class Solution {
+public:
+    int minimumOperations(string num) {
+        int len = num.length();
+        int first0 = len, first5 = len;
+        int i = len - 1;
+        int minOp = len;
+        while(i >= 0) {
+            if(num[i] == '0' && first0 == len) {
+                first0 = i;
+            } else if(num[i] == '5' && first5 == len) {
+                first5 = i;
+            }
+            if(num[i] == '0' && first0 != len && i < first0) {
+                minOp = min(minOp, len - first0 - 1 + first0 - i - 1);
+            } else if(num[i] == '2' && first5 != len && i < first5) {
+                minOp = min(minOp, len - first5 - 1 + first5 - i - 1);
+            } else if(num[i] == '5' && first0 != len && i < first0) {
+                minOp = min(minOp, len - first0 - 1 + first0 - i - 1);
+            } else if(num[i] == '7' && first5 != len && i < first5) {
+                minOp = min(minOp, len - first5 - 1 + first5 - i - 1);
+            }
+            i--;
+        }
+        if(first0 != len) minOp = min(minOp, len - 1);
+        return minOp;
+    }
+};
+```
+
+- 对于所有25的倍数，举例可知，结尾两位为`00`,`25`,`50`,`75`
+- 一个字符串可能有多种方式到达变成25的倍数
+  - 如果最后以`00`结尾，先倒着找到第一个`0`，删去后面的所有数，在找第二个`0`，删掉两个`0`中间的数
+  - `25`,`50`,`75`同理
+  - 返回删除数字最少的情况
+- 特殊情况
+  - 没有找到`00`,`25`,`50`,`75`，可以把整个字符串删掉
+  - 没有找到`00`,`25`,`50`,`75`，只找到了一个`0`，可以把`0`以外的数全删掉
+
+## 2766. 重新放置石块
+
+```c++
+class Solution {
+public:
+    vector<int> relocateMarbles(vector<int>& nums, vector<int>& moveFrom, vector<int>& moveTo) {
+        unordered_map<int, bool> pos2rock;
+        for(int rockPos : nums) {
+            pos2rock[rockPos] = true;
+        }
+        int opNum = moveFrom.size();
+        for(int i = 0; i < opNum; i++) {
+            if(moveTo[i] == moveFrom[i]) continue;
+            pos2rock[moveTo[i]] = true;
+            // pos2rock[moveFrom[i]] = 0;
+            pos2rock.erase(moveFrom[i]);
+        }
+        vector<int> res;
+        for(const auto& [pos, num] : pos2rock) {
+            // if(num) { // 不需要判断，都是true
+                res.push_back(pos);
+            // }
+        }
+        sort(res.begin(), res.end());
+        return res;
+    }
+};
+```
+
+
+## 2101. 引爆最多的炸弹
+
+```c++
+class Solution {
+    class Solve {
+        unordered_map<int, vector<int>> graph;
+        vector<vector<int>>& bombs;
+        int bombsNum;
+        int isICanBoomJ(int i, int j) {
+            return ((long long)bombs[i][0] - bombs[j][0]) * (bombs[i][0] - bombs[j][0]) + ((long long)bombs[i][1] - bombs[j][1]) * (bombs[i][1] - bombs[j][1]) <= (long long)bombs[i][2] * bombs[i][2];
+        }
+        int cntNodes(int start) {
+            vector<bool> visited = vector<bool>(bombsNum, false);
+            return cntNodes(start, visited);
+        }
+        int cntNodes(int start, vector<bool>& visited) {
+            visited[start] = true;
+            int child = 0;
+            for(int subNode : graph[start]) {
+                if(!visited[subNode]) {
+                    visited[subNode] = true;
+                    child += cntNodes(subNode, visited);
+                }
+            }
+            return 1+child;
+        }
+        public:
+        Solve(vector<vector<int>>& bombs) 
+            : bombs(bombs), bombsNum(bombs.size()) {}
+        int solve() {
+            for(int i = 0; i < bombsNum; i++) {
+                for(int j = 0; j < bombsNum; j++) {
+                    if(i == j) continue;
+                    if(isICanBoomJ(i, j)) {
+                        graph[i].push_back(j);
+                    }
+                }
+            }
+            int maxBoom = INT_MIN;
+            for(int i = 0; i < bombsNum; i++) {
+                maxBoom = max(maxBoom, cntNodes(i));
+            }
+            return maxBoom;
+        }
+    };
+public:
+    int maximumDetonation(vector<vector<int>>& bombs) {
+        return Solve(bombs).solve();
+    }
+};
+```
+
+```c++
+class Solution {
+public:
+    int maximumDetonation(vector<vector<int>>& bombs) {
+        int bombsNum = bombs.size();
+        auto isICanBoomJ = [&](int i, int j) {
+            return ((long long)bombs[i][0] - bombs[j][0]) * (bombs[i][0] - bombs[j][0]) + ((long long)bombs[i][1] - bombs[j][1]) * (bombs[i][1] - bombs[j][1]) <= (long long)bombs[i][2] * bombs[i][2];
+        };
+        unordered_map<int, vector<int>> graph;
+        function<int(int, vector<bool>&)> _cntNodes = [&](int start, vector<bool>& visited) {
+            visited[start] = true;
+            int child = 0;
+            for(int subNode : graph[start]) {
+                if(!visited[subNode]) {
+                    visited[subNode] = true;
+                    child += _cntNodes(subNode, visited);
+                }
+            }
+            return 1+child;
+        };
+        auto cntNodes = [&](int start) {
+            vector<bool> visited = vector<bool>(bombsNum, false);
+            return _cntNodes(start, visited);
+        };
+        for(int i = 0; i < bombsNum; i++) {
+            for(int j = 0; j < bombsNum; j++) {
+                if(i == j) continue;
+                if(isICanBoomJ(i, j)) {
+                    graph[i].push_back(j);
+                }
+            }
+        }
+        int maxBoom = INT_MIN;
+        for(int i = 0; i < bombsNum; i++) {
+            maxBoom = max(maxBoom, cntNodes(i));
+        }
+        return maxBoom;
+    }
+};
+```
+
+- 注意计算距离时int可能会溢出
+
+## 1186. 删除一次得到子数组最大和
