@@ -1187,3 +1187,212 @@ public:
 - 注意计算距离时int可能会溢出
 
 ## 1186. 删除一次得到子数组最大和
+
+
+## 3133. 数组最后一个元素的最小值
+
+```c++
+class Solution {
+public:
+    long long minEnd(int n, int x) {
+        long long res = 0;
+        int mask_n = 1;
+        int mask_x = 1;
+        long long mask_res = 1l;
+        n--;
+        while(mask_n < 0x8000'0000 && mask_x < 0x8000'0000) {
+            if(x & mask_x) {
+                res |= mask_res;
+            } else {
+                if(n & mask_n) res |= mask_res;
+                mask_n <<= 1;
+            }
+            mask_res <<= 1;
+            mask_x <<= 1;
+        }
+        while(mask_n < 0x8000'0000) {
+            if(n & mask_n) res |= mask_res;
+            mask_res <<= 1;
+            mask_n <<= 1;
+        }
+        while(mask_x < 0x8000'0000) {
+            if(x & mask_x) {
+                res |= mask_res;
+            }
+            mask_res <<= 1;
+            mask_x <<= 1;
+        }
+        return res;
+    }
+};
+```
+
+### 思路
+
+首先所有的数相与后的结果需要为x,先随便来一个二进制数，看看满足这样的数有什么规律
+
+以`x = 001101101001`为例
+
+对于数组中的二进制数，如果x的第i位为0，则对应数组中的数的第i位可以是0也可以是1；如果果x的第i位为1，则对应数组中的数的第i位必须是1
+
+也就是数组中的数满足 $ a_i = ??11?11?1??1 $
+
+现在希望数组中有n个数
+
+以`n = 9 = 000000001001`为例，先不管相与为x的限制，数组中的数可以是
+```
+0001
+0010
+0011
+0100
+0101
+0110
+0111
+1000
+1001
+```
+
+前面提到数组中的数必须满足$ a_i = ??11?11?1??1 $, 可以把这些数安排到?处，这样可以保证相与为x，也可以保证数目
+那么数组中最大数`9`，把他填入?处可得:`001111101011`
+那么数组中最小数`1`，把他填入?处可得:`001101101011`
+
+考虑到x&x = x, 所以数组中最小数可以是0，所以对于`x = 001101101001`, `n = 9 = 000000001001`, 数组中最小数为`x`，最大数为将8填入?处，得`001111101001`
+
+## 2850. 将石头分散到网格图的最少移动次数
+
+### 暴力分子
+
+```c++
+class Solution {
+    int minMove = INT_MAX;
+    void move(vector<vector<int>> grid, int moveCnt) {
+        bool flag = true;
+        int minDist = INT_MAX;
+        for(int i = 0; i < 9; i++) {
+            if(grid[i/3][i%3] <= 1) continue;
+            for(int j = 0; j < 9; j++) {
+                if(i == j) continue;
+                if(grid[j/3][j%3] == 0) {
+                    flag = false;
+                    minDist = min(minDist, abs(i/3 - j/3) + abs(i%3 - j%3));
+                }
+            }
+        }
+        if(flag) {
+            minMove = min(minMove, moveCnt);
+            return;
+        }
+        for(int i = 0; i < 9; i++) {
+            if(grid[i/3][i%3] <= 1) continue;
+            for(int j = 0; j < 9; j++) {
+                if(i == j) continue;
+                if(grid[j/3][j%3] == 0 && abs(i/3 - j/3) + abs(i%3 - j%3) == minDist) {
+                    grid[j/3][j%3]++;
+                    grid[i/3][i%3]--;
+                    move(grid, moveCnt + abs(i/3 - j/3) + abs(i%3 - j%3));
+                    grid[j/3][j%3]--;
+                    grid[i/3][i%3]++;
+                }
+            }
+        }
+    }
+public:
+    int minimumMoves(vector<vector<int>>& grid) {
+        move(grid, 0);
+        return minMove;
+    }
+};
+```
+
+硬搜
+
+### 枚举
+
+```c++
+unordered_map<long long, int> m; // int64表示的grid to 到达 初始状态的最小步数
+const long long initState = 0x00'00'00'01'11'11'11'11;
+static const int initMap = [](){
+    queue<long long> q;
+    q.push(initState);
+    m[initState] = 0;
+    while(!q.empty()) {
+        long long state = q.front();
+        int step = m[state];
+        q.pop();
+        for(int i = 0; i < 9; i++) {
+            int numI = (state >> (i << 2)) & 0x0f;
+            if(numI != 1) continue;
+            for(int j = 0; j < 9; j++) {
+                if(i == j) continue;
+                long long numJ = (state >> (j << 2)) & 0x0f;
+                if(numJ == 0) continue;
+                int newStep = step + abs(i / 3 - j / 3) + abs(i % 3 - j % 3);
+                numJ++;
+                long long newState = state;
+                newState = newState & ~(0x0fl << (i << 2));
+                newState = newState & ~(0x0fl << (j << 2));
+                newState = newState | (numJ << (j << 2));
+                if(!m.count(newState) || m[newState] > newStep) {
+                    q.push(newState);
+                    m[newState] = newStep;
+                }
+            }
+        }
+    }
+    return 0;
+}();
+class Solution {
+    long long grid2Int64(const vector<vector<int>>& grid) {
+        long long int64Grid = 0;
+        for(int i = 0; i < 3; i++) {
+            for(int j = 0; j < 3; j++) {
+                int64Grid <<= 4;
+                int64Grid += grid[i][j];
+            }
+        }
+        return int64Grid;
+    }
+public:
+    int minimumMoves(vector<vector<int>>& grid) {
+        return m[grid2Int64(grid)];
+    }
+};
+```
+
+用longlong表示grid，从全1的grid开始，找出所有grid情况，计算出他变成全1的step，缓存起来，用的时候查
+
+### 全排列
+
+```c++
+class Solution {
+public:
+    int minimumMoves(vector<vector<int>>& grid) {
+        vector<int> more, less;
+        for(int i = 0; i < 9; i++) {
+            int num = grid[i / 3][i % 3];
+            if(num > 1) {
+                for(int j = 1; j < num; j++) {
+                    more.push_back(i);
+                }
+            } else if(num == 0) {
+                less.push_back(i);
+            }
+        }
+        int len = more.size();
+        int minStep = INT_MAX;
+        do {
+            int step = 0;
+            for(int i = 0; i < len; i++) {
+                step += abs(more[i] / 3 - less[i] / 3) + abs(more[i] % 3 - less[i] % 3);
+            }
+            minStep = min(minStep, step);
+        } while(next_permutation(more.begin(), more.end()));
+        return minStep;
+    }
+};
+```
+
+- 抄的题解
+- 每个大于1的格子最后都会变成1，填补到0上，大于1的格子的值-1之和等于0的格子数量是相等的
+- 构造两个数组，一个存全0的格子下标，一个将大于1的格子存n-1次，两个数组长度一致
+- (more[i],less[i])表示将i格子上的一块石头搬到less上，只要对more进行全排列，就可以找出所有移动的方法，然后算出所需的总步数，然后算出最小步数

@@ -24,7 +24,7 @@ fun interface Observer<T> {
 
 - 通过`onChanged`函数分派数据变化
 
-### 域
+### 成员
 ```java
 @SuppressWarnings("WeakerAccess") /* synthetic access */
 final Object mDataLock = new Object();
@@ -40,17 +40,17 @@ private SafeIterableMap<Observer<? super T>, ObserverWrapper> mObservers =
 int mActiveCount = 0;
 // to handle active/inactive reentry, we guard with this boolean
 private boolean mChangingActiveState;
-private volatile Object mData;
+private volatile Object mData; // 1️⃣：当前的data
 // when setData is called, we set the pending data and actual data swap happens on the main
 // thread
 @SuppressWarnings("WeakerAccess") /* synthetic access */
-volatile Object mPendingData = NOT_SET;
-private int mVersion;
+volatile Object mPendingData = NOT_SET; // 2️⃣：给多线程使用的，在4️⃣mPostValueRunnable中使用
+private int mVersion; // 3️⃣：mVersion是数据版本
 
 private boolean mDispatchingValue;
 @SuppressWarnings("FieldCanBeLocal")
 private boolean mDispatchInvalidated;
-private final Runnable mPostValueRunnable = new Runnable() {
+private final Runnable mPostValueRunnable = new Runnable() {// 4️⃣mPostValueRunnable，在主线程中将mPendingData设置为当前值
     @SuppressWarnings("unchecked")
     @Override
     public void run() {
@@ -64,9 +64,10 @@ private final Runnable mPostValueRunnable = new Runnable() {
 };
 ```
 
-- 数据存在`mData`中
-- ``mPendingData``会调用`setValue`更新值，`mPendingData`是尚未被set的值
-- `mVersion`是数据版本
+- 数据存在mData中
+- mPendingData给多线程使用的，在mPostValueRunnable时设置为当前值
+- mVersion是数据版本
+- mPostValueRunnable，在主线程中将mPendingData设置为当前值
 
 ### 构造
 ```java
@@ -115,8 +116,9 @@ protected void postValue(T value) {
 }
 ```
 
-- 每次set,`mVersion`都会自增1，并调用`dispatchingValue`
-- 非主线程中调用`postValue`在主线程中更新值, `mPendingData`是被异步更新的，但最终`mData`都在主线程中被set
+- 每次set,mVersion都会自增1，并调用dispatchingValue
+- 非主线程中调用postValue在主线程中更新值, mPendingData是被异步更新的，但最终mData都在主线程中被set
+- postValue和mPostValueRunnable更新mPendingData时先获取mDataLock对象的锁，runnable执行后会将mPendingData设置为NOT_SET。如果postValue时mPendingData不是NOT_SET，就不会重复post runnable
 
 ### 分派事件
 
