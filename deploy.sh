@@ -22,7 +22,7 @@ else
     sed -i "s/<my token>/`cat token.txt`/g" _config.yml
 fi
 
-hexo d > deploy.log 2>&1 || echo "fail, check deplog.log!"
+hexo d > deploy.log 2>&1
 
 if [ `uname` == "Darwin" ]; then
     echo "MacOS"
