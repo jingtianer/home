@@ -1396,3 +1396,49 @@ public:
 - 每个大于1的格子最后都会变成1，填补到0上，大于1的格子的值-1之和等于0的格子数量是相等的
 - 构造两个数组，一个存全0的格子下标，一个将大于1的格子存n-1次，两个数组长度一致
 - (more[i],less[i])表示将i格子上的一块石头搬到less上，只要对more进行全排列，就可以找出所有移动的方法，然后算出所需的总步数，然后算出最小步数
+
+## 3096. 得到更多分数的最少关卡数目
+
+又是博弈问题，不会
+
+## 3112. 访问消失节点的最少时间
+
+```c++
+class Solution {
+public:
+    vector<int> minimumTime(int n, vector<vector<int>>& edges, vector<int>& disappear) {
+        vector<vector<pair<int, int>>> graph(n);
+        for(const auto& edge : edges) {
+            graph[edge[0]].emplace_back(edge[1], edge[2]);
+            graph[edge[1]].emplace_back(edge[0], edge[2]);
+        }
+        vector<int> ans(n, INT_MAX / 2);
+        auto cmp = [](const pair<int, int>& i , const pair<int, int>& j){
+            return i.second > j.second;
+        };
+        priority_queue<pair<int, int>, vector<pair<int, int>>, decltype(cmp)> q(cmp);
+        q.emplace(0, 0);
+        ans[0] = 0;
+        while(!q.empty()) {
+            auto [min_index, len] = q.top();
+            q.pop();
+            if(len > ans[min_index]) continue;
+            for(auto [child, len] : graph[min_index]) {
+                int newLen = ans[min_index] + len >= disappear[child] ? INT_MAX / 2 : ans[min_index] + len;
+                if(newLen < ans[child] && newLen < INT_MAX / 2) {
+                    ans[child] = newLen;
+                    q.emplace(child, ans[child]);
+                }
+            }
+        }
+        for(int i = 0; i < n; i++) {
+            if(ans[i] >= INT_MAX / 2) ans[i] = -1;
+        }
+        return ans;
+    }
+};
+```
+
+- 就是带限制的dijkstra，但是很坑
+  - 两个顶点之间可能存在多个长度不同的边，显然要选最小的，但不能用n*n的vector存图，会超内存
+  - 必须用优先队列选点，否则时间超过
