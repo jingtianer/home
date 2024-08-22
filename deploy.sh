@@ -7,9 +7,13 @@ hexo clean
 # enable errexit, do not deploy if master is not successfully committed
 set -e
 # cannot commit tokens to github
+echo "git add"
 git add .
+echo "git commit"
 git commit -m "`date`"
+echo "git push"
 git push origin master
+echo "hexo g"
 hexo g
 # sed -i 's/github.com\/jingtianer/jingtianer.github.io/g' public/atom.xml
 
