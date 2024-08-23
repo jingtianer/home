@@ -1441,4 +1441,122 @@ public:
 
 - 就是带限制的dijkstra，但是很坑
   - 两个顶点之间可能存在多个长度不同的边，显然要选最小的，但不能用n*n的vector存图，会超内存
-  - 必须用优先队列选点，否则时间超过
+  - 必须用优先队列选点，否则时间超
+
+## 3145. 大数组元素的乘积
+
+```c++
+typedef unsigned long long uint64;
+class Solution {
+    uint64 fastPower(uint64 a, uint64 n, uint64 mod) {
+        uint64 res = 1;
+        while(n) {
+            if(n & 1) {
+                res = (res * a) % mod;
+            }
+            a = (a * a) % mod;
+            n >>= 1;
+        }
+        return res % mod;
+    } // 快速幂
+    uint64 powerOfproduct(uint64 k) {
+        long long value = 0;
+        for(int mask_off = 64; mask_off >= 1; mask_off--) {
+            uint64 mask = 1l << (mask_off - 1);
+            if(!(mask & k)) continue;
+            k = k & ~mask;
+            value += ((k|mask) - mask + 1) * (mask_off - 1);
+            value += mask / 2 * ((mask_off - 1)*(mask_off - 2)/2);
+        }
+        return value;
+    } // 小于等于k的所有数的指数和
+
+    uint64 totalOneOf(uint64 k) {
+        long long value = 0;
+        for(int mask_off = 64; mask_off >= 1; mask_off--) {
+            uint64 mask = 1l << (mask_off - 1);
+            if(!(mask & k)) continue;
+            k = k & ~mask;
+            value += ((k|mask) - mask + 1);
+            value += mask / 2 * (mask_off - 1);
+        }
+        return value;
+    } // 小于等于k的所有数的1的个数
+
+    uint64 findLeftRange(uint64 pos) {
+        uint64 l = 0, r = pos;
+        while(l < r) {
+            uint64 mid = (r - l + 1) / 2 + l;
+            uint64 totalOnOfPos = totalOneOf(mid);
+            if(totalOnOfPos < pos) {
+                l = mid;
+            } else {
+                r = mid - 1;
+            }
+        }
+        return l; 
+    } // 二分查找下标在数组中对应的数的前一个数
+
+    uint64 powerSumTo(uint64 k, uint64 pos) {
+        uint64 powerSum = 0;
+        int cnt = 0;
+        for(int off = 0; off < 64; off++) {
+            uint64 mask = 1l << off;
+            if(k & mask) {
+                cnt++;
+                if(cnt <= pos) {
+                    powerSum += off;
+                } else {
+                    break;
+                }
+            }
+        }
+        return powerSum;
+    } // 计算k的前pos个1对应的指数和
+public:
+    vector<int> findProductsOfElements(vector<vector<long long>>& queries) {
+        vector<int> anwser;
+        for(const auto& query: queries) {
+            uint64 leftRange0 = findLeftRange(query[0]+1) + 1;
+            uint64 leftRange1 = findLeftRange(query[1]+1) + 1;
+            uint64 totalOneOf0 = totalOneOf(leftRange0 - 1);
+            uint64 totalOneOf1 = totalOneOf(leftRange1 - 1);
+            uint64 powerSum0 = powerSumTo(leftRange0, query[0] - totalOneOf0);
+            uint64 powerSum1 = powerSumTo(leftRange1, query[1]+1 - totalOneOf1);
+            uint64 power = (powerOfproduct(leftRange1 - 1) - powerOfproduct(leftRange0 - 1) + powerSum1 - powerSum0);
+            anwser.push_back(fastPower(2, power, query[2]));
+        }
+        return anwser;
+    }
+};
+```
+
+- 使用和[3007. 价值和小于等于 K 的最大数字](#3007-价值和小于等于-k-的最大数字)相同的思路，找到`O(1)`的计算小于等于N的1的个数
+- 通过二分查找就可以找到big_nums下标对应的数，由于所求数是2的幂的积，所以再计算这个数之前的所有数的乘积的指数，两个指数相减，再模n快速幂即可求得最终答案
+
+## 2956. 找到两个数组中的公共元素
+
+```c++
+class Solution {
+public:
+    vector<int> findIntersectionValues(vector<int>& nums1, vector<int>& nums2) {
+        int ans1 = 0, ans2 = 0;
+        unordered_map<int, int> m1, m2;
+        for(int num1 : nums1) {
+            m1[num1]++;
+        }
+        for(int num2 : nums2) {
+            if(m1.count(num2)) {
+                ans2++;
+            }
+            m2[num2]++;
+        }
+        for(int num1 : nums1) {
+            if(m2.count(num1)) {
+                ans1++;
+            }
+        }
+        return {ans1, ans2};
+    }
+};
+```
