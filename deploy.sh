@@ -28,5 +28,5 @@ if [ `uname` == "Darwin" ]; then
     echo "MacOS"
     mv _config.yml.bak _config.yml
 else
-    sed -i "s/<my token>/`cat token.txt`/g" _config.yml
+    sed -i "s/`cat token.txt`/<my token>/g" _config.yml
 fi
