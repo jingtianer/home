@@ -284,3 +284,81 @@ public:
     }
 };
 ```
+
+## [3127. 构造相同颜色的正方形](https://leetcode.cn/problems/make-a-square-with-the-same-color/description/?envType=daily-question&envId=2024-08-31)
+
+```c++
+class Solution {
+public:
+    bool canMakeSquare(vector<vector<char>>& grid) {
+        function<int(int, int)> gridValue = [&](int i, int j) {
+            return grid[i][j] == 'W' ? 1 : 0;
+        };
+        function<bool(int, int)> judge = [&](int i, int j) {
+            return 2 != gridValue(i, j) + gridValue(i + 1, j) + gridValue(i, j + 1) + gridValue(i + 1, j + 1);
+        };
+        return judge(0, 0) || judge(0, 1) || judge(1, 0) || judge(1, 1);
+    }
+};
+```
+
+## [3153. 所有数对中数位差之和](https://leetcode.cn/problems/sum-of-digit-differences-of-all-pairs/description/?envType=daily-question&envId=2024-08-30)
+
+```c++
+class Solution {
+public:
+    long long sumDigitDifferences(vector<int>& nums) {
+        int len = nums.size();
+        vector<vector<int>> digitCnt(10, vector<int>(10)); // digitCnt[i][j], nums中第i位为j的数的个数
+        auto cntDigitNumPerPos = [&]() {
+            for(int index = 0; index < len; index++) {
+                int n = nums[index];
+                for(int i = 0; n; i++, n /= 10) {
+                    digitCnt[i][n % 10]++;
+                }
+            }
+        };
+        cntDigitNumPerPos();
+        auto cntDiffsAndAdd = [&]() {
+            long long diffCnt = 0;
+            for(int index = 0; index < len; index++) {
+                int n = nums[index];
+                for(int i = 0; n; i++, n /= 10) {
+                    diffCnt += len - digitCnt[i][n % 10]; // 数出有多少数和当前数的第i位不同
+                }
+            }
+            return diffCnt;
+        };
+        return cntDiffsAndAdd() / 2;
+    }
+};
+```
+
+## [89. 格雷编码](https://leetcode.cn/problems/gray-code/description/)
+
+```c++
+class Solution {
+public:
+    vector<int> grayCode(int n) {
+        int len = 1 << n;
+        vector<int> ans(len);
+        for(int i = 1; i < len; i++) {
+            ans[i] = (i >> 1) ^ i;
+        }
+        return ans;
+    }
+};
+```
+
+### 证明
+推导一下公式为什么时正确的
+
+要证明公式 $ a_i = (i >> 1) \oplus i $ 是格雷码，就要证明 $ a_{i+1} \oplus a_{i} = 2^{k_i} $ , 其中 $ k_i $ 是整数
+
+设 $ i $的二进制从低位到高位第一个$ 0 $的位置是$ n $, 则 $ i \oplus (i + 1) = 2^{n+1} - 1$，原因参考[二进制自增计数器](https://blog.csdn.net/gengduc/article/details/131425911)的原理
+
+$ a_{i+1} \oplus a_{i} $
+$ = (i >> 1) \oplus i \oplus ((i + 1) >> 1) \oplus (i + 1) $
+$ = (i \oplus (i + 1)) \oplus ((i \oplus (i + 1)) >> 1)$
+$ = (2^{n+1} - 1) \oplus (2^{n} - 1) $
+$ = 2^{n+1} $

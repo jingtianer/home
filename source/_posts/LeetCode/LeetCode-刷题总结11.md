@@ -331,7 +331,7 @@ public:
         int n = int(matrix[0].size());
         int num = m*n;
         int l = 0,h = num-1;
-        while (l <= h) {\\二分查找法
+        while (l <= h) {// 二分查找法
             int mid = (h-l)/2+l;
             if (matrix[(mid)/n][(mid)%n] == target) {//算出mid对应的下标就行
                 return true;

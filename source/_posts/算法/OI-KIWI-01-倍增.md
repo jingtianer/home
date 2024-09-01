@@ -2,10 +2,10 @@
 title: OI KIWI 01-倍增
 date: 2024-8-23 11:14:34
 tags: 
-    - LeetCode
+    - OI KIWI
     - 算法
 categories: 
-    - LeetCode
+    - OI KIWI
     - 算法
 toc: true
 language: zh-CN
