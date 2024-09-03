@@ -284,7 +284,6 @@ public:
     }
 };
 ```
-
 ## [3127. 构造相同颜色的正方形](https://leetcode.cn/problems/make-a-square-with-the-same-color/description/?envType=daily-question&envId=2024-08-31)
 
 ```c++
@@ -362,3 +361,107 @@ $ = (i >> 1) \oplus i \oplus ((i + 1) >> 1) \oplus (i + 1) $
 $ = (i \oplus (i + 1)) \oplus ((i \oplus (i + 1)) >> 1)$
 $ = (2^{n+1} - 1) \oplus (2^{n} - 1) $
 $ = 2^{n+1} $
+
+
+## 2708. 一个小组的最大实力值
+
+```c++
+class Solution {
+public:
+    long long maxStrength(vector<int>& nums) {
+        long long ans = 1;
+        bool has2Neg = false;
+        bool hasPositive = false;
+        bool hasZero = false;
+        long long negProduct = 1;
+        int len = nums.size();
+        sort(nums.begin(), nums.end());
+        int i = 0;
+        while(i < len && nums[i] < 0) {
+            negProduct *= nums[i];
+            if(negProduct > 0) {
+                ans *= negProduct;
+                negProduct = 1;
+                has2Neg = true;
+            }
+            i++;
+        }
+        while(i < len && nums[i] <= 0) {
+            hasZero = true;
+            i++;
+        }
+
+        while(i < len){
+            ans *= nums[i];
+            i++;
+            hasPositive = true;
+        }
+        return (has2Neg || hasPositive) ? ans :
+                (hasZero) ? 0 : nums[0];
+    }
+};
+```
+- 除了0，全乘起来，如果负数有奇数个，去掉最大的负数
+- 如果没有正数也没有成对的负数，但是有0，返回0
+- 如果没有正数也没有成对的负数，没有0，返回唯一的负数
+
+> 数据规模好小，给人一种很难的感觉
+
+## 2024. 考试的最大困扰度
+
+```c++
+class Solution {
+    int _maxConsecutiveAnswers(const string& answerKey, int k) {
+        int ans = 0;
+        int len = answerKey.size();
+        int i = 0;
+        while(i < len && k > 0) {
+            while(i < len && answerKey[i] == 'T') {
+                i++;
+                ans++;
+            }
+            while(i < len && k > 0 && answerKey[i] == 'F') {
+                i++;
+                k--;
+                ans++;
+            }
+        }
+        int j = 0;
+        int cur = ans;
+        while(i < len) {
+            while(i < len && answerKey[i] == 'T') {
+                i++;
+                cur++;
+            }
+            // cout << i << ", " << ans << ", " << cur << endl;
+            ans = max(ans, cur);
+            if(i < len && answerKey[i] == 'F') {
+                int k = j;
+                while(k < i && answerKey[k] == 'T') {
+                    k++;
+                }
+                cur = cur - (k - j + 1) + 1;
+                // cout << ans << ", " << cur << endl;
+                ans = max(ans, cur);
+                j = k + 1;
+                i++;
+            }
+        }
+        return ans;
+    }
+public:
+    int maxConsecutiveAnswers(string& answerKey, int k) {
+        int res = _maxConsecutiveAnswers(answerKey, k);
+        for(auto& x : answerKey) {
+            x = 'T' + 'F' - x;
+        }
+        return max(res, _maxConsecutiveAnswers(answerKey, k));
+    }
+};
+```
+
+- 要么把k步全都用在T变F上，要么k步全部是F变T
+- 对于"TTFTTFTTFTT"，可以翻译成[2T, 1F, 2T, 1F, 2T, 1F, 2T], 假设k=2，我们只需要考虑选前两个1F或后两个1F的情况，其他不连续的F的组合不需要考虑
+- 经过上面的分析，可以使用双指针窗口
+  - 先把k消耗光
+  - 指针i每遇到一个F，前面的指针j就要向前移动，找到一个F把这个F变成T，移动几步，就减少了多少个T（包括j当前指向的F，已经在前面被变成T了）
