@@ -169,3 +169,97 @@ public:
 - 转移方程
   - 如果`nums[i] == nums[m]`，不同的数相同，`j`相同, `dp[i][j] = max(dp[i][j], dp[m]p[j])`
   - 如果`nums[i] != nums[m]`，不同的数相同，`j`不同，相差1, `dp[i][j] = max(dp[i][j], dp[m][j-1])`
+
+## 2552. 统计上升四元组
+
+```c++
+class Solution {
+public:
+    long long countQuadruplets(vector<int>& nums) {
+        long long ans = 0;
+        int n = nums.size();
+        vector<vector<int>> numsCnt(n, vector<int>(n+1, 0));
+        for(int i = n - 1; i >= 0; i--) {
+            for(int j = n - 1; j > i; j--) {
+                numsCnt[i][nums[j]]++;
+            }
+        }
+        for(int i = 0; i < n; i++) {
+            for(int j = 1; j <= n; j++) {
+                numsCnt[i][j] += numsCnt[i][j-1];
+            }
+        }
+        for(int i = 0; i < n; i++) {
+            int smallerThanMe = 0;
+            int cntOfBiggerAfterMe = 0;
+            for(int j = i - 1; j >= 0; j--) {
+                if(nums[j] > nums[i]) {
+                    cntOfBiggerAfterMe += (n - i - 1) - numsCnt[i][nums[j]];
+                } else if(nums[j] < nums[i]) {
+                    ans += cntOfBiggerAfterMe;
+                }
+            }
+        }
+        return ans;
+    }
+};
+```
+
+- 想用单调递增栈，这样栈内两个相邻元素之间都是比两个数大的，在找到第三个元素后面有多少比第二个元素大的数，就可以了
+- 这样只比栈顶两个元素会导致遗漏，直接找`nums[i]`前比`nums[i]`小的数`nums[j1]`，和他们之间比`nums[i]`大的数`nums[j]`，再找出每个数在i后有多少比`nums[j]`大的数，可以统计到到比`nums[j1]`还小的数的组合情况
+- `numsCnt[i][j]`表示在开区间`(i, n)`中，有多少比`nums[j]`大的数
+
+## 2555. 两个线段获得的最多奖品
+
+```c++
+class Solution {
+public:
+    int maximizeWin(vector<int>& prizePositions, int k) {
+        int i = 0, j = 0;
+        int n = prizePositions.size();
+        vector<int> windowSum;
+        vector<int> windowStart;
+        int prizeCnt = 0;
+        while(i < n) {
+            int start = prizePositions[i];
+            int end = prizePositions[i] + k;
+            while(j < n && prizePositions[j] <= end) {
+                j++;
+                prizeCnt++;
+            }
+            windowSum.push_back(prizeCnt);
+            windowStart.push_back(start);
+            while(i < n && prizePositions[i] == start) {
+                i++;
+                prizeCnt--;
+            }
+        }
+        int windowSize = windowSum.size();
+        int curMaxTail = windowSum[windowSize - 1];
+        int curMaxStart = windowStart[windowSize - 1];
+        vector<int> maxTail(windowSize);
+        for(int i = windowSize - 2; i >= 0; i--) {
+            maxTail[i] = curMaxTail;
+            if(windowSum[i] > curMaxTail) {
+                curMaxTail = windowSum[i];
+                curMaxStart = windowStart[i];
+            }
+        }
+        int ans = 0;
+        j = 0;
+        for(int i = 0; i < windowSize; i++) {
+            while(j < windowSize && windowStart[i] + k >= windowStart[j]) {
+                j++;
+            }
+            j--;
+            if(j < n) ans = max(ans, windowSum[i] + maxTail[j]);
+        }
+        return ans;
+    }
+};
+```
+
+- 虽然两个线段可以重叠，但是重叠部分的奖品不能重复拿，所以问题就变成了长度最长为k的情况下，不想交的两个线段内礼物总数和最大的情况
+- 找出所有长度为k的线段的礼物数（`start`相同的不重复记录），记录在`windowSum`中，用`windowStart`记录区间的起点
+- 用`maxTail[i]`记录起始点为`windowStart[i]`的线段后方，礼物多的线段的礼物个数
+- 最后对于每一个线段，双指针找到不重叠的下一个线段及其后面的最大礼物数，加起来，求最大值
