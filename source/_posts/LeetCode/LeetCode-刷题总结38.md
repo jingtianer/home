@@ -263,3 +263,107 @@ public:
 - 找出所有长度为k的线段的礼物数（`start`相同的不重复记录），记录在`windowSum`中，用`windowStart`记录区间的起点
 - 用`maxTail[i]`记录起始点为`windowStart[i]`的线段后方，礼物多的线段的礼物个数
 - 最后对于每一个线段，双指针找到不重叠的下一个线段及其后面的最大礼物数，加起来，求最大值
+
+## 2332. 坐上公交的最晚时间
+
+### 二分
+
+```c++
+class Solution {
+public:
+    int latestTimeCatchTheBus(vector<int>& buses, vector<int>& passengers, int capacity) {
+        sort(buses.begin(), buses.end());
+        sort(passengers.begin(), passengers.end());
+        int busNum = buses.size();
+        int passengersNum = passengers.size();
+        vector<int> insertPoints(passengersNum);
+        insertPoints[0] = 0;
+        for(int i = 1; i < passengersNum; i++) {
+            if(passengers[i] - passengers[i - 1] > 1) {
+                insertPoints[i] = i; // 不和前一个连号，更新最晚上车位置
+            } else {
+                insertPoints[i] = insertPoints[i - 1]; // 上车时间不能和别人重复，如果连号，找到前面第一个不连号的位置
+            }
+        }
+        int lastestTime = 0;
+        int j = 0;
+        int i = 0;
+        for(; i < busNum && j < passengersNum; i++) { // 遍历公交车
+            int firstCantGetOn = upper_bound(passengers.begin() + j, passengers.end(), buses[i]) - passengers.begin(); // 二分找到第一个，时间上无法上车的人
+            int getOnCnt = min(firstCantGetOn - j, capacity);
+            if(getOnCnt == 0 && capacity > 0) { // 如果没有人能上，且车容量大于0
+                lastestTime = buses[i]; // 最晚就是公交车到站时间
+            } else if(getOnCnt < capacity && buses[i] - passengers[j + getOnCnt - 1] > 0) {
+                // 如果上车数量小于容量，最晚可以在发车前到达，且最后一个人不是在发车时到达
+                lastestTime = buses[i];
+            } else if(insertPoints[j + getOnCnt - 1] >= j) {
+                // 如果前一个可插入点在j或其之后，也就是这批人中有插入点
+                lastestTime = passengers[insertPoints[j + getOnCnt - 1]] - 1;
+            } // else: 没有插入点，无法上车，什么都不做
+            j += getOnCnt;
+        }
+        if(i < busNum) {
+            return buses.back();
+        }
+        return lastestTime;
+    }
+};
+```
+
+## 1184. 公交站间的距离
+
+### dijkstra
+```c++
+class Solution {
+public:
+    int distanceBetweenBusStops(vector<int>& distance, int start, int destination) {
+        int n = distance.size();
+        vector<int> dis(n, INT_MAX / 2);
+        dis[start] = 0;
+
+        vector<bool> visited(n, false);
+        for(int i = 0; i < n; i++) {
+            int firstClosestAndNotVisited = -1;
+            for(int j = 0; j < n; j++) {
+                if(!visited[j] && (firstClosestAndNotVisited == -1 || dis[j] < dis[firstClosestAndNotVisited])) {
+                    firstClosestAndNotVisited = j;
+                }
+            }
+            int next = firstClosestAndNotVisited;
+            visited[next] = true;
+            dis[(next + 1) % n] = min(dis[(next + 1) % n], distance[next] + dis[next]);
+            dis[(next - 1 + n) % n] = min(dis[(next - 1 + n) % n], distance[(next - 1 + n) % n] + dis[next]);
+        }
+        return dis[destination];
+    }
+};
+```
+
+
+### 一次遍历
+
+```c++
+class Solution {
+public:
+    int distanceBetweenBusStops(vector<int>& distance, int start, int destination) {
+        int n = distance.size();
+        int counterClockWiseSum = 0;
+        int clockWiseSum = 0;
+        if(start > destination) {
+            swap(start, destination);
+        }
+        for(int i = 0; i < start; i++) {
+            counterClockWiseSum += distance[i];
+        }
+        for(int i = start; i < destination; i++) {
+            clockWiseSum += distance[i];
+        }
+        for(int i = destination; i < n; i++) {
+            counterClockWiseSum += distance[i];
+        }
+        return min(clockWiseSum, counterClockWiseSum);
+    }
+};
+```
+
+> 由于只有两个路径到达destination，只要计算顺时针和逆时针的总和，取最小值就好

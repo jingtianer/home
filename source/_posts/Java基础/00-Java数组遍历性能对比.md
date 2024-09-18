@@ -24,7 +24,6 @@ public class JavaMain {
 ```
 
 2. 将数组`length`存在方法栈中
-
 ```java
 public class JavaMain {
     static Object[] objs = new Object[10000000];
@@ -40,7 +39,6 @@ public class JavaMain {
 ```
 
 3. for-each循环
-
 ```java
 public class JavaMain {
     static Object[] objs = new Object[10000000];
