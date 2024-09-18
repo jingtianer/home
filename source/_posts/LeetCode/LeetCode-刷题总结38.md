@@ -367,3 +367,55 @@ public:
 ```
 
 > 由于只有两个路径到达destination，只要计算顺时针和逆时针的总和，取最小值就好
+
+## 2848. 与车相交的点
+
+### 差分数组
+
+```c++
+class Solution {
+public:
+    int numberOfPoints(vector<vector<int>>& nums) {
+        int n = nums.size();
+        vector<int> diff(102);
+        for(int i = 0; i < n; i++) {
+            diff[nums[i][0]]++;
+            diff[nums[i][1] + 1]--;
+        }
+        int curVal = 0;
+        int cnt = 0;
+        for(int i = 1; i <= 100; i++) {
+            curVal += diff[i];
+            if(curVal > 0) {
+                cnt++;
+            }
+        }
+        return cnt;
+    }
+};
+```
+
+### 排序贪心
+
+```c++
+class Solution {
+public:
+    int numberOfPoints(vector<vector<int>>& nums) {
+        int n = nums.size();
+        sort(nums.begin(), nums.end(), [](vector<int>& a, vector<int>& b){ return a[0] < b[0]; });
+        int curStart = nums[0][0], curEnd = nums[0][1];
+        int i = 0;
+        int cnt = 0;
+        for(; i < n; i++) {
+            if(nums[i][0] > curEnd) {
+                cnt += curEnd - curStart + 1;
+                curStart = nums[i][0];
+                curEnd = nums[i][1];
+            } else {
+                curEnd = max(curEnd, nums[i][1]);
+            }
+        }
+        return cnt + (curEnd - curStart + 1);
+    }
+};
+```
