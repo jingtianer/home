@@ -5,7 +5,7 @@
 hexo clean
 
 # enable errexit, do not deploy if master is not successfully committed
-set -e
+# set -e
 # cannot commit tokens to github
 git add .
 git commit -m "`date`"
