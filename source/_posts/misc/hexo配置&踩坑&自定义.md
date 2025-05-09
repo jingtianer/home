@@ -400,3 +400,37 @@ function copyCode(element) {
 ```
 {% pdf ./bash_freshman.pdf %}
 ```
+
+## mermaid.js支持
+
+### 安装`hexo-filter-mermaid-diagrams`
+
+```shell
+npm install hexo-filter-mermaid-diagrams
+```
+
+### 编写`mermaidInitializer.js`，并添加到`layout.jsx`中
+
+
+{% codeblock source/js/mermaidInitializer.js lang:js %}
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11.6.0/+esm'
+function initMermaid() {
+    mermaid.initialize({ startOnLoad: true })
+}
+initMermaid()
+{% endcodeblock %}
+
+{% codeblock layout.jsx lang:js %}
+<script type="module" src="/home/js/mermaidInitializer.js"></script>
+{% endcodeblock %}
+
+### 测试一下
+
+
+```mermaid
+graph TD
+    A[开始] --> B{条件判断}
+    B -->|是| C[执行操作]
+    B -->|否| D[结束]
+    C --> D
+```

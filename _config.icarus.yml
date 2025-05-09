@@ -197,3 +197,6 @@ comment:
     language: zh-CN                 # 可选填
 
 mathjax: true
+
+mermaid:
+    enable: true
