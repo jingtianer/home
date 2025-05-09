@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>cha13.文件I/O缓冲 - Jingtianer</title><link rel="manifest" href="/home/manifest.json"><meta name="application-name" content="Jingtianer"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Jingtianer"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="13.1使用shell内嵌的time命令，测算程序清单4-1(copy.c)在当前环境下的用时。a）使用不同的文件和缓冲区大小进行试验。编译应用程序时使用-DBUF_SIZE&amp;#x3D;nbytes选项可设置缓冲区大小。b) 对open()的系统调用加入O_SYNC标识，针对不同大小的缓冲区，速度存在多大差异?c) 在一系列文件系统（比如，ext3、XFS、Btrfs和 JFS）中执行这些计时测试"><meta property="og:type" content="blog"><meta property="og:title" content="cha13.文件I/O缓冲"><meta property="og:url" content="https://jingtianer.github.io/home/2023/04/26/linux/Linux-UNIX%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B%E6%89%8B%E5%86%8C/cha13/"><meta property="og:site_name" content="Jingtianer"><meta property="og:description" content="13.1使用shell内嵌的time命令，测算程序清单4-1(copy.c)在当前环境下的用时。a）使用不同的文件和缓冲区大小进行试验。编译应用程序时使用-DBUF_SIZE&amp;#x3D;nbytes选项可设置缓冲区大小。b) 对open()的系统调用加入O_SYNC标识，针对不同大小的缓冲区，速度存在多大差异?c) 在一系列文件系统（比如，ext3、XFS、Btrfs和 JFS）中执行这些计时测试"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://jingtianer.github.io/home/img/og_image.png"><meta property="article:published_time" content="2023-04-26T10:05:00.000Z"><meta property="article:modified_time" content="2025-04-15T02:37:55.619Z"><meta property="article:author" content="Meow Meow Liu"><meta property="article:tag" content="Linux/UNIX系统编程手册"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://jingtianer.github.io/home/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://jingtianer.github.io/home/2023/04/26/linux/Linux-UNIX%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B%E6%89%8B%E5%86%8C/cha13/"},"headline":"cha13.文件I/O缓冲","image":["https://jingtianer.github.io/home/img/og_image.png"],"datePublished":"2023-04-26T10:05:00.000Z","dateModified":"2025-04-15T02:37:55.619Z","author":{"@type":"Person","name":"Meow Meow Liu"},"publisher":{"@type":"Organization","name":"Jingtianer","logo":{"@type":"ImageObject","url":{"text":"Meow!!"}}},"description":"13.1使用shell内嵌的time命令，测算程序清单4-1(copy.c)在当前环境下的用时。a）使用不同的文件和缓冲区大小进行试验。编译应用程序时使用-DBUF_SIZE&#x3D;nbytes选项可设置缓冲区大小。b) 对open()的系统调用加入O_SYNC标识，针对不同大小的缓冲区，速度存在多大差异?c) 在一系列文件系统（比如，ext3、XFS、Btrfs和 JFS）中执行这些计时测试"}</script><link rel="canonical" href="https://jingtianer.github.io/home/2023/04/26/linux/Linux-UNIX%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B%E6%89%8B%E5%86%8C/cha13/"><link rel="alternate" href="/home/atom.xml" title="Jingtianer" type="application/atom+xml"><link rel="icon" href="/home/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/vs.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/home/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const $tabMenu = document.querySelector(`a[href="${location.hash}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(location.hash);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/home/">Meow!!</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/home/">主页</a><a class="navbar-item" href="/home/archives">归档</a><a class="navbar-item" href="/home/categories">分类</a><a class="navbar-item" href="/home/tags">标签</a><a class="navbar-item" href="/home/about">关于我</a><a class="navbar-item" href="/home/tags/gallery">相册</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2023-04-26T10:05:00.000Z" title="2023/4/26 18:05:00">2023-04-26</time>发表</span><span class="level-item"><time dateTime="2025-04-15T02:37:55.619Z" title="2025/4/15 10:37:55">2025-04-15</time>更新</span><span class="level-item"><a class="link-muted" href="/home/categories/linux/">linux</a></span><span class="level-item">12 分钟读完 (大约1765个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">cha13.文件I/O缓冲</h1><div class="content"><h2 id="13-1"><a href="#13-1" class="headerlink" title="13.1"></a>13.1</h2><p>使用shell内嵌的time命令，测算程序清单4-1(copy.c)在当前环境下的用时。<br>a）使用不同的文件和缓冲区大小进行试验。编译应用程序时使用<br>-DBUF_SIZE&#x3D;nbytes选项可设置缓冲区大小。<br>b) 对open()的系统调用加入O_SYNC标识，针对不同大小的缓冲区，速度存在多<br>大差异?<br>c) 在一系列文件系统（比如，ext3、XFS、Btrfs和 JFS）中执行这些计时测试。结果相似吗?当缓冲区大小从小变大时，用时趋势相同吗?</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdarg.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;errno.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">ifndef</span> BUF_SIZE</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> BUF_SIZE 1024</span></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ERR(code, format, ...) do &#123; \</span></span><br><span class="line"><span class="meta">    <span class="keyword">if</span>(!(code)) &#123; \</span></span><br><span class="line"><span class="meta">        fprintf(stderr, (char*)format, ##__VA_ARGS__); \</span></span><br><span class="line"><span class="meta">        exit(code); \</span></span><br><span class="line"><span class="meta">    &#125; \</span></span><br><span class="line"><span class="meta">&#125; while(0)</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> *argv[])</span> &#123;</span><br><span class="line">    <span class="type">char</span> buf[BUF_SIZE];</span><br><span class="line">    <span class="type">ssize_t</span> readsize = <span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> openflag = O_RDONLY;</span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> SYNC</span></span><br><span class="line">    openflag |= O_SYNC;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">    <span class="type">int</span> inputfd = open(argv[<span class="number">1</span>], openflag);</span><br><span class="line">    ERR(inputfd != <span class="number">-1</span>, <span class="string">&quot;fail to open %s, err:%s\n&quot;</span>, argv[<span class="number">1</span>], strerror(errno));</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> outputfd = open(argv[<span class="number">2</span>], </span><br><span class="line">        O_CREAT | O_WRONLY | O_TRUNC, </span><br><span class="line">        S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH);</span><br><span class="line">    ERR(outputfd != <span class="number">-1</span>, <span class="string">&quot;fail to open %s, err:%s\n&quot;</span>, argv[<span class="number">2</span>], strerror(errno));</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">while</span>((readsize = read(inputfd, buf, BUF_SIZE)) &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        ERR(write(outputfd, buf, readsize) == readsize, <span class="string">&quot;could not write whole buffer, err:%s\n&quot;</span>, strerror(errno));</span><br><span class="line">    &#125;</span><br><span class="line">    ERR(readsize != <span class="number">-1</span>, <span class="string">&quot;read fail, err:%s&quot;</span>, strerror(errno));</span><br><span class="line">    ERR(close(inputfd) != <span class="number">-1</span>, <span class="string">&quot;fail to close input, err:%s\n&quot;</span>, strerror(errno));</span><br><span class="line">    ERR(close(outputfd) != <span class="number">-1</span>, <span class="string">&quot;fail to close output, err:%s\n&quot;</span>, strerror(errno));</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="测试时间"><a href="#测试时间" class="headerlink" title="测试时间"></a>测试时间</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">BUFSIZE=1</span><br><span class="line"><span class="built_in">cat</span> /dev/null &gt; log13.1.log</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> `<span class="built_in">seq</span> 15`; <span class="keyword">do</span></span><br><span class="line">    <span class="built_in">echo</span> round <span class="variable">$i</span>, BUFSIZE=<span class="variable">$BUFSIZE</span> &gt;&gt; log13.1.log</span><br><span class="line">    gcc practice13_1.c -DBUF_SIZE=<span class="variable">$BUFSIZE</span> -o practice13_1</span><br><span class="line">    /usr/bin/time -f <span class="string">&quot;real = %e\nuser = %U\nsystem = %S&quot;</span> -o log13.1.log -a ./practice13_1 big big.copy</span><br><span class="line">    BUFSIZE=`<span class="built_in">expr</span> <span class="variable">$BUFSIZE</span> \* 2`</span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line">BUFSIZE=1</span><br><span class="line"><span class="built_in">cat</span> /dev/null &gt; log13.1_sync.log</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> `<span class="built_in">seq</span> 15`; <span class="keyword">do</span></span><br><span class="line">    <span class="built_in">echo</span> round <span class="variable">$i</span>, BUFSIZE=<span class="variable">$BUFSIZE</span> &gt;&gt; log13.1_sync.log</span><br><span class="line">    gcc practice13_1.c -DBUF_SIZE=<span class="variable">$BUFSIZE</span> -DSYNC -o practice13_1</span><br><span class="line">    /usr/bin/time -f <span class="string">&quot;real = %e\nuser = %U\nsystem = %S&quot;</span> -o log13.1_sync.log -a ./practice13_1 big big.copy</span><br><span class="line">    BUFSIZE=`<span class="built_in">expr</span> <span class="variable">$BUFSIZE</span> \* 2`</span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="生成md"><a href="#生成md" class="headerlink" title="生成md"></a>生成md</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">file=<span class="variable">$1</span></span><br><span class="line"><span class="built_in">tee</span> awk_script.awk  2&gt;&amp;1 &gt; /dev/null &lt;&lt;-<span class="string">&#x27;EOF&#x27;</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">print</span> <span class="string">&quot;|round|bufsize|real|user|system|&quot;</span>;</span><br><span class="line">    <span class="built_in">print</span> <span class="string">&quot;|-|-|-|-|-|&quot;</span>;len=<span class="built_in">split</span>(<span class="variable">$0</span>, a, <span class="string">&quot;\n&quot;</span>)-1;</span><br><span class="line">    <span class="keyword">for</span>(i = 0; i &lt; len/4; i++) &#123;</span><br><span class="line">        <span class="built_in">split</span>(a[i*4+1], line1, <span class="string">&quot;,&quot;</span>);</span><br><span class="line">        <span class="built_in">split</span>(line1[1], line11, <span class="string">&quot; &quot;</span>);</span><br><span class="line">        round=line11[2];<span class="built_in">split</span>(line1[2], line12, <span class="string">&quot;=&quot;</span>);</span><br><span class="line">        bufsize=line12[2];</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;|%s|%s|&quot;</span>, round, bufsize);</span><br><span class="line">        <span class="keyword">for</span>(j = 2; j &lt;= 4; j++) &#123;</span><br><span class="line">            <span class="built_in">split</span>(a[i*4+j], linej, <span class="string">&quot; &quot;</span>);</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;%s|&quot;</span>, linej[3]); </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br><span class="line"><span class="built_in">cat</span> <span class="variable">$file</span> | awk -v RS=<span class="string">&#x27;EOF&#x27;</span> -f awk_script.awk</span><br></pre></td></tr></table></figure>
+
+<h3 id="测试结果"><a href="#测试结果" class="headerlink" title="测试结果"></a>测试结果</h3><blockquote>
+<p>测试于ext4，搭建其他文件系统太耗时了，就不弄了</p>
+</blockquote>
+<ul>
+<li>没有O_SYNC</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>round</th>
+<th>bufsize</th>
+<th>real</th>
+<th>user</th>
+<th>system</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>1</td>
+<td>322.64</td>
+<td>86.14</td>
+<td>236.38</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2</td>
+<td>160.22</td>
+<td>43.23</td>
+<td>116.92</td>
+</tr>
+<tr>
+<td>3</td>
+<td>4</td>
+<td>80.88</td>
+<td>21.85</td>
+<td>58.97</td>
+</tr>
+<tr>
+<td>4</td>
+<td>8</td>
+<td>40.21</td>
+<td>10.77</td>
+<td>29.41</td>
+</tr>
+<tr>
+<td>5</td>
+<td>16</td>
+<td>19.97</td>
+<td>5.23</td>
+<td>14.73</td>
+</tr>
+<tr>
+<td>6</td>
+<td>32</td>
+<td>10.13</td>
+<td>2.72</td>
+<td>7.37</td>
+</tr>
+<tr>
+<td>7</td>
+<td>64</td>
+<td>5.06</td>
+<td>1.42</td>
+<td>3.63</td>
+</tr>
+<tr>
+<td>8</td>
+<td>128</td>
+<td>2.52</td>
+<td>0.57</td>
+<td>1.94</td>
+</tr>
+<tr>
+<td>9</td>
+<td>256</td>
+<td>1.27</td>
+<td>0.26</td>
+<td>1.00</td>
+</tr>
+<tr>
+<td>10</td>
+<td>512</td>
+<td>0.71</td>
+<td>0.14</td>
+<td>0.56</td>
+</tr>
+<tr>
+<td>11</td>
+<td>1024</td>
+<td>0.37</td>
+<td>0.11</td>
+<td>0.26</td>
+</tr>
+<tr>
+<td>12</td>
+<td>2048</td>
+<td>0.21</td>
+<td>0.03</td>
+<td>0.17</td>
+</tr>
+<tr>
+<td>13</td>
+<td>4096</td>
+<td>0.14</td>
+<td>0.03</td>
+<td>0.10</td>
+</tr>
+<tr>
+<td>14</td>
+<td>8192</td>
+<td>0.10</td>
+<td>0.02</td>
+<td>0.07</td>
+</tr>
+<tr>
+<td>15</td>
+<td>16384</td>
+<td>0.10</td>
+<td>0.00</td>
+<td>0.09</td>
+</tr>
+</tbody></table>
+<ul>
+<li>有O_SYNC</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>round</th>
+<th>bufsize</th>
+<th>real</th>
+<th>user</th>
+<th>system</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>1</td>
+<td>370.43</td>
+<td>99.46</td>
+<td>270.89</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2</td>
+<td>202.32</td>
+<td>53.13</td>
+<td>149.09</td>
+</tr>
+<tr>
+<td>3</td>
+<td>4</td>
+<td>95.62</td>
+<td>25.74</td>
+<td>69.80</td>
+</tr>
+<tr>
+<td>4</td>
+<td>8</td>
+<td>49.08</td>
+<td>12.88</td>
+<td>36.17</td>
+</tr>
+<tr>
+<td>5</td>
+<td>16</td>
+<td>23.94</td>
+<td>6.48</td>
+<td>17.45</td>
+</tr>
+<tr>
+<td>6</td>
+<td>32</td>
+<td>11.96</td>
+<td>3.65</td>
+<td>8.31</td>
+</tr>
+<tr>
+<td>7</td>
+<td>64</td>
+<td>6.05</td>
+<td>1.55</td>
+<td>4.49</td>
+</tr>
+<tr>
+<td>8</td>
+<td>128</td>
+<td>3.26</td>
+<td>0.82</td>
+<td>2.43</td>
+</tr>
+<tr>
+<td>9</td>
+<td>256</td>
+<td>1.61</td>
+<td>0.38</td>
+<td>1.22</td>
+</tr>
+<tr>
+<td>10</td>
+<td>512</td>
+<td>0.78</td>
+<td>0.23</td>
+<td>0.55</td>
+</tr>
+<tr>
+<td>11</td>
+<td>1024</td>
+<td>0.45</td>
+<td>0.06</td>
+<td>0.39</td>
+</tr>
+<tr>
+<td>12</td>
+<td>2048</td>
+<td>0.31</td>
+<td>0.08</td>
+<td>0.16</td>
+</tr>
+<tr>
+<td>13</td>
+<td>4096</td>
+<td>0.24</td>
+<td>0.04</td>
+<td>0.14</td>
+</tr>
+<tr>
+<td>14</td>
+<td>8192</td>
+<td>0.19</td>
+<td>0.00</td>
+<td>0.12</td>
+</tr>
+<tr>
+<td>15</td>
+<td>16384</td>
+<td>0.19</td>
+<td>0.02</td>
+<td>0.12</td>
+</tr>
+</tbody></table>
+<h2 id="13-2"><a href="#13-2" class="headerlink" title="13.2"></a>13.2</h2><p>懒得搞</p>
+<h2 id="13-3"><a href="#13-3" class="headerlink" title="13.3"></a>13.3</h2><p>如下语句的执行效果是什么?</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">fflush(fp);</span><br><span class="line">fsync(fileno(fp));</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>先将文件指针<code>fp</code>的stdio库的缓存调用write系统调用，再获取<code>fd</code>的文件描述符，将该文件描述符的系统IO缓冲区的数据以及文件元数据强制写入存储设备</p>
+</blockquote>
+<h2 id="13-4"><a href="#13-4" class="headerlink" title="13.4"></a>13.4</h2><p>试解释取决于将标准输出重定向到终端还是磁盘文件,为什么如下代码的输出结果不同。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;If I had more time,\n&quot;</span>);</span><br><span class="line">write(STDOUT_FILENO, <span class="string">&quot;I would have written you a shorter letter.\n&quot;</span>,<span class="number">43</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;If I had more time,\n&quot;</span>);</span><br><span class="line">    write(STDOUT_FILENO, <span class="string">&quot;I would have written you a shorter letter.\n&quot;</span>,<span class="number">43</span>);</span><br><span class="line"></span><br><span class="line">    FILE* file = freopen(<span class="string">&quot;tmp13.4&quot;</span>, <span class="string">&quot;w&quot;</span>, <span class="built_in">stdout</span>);</span><br><span class="line">    <span class="keyword">if</span>(file == <span class="literal">NULL</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;If I had more time,\n&quot;</span>);</span><br><span class="line">    write(STDOUT_FILENO, <span class="string">&quot;I would have written you a shorter letter.\n&quot;</span>,<span class="number">43</span>);</span><br><span class="line">    fclose(file);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h3><ul>
+<li>终端<ul>
+<li>由于终端的缓存mod默认为_IOLBUF，行缓冲io，也就是当遇到一行结束或缓存满时，就写入终端，所以会按照代码的顺序输出</li>
+</ul>
+</li>
+<li>文件<ul>
+<li>普通磁盘文件的缓存mod为_IOFBUF，全缓冲io，printf会先写入stdio库的缓冲区，write直接写入系统IO缓冲区，一般情况下，write会先于stdio进入系统缓冲区，导致最终写入文件的顺序与代码中的顺序相反</li>
+</ul>
+</li>
+</ul>
+<h2 id="13-5"><a href="#13-5" class="headerlink" title="13.5"></a>13.5</h2><p>实现tail</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span>  _XOPEN_SOURCE 600</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;errno.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdbool.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdarg.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> INFO(msg, ...) fprintf(stderr, <span class="string">&quot;INFO: &quot;</span>);\</span></span><br><span class="line"><span class="meta">    fprintf(stderr, msg, ##__VA_ARGS__)</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> CHECK(flag, msg, ...) do &#123; \</span></span><br><span class="line"><span class="meta">        <span class="keyword">if</span>(!(flag)) &#123;\</span></span><br><span class="line"><span class="meta">            fprintf(stderr, <span class="string">&quot;FATAL: &quot;</span>); \</span></span><br><span class="line"><span class="meta">            fprintf(stderr, msg, ##__VA_ARGS__); \</span></span><br><span class="line"><span class="meta">            fprintf(stderr, <span class="string">&quot; ERROR: %s\n&quot;</span>, strerror(errno));                           \</span></span><br><span class="line"><span class="meta">            exit(2); \</span></span><br><span class="line"><span class="meta">        &#125; \</span></span><br><span class="line"><span class="meta">    &#125; while(0)</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> streq(str1, str2) (strcmp(str1, str2)==0)</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">ifndef</span> BUFSIZE</span></span><br><span class="line"><span class="comment">//#define BUFSIZE 0x1000</span></span><br><span class="line"><span class="comment">//#define BUFSIZE 2</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> BUFSIZE 1</span></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"><span class="type">bool</span> <span class="title function_">str2int</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *num, <span class="type">int</span> *ret)</span> &#123;</span><br><span class="line">    errno = <span class="number">0</span>;</span><br><span class="line">    <span class="type">char</span> *end;</span><br><span class="line">    *ret = strtol(num, &amp;end, <span class="number">10</span>);</span><br><span class="line">    CHECK(!(end == num || *end != <span class="string">&#x27;\0&#x27;</span> || errno != <span class="number">0</span>), <span class="string">&quot;%s is not a integer!\n&quot;</span>, num);</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">print</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *str, ...)</span> &#123;</span><br><span class="line">    va_list <span class="built_in">list</span>;</span><br><span class="line">    va_start(<span class="built_in">list</span>, str);</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">const</span> <span class="type">char</span> *s = str; s != <span class="literal">NULL</span>; (s = va_arg(<span class="built_in">list</span>, <span class="type">const</span> <span class="type">char</span> *))) &#123;</span><br><span class="line">        <span class="type">size_t</span> slen = va_arg(<span class="built_in">list</span>, <span class="type">size_t</span>);</span><br><span class="line">        <span class="type">ssize_t</span> wsize = write(STDOUT_FILENO, s, slen);</span><br><span class="line">        CHECK(wsize == slen, <span class="string">&quot;fail to print %s\n&quot;</span>, s);</span><br><span class="line">    &#125;</span><br><span class="line">    va_end(<span class="built_in">list</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">char</span> *<span class="title function_">str_alloc_reverse_cat</span><span class="params">(<span class="type">char</span> * str1, <span class="type">const</span> <span class="type">char</span> *str2, <span class="type">int</span> *len1, <span class="type">int</span> len2)</span> &#123;</span><br><span class="line">    <span class="type">char</span> *str = <span class="built_in">realloc</span>(strdup(str2), (*len1+len2+<span class="number">1</span>) * <span class="keyword">sizeof</span>(<span class="type">char</span>));</span><br><span class="line">    str[len2] = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">strncat</span>(str, str1, *len1);</span><br><span class="line">    *len1 += len2;</span><br><span class="line">    <span class="keyword">return</span> str;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">tail</span><span class="params">(<span class="type">int</span> fd, <span class="type">const</span> <span class="type">int</span> line, <span class="type">off_t</span> end)</span> &#123;</span><br><span class="line">    <span class="type">int</span> num = line;</span><br><span class="line">    <span class="type">char</span> *buf = (<span class="type">char</span>*)<span class="built_in">malloc</span>((BUFSIZE+<span class="number">1</span>)*<span class="keyword">sizeof</span>(<span class="type">char</span>));</span><br><span class="line">    <span class="type">char</span> **output = (<span class="type">char</span> **)<span class="built_in">malloc</span>(num *<span class="keyword">sizeof</span>(<span class="type">char</span> *));</span><br><span class="line">    <span class="type">int</span> *output_len = (<span class="type">int</span> *) <span class="built_in">malloc</span>(num * <span class="keyword">sizeof</span>(<span class="type">int</span>));</span><br><span class="line">    <span class="built_in">memset</span>(output, <span class="number">0</span>, num *<span class="keyword">sizeof</span>(<span class="type">char</span> *));</span><br><span class="line">    <span class="built_in">memset</span>(output_len, <span class="number">0</span>, num *<span class="keyword">sizeof</span>(<span class="type">int</span>));</span><br><span class="line">    <span class="keyword">while</span>(end &gt; <span class="number">0</span> &amp;&amp; num) &#123;</span><br><span class="line">        <span class="type">size_t</span> bufsize = BUFSIZE &gt; end ? end : BUFSIZE;</span><br><span class="line">        posix_fadvise(fd, end-bufsize, bufsize, POSIX_FADV_WILLNEED);</span><br><span class="line">        CHECK(end != <span class="number">-1</span>, <span class="string">&quot;end = %ld, fail to lseek fd%d&quot;</span>, end, fd);</span><br><span class="line">        <span class="type">ssize_t</span> readsize = pread(fd, buf, bufsize, end-bufsize);</span><br><span class="line">        CHECK(readsize &gt;= <span class="number">0</span>, <span class="string">&quot;readsize = %ld, fail to read fd%d&quot;</span>, readsize, fd);</span><br><span class="line">        buf[readsize] = <span class="number">0</span>;</span><br><span class="line">        end -= bufsize;</span><br><span class="line">        CHECK(end != <span class="number">-1</span>, <span class="string">&quot;end = %ld, fail to lseek fd%d&quot;</span>, end, fd);</span><br><span class="line">        <span class="keyword">while</span>(readsize &gt;= <span class="number">0</span> &amp;&amp; num) &#123;</span><br><span class="line">            <span class="type">ssize_t</span> move = readsize<span class="number">-1</span>;</span><br><span class="line">            <span class="keyword">while</span>(move &gt;=<span class="number">0</span> &amp;&amp; buf[move] != <span class="string">&#x27;\n&#x27;</span>) move--;</span><br><span class="line">            <span class="type">size_t</span> size = readsize - move - <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">if</span>(move &gt;= <span class="number">0</span> || end == <span class="number">0</span>) &#123;</span><br><span class="line">                num--;</span><br><span class="line">                output[num] = str_alloc_reverse_cat(output[num], buf+move+<span class="number">1</span>, &amp;output_len[num], size);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                output[num<span class="number">-1</span>] = str_alloc_reverse_cat(output[num<span class="number">-1</span>], buf+move+<span class="number">1</span>, &amp;output_len[num<span class="number">-1</span>], size);</span><br><span class="line">            &#125;</span><br><span class="line">            readsize = move;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">size_t</span> outbufsize = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = num; i &lt; line; i++) &#123;</span><br><span class="line">        outbufsize += output_len[i]+<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">char</span> *outbuf = (<span class="type">char</span> *) <span class="built_in">malloc</span>(outbufsize*<span class="keyword">sizeof</span>(<span class="type">char</span>));</span><br><span class="line">    outbuf[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = num; i &lt; line; i++) &#123;</span><br><span class="line">        <span class="built_in">strcat</span>(outbuf, output[i]);</span><br><span class="line">        <span class="built_in">strcat</span>(outbuf, <span class="string">&quot;\n&quot;</span>);</span><br><span class="line">        <span class="built_in">free</span>(output[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    print(outbuf, outbufsize - <span class="number">1</span>, <span class="literal">NULL</span>);</span><br><span class="line">    <span class="built_in">free</span>(outbuf);</span><br><span class="line">    <span class="built_in">free</span>(buf);</span><br><span class="line">    <span class="built_in">free</span>(output);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">char</span> *<span class="title function_">str_alloc_cat</span><span class="params">(<span class="type">char</span> * str1, <span class="type">const</span> <span class="type">char</span> *str2, <span class="type">int</span> *len1, <span class="type">int</span> len2)</span> &#123;</span><br><span class="line">    <span class="type">char</span> *str = <span class="literal">NULL</span>;</span><br><span class="line">    <span class="keyword">if</span>(str1 == <span class="literal">NULL</span>) &#123;</span><br><span class="line">        str = <span class="built_in">malloc</span>((*len1+len2+<span class="number">1</span>) * <span class="keyword">sizeof</span>(<span class="type">char</span>));</span><br><span class="line">        *len1 = <span class="number">0</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        str = <span class="built_in">realloc</span>(str1, (*len1 + len2 + <span class="number">1</span>) * <span class="keyword">sizeof</span>(<span class="type">char</span>));</span><br><span class="line">    &#125;</span><br><span class="line">    str[*len1] = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">strncat</span>(str + *len1, str2, len2);</span><br><span class="line">    *len1 += len2;</span><br><span class="line">    <span class="keyword">return</span> str;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">tailsafe</span><span class="params">(<span class="type">int</span> fd, <span class="type">const</span> <span class="type">int</span> num)</span> &#123; <span class="comment">// for file that do not support SEEK_END</span></span><br><span class="line">    <span class="type">int</span> line = <span class="number">0</span>;</span><br><span class="line">    <span class="type">char</span> *buf = (<span class="type">char</span>*)<span class="built_in">malloc</span>((BUFSIZE+<span class="number">1</span>)*<span class="keyword">sizeof</span>(<span class="type">char</span>));</span><br><span class="line">    <span class="type">char</span> **output = (<span class="type">char</span> **)<span class="built_in">malloc</span>(num *<span class="keyword">sizeof</span>(<span class="type">char</span> *));</span><br><span class="line">    <span class="type">int</span> *output_len = (<span class="type">int</span> *) <span class="built_in">malloc</span>(num * <span class="keyword">sizeof</span>(<span class="type">int</span>));</span><br><span class="line">    <span class="built_in">memset</span>(output, <span class="number">0</span>, num *<span class="keyword">sizeof</span>(<span class="type">char</span> *));</span><br><span class="line">    <span class="built_in">memset</span>(output_len, <span class="number">0</span>, num *<span class="keyword">sizeof</span>(<span class="type">int</span>));</span><br><span class="line"></span><br><span class="line">    <span class="type">size_t</span> readsize = <span class="number">0</span>, prev_readsize = <span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> i,j;</span><br><span class="line">    <span class="keyword">while</span>((readsize = read(fd, buf, BUFSIZE)) != <span class="number">0</span>) &#123;</span><br><span class="line">        prev_readsize = readsize;</span><br><span class="line">        CHECK(readsize &gt;= <span class="number">0</span>, <span class="string">&quot;readsize = %ld, fail to read fd%d&quot;</span>, readsize, fd);</span><br><span class="line">        buf[readsize] = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; readsize; i=j+<span class="number">1</span>) &#123;</span><br><span class="line">            j = i;</span><br><span class="line">            <span class="keyword">while</span>(j &lt; readsize &amp;&amp; buf[j] != <span class="string">&#x27;\n&#x27;</span>)j++;</span><br><span class="line">            <span class="keyword">if</span>(output[line] != <span class="literal">NULL</span> &amp;&amp; output[line][output_len[line]] == <span class="string">&#x27;\n&#x27;</span>) &#123;</span><br><span class="line">                <span class="built_in">free</span>(output[line]);</span><br><span class="line">                output[line]= <span class="literal">NULL</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(j &lt; readsize) &#123;</span><br><span class="line">                output[line] = str_alloc_cat(output[line], buf+i, &amp;output_len[line], j - i);</span><br><span class="line">                output[line][output_len[line]] = <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">                line = (line+<span class="number">1</span>)%num;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line"><span class="comment">//                size_t end = lseek(fd, i - j, SEEK_CUR);</span></span><br><span class="line">                output[line] = str_alloc_cat(output[line], buf+i, &amp;output_len[line], j - i);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(i &lt; prev_readsize) &#123;</span><br><span class="line">        output[line][output_len[line]] = <span class="number">0</span>;</span><br><span class="line">        line = (line+<span class="number">1</span>)%num;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(output[line] == <span class="literal">NULL</span>) &#123;</span><br><span class="line">        line = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">size_t</span> outbufsize = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; num; i++) &#123;</span><br><span class="line">        outbufsize += output_len[i]+<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span>(output[i] != <span class="literal">NULL</span>) output[i][output_len[i]] = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">char</span> *outbuf = (<span class="type">char</span> *) <span class="built_in">malloc</span>(outbufsize*<span class="keyword">sizeof</span>(<span class="type">char</span>));</span><br><span class="line">    outbuf[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; num &amp;&amp; output[(i+line)%num] != <span class="literal">NULL</span>; i++) &#123;</span><br><span class="line">        <span class="built_in">strcat</span>(outbuf, output[(i+line)%num]);</span><br><span class="line">        <span class="built_in">strcat</span>(outbuf, <span class="string">&quot;\n&quot;</span>);</span><br><span class="line">        <span class="built_in">free</span>(output[(i+line)%num]);</span><br><span class="line">    &#125;</span><br><span class="line">    print(outbuf, outbufsize - <span class="number">1</span>, <span class="literal">NULL</span>);</span><br><span class="line">    <span class="built_in">free</span>(outbuf);</span><br><span class="line">    <span class="built_in">free</span>(output_len);</span><br><span class="line">    <span class="built_in">free</span>(output);</span><br><span class="line">    <span class="built_in">free</span>(buf);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> ** argv)</span> &#123;</span><br><span class="line">    <span class="type">char</span> **filename = (<span class="type">char</span> **)<span class="built_in">malloc</span>(argc * <span class="keyword">sizeof</span>(<span class="type">char</span> *));</span><br><span class="line">    <span class="type">int</span> filecount = <span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> num = <span class="number">10</span>;</span><br><span class="line">    <span class="type">bool</span> safe = <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>; i &lt; argc; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span>(argv[i][<span class="number">0</span>] == <span class="string">&#x27;-&#x27;</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span>(streq(argv[i], <span class="string">&quot;--help&quot;</span>) || streq(argv[i], <span class="string">&quot;-h&quot;</span>)) &#123;</span><br><span class="line">                INFO(<span class="string">&quot;Usage: %s [-h|--help] [-n num] filename&quot;</span>, argv[<span class="number">0</span>]);</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span>(streq(argv[i], <span class="string">&quot;-n&quot;</span>)) &#123;</span><br><span class="line">                str2int(argv[++i], &amp;num);</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span>(streq(argv[i], <span class="string">&quot;--safe&quot;</span>)) &#123;</span><br><span class="line">                safe = <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            filename[filecount++] = strdup(argv[i]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    CHECK(num &gt;= <span class="number">0</span>, <span class="string">&quot;num should be non-negative, num = %d\n&quot;</span>, num);</span><br><span class="line">    <span class="keyword">if</span>(filecount == <span class="number">0</span>) &#123;</span><br><span class="line">        INFO(<span class="string">&quot;Usage: %s [-h|--help] [-n num] filename&quot;</span>, argv[<span class="number">0</span>]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; filecount; i++) &#123;</span><br><span class="line">        <span class="type">int</span> fd = open(filename[i], O_RDONLY);</span><br><span class="line">        CHECK(fd != <span class="number">-1</span>, <span class="string">&quot;fail to open %s, fd = %d&quot;</span>, filename[i], fd);</span><br><span class="line">        <span class="keyword">if</span> (filecount &gt; <span class="number">1</span>) print(<span class="string">&quot;==&gt; &quot;</span>, <span class="number">4</span>, filename[i], <span class="built_in">strlen</span>(filename[i]), <span class="string">&quot; &lt;==&quot;</span>, <span class="number">4</span>, <span class="string">&quot;\n&quot;</span>, <span class="number">1</span>, <span class="literal">NULL</span>);</span><br><span class="line">        <span class="keyword">if</span>(!safe) &#123;</span><br><span class="line">            <span class="type">off_t</span> pos = lseek(fd, <span class="number">0</span>, SEEK_END);</span><br><span class="line">            CHECK(pos != <span class="number">-1</span>, <span class="string">&quot;fail to lseek %s, pos = %ld&quot;</span>, filename[i], pos);</span><br><span class="line">            tail(fd, num, pos);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            tailsafe(fd, num);</span><br><span class="line">        &#125;</span><br><span class="line">        close(fd);</span><br><span class="line">        <span class="built_in">free</span>(filename[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">free</span>(filename);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>两种方式，正着读和倒着读<br>有些文件不支持SEEK_END，用<code>--safe</code>选项正着读</p>
+</blockquote>
+</div><div class="article-licensing box"><div class="licensing-title"><p>cha13.文件I/O缓冲</p><p><a href="https://jingtianer.github.io/home/2023/04/26/linux/Linux-UNIX系统编程手册/cha13/">https://jingtianer.github.io/home/2023/04/26/linux/Linux-UNIX系统编程手册/cha13/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>Meow Meow Liu</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2023-04-26</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2025-04-15</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/home/tags/Linux-UNIX%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B%E6%89%8B%E5%86%8C/">Linux/UNIX系统编程手册</a></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/home/2023/04/28/linux/Linux-UNIX%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B%E6%89%8B%E5%86%8C/cha14/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">cha14.系统编程概念</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/home/2023/04/24/linux/Linux-UNIX%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B%E6%89%8B%E5%86%8C/cha12/"><span class="level-item">cha12.系统和进程信息</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+            id: "5ded859d61569f1c9bcebbb331adf0d0",
+            repo: "blog_comment",
+            owner: "jingtianer",
+            clientID: "f0b13fe8021fcd2efe50",
+            clientSecret: "35207c14b34e77c48a3aeee1e94c9da169ffe0c2",
+            admin: ["jingtianer"],
+            createIssueManually: false,
+            distractionFreeMode: false,
+            perPage: 20,
+            pagerDirection: "last",
+            
+            
+            enableHotKey: true,
+            language: "zh-CN",
+        })
+        gitalk.render('comment-container')</script></div></div></div><!--!--><div class="column column-right is-4-tablet is-4-desktop is-4-widescreen  order-3 is-sticky"><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#13-1"><span class="level-left"><span class="level-item">1</span><span class="level-item">13.1</span></span></a></li><li><a class="level is-mobile" href="#测试时间"><span class="level-left"><span class="level-item">2</span><span class="level-item">测试时间</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#生成md"><span class="level-left"><span class="level-item">2.1</span><span class="level-item">生成md</span></span></a></li><li><a class="level is-mobile" href="#测试结果"><span class="level-left"><span class="level-item">2.2</span><span class="level-item">测试结果</span></span></a></li></ul></li><li><a class="level is-mobile" href="#13-2"><span class="level-left"><span class="level-item">3</span><span class="level-item">13.2</span></span></a></li><li><a class="level is-mobile" href="#13-3"><span class="level-left"><span class="level-item">4</span><span class="level-item">13.3</span></span></a></li><li><a class="level is-mobile" href="#13-4"><span class="level-left"><span class="level-item">5</span><span class="level-item">13.4</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#代码"><span class="level-left"><span class="level-item">5.1</span><span class="level-item">代码</span></span></a></li><li><a class="level is-mobile" href="#结果"><span class="level-left"><span class="level-item">5.2</span><span class="level-item">结果</span></span></a></li></ul></li><li><a class="level is-mobile" href="#13-5"><span class="level-left"><span class="level-item">6</span><span class="level-item">13.5</span></span></a></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/home/js/toc.js" defer></script></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/home/">Meow!!</a><p class="is-size-7"><span>&copy; 2025 Meow Meow Liu</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/home/js/column.js"></script><script src="/home/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/home/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/home/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/home/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/home/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script><script type="text/javascript" src="/home/js/fairyDustCursor.js"></script><link rel="stylesheet" type="text/css" href="/home/css/textPopup.css"><script type="text/javascript" src="/home/js/textPopup.js"></script><script type="text/javascript" src="/home/js/clickClipBoard.js"></script><script type="module" src="/home/js/mermaidInitializer.js"></script><script src="/home/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/home/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":200,"height":400},"mobile":{"show":true}});</script></body></html>

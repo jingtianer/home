@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>01-Binder - Jingtianer</title><link rel="manifest" href="/home/manifest.json"><meta name="application-name" content="Jingtianer"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Jingtianer"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="看源码的时候可以用uml图辅助理解  多进程为什么多进程 突破内存限制：Android系统在内存不足时，会优先杀占用内存多的进程 功能稳定性：把一些功能放到独立的进程中，保证进程功能的纯粹性和稳定性 规避系统内存泄漏：独立的WebView进程阻隔内存泄漏问题 隔离风险：不稳定功能放到子进程，保证主进程的稳定性  Android中的进程间通信 Binder aidl   Socket 管道：han"><meta property="og:type" content="blog"><meta property="og:title" content="01-Binder"><meta property="og:url" content="https://jingtianer.github.io/home/2024/03/24/Android%E9%AB%98%E7%BA%A7/FrameWork/01-Binder/"><meta property="og:site_name" content="Jingtianer"><meta property="og:description" content="看源码的时候可以用uml图辅助理解  多进程为什么多进程 突破内存限制：Android系统在内存不足时，会优先杀占用内存多的进程 功能稳定性：把一些功能放到独立的进程中，保证进程功能的纯粹性和稳定性 规避系统内存泄漏：独立的WebView进程阻隔内存泄漏问题 隔离风险：不稳定功能放到子进程，保证主进程的稳定性  Android中的进程间通信 Binder aidl   Socket 管道：han"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://jingtianer.github.io/home/images/bindService.png"><meta property="og:image" content="http://gityuan.com/images/binder/binder_dev/binder_ipc.jpg"><meta property="og:image" content="http://gityuan.com/images/binder/binder_dev/binder_transaction_ipc.jpg"><meta property="og:image" content="http://gityuan.com/images/binder/binder_dev/binder_protocol.jpg"><meta property="article:published_time" content="2024-03-24T13:15:36.000Z"><meta property="article:modified_time" content="2025-04-15T02:37:55.587Z"><meta property="article:author" content="Meow Meow Liu"><meta property="article:tag" content="Android FrameWork"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://jingtianer.github.io/home/images/bindService.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://jingtianer.github.io/home/2024/03/24/Android%E9%AB%98%E7%BA%A7/FrameWork/01-Binder/"},"headline":"01-Binder","image":["https://jingtianer.github.io/home/images/bindService.png","http://gityuan.com/images/binder/binder_dev/binder_ipc.jpg","http://gityuan.com/images/binder/binder_dev/binder_transaction_ipc.jpg","http://gityuan.com/images/binder/binder_dev/binder_protocol.jpg"],"datePublished":"2024-03-24T13:15:36.000Z","dateModified":"2025-04-15T02:37:55.587Z","author":{"@type":"Person","name":"Meow Meow Liu"},"publisher":{"@type":"Organization","name":"Jingtianer","logo":{"@type":"ImageObject","url":{"text":"Meow!!"}}},"description":"看源码的时候可以用uml图辅助理解  多进程为什么多进程 突破内存限制：Android系统在内存不足时，会优先杀占用内存多的进程 功能稳定性：把一些功能放到独立的进程中，保证进程功能的纯粹性和稳定性 规避系统内存泄漏：独立的WebView进程阻隔内存泄漏问题 隔离风险：不稳定功能放到子进程，保证主进程的稳定性  Android中的进程间通信 Binder aidl   Socket 管道：han"}</script><link rel="canonical" href="https://jingtianer.github.io/home/2024/03/24/Android%E9%AB%98%E7%BA%A7/FrameWork/01-Binder/"><link rel="alternate" href="/home/atom.xml" title="Jingtianer" type="application/atom+xml"><link rel="icon" href="/home/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/vs.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/home/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const $tabMenu = document.querySelector(`a[href="${location.hash}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(location.hash);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/home/">Meow!!</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/home/">主页</a><a class="navbar-item" href="/home/archives">归档</a><a class="navbar-item" href="/home/categories">分类</a><a class="navbar-item" href="/home/tags">标签</a><a class="navbar-item" href="/home/about">关于我</a><a class="navbar-item" href="/home/tags/gallery">相册</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2024-03-24T13:15:36.000Z" title="2024/3/24 21:15:36">2024-03-24</time>发表</span><span class="level-item"><time dateTime="2025-04-15T02:37:55.587Z" title="2025/4/15 10:37:55">2025-04-15</time>更新</span><span class="level-item"><a class="link-muted" href="/home/categories/Android/">Android</a></span><span class="level-item">11 分钟读完 (大约1620个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">01-Binder</h1><div class="content"><blockquote>
+<p>看源码的时候可以用uml图辅助理解</p>
+</blockquote>
+<h2 id="多进程"><a href="#多进程" class="headerlink" title="多进程"></a>多进程</h2><h3 id="为什么多进程"><a href="#为什么多进程" class="headerlink" title="为什么多进程"></a>为什么多进程</h3><ul>
+<li>突破内存限制：Android系统在内存不足时，会优先杀占用内存多的<strong>进程</strong></li>
+<li>功能稳定性：把一些功能放到独立的进程中，保证进程功能的纯粹性和稳定性</li>
+<li>规避系统内存泄漏：独立的WebView进程阻隔内存泄漏问题</li>
+<li>隔离风险：不稳定功能放到子进程，保证主进程的稳定性</li>
+</ul>
+<h2 id="Android中的进程间通信"><a href="#Android中的进程间通信" class="headerlink" title="Android中的进程间通信"></a>Android中的进程间通信</h2><ul>
+<li>Binder<ul>
+<li>aidl</li>
+</ul>
+</li>
+<li>Socket</li>
+<li>管道：handler</li>
+<li>共享内存<ul>
+<li>fresco，mmkv（匿名）</li>
+</ul>
+</li>
+<li>信号：<ul>
+<li>ANR监控</li>
+<li>matrix、xcrash、友盟apm</li>
+</ul>
+</li>
+</ul>
+<h2 id="binder的优势"><a href="#binder的优势" class="headerlink" title="binder的优势"></a>binder的优势</h2><ul>
+<li>一次拷贝<ul>
+<li>将内核空间内存映射到用户空间</li>
+<li>a发送数据到b，binder直接将数据拷贝到与b共享的内存空间中</li>
+</ul>
+</li>
+<li>cs架构，稳定性好</li>
+<li>安全，有身份验证（交换pid，由内核完成</li>
+</ul>
+<h2 id="AIDL"><a href="#AIDL" class="headerlink" title="AIDL"></a>AIDL</h2><ul>
+<li>DSL<ul>
+<li>aidl将dsl文件编译成Java</li>
+</ul>
+</li>
+</ul>
+<h2 id="四大组件"><a href="#四大组件" class="headerlink" title="四大组件"></a>四大组件</h2><ul>
+<li>init启动<ul>
+<li>zygote</li>
+<li>servicemanager</li>
+</ul>
+</li>
+</ul>
+<h3 id="bindService一共几次IPC"><a href="#bindService一共几次IPC" class="headerlink" title="bindService一共几次IPC"></a>bindService一共几次IPC</h3><ol>
+<li>客户端与ServiceManager交互获得AMS的IBinder</li>
+<li>客户端通过AMS的IBinder请求bindService</li>
+<li>AMS与服务进程通信，调用onBind，获取IBinder</li>
+<li>服务端把IBinder交给AMS，先ServiceManager交互获得AMS的IBinder</li>
+<li>服务端通过AMS的IBinder发布自己的IBinder给AMS</li>
+<li>AMS与客户端通信，转发服务端的IBinder（代理BinderProxy）</li>
+</ol>
+<p><img src="/home/./images/bindService.png"></p>
+<h3 id="binder数据传输的大小限制"><a href="#binder数据传输的大小限制" class="headerlink" title="binder数据传输的大小限制"></a>binder数据传输的大小限制</h3><ul>
+<li>1024<em>1024-4096</em>2</li>
+<li>BIND_VM_SIZE &#x3D; 1M - sysconf(_SC_PAGE_SIZE) * 2</li>
+<li>aidl<ul>
+<li>异步传输：oneway，BIND_VM_SIZE&#x2F;2</li>
+<li>同步传输：BIND_VM_SIZE</li>
+</ul>
+</li>
+</ul>
+<h3 id="Binder其他知识"><a href="#Binder其他知识" class="headerlink" title="Binder其他知识"></a>Binder其他知识</h3><ul>
+<li>四棵红黑树</li>
+<li>Binder线程池</li>
+</ul>
+<h2 id="Binder驱动"><a href="#Binder驱动" class="headerlink" title="Binder驱动"></a>Binder驱动</h2><h3 id="binder-init"><a href="#binder-init" class="headerlink" title="binder_init"></a>binder_init</h3><p>通过misc_register注册特殊设备</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">file_operations</span> <span class="title">binder_fops</span> =</span> &#123;</span><br><span class="line">    .owner = THIS_MODULE,</span><br><span class="line">    .poll = binder_poll,</span><br><span class="line">    .unlocked_ioctl = binder_ioctl,</span><br><span class="line">    .compat_ioctl = binder_ioctl,</span><br><span class="line">    .mmap = binder_mmap,</span><br><span class="line">    .open = binder_open,</span><br><span class="line">    .flush = binder_flush,</span><br><span class="line">    .release = binder_release,</span><br><span class="line">&#125;; <span class="comment">// 系统调用与驱动的对应关系</span></span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="class"><span class="keyword">struct</span> <span class="title">miscdevice</span> <span class="title">binder_miscdev</span> =</span> &#123;</span><br><span class="line">    .minor = MISC_DYNAMIC_MINOR, <span class="comment">//次设备号 动态分配</span></span><br><span class="line">    .name = <span class="string">&quot;binder&quot;</span>,     <span class="comment">//设备名</span></span><br><span class="line">    .fops = &amp;binder_fops  <span class="comment">//设备的文件操作结构，这是file_operations结构</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="open-binder-open"><a href="#open-binder-open" class="headerlink" title="open -&gt; binder_open"></a>open -&gt; binder_open</h3><ul>
+<li>创建binder_proc结构并初始化<ul>
+<li>保存进程信息</li>
+<li>加锁，计数++，hlist_add_head</li>
+</ul>
+</li>
+<li>filp文件指针的private_data指向binder_proc</li>
+</ul>
+<h3 id="mmap-binder-mmap"><a href="#mmap-binder-mmap" class="headerlink" title="mmap -&gt; binder_mmap"></a>mmap -&gt; binder_mmap</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//地址偏移量 = 用户虚拟地址空间 - 内核虚拟地址空间</span></span><br><span class="line">proc-&gt;user_buffer_offset = vma-&gt;vm_start - (<span class="type">uintptr_t</span>)proc-&gt;buffer;</span><br><span class="line"><span class="comment">//异步可用空间大小为buffer总大小的一半。</span></span><br><span class="line">proc-&gt;free_async_space = proc-&gt;buffer_size / <span class="number">2</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="ioctl-binder-ioctl"><a href="#ioctl-binder-ioctl" class="headerlink" title="ioctl -&gt; binder_ioctl"></a>ioctl -&gt; binder_ioctl</h3><table>
+<thead>
+<tr>
+<th>ioctl命令</th>
+<th>数据类型</th>
+<th>操作</th>
+<th>使用场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>BINDER_WRITE_READ</td>
+<td>struct binder_write_read</td>
+<td>收发Binder IPC数据</td>
+<td>Binder读写交互场景，IPC.talkWithDriver</td>
+</tr>
+<tr>
+<td>BINDER_SET_MAX_THREADS</td>
+<td>__u32</td>
+<td>设置Binder线程最大个数</td>
+<td></td>
+</tr>
+<tr>
+<td>BINDER_SET_CONTEXT_MGR</td>
+<td>__s32</td>
+<td>设置Service Manager节点</td>
+<td>servicemanager进程成为上下文管理者，binder_become_context_manager()</td>
+</tr>
+<tr>
+<td>BINDER_THREAD_EXIT</td>
+<td>__s32</td>
+<td>释放Binder线程</td>
+<td></td>
+</tr>
+<tr>
+<td>BINDER_VERSION</td>
+<td>struct binder_version</td>
+<td>获取Binder版本信息</td>
+<td></td>
+</tr>
+</tbody></table>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">long</span> <span class="title function_">binder_ioctl</span><span class="params">(<span class="keyword">struct</span> file *filp, <span class="type">unsigned</span> <span class="type">int</span> cmd, <span class="type">unsigned</span> <span class="type">long</span> arg)</span> &#123;</span><br><span class="line">    <span class="comment">//进入休眠状态，直到中断唤醒</span></span><br><span class="line">    ret = wait_event_interruptible(binder_user_error_wait, binder_stop_on_user_error &lt; <span class="number">2</span>);</span><br><span class="line">    binder_lock(__func__);</span><br><span class="line">    <span class="comment">//获取binder_thread</span></span><br><span class="line">    thread = binder_get_thread(proc);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">switch</span> (cmd) &#123;</span><br><span class="line">      <span class="keyword">case</span> BINDER_WRITE_READ:  <span class="comment">//进行binder的读写操作</span></span><br><span class="line">          ret = binder_ioctl_write_read(filp, cmd, arg, thread);</span><br><span class="line">          <span class="keyword">if</span> (ret)</span><br><span class="line">              <span class="keyword">goto</span> err;</span><br><span class="line">          <span class="keyword">break</span>;</span><br><span class="line">      <span class="comment">// case ....:</span></span><br><span class="line">        <span class="comment">// xxxx  </span></span><br><span class="line">    &#125;</span><br><span class="line">err:</span><br><span class="line">    <span class="keyword">if</span> (thread)</span><br><span class="line">        thread-&gt;looper &amp;= ~BINDER_LOOPER_STATE_NEED_RETURN;</span><br><span class="line">    binder_unlock(__func__);</span><br><span class="line">    wait_event_interruptible(binder_user_error_wait, binder_stop_on_user_error &lt; <span class="number">2</span>);</span><br><span class="line">err_unlocked:</span><br><span class="line">    trace_binder_ioctl_done(ret);</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>binder_get_thread<ul>
+<li>从一颗红黑树上根据pid找当前线程</li>
+<li>如果没有，则创建节点</li>
+</ul>
+</li>
+<li>binder_ioctl_write_read<ul>
+<li>copy_from_user读取bwr</li>
+<li>检查读写缓存中是否有数据，如果有，就执行读写</li>
+<li>copy_to_user将bwr写回用户空间</li>
+</ul>
+</li>
+</ul>
+<h3 id="Binder层次结构"><a href="#Binder层次结构" class="headerlink" title="Binder层次结构"></a>Binder层次结构</h3><p><img src="http://gityuan.com/images/binder/binder_dev/binder_ipc.jpg"></p>
+<h3 id="Binder通信模型"><a href="#Binder通信模型" class="headerlink" title="Binder通信模型"></a>Binder通信模型</h3><p><img src="http://gityuan.com/images/binder/binder_dev/binder_transaction_ipc.jpg"></p>
+<h4 id="通信码"><a href="#通信码" class="headerlink" title="通信码"></a>通信码</h4><ul>
+<li>从ICP层至内核：<code>BC_</code>请求码</li>
+<li>从内核到IPC层：<code>BR_</code>响应码</li>
+</ul>
+<h4 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h4><p><img src="http://gityuan.com/images/binder/binder_dev/binder_protocol.jpg"></p>
+<h5 id="binder-thread-write"><a href="#binder-thread-write" class="headerlink" title="binder_thread_write"></a>binder_thread_write</h5><p>循环根据cmd处理请求</p>
+<ul>
+<li><code>BC_FREE_BUFFER</code><ul>
+<li>通过mmap映射内存，ServiceManager映射空间为128K，Binder应用进程为<code>1M-8K</code></li>
+<li>allocated_buffers和free_buffers是两棵红黑树，分别存放已分配内存和未分配内存。分配内存时使用最佳适应算法。</li>
+</ul>
+</li>
+<li><code>BC_TRANSACTION</code><ul>
+<li>最常见的码，将交易转化成binder_work</li>
+<li>Client向Binder驱动发送请求数据</li>
+</ul>
+</li>
+<li><code>BC_REPLY</code><ul>
+<li>Server向Binder驱动发送请求数据</li>
+</ul>
+</li>
+</ul>
+<h5 id="binder-thread-read"><a href="#binder-thread-read" class="headerlink" title="binder_thread_read"></a>binder_thread_read</h5><ul>
+<li>根据work和当前状态生成响应码，接下来由用户态进行处理</li>
+</ul>
+<h2 id="ServiceManager"><a href="#ServiceManager" class="headerlink" title="ServiceManager"></a>ServiceManager</h2><ul>
+<li>servicemanager是操作系统的一个可执行文件，在init.rc中启动</li>
+</ul>
+<h3 id="main"><a href="#main" class="headerlink" title="main"></a>main</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> **argv)</span> &#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">binder_state</span> *<span class="title">bs</span>;</span></span><br><span class="line">    <span class="comment">//打开binder驱动，申请128k字节大小的内存空间 </span></span><br><span class="line">    bs = binder_open(<span class="number">128</span>*<span class="number">1024</span>); <span class="comment">// 不是上面binder driver的binder_open</span></span><br><span class="line">    <span class="comment">//成为上下文管理者 </span></span><br><span class="line">    binder_become_context_manager(bs);</span><br><span class="line">    <span class="comment">// 调用ioctl(bs-&gt;fd, BINDER_SET_CONTEXT_MGR, 0);</span></span><br><span class="line">    <span class="comment">//进入无限循环，处理client端发来的请求</span></span><br><span class="line">    binder_loop(bs, svcmgr_handler);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="binder-open"><a href="#binder-open" class="headerlink" title="binder_open"></a>binder_open</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> binder_state *<span class="title function_">binder_open</span><span class="params">(<span class="type">size_t</span> mapsize)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">binder_state</span> *<span class="title">bs</span>;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">binder_version</span> <span class="title">vers</span>;</span></span><br><span class="line"></span><br><span class="line">    bs = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(*bs));</span><br><span class="line"></span><br><span class="line">    <span class="comment">//通过系统调用陷入内核，打开Binder设备驱动</span></span><br><span class="line">    bs-&gt;fd = open(<span class="string">&quot;/dev/binder&quot;</span>, O_RDWR);</span><br><span class="line">    <span class="comment">// 调用上面驱动的binder_open，打开驱动，初始化，返回文件描述符</span></span><br><span class="line"></span><br><span class="line">     <span class="comment">//通过系统调用，ioctl获取binder版本信息</span></span><br><span class="line">    <span class="comment">// ioctl发送BINDER_VERSION，获取版本号与用户空间的版本号比较</span></span><br><span class="line"></span><br><span class="line">    bs-&gt;mapsize = mapsize;</span><br><span class="line">    <span class="comment">//通过系统调用，mmap内存映射，mmap必须是page的整数倍</span></span><br><span class="line">    bs-&gt;mapped = mmap(<span class="literal">NULL</span>, mapsize, PROT_READ, MAP_PRIVATE, bs-&gt;fd, <span class="number">0</span>);</span><br><span class="line">    <span class="comment">// 调用驱动的binder_mmap，建立内存映射</span></span><br><span class="line">    <span class="keyword">return</span> bs;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="binder-become-context-manager"><a href="#binder-become-context-manager" class="headerlink" title="binder_become_context_manager"></a>binder_become_context_manager</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ioctl(bs-&gt;fd, BINDER_SET_CONTEXT_MGR, <span class="number">0</span>);</span><br><span class="line">-&gt;</span><br><span class="line">binder_ioctl()</span><br><span class="line">-&gt;</span><br><span class="line">binder_ioctl_set_ctx_mgr()</span><br><span class="line">-&gt;</span><br><span class="line"><span class="comment">// 创建binder_new_node，weak、strong引用数++，将节点加入proc红黑树</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="binder-loop"><a href="#binder-loop" class="headerlink" title="binder_loop"></a>binder_loop</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">readbuf[<span class="number">0</span>] = BC_ENTER_LOOPER;</span><br><span class="line">binder_write(bs, readbuf, <span class="keyword">sizeof</span>(<span class="type">uint32_t</span>));<span class="comment">// 通过binider_write通知进入loop</span></span><br><span class="line"><span class="keyword">for</span>(;;) &#123;</span><br><span class="line">  res = ioctl(bs-&gt;fd, BINDER_WRITE_READ, &amp;bwr);</span><br><span class="line">  res = binder_parse(bs, <span class="number">0</span>, (<span class="type">uintptr_t</span>) readbuf, bwr.read_consumed, func);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="binder-write"><a href="#binder-write" class="headerlink" title="binder_write"></a>binder_write</h5><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">binder_write</span><span class="params">(<span class="keyword">struct</span> binder_state *bs, <span class="type">void</span> *data, <span class="type">size_t</span> len)</span> &#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">binder_write_read</span> <span class="title">bwr</span>;</span></span><br><span class="line">    <span class="type">int</span> res;</span><br><span class="line"></span><br><span class="line">    bwr.write_size = len;</span><br><span class="line">    bwr.write_consumed = <span class="number">0</span>;</span><br><span class="line">    bwr.write_buffer = (<span class="type">uintptr_t</span>) data; <span class="comment">//此处data为BC_ENTER_LOOPER</span></span><br><span class="line">    bwr.read_size = <span class="number">0</span>;</span><br><span class="line">    bwr.read_consumed = <span class="number">0</span>;</span><br><span class="line">    bwr.read_buffer = <span class="number">0</span>;</span><br><span class="line">    res = ioctl(bs-&gt;fd, BINDER_WRITE_READ, &amp;bwr);</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125; </span><br><span class="line"><span class="comment">// 就是通过ioctl传递消息，最终在驱动中找到thread，设置标志</span></span><br><span class="line"><span class="comment">// thread-&gt;looper |= BINDER_LOOPER_STATE_ENTERED;</span></span><br></pre></td></tr></table></figure>
+
+
+<blockquote>
+<p>提供功能：注册服务、添加服务</p>
+</blockquote>
+<h2 id="BBinder和BpBinder"><a href="#BBinder和BpBinder" class="headerlink" title="BBinder和BpBinder"></a>BBinder和BpBinder</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">virtual</span> BBinder* <span class="title">localBinder</span><span class="params">()</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">virtual</span> BpBinder* <span class="title">remoteBinder</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>BpBinder负责传输数据，BBinder负责接收数据和处理数据。</p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>01-Binder</p><p><a href="https://jingtianer.github.io/home/2024/03/24/Android高级/FrameWork/01-Binder/">https://jingtianer.github.io/home/2024/03/24/Android高级/FrameWork/01-Binder/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>Meow Meow Liu</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2024-03-24</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2025-04-15</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/home/tags/Android-FrameWork/">Android FrameWork</a></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/home/2024/03/25/LeetCode/LeetCode-%E5%88%B7%E9%A2%98%E6%80%BB%E7%BB%9335/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">LeetCode-35</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/home/2024/03/17/LeetCode/LeetCode-%E5%88%B7%E9%A2%98%E6%80%BB%E7%BB%93%E6%8E%92%E5%BA%8F/"><span class="level-item">LeetCode-排序</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+            id: "50be493a13dbe3d53c76de6a5024e7d1",
+            repo: "blog_comment",
+            owner: "jingtianer",
+            clientID: "f0b13fe8021fcd2efe50",
+            clientSecret: "35207c14b34e77c48a3aeee1e94c9da169ffe0c2",
+            admin: ["jingtianer"],
+            createIssueManually: false,
+            distractionFreeMode: false,
+            perPage: 20,
+            pagerDirection: "last",
+            
+            
+            enableHotKey: true,
+            language: "zh-CN",
+        })
+        gitalk.render('comment-container')</script></div></div></div><!--!--><div class="column column-right is-4-tablet is-4-desktop is-4-widescreen  order-3 is-sticky"><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#多进程"><span class="level-left"><span class="level-item">1</span><span class="level-item">多进程</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#为什么多进程"><span class="level-left"><span class="level-item">1.1</span><span class="level-item">为什么多进程</span></span></a></li></ul></li><li><a class="level is-mobile" href="#Android中的进程间通信"><span class="level-left"><span class="level-item">2</span><span class="level-item">Android中的进程间通信</span></span></a></li><li><a class="level is-mobile" href="#binder的优势"><span class="level-left"><span class="level-item">3</span><span class="level-item">binder的优势</span></span></a></li><li><a class="level is-mobile" href="#AIDL"><span class="level-left"><span class="level-item">4</span><span class="level-item">AIDL</span></span></a></li><li><a class="level is-mobile" href="#四大组件"><span class="level-left"><span class="level-item">5</span><span class="level-item">四大组件</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#bindService一共几次IPC"><span class="level-left"><span class="level-item">5.1</span><span class="level-item">bindService一共几次IPC</span></span></a></li><li><a class="level is-mobile" href="#binder数据传输的大小限制"><span class="level-left"><span class="level-item">5.2</span><span class="level-item">binder数据传输的大小限制</span></span></a></li><li><a class="level is-mobile" href="#Binder其他知识"><span class="level-left"><span class="level-item">5.3</span><span class="level-item">Binder其他知识</span></span></a></li></ul></li><li><a class="level is-mobile" href="#Binder驱动"><span class="level-left"><span class="level-item">6</span><span class="level-item">Binder驱动</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#binder-init"><span class="level-left"><span class="level-item">6.1</span><span class="level-item">binder_init</span></span></a></li><li><a class="level is-mobile" href="#open-binder-open"><span class="level-left"><span class="level-item">6.2</span><span class="level-item">open -&gt; binder_open</span></span></a></li><li><a class="level is-mobile" href="#mmap-binder-mmap"><span class="level-left"><span class="level-item">6.3</span><span class="level-item">mmap -&gt; binder_mmap</span></span></a></li><li><a class="level is-mobile" href="#ioctl-binder-ioctl"><span class="level-left"><span class="level-item">6.4</span><span class="level-item">ioctl -&gt; binder_ioctl</span></span></a></li><li><a class="level is-mobile" href="#Binder层次结构"><span class="level-left"><span class="level-item">6.5</span><span class="level-item">Binder层次结构</span></span></a></li><li><a class="level is-mobile" href="#Binder通信模型"><span class="level-left"><span class="level-item">6.6</span><span class="level-item">Binder通信模型</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#通信码"><span class="level-left"><span class="level-item">6.6.1</span><span class="level-item">通信码</span></span></a></li><li><a class="level is-mobile" href="#过程"><span class="level-left"><span class="level-item">6.6.2</span><span class="level-item">过程</span></span></a></li></ul></li></ul></li><li><a class="level is-mobile" href="#ServiceManager"><span class="level-left"><span class="level-item">7</span><span class="level-item">ServiceManager</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#main"><span class="level-left"><span class="level-item">7.1</span><span class="level-item">main</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#binder-open"><span class="level-left"><span class="level-item">7.1.1</span><span class="level-item">binder_open</span></span></a></li><li><a class="level is-mobile" href="#binder-become-context-manager"><span class="level-left"><span class="level-item">7.1.2</span><span class="level-item">binder_become_context_manager</span></span></a></li><li><a class="level is-mobile" href="#binder-loop"><span class="level-left"><span class="level-item">7.1.3</span><span class="level-item">binder_loop</span></span></a></li></ul></li></ul></li><li><a class="level is-mobile" href="#BBinder和BpBinder"><span class="level-left"><span class="level-item">8</span><span class="level-item">BBinder和BpBinder</span></span></a></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/home/js/toc.js" defer></script></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/home/">Meow!!</a><p class="is-size-7"><span>&copy; 2025 Meow Meow Liu</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/home/js/column.js"></script><script src="/home/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/home/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/home/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/home/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/home/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script><script type="text/javascript" src="/home/js/fairyDustCursor.js"></script><link rel="stylesheet" type="text/css" href="/home/css/textPopup.css"><script type="text/javascript" src="/home/js/textPopup.js"></script><script type="text/javascript" src="/home/js/clickClipBoard.js"></script><script type="module" src="/home/js/mermaidInitializer.js"></script><script src="/home/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/home/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":200,"height":400},"mobile":{"show":true}});</script></body></html>

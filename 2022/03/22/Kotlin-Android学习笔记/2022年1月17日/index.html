@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>实习笔记-4 - Jingtianer</title><link rel="manifest" href="/home/manifest.json"><meta name="application-name" content="Jingtianer"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Jingtianer"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="ImageView的参数1android:adjustViewBounds&amp;#x3D;&amp;quot;true&amp;quot; 对应源码1234567@android.view.RemotableViewMethodpublic void setAdjustViewBounds(boolean adjustViewBounds) &amp;amp;#123;    mAdjustViewBounds &amp;#x3D; adjustViewBou"><meta property="og:type" content="blog"><meta property="og:title" content="实习笔记-4"><meta property="og:url" content="https://jingtianer.github.io/home/2022/03/22/Kotlin-Android%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2022%E5%B9%B41%E6%9C%8817%E6%97%A5/"><meta property="og:site_name" content="Jingtianer"><meta property="og:description" content="ImageView的参数1android:adjustViewBounds&amp;#x3D;&amp;quot;true&amp;quot; 对应源码1234567@android.view.RemotableViewMethodpublic void setAdjustViewBounds(boolean adjustViewBounds) &amp;amp;#123;    mAdjustViewBounds &amp;#x3D; adjustViewBou"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://jingtianer.github.io/home/2022/03/22/Kotlin-Android%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2022%E5%B9%B41%E6%9C%8817%E6%97%A5/5.webp"><meta property="article:published_time" content="2022-03-22T13:15:36.000Z"><meta property="article:modified_time" content="2025-04-15T02:37:55.590Z"><meta property="article:author" content="Meow Meow Liu"><meta property="article:tag" content="Kotlin-Android 实习"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://jingtianer.github.io/home/2022/03/22/Kotlin-Android%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2022%E5%B9%B41%E6%9C%8817%E6%97%A5/5.webp"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://jingtianer.github.io/home/2022/03/22/Kotlin-Android%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2022%E5%B9%B41%E6%9C%8817%E6%97%A5/"},"headline":"实习笔记-4","image":["https://jingtianer.github.io/home/2022/03/22/Kotlin-Android%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2022%E5%B9%B41%E6%9C%8817%E6%97%A5/5.webp"],"datePublished":"2022-03-22T13:15:36.000Z","dateModified":"2025-04-15T02:37:55.590Z","author":{"@type":"Person","name":"Meow Meow Liu"},"publisher":{"@type":"Organization","name":"Jingtianer","logo":{"@type":"ImageObject","url":{"text":"Meow!!"}}},"description":"ImageView的参数1android:adjustViewBounds&#x3D;&quot;true&quot; 对应源码1234567@android.view.RemotableViewMethodpublic void setAdjustViewBounds(boolean adjustViewBounds) &amp;#123;    mAdjustViewBounds &#x3D; adjustViewBou"}</script><link rel="canonical" href="https://jingtianer.github.io/home/2022/03/22/Kotlin-Android%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2022%E5%B9%B41%E6%9C%8817%E6%97%A5/"><link rel="alternate" href="/home/atom.xml" title="Jingtianer" type="application/atom+xml"><link rel="icon" href="/home/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/vs.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/home/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const $tabMenu = document.querySelector(`a[href="${location.hash}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(location.hash);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/home/">Meow!!</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/home/">主页</a><a class="navbar-item" href="/home/archives">归档</a><a class="navbar-item" href="/home/categories">分类</a><a class="navbar-item" href="/home/tags">标签</a><a class="navbar-item" href="/home/about">关于我</a><a class="navbar-item" href="/home/tags/gallery">相册</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2022-03-22T13:15:36.000Z" title="2022/3/22 21:15:36">2022-03-22</time>发表</span><span class="level-item"><time dateTime="2025-04-15T02:37:55.590Z" title="2025/4/15 10:37:55">2025-04-15</time>更新</span><span class="level-item"><a class="link-muted" href="/home/categories/Kotlin-Android/">Kotlin-Android</a></span><span class="level-item">7 分钟读完 (大约1039个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">实习笔记-4</h1><div class="content"><h2 id="ImageView的参数"><a href="#ImageView的参数" class="headerlink" title="ImageView的参数"></a>ImageView的参数</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">android:adjustViewBounds=&quot;true&quot;</span><br></pre></td></tr></table></figure>
+<h3 id="对应源码"><a href="#对应源码" class="headerlink" title="对应源码"></a>对应源码</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@android</span>.view.RemotableViewMethod</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setAdjustViewBounds</span><span class="params">(<span class="type">boolean</span> adjustViewBounds)</span> &#123;</span><br><span class="line">    mAdjustViewBounds = adjustViewBounds;</span><br><span class="line">    <span class="keyword">if</span> (adjustViewBounds) &#123;</span><br><span class="line">        setScaleType(ScaleType.FIT_CENTER);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h3><ul>
+<li>当宽高有且仅有一个设置为wrapContent的时候是有用，指定一个宽or高，再根据drawable的比例确定另一个高&#x2F;宽的值</li>
+</ul>
+<h2 id="协调者布局-CoordinateLayout"><a href="#协调者布局-CoordinateLayout" class="headerlink" title="协调者布局 CoordinateLayout"></a>协调者布局 CoordinateLayout</h2><h3 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h3><p>协调子 View 之间交互的容器</p>
+<h3 id="使用例1"><a href="#使用例1" class="headerlink" title="使用例1"></a>使用例1</h3><ul>
+<li>点击FloatingActionBar弹出sneakbar，如果不适用CoordinateLayout，会导致弹出的SneakBar遮挡住FAB</li>
+</ul>
+<h3 id="layout-scrollFlags"><a href="#layout-scrollFlags" class="headerlink" title="layout_scrollFlags"></a>layout_scrollFlags</h3><ol>
+<li><code>scroll|exitUntilCollapsed</code>如果AppBarLayout的直接子控件设置该属性,该子控件可以滚动,向上滚动NestedScrollView出父布局(一般为CoordinatorLayout)时,会折叠到顶端,向下滚动时NestedScrollView必须滚动到最上面的时候才能拉出该布局 </li>
+<li><code>scroll|enterAlways</code>只要向下滚动该布局就会显示出来,只要向上滑动该布局就会向上收缩 </li>
+<li><code>scroll|enterAlwaysCollapsed</code>向下滚动NestedScrollView到最底端时该布局才会显示出来<br>如果不设置改属性,则改布局不能滑动</li>
+<li><code>snap</code>滑动时的弹性</li>
+</ol>
+<h3 id="CollapsingToolbarLayout"><a href="#CollapsingToolbarLayout" class="headerlink" title="CollapsingToolbarLayout"></a>CollapsingToolbarLayout</h3><p>它的直接子布局可以使用的属性:app:layout_collapseMode(折叠模式)</p>
+<ol>
+<li>pin:在滑动过程中,此自布局会固定在它所在的位置不动,直到CollapsingToolbarLayout全部折叠或者全部展开 </li>
+<li>parallax:视差效果，在折叠的时候会有个视差折叠的效果</li>
+<li>不设置:跟随NestedScrollView的滑动一起滑动,NestedScrollView滑动多少距离他就会跟着走多少距离</li>
+</ol>
+<h3 id="自定义Behavior"><a href="#自定义Behavior" class="headerlink" title="自定义Behavior"></a>自定义Behavior</h3><h4 id="通常自定义Behavior分为两种情况："><a href="#通常自定义Behavior分为两种情况：" class="headerlink" title="通常自定义Behavior分为两种情况："></a>通常自定义Behavior分为两种情况：</h4><ul>
+<li>某个View依赖另一个View，监听其位置、尺寸等状态的变化。</li>
+<li>某个View监听CoordinatorLayout内实现了NestedScrollingChild接口的子View的滑动状态变化(也是一种依赖关系)。<blockquote>
+<p>只有CoordinatorLayout的直接子布局才能响应</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="效果示例"><a href="#效果示例" class="headerlink" title="效果示例"></a>效果示例</h3><img src="./5.webp"/>
+
+<h3 id="可override的几个函数"><a href="#可override的几个函数" class="headerlink" title="可override的几个函数"></a>可override的几个函数</h3><ul>
+<li>onInterceptTouchEvent()：是否拦截触摸事件</li>
+<li>onTouchEvent()：处理触摸事件</li>
+<li>layoutDependsOn()：确定使用Behavior的View要依赖的View的类型</li>
+<li>onDependentViewChanged()：当被依赖的View状态改变时回调</li>
+<li>onDependentViewRemoved()：当被依赖的View移除时回调</li>
+<li>onMeasureChild()：测量使用Behavior的View尺寸</li>
+<li>onLayoutChild()：确定使用Behavior的View位置</li>
+<li>onStartNestedScroll()：嵌套滑动开始（ACTION_DOWN），确定Behavior是否要监听此次事件</li>
+<li>onStopNestedScroll()：嵌套滑动结束（ACTION_UP或ACTION_CANCEL）</li>
+<li>onNestedScroll()：嵌套滑动进行中，要监听的子 View的滑动事件已经被消费</li>
+<li>onNestedPreScroll()：嵌套滑动进行中，要监听的子 View将要滑动，滑动事件即将被消费（但最终被谁消费，可以通过代码控制）</li>
+<li>onNestedFling()：要监听的子 View在快速滑动中</li>
+<li>onNestedPreFling()：要监听的子View即将快速滑动</li>
+</ul>
+<p>(参考)[<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/b987fad8fcb4]">https://www.jianshu.com/p/b987fad8fcb4]</a></p>
+<h2 id="NestedScrollView"><a href="#NestedScrollView" class="headerlink" title="NestedScrollView"></a>NestedScrollView</h2><ul>
+<li>NestedScrollView 与 ScrollView 一样，内部只能容纳一个子控件。当存在多个组件（产生滑动冲突时），解决冲突的办法：<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">android:nestedScrollingEnabled=&quot;false&quot;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="RecyclerView-实现瀑布流效果"><a href="#RecyclerView-实现瀑布流效果" class="headerlink" title="RecyclerView 实现瀑布流效果"></a>RecyclerView 实现瀑布流效果</h2><ul>
+<li>1）通过LinearLayoutManager：我们可以实现横向、纵向的列表效果</li>
+<li>2）通过GridLayoutManager：我们可以实现像GridView一样的网格布局</li>
+<li>3）通过StaggeredGridLayoutManager：我们可以实现瀑布流的效果</li>
+</ul>
+<h2 id="网络请求踩坑"><a href="#网络请求踩坑" class="headerlink" title="网络请求踩坑"></a>网络请求踩坑</h2><h3 id="明码传输"><a href="#明码传输" class="headerlink" title="明码传输"></a>明码传输</h3><blockquote>
+<p>D&#x2F;OkHttp: &lt;– HTTP FAILED: java.net.UnknownServiceException: CLEARTEXT communication to  japi.juhe.cn not permitted by network security policy</p>
+</blockquote>
+<p>为保证用户数据和设备的安全，Google针对下一代 Android 系统(Android P) 的应用程序，将要求默认使用加密连接，这意味着 Android P 将禁止 App 使用所有未加密的连接，因此运行 Android P 系统的安卓设备无论是接收或者发送流量，未来都不能明码传输。</p>
+<ul>
+<li>在res文件夹下创建一个xml文件夹，然后创建一个network_security_config.xml文件，文件内容如下：<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;utf-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">network-security-config</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">base-config</span> <span class="attr">cleartextTrafficPermitted</span>=<span class="string">&quot;true&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">network-security-config</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li>接着，在AndroidManifest.xml文件下的application标签增加以下属性<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">android:networkSecurityConfig=&quot;@xml/network_security_config&quot;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="声明权限"><a href="#声明权限" class="headerlink" title="声明权限"></a>声明权限</h3> <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">&quot;android.permission.INTERNET&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">&quot;android.permission.ACCESS_NETWORK_STATE&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<p> 注意标签是<code>uses-permission</code>，不是<code>permission</code></p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>实习笔记-4</p><p><a href="https://jingtianer.github.io/home/2022/03/22/Kotlin-Android学习笔记/2022年1月17日/">https://jingtianer.github.io/home/2022/03/22/Kotlin-Android学习笔记/2022年1月17日/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>Meow Meow Liu</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2022-03-22</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2025-04-15</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/home/tags/Kotlin-Android-%E5%AE%9E%E4%B9%A0/">Kotlin-Android 实习</a></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/home/2022/03/22/Kotlin-Android%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2022%E5%B9%B41%E6%9C%8814%E6%97%A5/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">实习笔记-3</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/home/2022/03/22/Kotlin-Android%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2022%E5%B9%B41%E6%9C%8821%E6%97%A5/"><span class="level-item">实习笔记-7</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+            id: "4455ac2821622b9930b15158dd2a5bea",
+            repo: "blog_comment",
+            owner: "jingtianer",
+            clientID: "f0b13fe8021fcd2efe50",
+            clientSecret: "35207c14b34e77c48a3aeee1e94c9da169ffe0c2",
+            admin: ["jingtianer"],
+            createIssueManually: false,
+            distractionFreeMode: false,
+            perPage: 20,
+            pagerDirection: "last",
+            
+            
+            enableHotKey: true,
+            language: "zh-CN",
+        })
+        gitalk.render('comment-container')</script></div></div></div><!--!--><div class="column column-right is-4-tablet is-4-desktop is-4-widescreen  order-3 is-sticky"><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#ImageView的参数"><span class="level-left"><span class="level-item">1</span><span class="level-item">ImageView的参数</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#对应源码"><span class="level-left"><span class="level-item">1.1</span><span class="level-item">对应源码</span></span></a></li><li><a class="level is-mobile" href="#应用场景"><span class="level-left"><span class="level-item">1.2</span><span class="level-item">应用场景</span></span></a></li></ul></li><li><a class="level is-mobile" href="#协调者布局-CoordinateLayout"><span class="level-left"><span class="level-item">2</span><span class="level-item">协调者布局 CoordinateLayout</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#作用"><span class="level-left"><span class="level-item">2.1</span><span class="level-item">作用</span></span></a></li><li><a class="level is-mobile" href="#使用例1"><span class="level-left"><span class="level-item">2.2</span><span class="level-item">使用例1</span></span></a></li><li><a class="level is-mobile" href="#layout-scrollFlags"><span class="level-left"><span class="level-item">2.3</span><span class="level-item">layout_scrollFlags</span></span></a></li><li><a class="level is-mobile" href="#CollapsingToolbarLayout"><span class="level-left"><span class="level-item">2.4</span><span class="level-item">CollapsingToolbarLayout</span></span></a></li><li><a class="level is-mobile" href="#自定义Behavior"><span class="level-left"><span class="level-item">2.5</span><span class="level-item">自定义Behavior</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#通常自定义Behavior分为两种情况："><span class="level-left"><span class="level-item">2.5.1</span><span class="level-item">通常自定义Behavior分为两种情况：</span></span></a></li></ul></li><li><a class="level is-mobile" href="#效果示例"><span class="level-left"><span class="level-item">2.6</span><span class="level-item">效果示例</span></span></a></li><li><a class="level is-mobile" href="#可override的几个函数"><span class="level-left"><span class="level-item">2.7</span><span class="level-item">可override的几个函数</span></span></a></li></ul></li><li><a class="level is-mobile" href="#NestedScrollView"><span class="level-left"><span class="level-item">3</span><span class="level-item">NestedScrollView</span></span></a></li><li><a class="level is-mobile" href="#RecyclerView-实现瀑布流效果"><span class="level-left"><span class="level-item">4</span><span class="level-item">RecyclerView 实现瀑布流效果</span></span></a></li><li><a class="level is-mobile" href="#网络请求踩坑"><span class="level-left"><span class="level-item">5</span><span class="level-item">网络请求踩坑</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#明码传输"><span class="level-left"><span class="level-item">5.1</span><span class="level-item">明码传输</span></span></a></li><li><a class="level is-mobile" href="#声明权限"><span class="level-left"><span class="level-item">5.2</span><span class="level-item">声明权限</span></span></a></li></ul></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/home/js/toc.js" defer></script></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/home/">Meow!!</a><p class="is-size-7"><span>&copy; 2025 Meow Meow Liu</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/home/js/column.js"></script><script src="/home/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/home/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/home/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/home/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/home/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script><script type="text/javascript" src="/home/js/fairyDustCursor.js"></script><link rel="stylesheet" type="text/css" href="/home/css/textPopup.css"><script type="text/javascript" src="/home/js/textPopup.js"></script><script type="text/javascript" src="/home/js/clickClipBoard.js"></script><script type="module" src="/home/js/mermaidInitializer.js"></script><script src="/home/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/home/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":200,"height":400},"mobile":{"show":true}});</script></body></html>

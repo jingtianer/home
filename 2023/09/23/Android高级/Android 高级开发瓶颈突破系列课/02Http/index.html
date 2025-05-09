@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>02-http - Jingtianer</title><link rel="manifest" href="/home/manifest.json"><meta name="application-name" content="Jingtianer"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Jingtianer"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="格式 报文格式(Request) 请求行 eg: GET &amp;#x2F;users?id&amp;#x3D;xxxx HTTP&amp;#x2F;1.1 method path(包括参数部分) Http version   headers (Host在这里) body   报文格式(Response) 状态行 eg: HTTP&amp;#x2F;1.1 200 OK Http Version status code status message   header"><meta property="og:type" content="blog"><meta property="og:title" content="02-http"><meta property="og:url" content="https://jingtianer.github.io/home/2023/09/23/Android%E9%AB%98%E7%BA%A7/Android%20%E9%AB%98%E7%BA%A7%E5%BC%80%E5%8F%91%E7%93%B6%E9%A2%88%E7%AA%81%E7%A0%B4%E7%B3%BB%E5%88%97%E8%AF%BE/02Http/"><meta property="og:site_name" content="Jingtianer"><meta property="og:description" content="格式 报文格式(Request) 请求行 eg: GET &amp;#x2F;users?id&amp;#x3D;xxxx HTTP&amp;#x2F;1.1 method path(包括参数部分) Http version   headers (Host在这里) body   报文格式(Response) 状态行 eg: HTTP&amp;#x2F;1.1 200 OK Http Version status code status message   header"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://jingtianer.github.io/home/img/og_image.png"><meta property="article:published_time" content="2023-09-23T13:15:36.000Z"><meta property="article:modified_time" content="2025-04-15T02:37:55.585Z"><meta property="article:author" content="Meow Meow Liu"><meta property="article:tag" content="Android 高级开发瓶颈突破系列课"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://jingtianer.github.io/home/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://jingtianer.github.io/home/2023/09/23/Android%E9%AB%98%E7%BA%A7/Android%20%E9%AB%98%E7%BA%A7%E5%BC%80%E5%8F%91%E7%93%B6%E9%A2%88%E7%AA%81%E7%A0%B4%E7%B3%BB%E5%88%97%E8%AF%BE/02Http/"},"headline":"02-http","image":["https://jingtianer.github.io/home/img/og_image.png"],"datePublished":"2023-09-23T13:15:36.000Z","dateModified":"2025-04-15T02:37:55.585Z","author":{"@type":"Person","name":"Meow Meow Liu"},"publisher":{"@type":"Organization","name":"Jingtianer","logo":{"@type":"ImageObject","url":{"text":"Meow!!"}}},"description":"格式 报文格式(Request) 请求行 eg: GET &#x2F;users?id&#x3D;xxxx HTTP&#x2F;1.1 method path(包括参数部分) Http version   headers (Host在这里) body   报文格式(Response) 状态行 eg: HTTP&#x2F;1.1 200 OK Http Version status code status message   header"}</script><link rel="canonical" href="https://jingtianer.github.io/home/2023/09/23/Android%E9%AB%98%E7%BA%A7/Android%20%E9%AB%98%E7%BA%A7%E5%BC%80%E5%8F%91%E7%93%B6%E9%A2%88%E7%AA%81%E7%A0%B4%E7%B3%BB%E5%88%97%E8%AF%BE/02Http/"><link rel="alternate" href="/home/atom.xml" title="Jingtianer" type="application/atom+xml"><link rel="icon" href="/home/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/vs.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/home/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const $tabMenu = document.querySelector(`a[href="${location.hash}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(location.hash);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/home/">Meow!!</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/home/">主页</a><a class="navbar-item" href="/home/archives">归档</a><a class="navbar-item" href="/home/categories">分类</a><a class="navbar-item" href="/home/tags">标签</a><a class="navbar-item" href="/home/about">关于我</a><a class="navbar-item" href="/home/tags/gallery">相册</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2023-09-23T13:15:36.000Z" title="2023/9/23 21:15:36">2023-09-23</time>发表</span><span class="level-item"><time dateTime="2025-04-15T02:37:55.585Z" title="2025/4/15 10:37:55">2025-04-15</time>更新</span><span class="level-item"><a class="link-muted" href="/home/categories/Android/">Android</a></span><span class="level-item">6 分钟读完 (大约826个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">02-http</h1><div class="content"><h2 id="格式"><a href="#格式" class="headerlink" title="格式"></a>格式</h2><ul>
+<li>报文格式(Request)<ul>
+<li>请求行 eg: <code>GET /users?id=xxxx HTTP/1.1</code><ul>
+<li>method</li>
+<li>path(包括参数部分)</li>
+<li>Http version</li>
+</ul>
+</li>
+<li>headers (Host在这里)</li>
+<li>body</li>
+</ul>
+</li>
+<li>报文格式(Response)<ul>
+<li>状态行 eg: <code>HTTP/1.1 200 OK</code><ul>
+<li>Http Version</li>
+<li>status code</li>
+<li>status message</li>
+</ul>
+</li>
+<li>headers</li>
+<li>body</li>
+</ul>
+</li>
+</ul>
+<h2 id="Request"><a href="#Request" class="headerlink" title="Request"></a>Request</h2><h3 id="method"><a href="#method" class="headerlink" title="method"></a>method</h3><ul>
+<li>GET<ul>
+<li>获取资源</li>
+<li>没有body</li>
+</ul>
+</li>
+<li>POST<ul>
+<li>增加&#x2F;修改资源</li>
+<li>有body</li>
+</ul>
+</li>
+<li>PUT<ul>
+<li>修改资源</li>
+<li>有body</li>
+</ul>
+</li>
+<li>DELETE<ul>
+<li>删除资源</li>
+<li>没有body</li>
+</ul>
+</li>
+<li>HEAD<ul>
+<li>获取资源</li>
+<li>没有body</li>
+<li>响应无body</li>
+<li>用于下载时，确定文件大小，有无断点续传等信息</li>
+</ul>
+</li>
+</ul>
+<p>幂等性：指重复的请求多次向服务器传送，对服务器的没有影响。如<code>GET</code>和<code>PUT</code>,<code>DELETE</code>。</p>
+<h2 id="Response"><a href="#Response" class="headerlink" title="Response"></a>Response</h2><h3 id="status-code"><a href="#status-code" class="headerlink" title="status code"></a>status code</h3><p>为了方便开发人员定位错误</p>
+<ul>
+<li>1xx: 临时性消息<ul>
+<li>100 当客户端传送数据过大时，将其分段发送，在最后一个请求之前，服务器每收到一个请求，返回<code>100</code>表示收到，客户端再发送下一个。</li>
+<li>101 表示支持<code>http2</code>，浏览并尝试使用<code>http2</code>时，会先发送一个试探性的请求，如果返回<code>200</code>，说明服务器不支持<code>http2</code>，返回<code>101</code>则表示支持</li>
+</ul>
+</li>
+<li>2xx: 成功</li>
+<li>3xx: 重定向<ul>
+<li>301 如，浏览器访问http时返回301，自动改用https访问</li>
+<li>304 内容未改变</li>
+</ul>
+</li>
+<li>4xx: 客户端错误<ul>
+<li>400 请求有问题</li>
+<li>401 未登录</li>
+<li>404 没找到</li>
+</ul>
+</li>
+<li>5xx: 服务器出错</li>
+</ul>
+<h2 id="Header"><a href="#Header" class="headerlink" title="Header"></a>Header</h2><p>请求的数据的元数据</p>
+<ul>
+<li>Host: 服务器主机(作用是区分多个域名对应同一个ip的情况，在发送之前已经解析出ip了)</li>
+<li>Content-Length: 内容长度，作用是当传送二进制数据时，确定结束位置</li>
+<li>Content-type: 内容类型<ul>
+<li>text&#x2F;html: 是html页面</li>
+<li>application&#x2F;x-www-form-urlencoded: 普通表单(html里面那个)，encoded URL格式<ul>
+<li>body中的内容和path中的参数一样，都是使用urlencoded编码的纯文本信息</li>
+</ul>
+</li>
+<li>multipart&#x2F;form-data: 多部份，带文件的表单，二进制内容<ul>
+<li>每个part通过boundary指定 分隔</li>
+</ul>
+</li>
+<li>application&#x2F;json</li>
+<li>image&#x2F;jpeg, application&#x2F;zip 传送单个文件</li>
+</ul>
+</li>
+<li>Chunked Transfer Encoding: 分块传输，若响应量非常大，服务器相应非常耗时时，想要每查出一部分数据后就立即返回给客户端。<ul>
+<li>body格式<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;len1&gt;</span><br><span class="line">&lt;content1&gt;</span><br><span class="line">&lt;len2&gt;</span><br><span class="line">&lt;content1&gt;</span><br><span class="line">&lt;len3&gt;</span><br><span class="line">&lt;content1&gt;</span><br><span class="line">...more</span><br><span class="line">&lt;len_n&gt;</span><br><span class="line">&lt;content1&gt;</span><br><span class="line">0 <span class="comment">#结束</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>Location: 重定向的目标URL</li>
+<li>User-Agent: 标识用户使用的客户端</li>
+<li>Range &#x2F; Accept-Range: 指定接收body的范围，断点续传时使用，多线程下载</li>
+<li>Cookie &#x2F; set-Cookie: Cookie</li>
+<li>Authorization: 授权信息</li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers">more</a></li>
+</ul>
+<h3 id="Cache-Control"><a href="#Cache-Control" class="headerlink" title="Cache-Control"></a>Cache-Control</h3><ul>
+<li><p>cache和buffer的区别</p>
+<ul>
+<li>Cache:  缓存，如cpu的Cache，Android的LRUCache。已经使用过的内存，未来可能还要用，暂时存起来</li>
+<li>Buffer: 缓冲，未来一定会用，来不及使用&#x2F;预读提升速度。如视频缓冲</li>
+</ul>
+</li>
+<li><p>no-cache: 可以缓存，再次访问该页面时，重新请求</p>
+</li>
+<li><p>no-store: 不要缓存</p>
+</li>
+<li><p>max-age: 请求结果具有生效时间</p>
+</li>
+<li><p>private&#x2F;private: 消息链路上的其他路由节点是否可以缓存这个消息</p>
+</li>
+</ul>
+<h3 id="Last-Modified"><a href="#Last-Modified" class="headerlink" title="Last-Modified"></a>Last-Modified</h3><p>资源最近一次更新的时间，若更新于请求之后，则资源失效</p>
+<h3 id="Etag"><a href="#Etag" class="headerlink" title="Etag"></a>Etag</h3><p>类似hash值，若不一样则资源失效</p>
+<h3 id="REST"><a href="#REST" class="headerlink" title="REST"></a>REST</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/REST">REST</a></li>
+</ul>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/chapter/13539">更多http相关资源</a></p>
+</blockquote>
+</div><div class="article-licensing box"><div class="licensing-title"><p>02-http</p><p><a href="https://jingtianer.github.io/home/2023/09/23/Android高级/Android 高级开发瓶颈突破系列课/02Http/">https://jingtianer.github.io/home/2023/09/23/Android高级/Android 高级开发瓶颈突破系列课/02Http/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>Meow Meow Liu</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2023-09-23</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2025-04-15</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/home/tags/Android-%E9%AB%98%E7%BA%A7%E5%BC%80%E5%8F%91%E7%93%B6%E9%A2%88%E7%AA%81%E7%A0%B4%E7%B3%BB%E5%88%97%E8%AF%BE/">Android 高级开发瓶颈突破系列课</a></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/home/2023/09/24/Android%E9%AB%98%E7%BA%A7/Android%20%E9%AB%98%E7%BA%A7%E5%BC%80%E5%8F%91%E7%93%B6%E9%A2%88%E7%AA%81%E7%A0%B4%E7%B3%BB%E5%88%97%E8%AF%BE/03%E7%BC%96%E7%A0%81%E5%8A%A0%E5%AF%86Hash%E5%BA%8F%E5%88%97%E5%8C%96%E5%92%8C%E5%AD%97%E7%AC%A6%E9%9B%86%20copy/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">03-编码加密Hash序列化和字符集</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/home/2023/09/21/Android%E9%AB%98%E7%BA%A7/Android%20%E9%AB%98%E7%BA%A7%E5%BC%80%E5%8F%91%E7%93%B6%E9%A2%88%E7%AA%81%E7%A0%B4%E7%B3%BB%E5%88%97%E8%AF%BE/01%E5%A4%9A%E7%BA%BF%E7%A8%8B/"><span class="level-item">01-多线程</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+            id: "60bd793337a3cb4758fff2bf5e948a9c",
+            repo: "blog_comment",
+            owner: "jingtianer",
+            clientID: "f0b13fe8021fcd2efe50",
+            clientSecret: "35207c14b34e77c48a3aeee1e94c9da169ffe0c2",
+            admin: ["jingtianer"],
+            createIssueManually: false,
+            distractionFreeMode: false,
+            perPage: 20,
+            pagerDirection: "last",
+            
+            
+            enableHotKey: true,
+            language: "zh-CN",
+        })
+        gitalk.render('comment-container')</script></div></div></div><!--!--><div class="column column-right is-4-tablet is-4-desktop is-4-widescreen  order-3 is-sticky"><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#格式"><span class="level-left"><span class="level-item">1</span><span class="level-item">格式</span></span></a></li><li><a class="level is-mobile" href="#Request"><span class="level-left"><span class="level-item">2</span><span class="level-item">Request</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#method"><span class="level-left"><span class="level-item">2.1</span><span class="level-item">method</span></span></a></li></ul></li><li><a class="level is-mobile" href="#Response"><span class="level-left"><span class="level-item">3</span><span class="level-item">Response</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#status-code"><span class="level-left"><span class="level-item">3.1</span><span class="level-item">status code</span></span></a></li></ul></li><li><a class="level is-mobile" href="#Header"><span class="level-left"><span class="level-item">4</span><span class="level-item">Header</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#Cache-Control"><span class="level-left"><span class="level-item">4.1</span><span class="level-item">Cache-Control</span></span></a></li><li><a class="level is-mobile" href="#Last-Modified"><span class="level-left"><span class="level-item">4.2</span><span class="level-item">Last-Modified</span></span></a></li><li><a class="level is-mobile" href="#Etag"><span class="level-left"><span class="level-item">4.3</span><span class="level-item">Etag</span></span></a></li><li><a class="level is-mobile" href="#REST"><span class="level-left"><span class="level-item">4.4</span><span class="level-item">REST</span></span></a></li></ul></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/home/js/toc.js" defer></script></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/home/">Meow!!</a><p class="is-size-7"><span>&copy; 2025 Meow Meow Liu</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/home/js/column.js"></script><script src="/home/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/home/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/home/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/home/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/home/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script><script type="text/javascript" src="/home/js/fairyDustCursor.js"></script><link rel="stylesheet" type="text/css" href="/home/css/textPopup.css"><script type="text/javascript" src="/home/js/textPopup.js"></script><script type="text/javascript" src="/home/js/clickClipBoard.js"></script><script type="module" src="/home/js/mermaidInitializer.js"></script><script src="/home/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/home/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":200,"height":400},"mobile":{"show":true}});</script></body></html>

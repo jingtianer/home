@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>6.824-lab1-Mapreduce - Jingtianer</title><link rel="manifest" href="/home/manifest.json"><meta name="application-name" content="Jingtianer"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Jingtianer"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="Intro实验目的 实现一个MapReduce调度器(Coordinator)  准备工作 下载源码  1git clone git:&amp;#x2F;&amp;#x2F;g.csail.mit.edu&amp;#x2F;6.824-golabs-2021 6.824"><meta property="og:type" content="blog"><meta property="og:title" content="6.824-lab1-Mapreduce"><meta property="og:url" content="https://jingtianer.github.io/home/2022/10/28/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/6.824/lab1/"><meta property="og:site_name" content="Jingtianer"><meta property="og:description" content="Intro实验目的 实现一个MapReduce调度器(Coordinator)  准备工作 下载源码  1git clone git:&amp;#x2F;&amp;#x2F;g.csail.mit.edu&amp;#x2F;6.824-golabs-2021 6.824"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://jingtianer.github.io/home/img/og_image.png"><meta property="article:published_time" content="2022-10-28T10:00:36.000Z"><meta property="article:modified_time" content="2025-04-15T02:37:55.627Z"><meta property="article:author" content="Meow Meow Liu"><meta property="article:tag" content="6.824"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://jingtianer.github.io/home/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://jingtianer.github.io/home/2022/10/28/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/6.824/lab1/"},"headline":"6.824-lab1-Mapreduce","image":["https://jingtianer.github.io/home/img/og_image.png"],"datePublished":"2022-10-28T10:00:36.000Z","dateModified":"2025-04-15T02:37:55.627Z","author":{"@type":"Person","name":"Meow Meow Liu"},"publisher":{"@type":"Organization","name":"Jingtianer","logo":{"@type":"ImageObject","url":{"text":"Meow!!"}}},"description":"Intro实验目的 实现一个MapReduce调度器(Coordinator)  准备工作 下载源码  1git clone git:&#x2F;&#x2F;g.csail.mit.edu&#x2F;6.824-golabs-2021 6.824"}</script><link rel="canonical" href="https://jingtianer.github.io/home/2022/10/28/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/6.824/lab1/"><link rel="alternate" href="/home/atom.xml" title="Jingtianer" type="application/atom+xml"><link rel="icon" href="/home/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/vs.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/home/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const $tabMenu = document.querySelector(`a[href="${location.hash}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(location.hash);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/home/">Meow!!</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/home/">主页</a><a class="navbar-item" href="/home/archives">归档</a><a class="navbar-item" href="/home/categories">分类</a><a class="navbar-item" href="/home/tags">标签</a><a class="navbar-item" href="/home/about">关于我</a><a class="navbar-item" href="/home/tags/gallery">相册</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2022-10-28T10:00:36.000Z" title="2022/10/28 18:00:36">2022-10-28</time>发表</span><span class="level-item"><time dateTime="2025-04-15T02:37:55.627Z" title="2025/4/15 10:37:55">2025-04-15</time>更新</span><span class="level-item"><a class="link-muted" href="/home/categories/OS/">OS</a></span><span class="level-item">6 分钟读完 (大约923个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">6.824-lab1-Mapreduce</h1><div class="content"><h2 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h2><h3 id="实验目的"><a href="#实验目的" class="headerlink" title="实验目的"></a>实验目的</h3><ul>
+<li>实现一个MapReduce调度器(Coordinator)</li>
+</ul>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><ol>
+<li>下载源码</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> git://g.csail.mit.edu/6.824-golabs-2021 6.824</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>串行运行 word-count<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ./6.824</span><br><span class="line"><span class="built_in">cd</span> src/main</span><br><span class="line">go build -race -buildmode=plugin ../mrapps/wc.go</span><br><span class="line"><span class="built_in">rm</span> mr-out*</span><br><span class="line">go run -race mrsequential.go wc.so pg*.txt</span><br><span class="line">more mr-out-0</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="我的任务"><a href="#我的任务" class="headerlink" title="我的任务"></a>我的任务</h2><p>修改<code>mr/coordinator.go</code>,<code> mr/worker.go</code>, <code>mr/rpc.go</code>，实现coordinator和worker</p>
+<h3 id="运行方式"><a href="#运行方式" class="headerlink" title="运行方式"></a>运行方式</h3><ul>
+<li><p>编译并运行coordinator</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">go build -race -buildmode=plugin ../mrapps/wc.go </span><br><span class="line"><span class="built_in">rm</span> mr-out*</span><br><span class="line">go run -race mrcoordinator.go pg-*.txt</span><br></pre></td></tr></table></figure></li>
+<li><p>多开几个窗口跑worker</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go run -race mrworker.go wc.so</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>测试</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash test-mr.sh</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><h3 id="early-exit"><a href="#early-exit" class="headerlink" title="early exit"></a>early exit</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">rm</span> -f mr-*</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;***&#x27;</span> Starting early <span class="built_in">exit</span> <span class="built_in">test</span>.</span><br><span class="line"></span><br><span class="line"><span class="built_in">timeout</span> -k 2s 180s ../mrcoordinator ../pg*txt &amp;</span><br><span class="line"></span><br><span class="line"><span class="comment">## give the coordinator time to create the sockets.</span></span><br><span class="line"><span class="built_in">sleep</span> 1</span><br><span class="line"></span><br><span class="line"><span class="comment">## start multiple workers.</span></span><br><span class="line"><span class="built_in">timeout</span> -k 2s 180s ../mrworker ../../mrapps/early_exit.so &amp;</span><br><span class="line"><span class="built_in">timeout</span> -k 2s 180s ../mrworker ../../mrapps/early_exit.so &amp;</span><br><span class="line"><span class="built_in">timeout</span> -k 2s 180s ../mrworker ../../mrapps/early_exit.so &amp;</span><br><span class="line"></span><br><span class="line"><span class="comment">## wait for any of the coord or workers to exit</span></span><br><span class="line"><span class="comment">## `jobs` ensures that any completed old processes from other tests</span></span><br><span class="line"><span class="comment">## are not waited upon</span></span><br><span class="line"><span class="built_in">jobs</span> &amp;&gt; /dev/null</span><br><span class="line"><span class="built_in">wait</span> -n</span><br><span class="line"><span class="comment">## 关键是这一行</span></span><br><span class="line"><span class="comment">## a process has exited. this means that the output should be finalized</span></span><br><span class="line"><span class="comment">## otherwise, either a worker or the coordinator exited early</span></span><br><span class="line"><span class="built_in">sort</span> mr-out* | grep . &gt; mr-wc-all-initial</span><br><span class="line"></span><br><span class="line"><span class="comment">## wait for remaining workers and coordinator to exit.</span></span><br><span class="line"><span class="built_in">wait</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>这一行的作用是当上面任何一个线程中，第一个线程结束，则停止wait继续下面的脚本</li>
+<li>也就是说，大家要一起退出，不能因为执行完任务了，也没有新任务了，就让worker结束<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">wait</span> -n</span><br><span class="line"><span class="comment">## 关键是这一行</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>一种可行的方法是当所有reduce任务结束后，直接退出，socket连接关闭，后面的worker心跳直接连接关闭的socket导致panic退出</p>
+</blockquote>
+</li>
+</ul>
+<p>但这样太不优雅</p>
+<blockquote>
+<p>每个worker请求task时发送自己已经完成的reduce数<br>如果coordinator收到了所有的reduce complete消息，维护一个变量reduce，此时每收到一个RequestTask消息reduce+&#x3D;该客户端的reduce数，并发送finish消息，worker收到后立刻finish<br>Coordinator的Done实现为，该reduce大于等于NReduce时，结束运行</p>
+</blockquote>
+<h3 id="job-count-test"><a href="#job-count-test" class="headerlink" title="job count test"></a>job count test</h3><ul>
+<li>检查某个job运行的次数是否正确</li>
+<li>这个检测最初没有通过，就去看了测试脚本和源码</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;***&#x27;</span> Starting job count <span class="built_in">test</span>.</span><br><span class="line"></span><br><span class="line"><span class="built_in">rm</span> -f mr-*</span><br><span class="line"></span><br><span class="line"><span class="built_in">timeout</span> -k 2s 180s ../mrcoordinator ../pg*txt &amp;</span><br><span class="line"><span class="built_in">sleep</span> 1</span><br><span class="line"></span><br><span class="line"><span class="built_in">timeout</span> -k 2s 180s ../mrworker ../../mrapps/jobcount.so &amp;</span><br><span class="line"><span class="built_in">timeout</span> -k 2s 180s ../mrworker ../../mrapps/jobcount.so</span><br><span class="line"><span class="built_in">timeout</span> -k 2s 180s ../mrworker ../../mrapps/jobcount.so &amp;</span><br><span class="line"><span class="built_in">timeout</span> -k 2s 180s ../mrworker ../../mrapps/jobcount.so</span><br><span class="line"></span><br><span class="line">NT=`<span class="built_in">cat</span> mr-out* | awk <span class="string">&#x27;&#123;print $2&#125;&#x27;</span>`</span><br><span class="line"><span class="keyword">if</span> [ <span class="string">&quot;<span class="variable">$NT</span>&quot;</span> -ne <span class="string">&quot;8&quot;</span> ]</span><br><span class="line"><span class="keyword">then</span></span><br><span class="line">  <span class="built_in">echo</span> <span class="string">&#x27;---&#x27;</span> map <span class="built_in">jobs</span> ran incorrect number of <span class="built_in">times</span> <span class="string">&quot;(<span class="variable">$NT</span> != 8)&quot;</span></span><br><span class="line">  <span class="built_in">echo</span> <span class="string">&#x27;---&#x27;</span> job count <span class="built_in">test</span>: FAIL</span><br><span class="line">  failed_any=1</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">  <span class="built_in">echo</span> <span class="string">&#x27;---&#x27;</span> job count <span class="built_in">test</span>: PASS</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">wait</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>简单分析可知，加载jobcount中的特殊map，reduce函数，使输出文件输出的是map的个数<br>通过cat输出mr-out<em>的所有文件，在使用awk输出mr-out</em>的第二个参数(<code>awk &#39;print $2&#39;</code>)</p>
+</blockquote>
+<figure class="highlight go"><figcaption><span>mrapps/crash.go</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> count <span class="type">int</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Map</span><span class="params">(filename <span class="type">string</span>, contents <span class="type">string</span>)</span></span> []mr.KeyValue &#123;</span><br><span class="line">	me := os.Getpid()</span><br><span class="line">	f := fmt.Sprintf(<span class="string">&quot;mr-worker-jobcount-%d-%d&quot;</span>, me, count)</span><br><span class="line">	count++</span><br><span class="line">	err := ioutil.WriteFile(f, []<span class="type">byte</span>(<span class="string">&quot;x&quot;</span>), <span class="number">0666</span>)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="built_in">panic</span>(err)</span><br><span class="line">	&#125;</span><br><span class="line">	time.Sleep(time.Duration(<span class="number">2000</span>+rand.Intn(<span class="number">3000</span>)) * time.Millisecond)</span><br><span class="line">	<span class="keyword">return</span> []mr.KeyValue&#123;mr.KeyValue&#123;<span class="string">&quot;a&quot;</span>, <span class="string">&quot;x&quot;</span>&#125;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Reduce</span><span class="params">(key <span class="type">string</span>, values []<span class="type">string</span>)</span></span> <span class="type">string</span> &#123;</span><br><span class="line">	files, err := ioutil.ReadDir(<span class="string">&quot;.&quot;</span>)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="built_in">panic</span>(err)</span><br><span class="line">	&#125;</span><br><span class="line">	invocations := <span class="number">0</span></span><br><span class="line">	<span class="keyword">for</span> _, f := <span class="keyword">range</span> files &#123;</span><br><span class="line">		<span class="comment">// println(&quot;test, f =&quot;, f.Name(), strings.HasPrefix(f.Name(), &quot;mr-worker-jobcount&quot;))</span></span><br><span class="line">		<span class="keyword">if</span> strings.HasPrefix(f.Name(), <span class="string">&quot;mr-worker-jobcount&quot;</span>) &#123;</span><br><span class="line">			invocations++</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> strconv.Itoa(invocations)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>分析这里的代码可知，每调用依次map，全局变量count就会++，并创建该worker的第count个文件<br>在reduce中数当前目录下前缀为mr-worker-jobcount的文件个数就是map的个数</p>
+</blockquote>
+<p>调试了自己的代码，map只调用了8次，reduce只调用了一次</p>
+<blockquote>
+<p>注意到jobcount中使用了go已经弃用的<code>ioutils</code>包，改为os，问题解决</p>
+</blockquote>
+<h3 id="crash-test"><a href="#crash-test" class="headerlink" title="crash test"></a>crash test</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## mimic rpc.go&#x27;s coordinatorSock()</span></span><br><span class="line">SOCKNAME=/var/tmp/824-mr-`<span class="built_in">id</span> -u`</span><br></pre></td></tr></table></figure>
+
+<p>测试脚本要模仿Coordinator的Sock</p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>6.824-lab1-Mapreduce</p><p><a href="https://jingtianer.github.io/home/2022/10/28/操作系统/6.824/lab1/">https://jingtianer.github.io/home/2022/10/28/操作系统/6.824/lab1/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>Meow Meow Liu</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2022-10-28</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2025-04-15</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/home/tags/6-824/">6.824</a></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/home/2022/11/01/LeetCode/LeetCode-%E5%88%B7%E9%A2%98%E6%80%BB%E7%BB%9317/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">LeetCode-17</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/home/2022/10/28/linux/%E6%98%BE%E5%8D%A1%E9%A9%B1%E5%8A%A8%E8%B8%A9%E5%9D%91/"><span class="level-item">显卡驱动踩坑</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+            id: "ecdcb87424e5c777479f852211586960",
+            repo: "blog_comment",
+            owner: "jingtianer",
+            clientID: "f0b13fe8021fcd2efe50",
+            clientSecret: "35207c14b34e77c48a3aeee1e94c9da169ffe0c2",
+            admin: ["jingtianer"],
+            createIssueManually: false,
+            distractionFreeMode: false,
+            perPage: 20,
+            pagerDirection: "last",
+            
+            
+            enableHotKey: true,
+            language: "zh-CN",
+        })
+        gitalk.render('comment-container')</script></div></div></div><!--!--><div class="column column-right is-4-tablet is-4-desktop is-4-widescreen  order-3 is-sticky"><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#Intro"><span class="level-left"><span class="level-item">1</span><span class="level-item">Intro</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#实验目的"><span class="level-left"><span class="level-item">1.1</span><span class="level-item">实验目的</span></span></a></li></ul></li><li><a class="level is-mobile" href="#准备工作"><span class="level-left"><span class="level-item">2</span><span class="level-item">准备工作</span></span></a></li><li><a class="level is-mobile" href="#我的任务"><span class="level-left"><span class="level-item">3</span><span class="level-item">我的任务</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#运行方式"><span class="level-left"><span class="level-item">3.1</span><span class="level-item">运行方式</span></span></a></li></ul></li><li><a class="level is-mobile" href="#测试"><span class="level-left"><span class="level-item">4</span><span class="level-item">测试</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#early-exit"><span class="level-left"><span class="level-item">4.1</span><span class="level-item">early exit</span></span></a></li><li><a class="level is-mobile" href="#job-count-test"><span class="level-left"><span class="level-item">4.2</span><span class="level-item">job count test</span></span></a></li><li><a class="level is-mobile" href="#crash-test"><span class="level-left"><span class="level-item">4.3</span><span class="level-item">crash test</span></span></a></li></ul></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/home/js/toc.js" defer></script></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/home/">Meow!!</a><p class="is-size-7"><span>&copy; 2025 Meow Meow Liu</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/home/js/column.js"></script><script src="/home/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/home/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/home/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/home/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/home/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script><script type="text/javascript" src="/home/js/fairyDustCursor.js"></script><link rel="stylesheet" type="text/css" href="/home/css/textPopup.css"><script type="text/javascript" src="/home/js/textPopup.js"></script><script type="text/javascript" src="/home/js/clickClipBoard.js"></script><script type="module" src="/home/js/mermaidInitializer.js"></script><script src="/home/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/home/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":200,"height":400},"mobile":{"show":true}});</script></body></html>

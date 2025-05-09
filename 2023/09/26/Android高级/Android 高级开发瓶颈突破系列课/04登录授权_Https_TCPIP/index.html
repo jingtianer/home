@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>04-登录授权 Https TCP/IP - Jingtianer</title><link rel="manifest" href="/home/manifest.json"><meta name="application-name" content="Jingtianer"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Jingtianer"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="登录授权Basic在header中Authorization: Basic username:password(Base64ed, encrypted) Bearer在header中Authorization: Bearer bearer_token 这里的bearer_token就类似于github的Personal access tokens，在请求中持有token的请求，可以根据token的"><meta property="og:type" content="blog"><meta property="og:title" content="04-登录授权 Https TCP/IP"><meta property="og:url" content="https://jingtianer.github.io/home/2023/09/26/Android%E9%AB%98%E7%BA%A7/Android%20%E9%AB%98%E7%BA%A7%E5%BC%80%E5%8F%91%E7%93%B6%E9%A2%88%E7%AA%81%E7%A0%B4%E7%B3%BB%E5%88%97%E8%AF%BE/04%E7%99%BB%E5%BD%95%E6%8E%88%E6%9D%83_Https_TCPIP/"><meta property="og:site_name" content="Jingtianer"><meta property="og:description" content="登录授权Basic在header中Authorization: Basic username:password(Base64ed, encrypted) Bearer在header中Authorization: Bearer bearer_token 这里的bearer_token就类似于github的Personal access tokens，在请求中持有token的请求，可以根据token的"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://jingtianer.github.io/home/images/githubTokenGen.png"><meta property="og:image" content="https://jingtianer.github.io/home/images/CA.png"><meta property="og:image" content="https://jingtianer.github.io/home/images/CertArchitecture.png"><meta property="article:published_time" content="2023-09-26T13:15:36.000Z"><meta property="article:modified_time" content="2025-04-15T02:37:55.585Z"><meta property="article:author" content="Meow Meow Liu"><meta property="article:tag" content="Android 高级开发瓶颈突破系列课"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://jingtianer.github.io/home/images/githubTokenGen.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://jingtianer.github.io/home/2023/09/26/Android%E9%AB%98%E7%BA%A7/Android%20%E9%AB%98%E7%BA%A7%E5%BC%80%E5%8F%91%E7%93%B6%E9%A2%88%E7%AA%81%E7%A0%B4%E7%B3%BB%E5%88%97%E8%AF%BE/04%E7%99%BB%E5%BD%95%E6%8E%88%E6%9D%83_Https_TCPIP/"},"headline":"04-登录授权 Https TCP/IP","image":["https://jingtianer.github.io/home/images/githubTokenGen.png","https://jingtianer.github.io/home/images/CA.png","https://jingtianer.github.io/home/images/CertArchitecture.png"],"datePublished":"2023-09-26T13:15:36.000Z","dateModified":"2025-04-15T02:37:55.585Z","author":{"@type":"Person","name":"Meow Meow Liu"},"publisher":{"@type":"Organization","name":"Jingtianer","logo":{"@type":"ImageObject","url":{"text":"Meow!!"}}},"description":"登录授权Basic在header中Authorization: Basic username:password(Base64ed, encrypted) Bearer在header中Authorization: Bearer bearer_token 这里的bearer_token就类似于github的Personal access tokens，在请求中持有token的请求，可以根据token的"}</script><link rel="canonical" href="https://jingtianer.github.io/home/2023/09/26/Android%E9%AB%98%E7%BA%A7/Android%20%E9%AB%98%E7%BA%A7%E5%BC%80%E5%8F%91%E7%93%B6%E9%A2%88%E7%AA%81%E7%A0%B4%E7%B3%BB%E5%88%97%E8%AF%BE/04%E7%99%BB%E5%BD%95%E6%8E%88%E6%9D%83_Https_TCPIP/"><link rel="alternate" href="/home/atom.xml" title="Jingtianer" type="application/atom+xml"><link rel="icon" href="/home/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/vs.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/home/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const $tabMenu = document.querySelector(`a[href="${location.hash}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(location.hash);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/home/">Meow!!</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/home/">主页</a><a class="navbar-item" href="/home/archives">归档</a><a class="navbar-item" href="/home/categories">分类</a><a class="navbar-item" href="/home/tags">标签</a><a class="navbar-item" href="/home/about">关于我</a><a class="navbar-item" href="/home/tags/gallery">相册</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2023-09-26T13:15:36.000Z" title="2023/9/26 21:15:36">2023-09-26</time>发表</span><span class="level-item"><time dateTime="2025-04-15T02:37:55.585Z" title="2025/4/15 10:37:55">2025-04-15</time>更新</span><span class="level-item"><a class="link-muted" href="/home/categories/Android/">Android</a></span><span class="level-item">4 分钟读完 (大约672个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">04-登录授权 Https TCP/IP</h1><div class="content"><h2 id="登录授权"><a href="#登录授权" class="headerlink" title="登录授权"></a>登录授权</h2><h3 id="Basic"><a href="#Basic" class="headerlink" title="Basic"></a>Basic</h3><p>在header中<br>Authorization: Basic <code>username:password(Base64ed, encrypted)</code></p>
+<h3 id="Bearer"><a href="#Bearer" class="headerlink" title="Bearer"></a>Bearer</h3><p>在header中<br>Authorization: Bearer <code>bearer_token</code></p>
+<p>这里的bearer_token就类似于github的<code>Personal access tokens</code>，在请求中持有token的请求，可以根据token的权限对第三方账号中的数据进行获取、修改</p>
+<p><img src="/home/./images/githubTokenGen.png"></p>
+<p>可以配置token的失效时间，权限大小</p>
+<p>客户端使用Basic方式登录后获取token，之后的请求都使用该token，不必记录用户的用户名密码。</p>
+<h4 id="OAuth2流程"><a href="#OAuth2流程" class="headerlink" title="OAuth2流程"></a>OAuth2流程</h4><p>在<code>Bearer</code>方式的授权方式中，第三方网站的<code>token</code>直接存储在用户端设备上是不安全的(直接将token返回给用户端设备不安全）。在OAuth2中，返回<code>access code</code>，用户端向自家服务器提供<code>access code</code>，自家服务器使用<code>access code</code>以安全的https信道向第三方服务器获取token，储存在服务器中，之后的对第三方账号的操作全部由服务器代劳。</p>
+<h2 id="HTTPS"><a href="#HTTPS" class="headerlink" title="HTTPS"></a>HTTPS</h2><p>http over ssl<br>加密后，从传输层看，无法判断其是否是http消息。</p>
+<h3 id="建立过程"><a href="#建立过程" class="headerlink" title="建立过程"></a>建立过程</h3><ol>
+<li>Client Hello</li>
+<li>Server Hello</li>
+<li>服务器器证书 信任建⽴立</li>
+<li>Pre-master Secret</li>
+<li>客户端通知：将使⽤用加密通信</li>
+<li>客户端发送：Finished</li>
+<li>服务器器通知：将使⽤用加密通信</li>
+<li>服务器器发送：Finished</li>
+</ol>
+<h3 id="信任建立"><a href="#信任建立" class="headerlink" title="信任建立"></a>信任建立</h3><h4 id="证书"><a href="#证书" class="headerlink" title="证书"></a>证书</h4><p>为了让客户端相信<code>我是我</code>，需要使用数字签名，但是在不知道对方公钥的情况下，如何证明<code>我是我</code>呢？需要一个权威机构向其证明。<br>证明的方式是：<br><img src="/home/./images/CA.png"></p>
+<p>使用我的公钥可以证明<code>我是我</code>，但是为了防止其他人生成密钥欺骗我，我在消息里添加我的证书颁布放的公钥即相关信息。使用颁布放的公钥可以验证<code>我的证书颁布方是我的证书颁布方</code>。但是我依然可以生成一个颁布放的密钥，颁布方的信息中需要放入根证书。每台机器上都由所有根证书的列表和根证书的公钥，使用该公钥即可验证<code>我的颁布方的颁布方是我的颁布方的颁布方</code>。所以只要系统中有根证书，我就是可信任的。</p>
+<p>证书是由证书的颁布机构所签名的</p>
+<h4 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h4><p><img src="/home/./images/CertArchitecture.png"></p>
+<h4 id="HMAC"><a href="#HMAC" class="headerlink" title="HMAC"></a>HMAC</h4><p>HMAC &#x3D; Hash-based Message Authenticate Code</p>
+<p>就是一种不容易被破解的Hash，加盐，且是只有收发两方知道的盐</p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>04-登录授权 Https TCP/IP</p><p><a href="https://jingtianer.github.io/home/2023/09/26/Android高级/Android 高级开发瓶颈突破系列课/04登录授权_Https_TCPIP/">https://jingtianer.github.io/home/2023/09/26/Android高级/Android 高级开发瓶颈突破系列课/04登录授权_Https_TCPIP/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>Meow Meow Liu</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2023-09-26</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2025-04-15</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/home/tags/Android-%E9%AB%98%E7%BA%A7%E5%BC%80%E5%8F%91%E7%93%B6%E9%A2%88%E7%AA%81%E7%A0%B4%E7%B3%BB%E5%88%97%E8%AF%BE/">Android 高级开发瓶颈突破系列课</a></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/home/2023/09/27/Android%E9%AB%98%E7%BA%A7/Android%20%E9%AB%98%E7%BA%A7%E5%BC%80%E5%8F%91%E7%93%B6%E9%A2%88%E7%AA%81%E7%A0%B4%E7%B3%BB%E5%88%97%E8%AF%BE/05Retrofit/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">05-Retrofit</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/home/2023/09/24/Android%E9%AB%98%E7%BA%A7/Android%20%E9%AB%98%E7%BA%A7%E5%BC%80%E5%8F%91%E7%93%B6%E9%A2%88%E7%AA%81%E7%A0%B4%E7%B3%BB%E5%88%97%E8%AF%BE/03%E7%BC%96%E7%A0%81%E5%8A%A0%E5%AF%86Hash%E5%BA%8F%E5%88%97%E5%8C%96%E5%92%8C%E5%AD%97%E7%AC%A6%E9%9B%86%20copy/"><span class="level-item">03-编码加密Hash序列化和字符集</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+            id: "a76206e55eff07ac3a763fbdc70db277",
+            repo: "blog_comment",
+            owner: "jingtianer",
+            clientID: "f0b13fe8021fcd2efe50",
+            clientSecret: "35207c14b34e77c48a3aeee1e94c9da169ffe0c2",
+            admin: ["jingtianer"],
+            createIssueManually: false,
+            distractionFreeMode: false,
+            perPage: 20,
+            pagerDirection: "last",
+            
+            
+            enableHotKey: true,
+            language: "zh-CN",
+        })
+        gitalk.render('comment-container')</script></div></div></div><!--!--><div class="column column-right is-4-tablet is-4-desktop is-4-widescreen  order-3 is-sticky"><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#登录授权"><span class="level-left"><span class="level-item">1</span><span class="level-item">登录授权</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#Basic"><span class="level-left"><span class="level-item">1.1</span><span class="level-item">Basic</span></span></a></li><li><a class="level is-mobile" href="#Bearer"><span class="level-left"><span class="level-item">1.2</span><span class="level-item">Bearer</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#OAuth2流程"><span class="level-left"><span class="level-item">1.2.1</span><span class="level-item">OAuth2流程</span></span></a></li></ul></li></ul></li><li><a class="level is-mobile" href="#HTTPS"><span class="level-left"><span class="level-item">2</span><span class="level-item">HTTPS</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#建立过程"><span class="level-left"><span class="level-item">2.1</span><span class="level-item">建立过程</span></span></a></li><li><a class="level is-mobile" href="#信任建立"><span class="level-left"><span class="level-item">2.2</span><span class="level-item">信任建立</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#证书"><span class="level-left"><span class="level-item">2.2.1</span><span class="level-item">证书</span></span></a></li><li><a class="level is-mobile" href="#流程"><span class="level-left"><span class="level-item">2.2.2</span><span class="level-item">流程</span></span></a></li><li><a class="level is-mobile" href="#HMAC"><span class="level-left"><span class="level-item">2.2.3</span><span class="level-item">HMAC</span></span></a></li></ul></li></ul></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/home/js/toc.js" defer></script></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/home/">Meow!!</a><p class="is-size-7"><span>&copy; 2025 Meow Meow Liu</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/home/js/column.js"></script><script src="/home/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/home/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/home/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/home/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/home/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script><script type="text/javascript" src="/home/js/fairyDustCursor.js"></script><link rel="stylesheet" type="text/css" href="/home/css/textPopup.css"><script type="text/javascript" src="/home/js/textPopup.js"></script><script type="text/javascript" src="/home/js/clickClipBoard.js"></script><script type="module" src="/home/js/mermaidInitializer.js"></script><script src="/home/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/home/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":200,"height":400},"mobile":{"show":true}});</script></body></html>

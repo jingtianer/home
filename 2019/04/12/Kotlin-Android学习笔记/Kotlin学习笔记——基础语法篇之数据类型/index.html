@@ -1,0 +1,534 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>Kotlin学习笔记——基础语法篇之数据类型 - Jingtianer</title><link rel="manifest" href="/home/manifest.json"><meta name="application-name" content="Jingtianer"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Jingtianer"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="一、基本数据类型Kotlin的数据类型   数据类型名称 Kotlin的数据类型    整型 Int   长整型 Long   浮点型 Float   双精度浮点型 Double   布尔型 Boolean   声明变量1234567891011var integer:Int&amp;#x2F;&amp;#x2F;一般用法var&amp;#x2F;val + 标识符 + : + 类型名，var表示变量val integer1:Int &amp;#x3D; 0&amp;#x2F;&amp;#x2F;val"><meta property="og:type" content="blog"><meta property="og:title" content="Kotlin学习笔记——基础语法篇之数据类型"><meta property="og:url" content="https://jingtianer.github.io/home/2019/04/12/Kotlin-Android%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/Kotlin%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95%E7%AF%87%E4%B9%8B%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/"><meta property="og:site_name" content="Jingtianer"><meta property="og:description" content="一、基本数据类型Kotlin的数据类型   数据类型名称 Kotlin的数据类型    整型 Int   长整型 Long   浮点型 Float   双精度浮点型 Double   布尔型 Boolean   声明变量1234567891011var integer:Int&amp;#x2F;&amp;#x2F;一般用法var&amp;#x2F;val + 标识符 + : + 类型名，var表示变量val integer1:Int &amp;#x3D; 0&amp;#x2F;&amp;#x2F;val"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://jingtianer.github.io/home/img/og_image.png"><meta property="article:published_time" content="2019-04-12T13:15:36.000Z"><meta property="article:modified_time" content="2025-04-15T02:37:55.595Z"><meta property="article:author" content="Meow Meow Liu"><meta property="article:tag" content="Kotlin-Android"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://jingtianer.github.io/home/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://jingtianer.github.io/home/2019/04/12/Kotlin-Android%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/Kotlin%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95%E7%AF%87%E4%B9%8B%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/"},"headline":"Kotlin学习笔记——基础语法篇之数据类型","image":["https://jingtianer.github.io/home/img/og_image.png"],"datePublished":"2019-04-12T13:15:36.000Z","dateModified":"2025-04-15T02:37:55.595Z","author":{"@type":"Person","name":"Meow Meow Liu"},"publisher":{"@type":"Organization","name":"Jingtianer","logo":{"@type":"ImageObject","url":{"text":"Meow!!"}}},"description":"一、基本数据类型Kotlin的数据类型   数据类型名称 Kotlin的数据类型    整型 Int   长整型 Long   浮点型 Float   双精度浮点型 Double   布尔型 Boolean   声明变量1234567891011var integer:Int&#x2F;&#x2F;一般用法var&#x2F;val + 标识符 + : + 类型名，var表示变量val integer1:Int &#x3D; 0&#x2F;&#x2F;val"}</script><link rel="canonical" href="https://jingtianer.github.io/home/2019/04/12/Kotlin-Android%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/Kotlin%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95%E7%AF%87%E4%B9%8B%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/"><link rel="alternate" href="/home/atom.xml" title="Jingtianer" type="application/atom+xml"><link rel="icon" href="/home/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/vs.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/home/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const $tabMenu = document.querySelector(`a[href="${location.hash}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(location.hash);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/home/">Meow!!</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/home/">主页</a><a class="navbar-item" href="/home/archives">归档</a><a class="navbar-item" href="/home/categories">分类</a><a class="navbar-item" href="/home/tags">标签</a><a class="navbar-item" href="/home/about">关于我</a><a class="navbar-item" href="/home/tags/gallery">相册</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2019-04-12T13:15:36.000Z" title="2019/4/12 21:15:36">2019-04-12</time>发表</span><span class="level-item"><time dateTime="2025-04-15T02:37:55.595Z" title="2025/4/15 10:37:55">2025-04-15</time>更新</span><span class="level-item"><a class="link-muted" href="/home/categories/Kotlin-Android/">Kotlin-Android</a></span><span class="level-item">8 分钟读完 (大约1244个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">Kotlin学习笔记——基础语法篇之数据类型</h1><div class="content"><h2 id="一、基本数据类型"><a href="#一、基本数据类型" class="headerlink" title="一、基本数据类型"></a>一、基本数据类型</h2><h3 id="Kotlin的数据类型"><a href="#Kotlin的数据类型" class="headerlink" title="Kotlin的数据类型"></a>Kotlin的数据类型</h3><table>
+<thead>
+<tr>
+<th>数据类型名称</th>
+<th>Kotlin的数据类型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>整型</td>
+<td>Int</td>
+</tr>
+<tr>
+<td>长整型</td>
+<td>Long</td>
+</tr>
+<tr>
+<td>浮点型</td>
+<td>Float</td>
+</tr>
+<tr>
+<td>双精度浮点型</td>
+<td>Double</td>
+</tr>
+<tr>
+<td>布尔型</td>
+<td>Boolean</td>
+</tr>
+</tbody></table>
+<h3 id="声明变量"><a href="#声明变量" class="headerlink" title="声明变量"></a>声明变量</h3><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> integer:<span class="built_in">Int</span><span class="comment">//一般用法var/val + 标识符 + : + 类型名，var表示变量</span></span><br><span class="line"><span class="keyword">val</span> integer1:<span class="built_in">Int</span> = <span class="number">0</span><span class="comment">//val表示常量，相当于java中的final，c++中的const</span></span><br><span class="line"><span class="keyword">var</span> str = <span class="string">&quot;this is a string&quot;</span></span><br><span class="line"><span class="comment">//没有&quot;:String&quot;，此时只要保证编译器可以知道变量的类型，则编译器可以完成类型推断</span></span><br><span class="line"><span class="keyword">var</span> flt:<span class="built_in">Float</span> = <span class="number">5f</span><span class="comment">//f表示数据为float类型</span></span><br><span class="line"><span class="keyword">var</span> tobar:Toolbar? = findViewById&lt;Toolbar&gt;(R.id.toolbar)</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">类型名后+&#x27;?&#x27;表示该变量为可空变量，kotlin为了防止java中NullPointerException，</span></span><br><span class="line"><span class="comment">默认所有的变量都是不可空（不能为null的），如果要让变量为空，需要+&#x27;?&#x27;，</span></span><br><span class="line"><span class="comment">此时，编译器会强制程序员对所有可空变量进行非空判断</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<h3 id="Kotlin的类型转换"><a href="#Kotlin的类型转换" class="headerlink" title="Kotlin的类型转换"></a>Kotlin的类型转换</h3><h4 id="强制类型转换"><a href="#强制类型转换" class="headerlink" title="强制类型转换"></a>强制类型转换</h4><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> double:<span class="built_in">Double</span> = <span class="number">16.0</span></span><br><span class="line"><span class="keyword">val</span> dbl2Int:<span class="built_in">Int</span> = (double <span class="keyword">as</span> <span class="built_in">Int</span>)</span><br></pre></td></tr></table></figure>
+<h4 id="数据转换函数"><a href="#数据转换函数" class="headerlink" title="数据转换函数"></a>数据转换函数</h4><p>在kotlin的世界中，一切都是类和对象，基本数据类型也是，其中用于数据转换的成员函数</p>
+<table>
+<thead>
+<tr>
+<th>Kotlin的数据类型转换函数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>toInt</td>
+</tr>
+<tr>
+<td>toLong</td>
+</tr>
+<tr>
+<td>toFloat</td>
+</tr>
+<tr>
+<td>toDouble</td>
+</tr>
+<tr>
+<td>toChar</td>
+</tr>
+<tr>
+<td>toString</td>
+</tr>
+</tbody></table>
+<h2 id="二、字符串"><a href="#二、字符串" class="headerlink" title="二、字符串"></a>二、字符串</h2><h3 id="字符串与其他基本数据类型转换"><a href="#字符串与其他基本数据类型转换" class="headerlink" title="字符串与其他基本数据类型转换"></a>字符串与其他基本数据类型转换</h3><table>
+<thead>
+<tr>
+<th>String的成员函数</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>toInt</td>
+<td></td>
+</tr>
+<tr>
+<td>toLong</td>
+<td></td>
+</tr>
+<tr>
+<td>toFloat</td>
+<td></td>
+</tr>
+<tr>
+<td>toDouble</td>
+<td></td>
+</tr>
+<tr>
+<td>toBoolean</td>
+<td></td>
+</tr>
+<tr>
+<td>toCharArray</td>
+<td>返回的是CharArray不是Array&lt;Char&gt;</td>
+</tr>
+</tbody></table>
+<h3 id="字符串的常用方法"><a href="#字符串的常用方法" class="headerlink" title="字符串的常用方法"></a>字符串的常用方法</h3><table>
+<thead>
+<tr>
+<th>String的成员函数</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>indexOf</td>
+<td>查找子串</td>
+</tr>
+<tr>
+<td>substring</td>
+<td>获取子串</td>
+</tr>
+<tr>
+<td>replace</td>
+<td>替换子串</td>
+</tr>
+<tr>
+<td>split</td>
+<td>按特定字符分隔子串，返回值是List&lt;String&gt;</td>
+</tr>
+</tbody></table>
+<h3 id="字符串拼接"><a href="#字符串拼接" class="headerlink" title="字符串拼接"></a>字符串拼接</h3><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> str1:String = <span class="string">&quot;我刘景天宇宙第一帅！&quot;</span></span><br><span class="line"><span class="keyword">val</span> integer:<span class="built_in">Int</span> = <span class="number">8848</span></span><br><span class="line"><span class="keyword">val</span> text:TextView = findViewById&lt;TextView&gt;(R.id.text)</span><br><span class="line"><span class="keyword">val</span> strCat:String = <span class="string">&quot;str1 = <span class="subst">$&#123;str1&#125;</span> integer = <span class="variable">$integer</span>, 当前text中显示的内容是：<span class="subst">$&#123;text.text&#125;</span>&quot;</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">$变量名</span></span><br><span class="line"><span class="comment">$&#123;表达式&#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<h2 id="三、数组"><a href="#三、数组" class="headerlink" title="三、数组"></a>三、数组</h2><h3 id="Kotlin的数组类型"><a href="#Kotlin的数组类型" class="headerlink" title="Kotlin的数组类型"></a>Kotlin的数组类型</h3><table>
+<thead>
+<tr>
+<th>数组名称</th>
+<th>初始化方法</th>
+<th>数组名称</th>
+<th>初始化方法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>IntArray</td>
+<td>intArrayOf</td>
+<td>Array&lt;Int&gt;</td>
+<td>ArrayOf</td>
+</tr>
+<tr>
+<td>LongArray</td>
+<td>longArrayOf</td>
+<td>Array&lt;Long&gt;</td>
+<td>ArrayOf</td>
+</tr>
+<tr>
+<td>FloatArray</td>
+<td>floatArrayOf</td>
+<td>Array&lt;Float&gt;</td>
+<td>ArrayOf</td>
+</tr>
+<tr>
+<td>DoubleArray</td>
+<td>doubleArrayOf</td>
+<td>Array&lt;Double&gt;</td>
+<td>ArrayOf</td>
+</tr>
+<tr>
+<td>BooleanArray</td>
+<td>booleanArrayOf</td>
+<td>Array&lt;Boolean&gt;</td>
+<td>ArrayOf</td>
+</tr>
+<tr>
+<td>CharArray</td>
+<td>charArrayOf</td>
+<td>Array&lt;Char&gt;</td>
+<td>ArrayOf</td>
+</tr>
+<tr>
+<td>null</td>
+<td>null</td>
+<td>Array&lt;String&gt;</td>
+<td>ArrayOf</td>
+</tr>
+</tbody></table>
+<h3 id="数组常用方法"><a href="#数组常用方法" class="headerlink" title="数组常用方法"></a>数组常用方法</h3><table>
+<thead>
+<tr>
+<th>成员</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>size</td>
+<td>数组长度</td>
+</tr>
+<tr>
+<td>get(index)</td>
+<td>获取元素</td>
+</tr>
+<tr>
+<td>set(index, value)</td>
+<td>修改元素值</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>ps:kotlin也可以通过下标引用元素和修改元素</p>
+</blockquote>
+<h2 id="四、容器"><a href="#四、容器" class="headerlink" title="四、容器"></a>四、容器</h2><h3 id="Kotlin的容器"><a href="#Kotlin的容器" class="headerlink" title="Kotlin的容器"></a>Kotlin的容器</h3><table>
+<thead>
+<tr>
+<th>Kotlin容器</th>
+<th>名称</th>
+<th>初始化方法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>只读集合</td>
+<td>Set</td>
+<td>setOf</td>
+</tr>
+<tr>
+<td>可变集合</td>
+<td>MutableSet</td>
+<td>mutableSetOf</td>
+</tr>
+<tr>
+<td>只读队列</td>
+<td>Set</td>
+<td>listOf</td>
+</tr>
+<tr>
+<td>可变队列</td>
+<td>MutableSet</td>
+<td>mutableListOf</td>
+</tr>
+<tr>
+<td>只读映射</td>
+<td>Set</td>
+<td>mapOf</td>
+</tr>
+<tr>
+<td>可变映射</td>
+<td>MutableSet</td>
+<td>mutableMapOf</td>
+</tr>
+</tbody></table>
+<h4 id="容器的通用常用方法"><a href="#容器的通用常用方法" class="headerlink" title="容器的通用常用方法"></a>容器的通用常用方法</h4><table>
+<thead>
+<tr>
+<th>方法名</th>
+<th>返回值</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>isEmpty()</td>
+<td>Boolean</td>
+<td>判断是否为空</td>
+</tr>
+<tr>
+<td>isNotEmpty()</td>
+<td>Boolean</td>
+<td>判断是否为非空</td>
+</tr>
+<tr>
+<td>clear()</td>
+<td>Unit（猜测）</td>
+<td>清空容器（找不到这个方法）</td>
+</tr>
+<tr>
+<td>contains(value)</td>
+<td>Boolean</td>
+<td>查找有没有这个元素</td>
+</tr>
+<tr>
+<td>iterator()</td>
+<td>对应的迭代器</td>
+<td>返回容器的迭代器</td>
+</tr>
+<tr>
+<td>count()</td>
+<td>Int</td>
+<td>获取元素个数</td>
+</tr>
+<tr>
+<td>size</td>
+<td>Int</td>
+<td>获取元素个数</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>ps:只读容器初始化后就不可更改了</p>
+</blockquote>
+<h4 id="容器的迭代器的常用方法"><a href="#容器的迭代器的常用方法" class="headerlink" title="容器的迭代器的常用方法"></a>容器的迭代器的常用方法</h4><table>
+<thead>
+<tr>
+<th>方法名</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>hasNext()</td>
+<td>类似java的Scanner的hasNext方法</td>
+</tr>
+<tr>
+<td>next()</td>
+<td>类似java的Scanner的Next方法</td>
+</tr>
+</tbody></table>
+<h3 id="集合"><a href="#集合" class="headerlink" title="集合"></a>集合</h3><h4 id="Kotlin集合的特性"><a href="#Kotlin集合的特性" class="headerlink" title="Kotlin集合的特性"></a>Kotlin集合的特性</h4><ol>
+<li>集合内部元素不按照顺序排列，无法下标访问</li>
+<li>集合内部元素具有唯一性</li>
+</ol>
+<h4 id="MutableSet的元素变更方法"><a href="#MutableSet的元素变更方法" class="headerlink" title="MutableSet的元素变更方法"></a>MutableSet的元素变更方法</h4><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>add(element)</td>
+<td>添加元素</td>
+</tr>
+<tr>
+<td>remove(element)</td>
+<td>移除某个元素</td>
+</tr>
+</tbody></table>
+<h3 id="映射"><a href="#映射" class="headerlink" title="映射"></a>映射</h3><h4 id="初始化方法"><a href="#初始化方法" class="headerlink" title="初始化方法"></a>初始化方法</h4><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> map1:map&lt;String, int&gt; = mapOf(<span class="string">&quot;1&quot;</span> to <span class="number">1</span>, <span class="string">&quot;2&quot;</span> to <span class="number">2</span>, <span class="string">&quot;3&quot;</span> to <span class="number">3</span>)</span><br><span class="line"><span class="keyword">var</span> map2:mutableMap&lt;String, <span class="built_in">Boolean</span>&gt; = mutableMapOf(Pair(<span class="string">&quot;a&quot;</span>, <span class="literal">true</span>), Pair(<span class="string">&quot;b&quot;</span>, <span class="literal">false</span>))</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">不论是map还是mutableMap，</span></span><br><span class="line"><span class="comment">都可以使用 key to value和Pair(Key, Value)</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<h4 id="Map和MutableMap的常用方法"><a href="#Map和MutableMap的常用方法" class="headerlink" title="Map和MutableMap的常用方法"></a>Map和MutableMap的常用方法</h4><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>返回值</th>
+<th>解释</th>
+<th>Map</th>
+<th>MutableMap</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>containsKey(key)</td>
+<td>Boolean</td>
+<td>判断是否有指定键的元素</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>containsValue(value)</td>
+<td>Boolean</td>
+<td>判断是否有指定值的元素</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>put(key, value)</td>
+<td>String?</td>
+<td>添加元素</td>
+<td>×</td>
+<td>√</td>
+</tr>
+<tr>
+<td>remove(key)</td>
+<td>String?</td>
+<td>移除元素</td>
+<td>×</td>
+<td>√</td>
+</tr>
+<tr>
+<td>remove(key， value)</td>
+<td>Boolean</td>
+<td>移除元素</td>
+<td>×</td>
+<td>√</td>
+</tr>
+</tbody></table>
+<h3 id="队列"><a href="#队列" class="headerlink" title="队列"></a>队列</h3><h4 id="队列的常用方法"><a href="#队列的常用方法" class="headerlink" title="队列的常用方法"></a>队列的常用方法</h4><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>返回值</th>
+<th>解释</th>
+<th>List</th>
+<th>MutableList</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>get(index)</td>
+<td>ElementType</td>
+<td>返回对应位置的元素</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>[index]</td>
+<td>ElementType</td>
+<td>下标运算</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>add(element)</td>
+<td>Unit</td>
+<td>向队尾添加元素</td>
+<td>×</td>
+<td>√</td>
+</tr>
+<tr>
+<td>set(index, element)</td>
+<td>ElementType</td>
+<td>修改指定位置的元素</td>
+<td>×</td>
+<td>√</td>
+</tr>
+<tr>
+<td>removeAt(index)</td>
+<td>Int</td>
+<td>移除指定位置的元素</td>
+<td>×</td>
+<td>√</td>
+</tr>
+<tr>
+<td>sortBy{排序条件}</td>
+<td>Unit</td>
+<td>按照排序条件升序排列</td>
+<td>×</td>
+<td>√</td>
+</tr>
+<tr>
+<td>sortByDescending{排序条件}</td>
+<td>Unit</td>
+<td>按照排序条件降序排列</td>
+<td>×</td>
+<td>√</td>
+</tr>
+<tr>
+<td>sort()</td>
+<td>Unit</td>
+<td>排序</td>
+<td>×</td>
+<td>√</td>
+</tr>
+</tbody></table>
+<h2 id="五、类型判断"><a href="#五、类型判断" class="headerlink" title="五、类型判断"></a>五、类型判断</h2><h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (varable <span class="keyword">is</span> String) &#123;</span><br><span class="line">    <span class="comment">//Do something，</span></span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> (varable <span class="keyword">is</span> <span class="built_in">Int</span>) &#123;</span><br><span class="line">    <span class="comment">//or you will do something</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="例子-1"><a href="#例子-1" class="headerlink" title="例子"></a>例子</h3><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">when</span> (varable) &#123;</span><br><span class="line">    <span class="keyword">is</span> String -&gt; <span class="comment">//Do something</span></span><br><span class="line">    <span class="keyword">is</span> <span class="built_in">Int</span> -&gt;  <span class="comment">//or you will do something</span></span><br><span class="line">    <span class="keyword">else</span> -&gt; <span class="comment">//nothing</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="六、空安全"><a href="#六、空安全" class="headerlink" title="六、空安全"></a>六、空安全</h2><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> i:<span class="built_in">Int</span> = <span class="number">0</span></span><br><span class="line"><span class="comment">//Kotlin默认的变量是不可为空(null)的</span></span><br><span class="line"><span class="keyword">var</span> str:String? = <span class="literal">null</span></span><br><span class="line"><span class="comment">//如果想让一个变量为空，要在类型名后面加&#x27;?&#x27;</span></span><br><span class="line">i = str?.length </span><br><span class="line"><span class="comment">//可空变量在调用方法时，在后面加上&#x27;?&#x27;，一旦可空变量str的值为空，返回null</span></span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    i = str!!.length</span><br><span class="line">&#125; <span class="keyword">catch</span>(e: Exception) &#123;</span><br><span class="line">    Toast.makeText(<span class="keyword">this</span>, <span class="string">&quot;遇到<span class="subst">$&#123;e&#125;</span>错误&quot;</span>, Toast.LENGTH_SHORT).show()</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//可空变量加!!，表示如果为空，抛出异常</span></span><br><span class="line">i = str?.length : -<span class="number">1</span></span><br><span class="line"><span class="comment">//表示如果str为空，则值为0</span></span><br></pre></td></tr></table></figure>
+</div><div class="article-licensing box"><div class="licensing-title"><p>Kotlin学习笔记——基础语法篇之数据类型</p><p><a href="https://jingtianer.github.io/home/2019/04/12/Kotlin-Android学习笔记/Kotlin学习笔记——基础语法篇之数据类型/">https://jingtianer.github.io/home/2019/04/12/Kotlin-Android学习笔记/Kotlin学习笔记——基础语法篇之数据类型/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>Meow Meow Liu</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2019-04-12</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2025-04-15</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/home/tags/Kotlin-Android/">Kotlin-Android</a></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/home/2019/04/12/Kotlin-Android%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/Kotlin%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95%E7%AF%87%E4%B9%8B%E6%8E%A7%E5%88%B6%E8%AF%AD%E5%8F%A5/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">Kotlin学习笔记——基础语法篇之控制语句</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/home/2019/04/12/Kotlin-Android%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/Kotlin%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95%E7%AF%87%E4%B9%8B%E5%87%BD%E6%95%B0/"><span class="level-item">Kotlin学习笔记——基础语法篇之函数</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+            id: "3ce4b214c542e4c912648f15acfebc8e",
+            repo: "blog_comment",
+            owner: "jingtianer",
+            clientID: "f0b13fe8021fcd2efe50",
+            clientSecret: "35207c14b34e77c48a3aeee1e94c9da169ffe0c2",
+            admin: ["jingtianer"],
+            createIssueManually: false,
+            distractionFreeMode: false,
+            perPage: 20,
+            pagerDirection: "last",
+            
+            
+            enableHotKey: true,
+            language: "zh-CN",
+        })
+        gitalk.render('comment-container')</script></div></div></div><!--!--><div class="column column-right is-4-tablet is-4-desktop is-4-widescreen  order-3 is-sticky"><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#一、基本数据类型"><span class="level-left"><span class="level-item">1</span><span class="level-item">一、基本数据类型</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#Kotlin的数据类型"><span class="level-left"><span class="level-item">1.1</span><span class="level-item">Kotlin的数据类型</span></span></a></li><li><a class="level is-mobile" href="#声明变量"><span class="level-left"><span class="level-item">1.2</span><span class="level-item">声明变量</span></span></a></li><li><a class="level is-mobile" href="#Kotlin的类型转换"><span class="level-left"><span class="level-item">1.3</span><span class="level-item">Kotlin的类型转换</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#强制类型转换"><span class="level-left"><span class="level-item">1.3.1</span><span class="level-item">强制类型转换</span></span></a></li><li><a class="level is-mobile" href="#数据转换函数"><span class="level-left"><span class="level-item">1.3.2</span><span class="level-item">数据转换函数</span></span></a></li></ul></li></ul></li><li><a class="level is-mobile" href="#二、字符串"><span class="level-left"><span class="level-item">2</span><span class="level-item">二、字符串</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#字符串与其他基本数据类型转换"><span class="level-left"><span class="level-item">2.1</span><span class="level-item">字符串与其他基本数据类型转换</span></span></a></li><li><a class="level is-mobile" href="#字符串的常用方法"><span class="level-left"><span class="level-item">2.2</span><span class="level-item">字符串的常用方法</span></span></a></li><li><a class="level is-mobile" href="#字符串拼接"><span class="level-left"><span class="level-item">2.3</span><span class="level-item">字符串拼接</span></span></a></li></ul></li><li><a class="level is-mobile" href="#三、数组"><span class="level-left"><span class="level-item">3</span><span class="level-item">三、数组</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#Kotlin的数组类型"><span class="level-left"><span class="level-item">3.1</span><span class="level-item">Kotlin的数组类型</span></span></a></li><li><a class="level is-mobile" href="#数组常用方法"><span class="level-left"><span class="level-item">3.2</span><span class="level-item">数组常用方法</span></span></a></li></ul></li><li><a class="level is-mobile" href="#四、容器"><span class="level-left"><span class="level-item">4</span><span class="level-item">四、容器</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#Kotlin的容器"><span class="level-left"><span class="level-item">4.1</span><span class="level-item">Kotlin的容器</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#容器的通用常用方法"><span class="level-left"><span class="level-item">4.1.1</span><span class="level-item">容器的通用常用方法</span></span></a></li><li><a class="level is-mobile" href="#容器的迭代器的常用方法"><span class="level-left"><span class="level-item">4.1.2</span><span class="level-item">容器的迭代器的常用方法</span></span></a></li></ul></li><li><a class="level is-mobile" href="#集合"><span class="level-left"><span class="level-item">4.2</span><span class="level-item">集合</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#Kotlin集合的特性"><span class="level-left"><span class="level-item">4.2.1</span><span class="level-item">Kotlin集合的特性</span></span></a></li><li><a class="level is-mobile" href="#MutableSet的元素变更方法"><span class="level-left"><span class="level-item">4.2.2</span><span class="level-item">MutableSet的元素变更方法</span></span></a></li></ul></li><li><a class="level is-mobile" href="#映射"><span class="level-left"><span class="level-item">4.3</span><span class="level-item">映射</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#初始化方法"><span class="level-left"><span class="level-item">4.3.1</span><span class="level-item">初始化方法</span></span></a></li><li><a class="level is-mobile" href="#Map和MutableMap的常用方法"><span class="level-left"><span class="level-item">4.3.2</span><span class="level-item">Map和MutableMap的常用方法</span></span></a></li></ul></li><li><a class="level is-mobile" href="#队列"><span class="level-left"><span class="level-item">4.4</span><span class="level-item">队列</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#队列的常用方法"><span class="level-left"><span class="level-item">4.4.1</span><span class="level-item">队列的常用方法</span></span></a></li></ul></li></ul></li><li><a class="level is-mobile" href="#五、类型判断"><span class="level-left"><span class="level-item">5</span><span class="level-item">五、类型判断</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#例子"><span class="level-left"><span class="level-item">5.1</span><span class="level-item">例子</span></span></a></li><li><a class="level is-mobile" href="#例子-1"><span class="level-left"><span class="level-item">5.2</span><span class="level-item">例子</span></span></a></li></ul></li><li><a class="level is-mobile" href="#六、空安全"><span class="level-left"><span class="level-item">6</span><span class="level-item">六、空安全</span></span></a></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/home/js/toc.js" defer></script></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/home/">Meow!!</a><p class="is-size-7"><span>&copy; 2025 Meow Meow Liu</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/home/js/column.js"></script><script src="/home/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/home/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/home/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/home/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/home/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script><script type="text/javascript" src="/home/js/fairyDustCursor.js"></script><link rel="stylesheet" type="text/css" href="/home/css/textPopup.css"><script type="text/javascript" src="/home/js/textPopup.js"></script><script type="text/javascript" src="/home/js/clickClipBoard.js"></script><script type="module" src="/home/js/mermaidInitializer.js"></script><script src="/home/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/home/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":200,"height":400},"mobile":{"show":true}});</script></body></html>

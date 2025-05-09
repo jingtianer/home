@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>fedml-4.与fabric通信 - Jingtianer</title><link rel="manifest" href="/home/manifest.json"><meta name="application-name" content="Jingtianer"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Jingtianer"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="直接采用“偷梁换柱”的模式,把修改后的代码复制到pip安装的位置  pip install的位置通过python -m site命令查找包的安装路径 123456789101112sys.path &amp;#x3D; [    &amp;amp;#x27;&amp;#x2F;usr&amp;#x2F;share&amp;#x2F;python3&amp;amp;#x27;,    &amp;amp;#x27;&amp;#x2F;usr&amp;#x2F;lib&amp;#x2F;python310.zip&amp;amp;#x27;,    &amp;amp;#x27;&amp;#x2F;usr&amp;#x2F;lib&amp;#x2F;pyth"><meta property="og:type" content="blog"><meta property="og:title" content="fedml-4.与fabric通信"><meta property="og:url" content="https://jingtianer.github.io/home/2022/10/22/fedfab/fedml/4.%E4%B8%8Efabric%E9%80%9A%E4%BF%A1/"><meta property="og:site_name" content="Jingtianer"><meta property="og:description" content="直接采用“偷梁换柱”的模式,把修改后的代码复制到pip安装的位置  pip install的位置通过python -m site命令查找包的安装路径 123456789101112sys.path &amp;#x3D; [    &amp;amp;#x27;&amp;#x2F;usr&amp;#x2F;share&amp;#x2F;python3&amp;amp;#x27;,    &amp;amp;#x27;&amp;#x2F;usr&amp;#x2F;lib&amp;#x2F;python310.zip&amp;amp;#x27;,    &amp;amp;#x27;&amp;#x2F;usr&amp;#x2F;lib&amp;#x2F;pyth"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://jingtianer.github.io/home/img/og_image.png"><meta property="article:published_time" content="2022-10-22T13:15:53.000Z"><meta property="article:modified_time" content="2025-04-15T02:37:55.617Z"><meta property="article:author" content="Meow Meow Liu"><meta property="article:tag" content="fedfab"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://jingtianer.github.io/home/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://jingtianer.github.io/home/2022/10/22/fedfab/fedml/4.%E4%B8%8Efabric%E9%80%9A%E4%BF%A1/"},"headline":"fedml-4.与fabric通信","image":["https://jingtianer.github.io/home/img/og_image.png"],"datePublished":"2022-10-22T13:15:53.000Z","dateModified":"2025-04-15T02:37:55.617Z","author":{"@type":"Person","name":"Meow Meow Liu"},"publisher":{"@type":"Organization","name":"Jingtianer","logo":{"@type":"ImageObject","url":{"text":"Meow!!"}}},"description":"直接采用“偷梁换柱”的模式,把修改后的代码复制到pip安装的位置  pip install的位置通过python -m site命令查找包的安装路径 123456789101112sys.path &#x3D; [    &amp;#x27;&#x2F;usr&#x2F;share&#x2F;python3&amp;#x27;,    &amp;#x27;&#x2F;usr&#x2F;lib&#x2F;python310.zip&amp;#x27;,    &amp;#x27;&#x2F;usr&#x2F;lib&#x2F;pyth"}</script><link rel="canonical" href="https://jingtianer.github.io/home/2022/10/22/fedfab/fedml/4.%E4%B8%8Efabric%E9%80%9A%E4%BF%A1/"><link rel="alternate" href="/home/atom.xml" title="Jingtianer" type="application/atom+xml"><link rel="icon" href="/home/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/vs.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/home/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const $tabMenu = document.querySelector(`a[href="${location.hash}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(location.hash);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/home/">Meow!!</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/home/">主页</a><a class="navbar-item" href="/home/archives">归档</a><a class="navbar-item" href="/home/categories">分类</a><a class="navbar-item" href="/home/tags">标签</a><a class="navbar-item" href="/home/about">关于我</a><a class="navbar-item" href="/home/tags/gallery">相册</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2022-10-22T13:15:53.000Z" title="2022/10/22 21:15:53">2022-10-22</time>发表</span><span class="level-item"><time dateTime="2025-04-15T02:37:55.617Z" title="2025/4/15 10:37:55">2025-04-15</time>更新</span><span class="level-item"><a class="link-muted" href="/home/categories/fedfab/">fedfab</a></span><span class="level-item">29 分钟读完 (大约4327个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">fedml-4.与fabric通信</h1><div class="content"><ul>
+<li>直接采用“偷梁换柱”的模式,把修改后的代码复制到pip安装的位置</li>
+</ul>
+<h2 id="pip-install的位置"><a href="#pip-install的位置" class="headerlink" title="pip install的位置"></a>pip install的位置</h2><p>通过<code>python -m site</code>命令查找包的安装路径</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">sys.path = [</span><br><span class="line">    &#x27;/usr/share/python3&#x27;,</span><br><span class="line">    &#x27;/usr/lib/python310.zip&#x27;,</span><br><span class="line">    &#x27;/usr/lib/python3.10&#x27;,</span><br><span class="line">    &#x27;/usr/lib/python3.10/lib-dynload&#x27;,</span><br><span class="line">    &#x27;/home/tt/.local/lib/python3.10/site-packages&#x27;,</span><br><span class="line">    &#x27;/usr/local/lib/python3.10/dist-packages&#x27;,</span><br><span class="line">    &#x27;/usr/lib/python3/dist-packages&#x27;,</span><br><span class="line">]</span><br><span class="line">USER_BASE: &#x27;/home/tt/.local&#x27; (exists)</span><br><span class="line">USER_SITE: &#x27;/home/tt/.local/lib/python3.10/site-packages&#x27; (exists)</span><br><span class="line">ENABLE_USER_SITE: True</span><br></pre></td></tr></table></figure>
+
+<h2 id="思考：需要修改哪些代码？"><a href="#思考：需要修改哪些代码？" class="headerlink" title="思考：需要修改哪些代码？"></a>思考：需要修改哪些代码？</h2><ul>
+<li>修改Aggregator。Aggregator的作用是（1）保存各个节点上传的本地模型；（2）对本地模型进行aggregate操作。<ul>
+<li>分离aggregator的功能,分为本地Aggregator和链上Aggregator,本地Aggregator不保存模型,将收到的模型转发给区块链,聚集操作时先向区块链取模型,再进行聚集操作</li>
+</ul>
+</li>
+<li>修改FedMLServerManager<ul>
+<li>在适当位置调用http接口,适当根据逻辑需要修改其它代码</li>
+</ul>
+</li>
+<li>修改ClientMasterManager<ul>
+<li>在适当位置调用http接口,适当根据逻辑需要修改其它代码</li>
+</ul>
+</li>
+<li>修改message_define,文件中定义了C&#x2F;S之间相互通信的名称,参数名称<ul>
+<li>对其适当增删,达到C&#x2F;S间协同的目的</li>
+</ul>
+</li>
+</ul>
+<h3 id="修改FedMLAggregator"><a href="#修改FedMLAggregator" class="headerlink" title="修改FedMLAggregator"></a>修改FedMLAggregator</h3><ul>
+<li><code>model_dict</code>: 用于保存收到的本地模型,与他相关的<code>sample_num_dict</code>,保存收到的本地模型的样本个数,<code>flag_client_model_uploaded_dict</code>用于保存是否收到模型。区块链端的<code>Aggregator</code>需要维护这三个数组</li>
+<li>add_local_trained_result,这个函数通过ml_engine_adapter.<code>model_params_to_device</code>获得本地模型,将这个函数注释掉</li>
+<li><code>check_whether_all_receive</code>,这个函数通过检查<code>flag_client_model_uploaded_dict</code>是否全是true来判断是否全部收到。这里改成从区块链获取</li>
+<li><code>aggregate</code>,这个函数使用了<code>sample_num_dict和model_dict</code>,也全都改成从区块链获取</li>
+<li>其他函数未涉及这三个dict,暂不做修改。</li>
+</ul>
+<h3 id="修改FedMLServerManager"><a href="#修改FedMLServerManager" class="headerlink" title="修改FedMLServerManager"></a>修改FedMLServerManager</h3><ul>
+<li><code>handle_message_receive_model_from_client</code>,这个函数处理节点发送来的模型,从消息中读取模型参数和样本个数。不从消息中获取这两个参数（后续修改Client,也不发送这两个参数）,但是仍然向Server发送这个消息。收到消息后延迟一定时间向区块链查询是否全部收到（调用本地aggregator的<code>check_whether_all_receive</code>）</li>
+<li>当查询到全部都收到后,会进行聚集操作,聚集操作后产生更新后的模型,这个模型会发送给client,在发送给client的同时发送一份给区块链存储</li>
+</ul>
+<h3 id="修改ClientMasterManager"><a href="#修改ClientMasterManager" class="headerlink" title="修改ClientMasterManager"></a>修改ClientMasterManager</h3><ul>
+<li><code>send_model_to_server</code>,对应Server的<code>handle_message_receive_model_from_client</code>。不发送模型和样本数给server,而是发送给区块链</li>
+</ul>
+<h3 id="统一发送模型的格式"><a href="#统一发送模型的格式" class="headerlink" title="统一发送模型的格式"></a>统一发送模型的格式</h3><ul>
+<li><code>ml_engine_adapter</code>中的函数<code>model_params_to_device</code>用于处理收到的模型,根据<code>ml_engine</code>的类型对模型进行处理,希望在发送之前在Client端就进行处理</li>
+</ul>
+<blockquote>
+<p>通过测试,输出type(ml_engine_adapter.model_params_to_device(self.args, weights, self.trainer_dist_adapter.device)),得到其类型是<code>collections.OrderedDict</code><br>它也是一种dict, 存储的是model_params(string) to Tensor<br>对他进行处理,变成python原生的dict,对Tensor处理,变成python原生的list,目的是使其可以变成json串<br>server收到后,对其dumps, 再将list转换成Tensor</p>
+</blockquote>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> ...ml.engine <span class="keyword">import</span> ml_engine_adapter</span><br><span class="line">model_params = ml_engine_adapter.model_params_to_device(self.args, weights, self.trainer_dist_adapter.device)</span><br><span class="line">model_params = &#123;k:v.tolist() <span class="keyword">for</span> k,v <span class="keyword">in</span> model_params.items()&#125;</span><br><span class="line">logging.info(<span class="string">&quot;Jingtian: type of model_params: %s&quot;</span> % <span class="built_in">type</span>(model_params))</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line">model_params_json = json.dumps(model_params)</span><br><span class="line">logging.info(<span class="string">&quot;Jingtian: model_params: &quot;</span> + (model_params_json))</span><br></pre></td></tr></table></figure>
+<h2 id="编写ChainCode"><a href="#编写ChainCode" class="headerlink" title="编写ChainCode"></a>编写ChainCode</h2><h3 id="链上Aggregator实现思路"><a href="#链上Aggregator实现思路" class="headerlink" title="链上Aggregator实现思路"></a>链上Aggregator实现思路</h3><p>ChainCode要实现存储模型,并检测每轮模型是否上传完毕,参考fabcar示例中队Car的定义以及对Car的增改查的代码,设计Round结构</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Round <span class="keyword">struct</span> &#123;</span><br><span class="line">	Models <span class="keyword">map</span>[<span class="type">string</span>]<span class="type">string</span> <span class="comment">// ClientID to Model</span></span><br><span class="line">	RoundID <span class="type">string</span></span><br><span class="line">	ClientNum <span class="type">int64</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>只需要检查Round中len(Model)与ClientNum是否相等即可</li>
+</ul>
+<h3 id="ChainCode合约定义"><a href="#ChainCode合约定义" class="headerlink" title="ChainCode合约定义"></a>ChainCode合约定义</h3><p>根据上面的分析,需要一下几个函数</p>
+<ul>
+<li>AddModel 接受并存储本地模型 保存： model-key model-weight model-sample-num<ul>
+<li>params:<ul>
+<li>RoundID string</li>
+<li>ClientID string</li>
+<li>model string(原始json串)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>QueryWetherAllReceived 检查是否全部收到,检查是否全部收到,返回True or False<ul>
+<li>params:<ul>
+<li>RoundID string</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>QueryAllReceived 若全部收到,返回模型,模型权重和模型样本数目,否则返回空<ul>
+<li>params:<ul>
+<li>RoundID string</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>UpdateGlobal 接受Server聚集后的,更新后的模型,对区块链内的内容进行更新</li>
+<li>params:<ul>
+<li>ServerID string</li>
+<li>model-weight string</li>
+</ul>
+</li>
+<li>NewRound 新增一个Round,每轮开始时创建<ul>
+<li>params:<ul>
+<li>RoundID string</li>
+<li>ClientNum int64</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>根据以上分析,需要在fedml节点运行时生成一个id,server的id自然成为server-id,client的id自然成为ClientID。在每轮训练开始前,需要生成RoundID,并且调用NewRound通知区块链。RoundID的前n为与ServerID相同,再拼接随机生成的后n位。</p>
+<ul>
+<li>通过以下命令进行对ChainCode的测试与Debug<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># RoundID = &quot;ri&quot;</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># ServerID = &quot;si&quot;</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># ClientID = &quot;ci&quot;</span></span></span><br><span class="line"></span><br><span class="line">peer chaincode invoke -o orderer.fedfab.com:7050 --isInit --ordererTLSHostnameOverride orderer.fedfab.com --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/fedfab.com/orderers/orderer.fedfab.com/msp/tlscacerts/tlsca.fedfab.com-cert.pem --channelID channel2 --name fedfab --tls true \</span><br><span class="line">    --peerAddresses peer0.org1.fedfab.com:8051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.fedfab.com/peers/peer0.org1.fedfab.com/tls/ca.crt \</span><br><span class="line">    --peerAddresses peer1.org1.fedfab.com:8053 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.fedfab.com/peers/peer1.org1.fedfab.com/tls/ca.crt \</span><br><span class="line">    --peerAddresses peer2.org1.fedfab.com:8055 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.fedfab.com/peers/peer2.org1.fedfab.com/tls/ca.crt \</span><br><span class="line">    --peerAddresses peer0.org2.fedfab.com:9051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.fedfab.com/peers/peer0.org2.fedfab.com/tls/ca.crt \</span><br><span class="line">    -c &#x27;&#123;&quot;Args&quot;:[&quot;initialize&quot;, &quot;Initializing chaincode&quot;]&#125;&#x27;</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># chaincode 初始化</span></span></span><br><span class="line">peer chaincode invoke -o orderer.fedfab.com:7050 --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/fedfab.com/orderers/orderer.fedfab.com/msp/tlscacerts/tlsca.fedfab.com-cert.pem --channelID channel2 --name fedfab --tls true \</span><br><span class="line">    --peerAddresses peer0.org1.fedfab.com:8051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.fedfab.com/peers/peer0.org1.fedfab.com/tls/ca.crt \</span><br><span class="line">    --peerAddresses peer1.org1.fedfab.com:8053 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.fedfab.com/peers/peer1.org1.fedfab.com/tls/ca.crt \</span><br><span class="line">    --peerAddresses peer2.org1.fedfab.com:8055 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.fedfab.com/peers/peer2.org1.fedfab.com/tls/ca.crt \</span><br><span class="line">    --peerAddresses peer0.org2.fedfab.com:9051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.fedfab.com/peers/peer0.org2.fedfab.com/tls/ca.crt \</span><br><span class="line">    -c &#x27;&#123;&quot;Args&quot;:[&quot;NewRound&quot;, &quot;r1&quot;, &quot;2&quot;]&#125;&#x27;</span><br><span class="line"></span><br><span class="line">peer chaincode invoke -o orderer.fedfab.com:7050 --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/fedfab.com/orderers/orderer.fedfab.com/msp/tlscacerts/tlsca.fedfab.com-cert.pem --channelID channel2 --name fedfab --tls true \</span><br><span class="line">    --peerAddresses peer0.org1.fedfab.com:8051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.fedfab.com/peers/peer0.org1.fedfab.com/tls/ca.crt \</span><br><span class="line">    --peerAddresses peer1.org1.fedfab.com:8053 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.fedfab.com/peers/peer1.org1.fedfab.com/tls/ca.crt \</span><br><span class="line">    --peerAddresses peer2.org1.fedfab.com:8055 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.fedfab.com/peers/peer2.org1.fedfab.com/tls/ca.crt \</span><br><span class="line">    --peerAddresses peer0.org2.fedfab.com:9051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.fedfab.com/peers/peer0.org2.fedfab.com/tls/ca.crt \</span><br><span class="line">    -c &#x27;&#123;&quot;Args&quot;:[&quot;AddModel&quot;, &quot;r1&quot;, &quot;c1&quot;, &quot;&#123;\&quot;a\&quot;:[1,2,3], \&quot;b\&quot;:[2,3,4], \&quot;c\&quot;:[3,4,5]&#125;&quot;]&#125;&#x27;</span><br><span class="line"></span><br><span class="line">peer chaincode invoke -o orderer.fedfab.com:7050 --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/fedfab.com/orderers/orderer.fedfab.com/msp/tlscacerts/tlsca.fedfab.com-cert.pem --channelID channel2 --name fedfab --tls true \</span><br><span class="line">    --peerAddresses peer0.org1.fedfab.com:8051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.fedfab.com/peers/peer0.org1.fedfab.com/tls/ca.crt \</span><br><span class="line">    --peerAddresses peer1.org1.fedfab.com:8053 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.fedfab.com/peers/peer1.org1.fedfab.com/tls/ca.crt \</span><br><span class="line">    --peerAddresses peer2.org1.fedfab.com:8055 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.fedfab.com/peers/peer2.org1.fedfab.com/tls/ca.crt \</span><br><span class="line">    --peerAddresses peer0.org2.fedfab.com:9051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.fedfab.com/peers/peer0.org2.fedfab.com/tls/ca.crt \</span><br><span class="line">    -c &#x27;&#123;&quot;Args&quot;:[&quot;QueryWetherAllReceived&quot;, &quot;r1&quot;]&#125;&#x27;</span><br><span class="line"></span><br><span class="line">peer chaincode invoke -o orderer.fedfab.com:7050 --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/fedfab.com/orderers/orderer.fedfab.com/msp/tlscacerts/tlsca.fedfab.com-cert.pem --channelID channel2 --name fedfab --tls true \</span><br><span class="line">    --peerAddresses peer0.org1.fedfab.com:8051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.fedfab.com/peers/peer0.org1.fedfab.com/tls/ca.crt \</span><br><span class="line">    --peerAddresses peer1.org1.fedfab.com:8053 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.fedfab.com/peers/peer1.org1.fedfab.com/tls/ca.crt \</span><br><span class="line">    --peerAddresses peer2.org1.fedfab.com:8055 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.fedfab.com/peers/peer2.org1.fedfab.com/tls/ca.crt \</span><br><span class="line">    --peerAddresses peer0.org2.fedfab.com:9051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.fedfab.com/peers/peer0.org2.fedfab.com/tls/ca.crt \</span><br><span class="line">    -c &#x27;&#123;&quot;Args&quot;:[&quot;AddModel&quot;, &quot;r1&quot;, &quot;c2&quot;, &quot;&#123;\&quot;a\&quot;:[1,2,3], \&quot;b\&quot;:[2,3,4], \&quot;c\&quot;:[3,4,5]&#125;&quot;]&#125;&#x27;</span><br><span class="line"></span><br><span class="line">peer chaincode invoke -o orderer.fedfab.com:7050 --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/fedfab.com/orderers/orderer.fedfab.com/msp/tlscacerts/tlsca.fedfab.com-cert.pem --channelID channel2 --name fedfab --tls true \</span><br><span class="line">    --peerAddresses peer0.org1.fedfab.com:8051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.fedfab.com/peers/peer0.org1.fedfab.com/tls/ca.crt \</span><br><span class="line">    --peerAddresses peer1.org1.fedfab.com:8053 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.fedfab.com/peers/peer1.org1.fedfab.com/tls/ca.crt \</span><br><span class="line">    --peerAddresses peer2.org1.fedfab.com:8055 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.fedfab.com/peers/peer2.org1.fedfab.com/tls/ca.crt \</span><br><span class="line">    --peerAddresses peer0.org2.fedfab.com:9051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.fedfab.com/peers/peer0.org2.fedfab.com/tls/ca.crt \</span><br><span class="line">    -c &#x27;&#123;&quot;Args&quot;:[&quot;QueryWetherAllReceived&quot;, &quot;r1&quot;]&#125;&#x27;</span><br><span class="line"></span><br><span class="line">peer chaincode invoke -o orderer.fedfab.com:7050 --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/fedfab.com/orderers/orderer.fedfab.com/msp/tlscacerts/tlsca.fedfab.com-cert.pem --channelID channel2 --name fedfab --tls true \</span><br><span class="line">    --peerAddresses peer0.org1.fedfab.com:8051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.fedfab.com/peers/peer0.org1.fedfab.com/tls/ca.crt \</span><br><span class="line">    --peerAddresses peer1.org1.fedfab.com:8053 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.fedfab.com/peers/peer1.org1.fedfab.com/tls/ca.crt \</span><br><span class="line">    --peerAddresses peer2.org1.fedfab.com:8055 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.fedfab.com/peers/peer2.org1.fedfab.com/tls/ca.crt \</span><br><span class="line">    --peerAddresses peer0.org2.fedfab.com:9051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.fedfab.com/peers/peer0.org2.fedfab.com/tls/ca.crt \</span><br><span class="line">    -c &#x27;&#123;&quot;Args&quot;:[&quot;QueryAllReceived&quot;, &quot;r1&quot;]&#125;&#x27;</span><br><span class="line"></span><br><span class="line">peer chaincode invoke -o orderer.fedfab.com:7050 --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/fedfab.com/orderers/orderer.fedfab.com/msp/tlscacerts/tlsca.fedfab.com-cert.pem --channelID channel2 --name fedfab --tls true \</span><br><span class="line">    --peerAddresses peer0.org1.fedfab.com:8051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.fedfab.com/peers/peer0.org1.fedfab.com/tls/ca.crt \</span><br><span class="line">    --peerAddresses peer1.org1.fedfab.com:8053 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.fedfab.com/peers/peer1.org1.fedfab.com/tls/ca.crt \</span><br><span class="line">    --peerAddresses peer2.org1.fedfab.com:8055 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.fedfab.com/peers/peer2.org1.fedfab.com/tls/ca.crt \</span><br><span class="line">    --peerAddresses peer0.org2.fedfab.com:9051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.fedfab.com/peers/peer0.org2.fedfab.com/tls/ca.crt \</span><br><span class="line">    -c &#x27;&#123;&quot;Args&quot;:[&quot;UpdateGlobal&quot;, &quot;s1&quot;, &quot;&#123;\&quot;a\&quot;:[1,2,3], \&quot;b\&quot;:[2,3,4], \&quot;c\&quot;:[3,4,5]&#125;&quot;]&#125;&#x27;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+</ul>
+<blockquote>
+<p>fedml拿到返回值后可能要进行两次json解析<br>把模型变成json后,当作普通字符串作为请求发送,发送请求时有进行了依次json编码<br>增加了json的转义字符,增加了冗余字符<br>减少了ChainCode编写的复杂度</p>
+</blockquote>
+<blockquote>
+<p>Server需要知道Client的id？  –不需要,QueryAll后对每个模型求平均就好,不需要发送给Client</p>
+</blockquote>
+<blockquote>
+<p>更新同名的ChainCode时,label要有变化,命令中的sequence参数要比上一次递增。</p>
+</blockquote>
+<h2 id="编写ts-API与HTTP-Server"><a href="#编写ts-API与HTTP-Server" class="headerlink" title="编写ts API与HTTP Server"></a>编写ts API与HTTP Server</h2><ul>
+<li><p>根据上周的ttsacc的api和Http Server,相同的方法实现上面5个功能对应的api和接口</p>
+</li>
+<li><p>使用postMan进行测试</p>
+<blockquote>
+<p>newRound调用时,client_num使用string</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="编写并测试Yaml-Requests的yaml配置文件"><a href="#编写并测试Yaml-Requests的yaml配置文件" class="headerlink" title="编写并测试Yaml-Requests的yaml配置文件"></a>编写并测试Yaml-Requests的yaml配置文件</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">url:</span> <span class="string">&#x27;10.128.196.184&#x27;</span></span><br><span class="line"><span class="attr">port:</span> <span class="string">&#x27;3000&#x27;</span></span><br><span class="line"><span class="attr">methods:</span></span><br><span class="line">  <span class="attr">AddModel:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">&#x27;post&#x27;</span></span><br><span class="line">    <span class="attr">async:</span> <span class="literal">false</span></span><br><span class="line">    <span class="attr">res-type:</span> <span class="string">&#x27;json&#x27;</span></span><br><span class="line">    <span class="attr">path:</span> <span class="string">&#x27;/invokeChainCode/AddModel&#x27;</span></span><br><span class="line">    <span class="attr">params:</span></span><br><span class="line">      <span class="attr">peer:</span> <span class="number">0</span></span><br><span class="line">      <span class="attr">org:</span> <span class="number">2</span></span><br><span class="line">    <span class="attr">body:</span></span><br><span class="line">      <span class="attr">content-type:</span> <span class="string">&#x27;json&#x27;</span></span><br><span class="line">      <span class="attr">content:</span></span><br><span class="line">        <span class="attr">cid:</span> <span class="string">&#x27;c1&#x27;</span></span><br><span class="line">  </span><br><span class="line">  <span class="attr">QueryWetherAllReceived:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">&#x27;post&#x27;</span></span><br><span class="line">    <span class="attr">async:</span> <span class="literal">false</span></span><br><span class="line">    <span class="attr">res-type:</span> <span class="string">&#x27;json&#x27;</span></span><br><span class="line">    <span class="attr">path:</span> <span class="string">&#x27;/invokeChainCode/QueryWetherAllReceived&#x27;</span></span><br><span class="line">    <span class="attr">params:</span></span><br><span class="line">      <span class="attr">peer:</span> <span class="number">0</span></span><br><span class="line">      <span class="attr">org:</span> <span class="number">2</span></span><br><span class="line">    <span class="attr">body:</span></span><br><span class="line">      <span class="attr">content-type:</span> <span class="string">&#x27;json&#x27;</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">QueryAllReceived:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">&#x27;post&#x27;</span></span><br><span class="line">    <span class="attr">async:</span> <span class="literal">false</span></span><br><span class="line">    <span class="attr">res-type:</span> <span class="string">&#x27;json&#x27;</span></span><br><span class="line">    <span class="attr">path:</span> <span class="string">&#x27;/invokeChainCode/QueryAllReceived&#x27;</span></span><br><span class="line">    <span class="attr">params:</span></span><br><span class="line">      <span class="attr">peer:</span> <span class="number">0</span></span><br><span class="line">      <span class="attr">org:</span> <span class="number">2</span></span><br><span class="line">    <span class="attr">body:</span></span><br><span class="line">      <span class="attr">content-type:</span> <span class="string">&#x27;json&#x27;</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">UpdateGlobal:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">&#x27;post&#x27;</span></span><br><span class="line">    <span class="attr">async:</span> <span class="literal">false</span></span><br><span class="line">    <span class="attr">res-type:</span> <span class="string">&#x27;json&#x27;</span></span><br><span class="line">    <span class="attr">path:</span> <span class="string">&#x27;/invokeChainCode/UpdateGlobal&#x27;</span></span><br><span class="line">    <span class="attr">params:</span></span><br><span class="line">      <span class="attr">peer:</span> <span class="number">0</span></span><br><span class="line">      <span class="attr">org:</span> <span class="number">2</span></span><br><span class="line">    <span class="attr">body:</span></span><br><span class="line">      <span class="attr">content-type:</span> <span class="string">&#x27;json&#x27;</span></span><br><span class="line">      <span class="attr">content:</span> </span><br><span class="line">        <span class="attr">sid:</span> <span class="string">&#x27;s1&#x27;</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">NewRound:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">&#x27;post&#x27;</span></span><br><span class="line">    <span class="attr">async:</span> <span class="literal">false</span></span><br><span class="line">    <span class="attr">res-type:</span> <span class="string">&#x27;json&#x27;</span></span><br><span class="line">    <span class="attr">path:</span> <span class="string">&#x27;/invokeChainCode/NewRound&#x27;</span></span><br><span class="line">    <span class="attr">params:</span></span><br><span class="line">      <span class="attr">peer:</span> <span class="number">0</span></span><br><span class="line">      <span class="attr">org:</span> <span class="number">2</span></span><br><span class="line">    <span class="attr">body:</span></span><br><span class="line">      <span class="attr">content-type:</span> <span class="string">&#x27;json&#x27;</span></span><br><span class="line">      <span class="attr">content:</span></span><br><span class="line">        <span class="attr">client_num:</span> <span class="string">&#x27;3&#x27;</span></span><br></pre></td></tr></table></figure>
+<h2 id="fedml中调用api"><a href="#fedml中调用api" class="headerlink" title="fedml中调用api"></a>fedml中调用api</h2><ul>
+<li>根据之前的分析，在对应位置进行调用，并处理返回值</li>
+</ul>
+<h2 id="编写dockerfile"><a href="#编写dockerfile" class="headerlink" title="编写dockerfile"></a>编写dockerfile</h2><ul>
+<li>创建自定义镜像,修改镜像中的fedml代码</li>
+<li>使用镜像创建container,在container中运行修改后的代码进行测试<br>修改过的文件有：<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/home/tt/.local/lib/python3<span class="number">.10</span>/site-packages/fedml/cross_silo/client/fedml_client_master_manager.py</span><br><span class="line">/home/tt/.local/lib/python3<span class="number">.10</span>/site-packages/fedml/cross_silo/server/fedml_aggregator.py</span><br><span class="line">/home/tt/.local/lib/python3<span class="number">.10</span>/site-packages/fedml/cross_silo/server/fedml_server_manager.py</span><br><span class="line">/home/tt/.local/lib/python3<span class="number">.10</span>/site-packages/fedml/cross_silo/server/fedml_server_manager.py</span><br><span class="line">/home/tt/.local/lib/python3<span class="number">.10</span>/site-packages/fedml/cross_silo/client/message_define.py</span><br><span class="line">/home/tt/.local/lib/python3<span class="number">.10</span>/site-packages/fedml/cross_silo/server/message_define.py</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="docker-COPY"><a href="#docker-COPY" class="headerlink" title="docker COPY"></a>docker COPY</h3><h4 id="COPY-遵循的规则"><a href="#COPY-遵循的规则" class="headerlink" title="COPY 遵循的规则"></a>COPY 遵循的规则</h4><ul>
+<li><code>src</code>路径必须在构建的上下文中</li>
+<li><code>src</code>是目录<ul>
+<li>则复制目录的全部内容,包括文件系统元数据</li>
+<li>不会复制目录本身,只会复制其内容</li>
+</ul>
+</li>
+<li><code>src</code>是任何其他类型的文件<ul>
+<li>则将其与其元数据一起单独复制</li>
+<li><code>dest</code> 以斜杠 &#x2F; 结尾,它将被视为一个目录,并且 <code>src</code> 的内容将写入  <code>dest</code>&#x2F;base(<code>src</code>)</li>
+</ul>
+</li>
+<li>指定了多个 <code>src</code> 资源,或者由于使用了通配符<ul>
+<li>则 <code>dest</code> 必须是一个目录,并且必须以斜杠 &#x2F; 结尾</li>
+</ul>
+</li>
+<li><code>dest</code> 不以斜杠结尾<ul>
+<li>它将被视为常规文件,并且 <code>src</code> 的内容将写入 <code>dest</code></li>
+</ul>
+</li>
+<li><code>dest</code> 不存在<ul>
+<li>路径中所有缺失的目录都会自动创建</li>
+</ul>
+</li>
+</ul>
+<h3 id="docker-错误记录"><a href="#docker-错误记录" class="headerlink" title="docker 错误记录"></a>docker 错误记录</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Error response from daemon: could not select device driver &quot;&quot; with capabilities: [[gpu]]</span><br></pre></td></tr></table></figure>
+
+<p>解决方法</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | \</span><br><span class="line">  sudo apt-key add -</span><br><span class="line">distribution=$(. /etc/os-release;echo $ID$VERSION_ID)</span><br><span class="line">curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | \</span><br><span class="line">  sudo tee /etc/apt/sources.list.d/nvidia-docker.list</span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install -y nvidia-container-toolkit</span><br><span class="line">sudo systemctl restart docker</span><br></pre></td></tr></table></figure>
+<p>如果上面出错了,先使用下面的命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo rm -f $(grep -l &quot;nvidia.github.io&quot; /etc/apt/sources.list.d/* | grep -vE &quot;/nvidia-container-toolkit.list\$&quot;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="dockerfile-文件"><a href="#dockerfile-文件" class="headerlink" title="dockerfile 文件"></a>dockerfile 文件</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">FROM fedml/fedml:cuda-11.4.0-devel-ubuntu20.04</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># RUN sudo apt upgrade python3</span></span></span><br><span class="line">RUN python -m pip install -i https://pypi.tuna.tsinghua.edu.cn/simple --upgrade pip</span><br><span class="line">RUN pip3 config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple</span><br><span class="line">RUN pip3 install update</span><br><span class="line">RUN pip3 install --upgrade fedml</span><br><span class="line">COPY ./fedml_files/fedml_client_master_manager.py /usr/local/lib/python3.8/dist-packages/fedml/cross_silo/client/</span><br><span class="line">COPY ./fedml_files/fedml_aggregator.py /usr/local/lib/python3.8/dist-packages/fedml/cross_silo/server/</span><br><span class="line">COPY ./fedml_files/fedml_server_manager.py /usr/local/lib/python3.8/dist-packages/fedml/cross_silo/server/</span><br><span class="line">COPY ./fedml_files/message_define.py /usr/local/lib/python3.8/dist-packages/fedml/cross_silo/server/</span><br><span class="line">COPY ./fedml_files/message_define.py /usr/local/lib/python3.8/dist-packages/fedml/cross_silo/client/</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>编译dockerfile的脚本</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># docker image rm fedml:tt</span></span></span><br><span class="line">cp ~/.local/lib/python3.10/site-packages/fedml/cross_silo/client/fedml_client_master_manager.py ../fedml_dockerfile_context/fedml_files/</span><br><span class="line">cp ~/.local/lib/python3.10/site-packages/fedml/cross_silo/server/fedml_aggregator.py ../fedml_dockerfile_context/fedml_files/</span><br><span class="line">cp ~/.local/lib/python3.10/site-packages/fedml/cross_silo/server/fedml_server_manager.py ../fedml_dockerfile_context/fedml_files/</span><br><span class="line">cp ~/.local/lib/python3.10/site-packages/fedml/cross_silo/server/message_define.py ../fedml_dockerfile_context/fedml_files/</span><br><span class="line">docker build -t fedml:tt ../fedml_dockerfile_context</span><br></pre></td></tr></table></figure>
+<h2 id="运行测试"><a href="#运行测试" class="headerlink" title="运行测试"></a>运行测试</h2><h3 id="问题：-会随机有几个请求被拒绝连接"><a href="#问题：-会随机有几个请求被拒绝连接" class="headerlink" title="问题： 会随机有几个请求被拒绝连接"></a>问题： 会随机有几个请求被拒绝连接</h3><ul>
+<li><p>减少出块时间到50ms</p>
+<blockquote>
+<p>依然没有解决<br>修改<code>configtx.yaml</code>中的一个参数</p>
+</blockquote>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">BatchTimeout:</span> <span class="string">50ms</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>给invoke函数加Mutex互斥锁,让其只能按顺序执行,锁解除后在sleep 65ms</p>
+<blockquote>
+<p>依然没有解决</p>
+</blockquote>
+</li>
+<li><p>观察到观察到MVCC_READ_CONFLICT总是在AddModel总是在AddModel, 时出现</p>
+</li>
+<li><p>在Client发送Model前,sleep(1*client_real_id),排队依次上传,给区块链反应的时间（假设模型训练时间都差不多）</p>
+<blockquote>
+<p>还是没有解决</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li>经过多天的debug与调试,最终基本可以正常训练,存储到区块链上,但是最多只训练了44轮,还是在AddModel环节出现了<code>MVCC_READ_CONFLICT</code>。</li>
+<li>很多地方要增加sleep操作,增加了运行时间</li>
+<li>需要一个协调方式,避免同时AddModel造成BlockChain崩溃。</li>
+<li>可以尝试用Server调用AddModel,Client的本地Model还是通过MQTT协议传送给Server,由Server统一上链</li>
+<li>或者可以捕获异常,保证server持续运行,Client发现Add失败则重新Add</li>
+<li>寻找方法将请求串行化</li>
+</ul>
+<h2 id="最新进展"><a href="#最新进展" class="headerlink" title="最新进展"></a>最新进展</h2><ul>
+<li>解决了<code>MVCC_READ_CONFLICT</code>,fedml和fabric可以相互配合完成整个训练过程,并且不发生<code>MVCC_READ_CONFLICT</code>等问题</li>
+</ul>
+<h3 id="新定义三个mqtt消息"><a href="#新定义三个mqtt消息" class="headerlink" title="新定义三个mqtt消息"></a>新定义三个mqtt消息</h3><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## tt define</span></span><br><span class="line">MSG_TYPE_C2S_ADD_MODEL_READY = <span class="number">8</span></span><br><span class="line">MSG_TYPE_C2S_ADD_MODEL_SEND = <span class="number">9</span></span><br><span class="line">MSG_TYPE_S2C_START_ADD_MODEL = <span class="number">10</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="解释："><a href="#解释：" class="headerlink" title="解释："></a>解释：</h4><ul>
+<li><code>MSG_TYPE_C2S_ADD_MODEL_READY</code>, Client to Server,训练完毕,可以向区块链发送AddModel。知会Server,server的Aggregator收集这个信息</li>
+<li><code>MSG_TYPE_S2C_START_ADD_MODEL</code>, Server to Client, 当<strong>全部</strong>ready时,会向Client开始<em>依次</em>发送这个消息。</li>
+<li><code>MSG_TYPE_C2S_ADD_MODEL_SEND</code>, Client to Server,当一个Client将Model发送到Chain后,发送这个消息到Server,Server收到后向下一个Client发送<code>MSG_TYPE_S2C_START_ADD_MODEL</code>消息,让下一个Client开始上传模型</li>
+</ul>
+<h3 id="方法带来的问题与思考："><a href="#方法带来的问题与思考：" class="headerlink" title="方法带来的问题与思考："></a>方法带来的问题与思考：</h3><ul>
+<li><p>由于invoke函数的mutex锁和刻意的延迟,以及上面通过三个信号实现的排队向ChainCode发送模型,导致整个系统运行的速度非常慢</p>
+</li>
+<li><p>有些节点算力强,训练快,有些算力低训练慢。</p>
+</li>
+<li><p>只有训练速度相似的节点会竞争AddModel的权利,而现在要让所有的Client都训练完成后才开始上传区块链,这样一定程度上降低了系统的效率</p>
+</li>
+<li><p>解决方法（设想）：</p>
+<ul>
+<li>维护一个队列ready,一个变量sending,一个字典send<ul>
+<li>ready表示目前收到ready的Client</li>
+<li>sending表示当前正在发送但没收到send消息的Client</li>
+<li>dict中存储ClientID to Bool,表示ClientID是否已经发送,即是否为send状态,将字典初始化全为False</li>
+</ul>
+</li>
+<li>收到Ci的ready消息后<ul>
+<li>若sending为None,则让Ci开始发送模型,将sending设为Ci</li>
+<li>若sending不为None,加入ready队列</li>
+</ul>
+</li>
+<li>收到Ci的send消息后,将sending设为None,send[Ci]变成True,检测send字典是否全为True<ul>
+<li>若全为True,进行下一轮</li>
+<li>若不全为True<ul>
+<li>若ready队列不为空,则从队列中取出下一个Client Cj让其发送模型,sending设为Cj</li>
+<li>若ready队列为空,则继续等待ready消息</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div><div class="article-licensing box"><div class="licensing-title"><p>fedml-4.与fabric通信</p><p><a href="https://jingtianer.github.io/home/2022/10/22/fedfab/fedml/4.与fabric通信/">https://jingtianer.github.io/home/2022/10/22/fedfab/fedml/4.与fabric通信/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>Meow Meow Liu</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2022-10-22</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2025-04-15</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/home/tags/fedfab/">fedfab</a></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/home/2022/10/22/projects/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">projects</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/home/2022/10/22/fedfab/fedml/3.Runner%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/"><span class="level-item">fedml-3.Runner源码阅读</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+            id: "a6f400a7de41ce4d19ff6c20e7577970",
+            repo: "blog_comment",
+            owner: "jingtianer",
+            clientID: "f0b13fe8021fcd2efe50",
+            clientSecret: "35207c14b34e77c48a3aeee1e94c9da169ffe0c2",
+            admin: ["jingtianer"],
+            createIssueManually: false,
+            distractionFreeMode: false,
+            perPage: 20,
+            pagerDirection: "last",
+            
+            
+            enableHotKey: true,
+            language: "zh-CN",
+        })
+        gitalk.render('comment-container')</script></div></div></div><!--!--><div class="column column-right is-4-tablet is-4-desktop is-4-widescreen  order-3 is-sticky"><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#pip-install的位置"><span class="level-left"><span class="level-item">1</span><span class="level-item">pip install的位置</span></span></a></li><li><a class="level is-mobile" href="#思考：需要修改哪些代码？"><span class="level-left"><span class="level-item">2</span><span class="level-item">思考：需要修改哪些代码？</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#修改FedMLAggregator"><span class="level-left"><span class="level-item">2.1</span><span class="level-item">修改FedMLAggregator</span></span></a></li><li><a class="level is-mobile" href="#修改FedMLServerManager"><span class="level-left"><span class="level-item">2.2</span><span class="level-item">修改FedMLServerManager</span></span></a></li><li><a class="level is-mobile" href="#修改ClientMasterManager"><span class="level-left"><span class="level-item">2.3</span><span class="level-item">修改ClientMasterManager</span></span></a></li><li><a class="level is-mobile" href="#统一发送模型的格式"><span class="level-left"><span class="level-item">2.4</span><span class="level-item">统一发送模型的格式</span></span></a></li></ul></li><li><a class="level is-mobile" href="#编写ChainCode"><span class="level-left"><span class="level-item">3</span><span class="level-item">编写ChainCode</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#链上Aggregator实现思路"><span class="level-left"><span class="level-item">3.1</span><span class="level-item">链上Aggregator实现思路</span></span></a></li><li><a class="level is-mobile" href="#ChainCode合约定义"><span class="level-left"><span class="level-item">3.2</span><span class="level-item">ChainCode合约定义</span></span></a></li></ul></li><li><a class="level is-mobile" href="#编写ts-API与HTTP-Server"><span class="level-left"><span class="level-item">4</span><span class="level-item">编写ts API与HTTP Server</span></span></a></li><li><a class="level is-mobile" href="#编写并测试Yaml-Requests的yaml配置文件"><span class="level-left"><span class="level-item">5</span><span class="level-item">编写并测试Yaml-Requests的yaml配置文件</span></span></a></li><li><a class="level is-mobile" href="#fedml中调用api"><span class="level-left"><span class="level-item">6</span><span class="level-item">fedml中调用api</span></span></a></li><li><a class="level is-mobile" href="#编写dockerfile"><span class="level-left"><span class="level-item">7</span><span class="level-item">编写dockerfile</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#docker-COPY"><span class="level-left"><span class="level-item">7.1</span><span class="level-item">docker COPY</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#COPY-遵循的规则"><span class="level-left"><span class="level-item">7.1.1</span><span class="level-item">COPY 遵循的规则</span></span></a></li></ul></li><li><a class="level is-mobile" href="#docker-错误记录"><span class="level-left"><span class="level-item">7.2</span><span class="level-item">docker 错误记录</span></span></a></li><li><a class="level is-mobile" href="#dockerfile-文件"><span class="level-left"><span class="level-item">7.3</span><span class="level-item">dockerfile 文件</span></span></a></li></ul></li><li><a class="level is-mobile" href="#运行测试"><span class="level-left"><span class="level-item">8</span><span class="level-item">运行测试</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#问题：-会随机有几个请求被拒绝连接"><span class="level-left"><span class="level-item">8.1</span><span class="level-item">问题： 会随机有几个请求被拒绝连接</span></span></a></li></ul></li><li><a class="level is-mobile" href="#总结"><span class="level-left"><span class="level-item">9</span><span class="level-item">总结</span></span></a></li><li><a class="level is-mobile" href="#最新进展"><span class="level-left"><span class="level-item">10</span><span class="level-item">最新进展</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#新定义三个mqtt消息"><span class="level-left"><span class="level-item">10.1</span><span class="level-item">新定义三个mqtt消息</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#解释："><span class="level-left"><span class="level-item">10.1.1</span><span class="level-item">解释：</span></span></a></li></ul></li><li><a class="level is-mobile" href="#方法带来的问题与思考："><span class="level-left"><span class="level-item">10.2</span><span class="level-item">方法带来的问题与思考：</span></span></a></li></ul></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/home/js/toc.js" defer></script></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/home/">Meow!!</a><p class="is-size-7"><span>&copy; 2025 Meow Meow Liu</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/home/js/column.js"></script><script src="/home/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/home/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/home/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/home/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/home/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script><script type="text/javascript" src="/home/js/fairyDustCursor.js"></script><link rel="stylesheet" type="text/css" href="/home/css/textPopup.css"><script type="text/javascript" src="/home/js/textPopup.js"></script><script type="text/javascript" src="/home/js/clickClipBoard.js"></script><script type="module" src="/home/js/mermaidInitializer.js"></script><script src="/home/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/home/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":200,"height":400},"mobile":{"show":true}});</script></body></html>

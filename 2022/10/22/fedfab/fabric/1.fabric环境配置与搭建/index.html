@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>fabric-1.fabric环境配置与搭建 - Jingtianer</title><link rel="manifest" href="/home/manifest.json"><meta name="application-name" content="Jingtianer"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Jingtianer"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="参考文档-getting start  准备工作 需要安装git，curl，docker，docker compose1sudo apt install docker-compose 给当前用户运行docker的权限12345678## 创建docker组sudo groupadd docker## 将当前用户加入docker组sudo usermod -aG docker tt## 重启服务s"><meta property="og:type" content="blog"><meta property="og:title" content="fabric-1.fabric环境配置与搭建"><meta property="og:url" content="https://jingtianer.github.io/home/2022/10/22/fedfab/fabric/1.fabric%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E4%B8%8E%E6%90%AD%E5%BB%BA/"><meta property="og:site_name" content="Jingtianer"><meta property="og:description" content="参考文档-getting start  准备工作 需要安装git，curl，docker，docker compose1sudo apt install docker-compose 给当前用户运行docker的权限12345678## 创建docker组sudo groupadd docker## 将当前用户加入docker组sudo usermod -aG docker tt## 重启服务s"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://github.com/jingtianer/fabric_note/blob/main/architecture.JPG?raw=true"><meta property="article:published_time" content="2022-10-22T13:15:37.000Z"><meta property="article:modified_time" content="2025-04-15T02:37:55.612Z"><meta property="article:author" content="Meow Meow Liu"><meta property="article:tag" content="fedfab"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://github.com/jingtianer/fabric_note/blob/main/architecture.JPG?raw=true"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://jingtianer.github.io/home/2022/10/22/fedfab/fabric/1.fabric%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E4%B8%8E%E6%90%AD%E5%BB%BA/"},"headline":"fabric-1.fabric环境配置与搭建","image":[],"datePublished":"2022-10-22T13:15:37.000Z","dateModified":"2025-04-15T02:37:55.612Z","author":{"@type":"Person","name":"Meow Meow Liu"},"publisher":{"@type":"Organization","name":"Jingtianer","logo":{"@type":"ImageObject","url":{"text":"Meow!!"}}},"description":"参考文档-getting start  准备工作 需要安装git，curl，docker，docker compose1sudo apt install docker-compose 给当前用户运行docker的权限12345678## 创建docker组sudo groupadd docker## 将当前用户加入docker组sudo usermod -aG docker tt## 重启服务s"}</script><link rel="canonical" href="https://jingtianer.github.io/home/2022/10/22/fedfab/fabric/1.fabric%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E4%B8%8E%E6%90%AD%E5%BB%BA/"><link rel="alternate" href="/home/atom.xml" title="Jingtianer" type="application/atom+xml"><link rel="icon" href="/home/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/vs.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/home/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const $tabMenu = document.querySelector(`a[href="${location.hash}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(location.hash);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/home/">Meow!!</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/home/">主页</a><a class="navbar-item" href="/home/archives">归档</a><a class="navbar-item" href="/home/categories">分类</a><a class="navbar-item" href="/home/tags">标签</a><a class="navbar-item" href="/home/about">关于我</a><a class="navbar-item" href="/home/tags/gallery">相册</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2022-10-22T13:15:37.000Z" title="2022/10/22 21:15:37">2022-10-22</time>发表</span><span class="level-item"><time dateTime="2025-04-15T02:37:55.612Z" title="2025/4/15 10:37:55">2025-04-15</time>更新</span><span class="level-item"><a class="link-muted" href="/home/categories/fedfab/">fedfab</a></span><span class="level-item">18 分钟读完 (大约2662个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">fabric-1.fabric环境配置与搭建</h1><div class="content"><ul>
+<li><a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/en/release-2.2/getting_started.html#">参考文档-getting start</a></li>
+</ul>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><ul>
+<li>需要安装git，curl，docker，docker compose<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install docker-compose</span><br></pre></td></tr></table></figure></li>
+<li>给当前用户运行docker的权限<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 创建docker组</span></span><br><span class="line">sudo groupadd docker</span><br><span class="line"><span class="comment">## 将当前用户加入docker组</span></span><br><span class="line">sudo usermod -aG docker tt</span><br><span class="line"><span class="comment">## 重启服务</span></span><br><span class="line">sudo service docker restart</span><br><span class="line"><span class="comment">## 刷新docker成员</span></span><br><span class="line">newgrp docker </span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="go环境的安装"><a href="#go环境的安装" class="headerlink" title="go环境的安装"></a>go环境的安装</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">wget https://golang.google.cn/dl/go1.19.linux-amd64.tar.gz</span><br><span class="line">tar -zxvf go1.19.linux-amd64.tar.gz</span><br><span class="line">sudo <span class="built_in">mv</span> go /usr/local/</span><br><span class="line">sudo <span class="built_in">tee</span> -a ~/.bachrc &lt;&lt;-<span class="string">&#x27;EOF&#x27;</span></span><br><span class="line"><span class="built_in">export</span> GOROOT=/usr/local/go</span><br><span class="line"><span class="comment">## export GOPATH=/home/go/goProject</span></span><br><span class="line"><span class="built_in">export</span> GOPROXY=https://goproxy.cn</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$GOROOT</span>/bin</span><br><span class="line">EOF</span><br><span class="line"><span class="built_in">source</span> /etc/profile</span><br></pre></td></tr></table></figure>
+
+<h2 id="fabric的安装"><a href="#fabric的安装" class="headerlink" title="fabric的安装"></a>fabric的安装</h2><ul>
+<li>fabric提供了一个脚本，用于安装二进制文件和镜像<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 安装最新版本</span></span><br><span class="line">curl -sSL https://bit.ly/2ysbOFE | bash -s</span><br><span class="line"><span class="comment">## 安装指定版本</span></span><br><span class="line">curl -sSL https://bit.ly/2ysbOFE | bash -s -- &lt;fabric_version&gt; &lt;fabric-ca_version&gt;</span><br><span class="line">curl -sSL https://bit.ly/2ysbOFE | bash -s -- 2.2.8 1.5.3</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="问题1–docker权限"><a href="#问题1–docker权限" class="headerlink" title="问题1–docker权限"></a>问题1–docker权限</h3><ul>
+<li>我的环境中docker pull必须使用sudo，而curl并不推荐使用sudo</li>
+<li>解决方案：先下载script，并修改，将第14行CONTAINER_CLI修改为<code>sudo docker</code><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl -sSL https://bit.ly/2ysbOFE -o script.sh</span><br><span class="line"><span class="built_in">chmod</span> +x script.sh</span><br><span class="line">vim script.sh</span><br></pre></td></tr></table></figure></li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">: <span class="variable">$&#123;CONTAINER_CLI:=&quot;docker&quot;&#125;</span> <span class="comment">## 改为sudo docker</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>解决方案2：重新安装docker，发现脚本结束后，有免root运行的脚本</li>
+</ul>
+<h3 id="问题2–pull缓慢"><a href="#问题2–pull缓慢" class="headerlink" title="问题2–pull缓慢"></a>问题2–pull缓慢</h3><ul>
+<li>更换镜像<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">sudo <span class="built_in">mkdir</span> -p /etc/docker</span><br><span class="line">sudo <span class="built_in">tee</span> /etc/docker/daemon.json &lt;&lt;-<span class="string">&#x27;EOF&#x27;</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;registry-mirrors&quot;</span> : [</span><br><span class="line">    <span class="string">&quot;https://registry.docker-cn.com&quot;</span>,</span><br><span class="line">    <span class="string">&quot;http://hub-mirror.c.163.com&quot;</span>,</span><br><span class="line">    <span class="string">&quot;https://docker.mirrors.ustc.edu.cn&quot;</span>,</span><br><span class="line">    <span class="string">&quot;https://cr.console.aliyun.com&quot;</span>,</span><br><span class="line">    <span class="string">&quot;https://mirror.ccs.tencentyun.com&quot;</span></span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br><span class="line">sudo systemctl daemon-reload</span><br><span class="line">sudo systemctl restart docker</span><br><span class="line">sudo docker info</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="部署一个测试网络"><a href="#部署一个测试网络" class="headerlink" title="部署一个测试网络"></a>部署一个测试网络</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/en/release-2.2/test_network.html">参考文档-Using the Fabric test network</a></li>
+<li>test-network在<code>fabric-samples/test-network</code>下</li>
+</ul>
+<h3 id="查看帮助文本"><a href="#查看帮助文本" class="headerlink" title="查看帮助文本"></a>查看帮助文本</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./network.sh -h</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">Using docker and docker-compose</span><br><span class="line">Usage: </span><br><span class="line">  network.sh &lt;Mode&gt; [Flags]</span><br><span class="line">    Modes:</span><br><span class="line">      up - Bring up Fabric orderer and peer nodes. No channel is created</span><br><span class="line">      up createChannel - Bring up fabric network with one channel</span><br><span class="line">      createChannel - Create and <span class="built_in">join</span> a channel after the network is created</span><br><span class="line">      deployCC - Deploy a chaincode to a channel (defaults to asset-transfer-basic)</span><br><span class="line">      down - Bring down the network</span><br><span class="line"></span><br><span class="line">    Flags:</span><br><span class="line">    Used with network.sh up, network.sh createChannel:</span><br><span class="line">    -ca &lt;use CAs&gt; -  Use Certificate Authorities to generate network crypto material</span><br><span class="line">    -c &lt;channel name&gt; - Name of channel to create (defaults to <span class="string">&quot;mychannel&quot;</span>)</span><br><span class="line">    -s &lt;dbtype&gt; - Peer state database to deploy: goleveldb (default) or couchdb</span><br><span class="line">    -r &lt;max retry&gt; - CLI <span class="built_in">times</span> out after certain number of attempts (defaults to 5)</span><br><span class="line">    -d &lt;delay&gt; - CLI delays <span class="keyword">for</span> a certain number of seconds (defaults to 3)</span><br><span class="line">    -verbose - Verbose mode</span><br><span class="line"></span><br><span class="line">    Used with network.sh deployCC</span><br><span class="line">    -c &lt;channel name&gt; - Name of channel to deploy chaincode to</span><br><span class="line">    -ccn &lt;name&gt; - Chaincode name.</span><br><span class="line">    -ccl &lt;language&gt; - Programming language of the chaincode to deploy: go, java, javascript, typescript</span><br><span class="line">    -ccv &lt;version&gt;  - Chaincode version. 1.0 (default), v2, version3.x, etc</span><br><span class="line">    -ccs &lt;sequence&gt;  - Chaincode definition sequence. Must be an <span class="built_in">integer</span>, 1 (default), 2, 3, etc</span><br><span class="line">    -ccp &lt;path&gt;  - File path to the chaincode.</span><br><span class="line">    -ccep &lt;policy&gt;  - (Optional) Chaincode endorsement policy using signature policy syntax. The default policy requires an endorsement from Org1 and Org2</span><br><span class="line">    -cccg &lt;collection-config&gt;  - (Optional) File path to private data collections configuration file</span><br><span class="line">    -cci &lt;fcn name&gt;  - (Optional) Name of chaincode initialization <span class="keyword">function</span>. When a <span class="keyword">function</span> is provided, the execution of init will be requested and the <span class="keyword">function</span> will be invoked.</span><br><span class="line"></span><br><span class="line">    -h - Print this message</span><br><span class="line"></span><br><span class="line"> Possible Mode and flag combinations</span><br><span class="line">   up -ca -r -d -s -verbose</span><br><span class="line">   up createChannel -ca -c -r -d -s -verbose</span><br><span class="line">   createChannel -c -r -d -verbose</span><br><span class="line">   deployCC -ccn -ccl -ccv -ccs -ccp -cci -r -d -verbose</span><br><span class="line"></span><br><span class="line"> Examples:</span><br><span class="line">   network.sh up createChannel -ca -c mychannel -s couchdb</span><br><span class="line">   network.sh createChannel -c channelName</span><br><span class="line">   network.sh deployCC -ccn basic -ccp ../asset-transfer-basic/chaincode-javascript/ -ccl javascript</span><br><span class="line">   network.sh deployCC -ccn mychaincode -ccp ./user/mychaincode -ccv 1 -ccl javascript</span><br></pre></td></tr></table></figure>
+
+<h3 id="启动测试网络"><a href="#启动测试网络" class="headerlink" title="启动测试网络"></a>启动测试网络</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./network.sh up</span><br></pre></td></tr></table></figure>
+<h3 id="创建Channel"><a href="#创建Channel" class="headerlink" title="创建Channel"></a>创建Channel</h3><ul>
+<li>channel是特定网络成员之间私有通信层，channel只能由邀请加入该channel的组织使用，并且对网络中的其他成员是不可见的。</li>
+<li>每个channel都有一个独立的区块链账本。被邀请“加入”其同行的组织到channel来存储channel账本并验证channel上的交易。<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./network.sh createChannel -c channel1</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="运行智能合约"><a href="#运行智能合约" class="headerlink" title="运行智能合约"></a>运行智能合约</h3><ul>
+<li>在fabric中，智能合约是chainCode</li>
+<li>Chaincode安装在组织的对等端，然后部署到一个通道，然后可以使用它来批准交易，并与区块链账本交互。</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./network.sh deployCC -ccn basic -ccp ../asset-transfer-basic/chaincode-go -ccl go</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这里使用了go语言的环境</p>
+</blockquote>
+<ul>
+<li><code>-ccl</code>指定了安装链码的语言，go&#x2F;typescript&#x2F;javascript</li>
+<li><code>-ccp</code>指定了chainCode</li>
+</ul>
+<h3 id="销毁网络"><a href="#销毁网络" class="headerlink" title="销毁网络"></a>销毁网络</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./network.sh down</span><br></pre></td></tr></table></figure>
+
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
+<li>测试时还有一部分是与网络交互，使用peer命令修改资产所有者等命令，测试网络有些内容还是不太清楚，运行暂时没有出错</li>
+</ul>
+<h2 id="Fabric概要"><a href="#Fabric概要" class="headerlink" title="Fabric概要"></a>Fabric概要</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1cz4y1C7dt?spm_id_from=333.999.0.0&vd_source=9338dca49c77890027835ec5abf98251">参考视频</a></li>
+<li><a target="_blank" rel="noopener" href="http://1uvu.com/2020/12/07/fabric-overview/">参考博客</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/1uvu/Blockchain-Notes">参考笔记</a></li>
+</ul>
+<p>可以参考笔记中的一个<a href="Blockchain-Notes/fabric-notes/2020.12.07%20Fabric%20Overview/2020.12.07%20Fabric%20Overview.xmind">思维导图</a>进行学习</p>
+<ul>
+<li>Overview</li>
+<li>Server&#x2F;Backend&#x2F;API<ul>
+<li>Network</li>
+<li>Chain Code</li>
+<li>Ca</li>
+<li>Ledger</li>
+<li>Development process</li>
+</ul>
+</li>
+<li>Client&#x2F;Frontend&#x2F;App<ul>
+<li>SDK</li>
+<li>Development process</li>
+</ul>
+</li>
+<li>Samples</li>
+</ul>
+<h3 id="Server"><a href="#Server" class="headerlink" title="Server"></a>Server</h3><h4 id="Network"><a href="#Network" class="headerlink" title="Network"></a>Network</h4><p>是一个p2p网络，由两部分组成</p>
+<ul>
+<li>Peer Container，对等节点<ul>
+<li>Endorser，背书节点，根据背书策略对交易进行验证</li>
+<li>Committer，提交节点，chainCode不会部署在Endorser之上，而是Committer上<blockquote>
+<p>集群管理 Kubernates</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li>Orderer Container，排序节点</li>
+</ul>
+<h4 id="Ca"><a href="#Ca" class="headerlink" title="Ca"></a>Ca</h4><p>客户端服务端配合实现动态授予证书，支持实时添加对等节点数量</p>
+<h4 id="Ledger"><a href="#Ledger" class="headerlink" title="Ledger"></a>Ledger</h4><ul>
+<li>BlockChain：TX记录，存储交易<ul>
+<li>channel，同一通道具有（可见）同一个公共账本</li>
+<li>Hash pointer，支持哈希指针</li>
+<li>Hashed linkList，支持哈希链表</li>
+</ul>
+</li>
+<li>State DB：World&#x2F;Current State，状态数据库<ul>
+<li>A peer，A DB</li>
+<li>存储交易的Index</li>
+<li>Single&#x2F;No-SQL – key value存储，HTTP Api，通过http请求获得数据，段康康5984</li>
+<li>level DB，默认引擎，k-v存储</li>
+<li>Couch DB，数据库引擎，k-v存储，json存储<ul>
+<li>顺序读写能力强，随机读取能力若</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="Chain-Code"><a href="#Chain-Code" class="headerlink" title="Chain Code"></a>Chain Code</h4><ul>
+<li>System Chain Code<ul>
+<li>包括CSCC等，可以自定义</li>
+<li>创建时随peer一起启动，用于peer节点（而不是channel）上，只支持go</li>
+</ul>
+</li>
+<li>User Chain Code<ul>
+<li>用于操纵资产，提供操纵资产的接口</li>
+<li>具有生命周期，初始化-部署-实例化-调用</li>
+<li>运行于peer上的容器中</li>
+</ul>
+</li>
+<li>支持语言<ul>
+<li><strong>Golang</strong>语言层面支持并发，适合服务端应用开发</li>
+<li>Node</li>
+<li>Java</li>
+</ul>
+</li>
+</ul>
+<h3 id="Client-Frontend-App"><a href="#Client-Frontend-App" class="headerlink" title="Client&#x2F;Frontend&#x2F;App"></a>Client&#x2F;Frontend&#x2F;App</h3><ul>
+<li>操作区块链网络，部署、执行 Chain code 提供的接口函数，监听网络事件，接收区块信息，写入交易等等</li>
+</ul>
+<h4 id="SDK"><a href="#SDK" class="headerlink" title="SDK"></a>SDK</h4><ul>
+<li><strong>Node</strong>(推荐使用)</li>
+<li>TypeScript</li>
+<li>Golang</li>
+<li>Python</li>
+<li>Java</li>
+</ul>
+<h2 id="Architecture"><a href="#Architecture" class="headerlink" title="Architecture"></a>Architecture</h2><p><img src="https://github.com/jingtianer/fabric_note/blob/main/architecture.JPG?raw=true" alt="架构图"></p>
+<h2 id="知识补充–Node-js"><a href="#知识补充–Node-js" class="headerlink" title="知识补充–Node.js"></a>知识补充–Node.js</h2><ul>
+<li>简单的说 Node.js 就是运行在服务端的 JavaScript。</li>
+</ul>
+<h3 id="创建Node-js应用"><a href="#创建Node-js应用" class="headerlink" title="创建Node.js应用"></a>创建Node.js应用</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> http = <span class="built_in">require</span>(<span class="string">&#x27;http&#x27;</span>);</span><br><span class="line"></span><br><span class="line">http.<span class="title function_">createServer</span>(<span class="keyword">function</span> (<span class="params">request, response</span>) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 发送 HTTP 头部 </span></span><br><span class="line">    <span class="comment">// HTTP 状态值: 200 : OK</span></span><br><span class="line">    <span class="comment">// 内容类型: text/plain</span></span><br><span class="line">    response.<span class="title function_">writeHead</span>(<span class="number">200</span>, &#123;<span class="string">&#x27;Content-Type&#x27;</span>: <span class="string">&#x27;text/plain&#x27;</span>&#125;);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 发送响应数据 &quot;Hello World&quot;</span></span><br><span class="line">    response.<span class="title function_">end</span>(<span class="string">&#x27;Hello World\n&#x27;</span>);</span><br><span class="line">&#125;).<span class="title function_">listen</span>(<span class="number">8888</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 终端打印如下信息</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Server running at http://127.0.0.1:8888/&#x27;</span>);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>require函数载入http模块</li>
+<li>createServer创建服务器</li>
+<li>listen指定监听端口</li>
+<li>使用node命令运行，访问8888端口</li>
+</ul>
+<h4 id="使用node命令运行"><a href="#使用node命令运行" class="headerlink" title="使用node命令运行"></a>使用node命令运行</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node server.js</span><br></pre></td></tr></table></figure>
+
+<h3 id="npm命令"><a href="#npm命令" class="headerlink" title="npm命令"></a>npm命令</h3><ul>
+<li>npm安装模块<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install xxxx</span><br></pre></td></tr></table></figure>
+安装好之后，express 包就放在了工程目录下的 node_modules 目录中，因此在代码中只需要通过 require(‘express’) 的方式就好，无需指定第三方包路径。</li>
+<li><code>-g</code>参数指定全局安装，即将安装包放在 &#x2F;usr&#x2F;local 下或者你 node 的安装目录。</li>
+</ul>
+<h3 id="pacjage-json"><a href="#pacjage-json" class="headerlink" title="pacjage.json"></a>pacjage.json</h3><ul>
+<li>用于定义包的属性</li>
+<li>name - 包名。</li>
+<li>version - 包的版本号。</li>
+<li>description - 包的描述。</li>
+<li>homepage - 包的官网 url 。</li>
+<li>author - 包的作者姓名。</li>
+<li>contributors - 包的其他贡献者姓名。</li>
+<li>dependencies - 依赖包列表。如果依赖包没有安装，npm 会自动将依赖包安装在 node_module 目录下。</li>
+<li>repository - 包代码存放的地方的类型，可以是 git 或 svn，git 可在 Github 上。</li>
+<li>main - main 字段指定了程序的主入口文件，require(‘moduleName’) 就会加载这个文件。这个字段的默认值是模块根目录下面的 index.js。</li>
+<li>keywords - 关键字</li>
+<li>还可以使用<code>npm init</code> <code>npm adduser</code> <code>npm publish</code>发布自己的模块，使用<code>npm unpublish</code>取消发布模块</li>
+</ul>
+<h3 id="REPL"><a href="#REPL" class="headerlink" title="REPL"></a>REPL</h3><ul>
+<li>Read Eval Print Loop，交互式解释器，类似python的IDLE，可以输入代码并获得执行结果</li>
+<li>通过<code>node</code>命令进入，快捷键<code>ctrl c</code>退出。</li>
+</ul>
+<h2 id="Hellow-World"><a href="#Hellow-World" class="headerlink" title="Hellow World"></a>Hellow World</h2><ul>
+<li>参考教程<a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/zh_CN/release-2.2/write_first_app.html">编写你的第一个应用</a></li>
+</ul>
+<h3 id="具体内容"><a href="#具体内容" class="headerlink" title="具体内容"></a>具体内容</h3><ul>
+<li>启动网络</li>
+<li>使用Node登记管理员用户，注册和登记应用程序用户，查询账本，更新账本</li>
+<li>清除数据</li>
+</ul>
+<h3 id="startFabric-sh"><a href="#startFabric-sh" class="headerlink" title="startFabric.sh"></a>startFabric.sh</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">pushd</span> ../test-network</span><br><span class="line">./network.sh down</span><br><span class="line">./network.sh up createChannel -ca -s couchdb</span><br><span class="line">./network.sh deployCC -ccn fabcar -ccv 1 -cci initLedger -ccl <span class="variable">$&#123;CC_SRC_LANGUAGE&#125;</span> -ccp <span class="variable">$&#123;CC_SRC_PATH&#125;</span></span><br><span class="line"><span class="built_in">popd</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>事实上就是启动test-network，创建两个peer节点和channel，再部署链码</p>
+</blockquote>
+<h2 id="chaincode-api"><a href="#chaincode-api" class="headerlink" title="chaincode api"></a>chaincode api</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/en/release-2.2/getting_started.html#hyperledger-fabric-application-sdks">sdk</a>有go，java和未正式发布的python</li>
+</ul>
+<h3 id="开发一个ChainCode（go）"><a href="#开发一个ChainCode（go）" class="headerlink" title="开发一个ChainCode（go）"></a>开发一个ChainCode（go）</h3><h4 id="创建struct"><a href="#创建struct" class="headerlink" title="创建struct"></a>创建struct</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="string">&quot;github.com/hyperledger/fabric-chaincode-go/shim&quot;</span></span><br><span class="line">    <span class="string">&quot;github.com/hyperledger/fabric-protos-go/peer&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// SimpleAsset implements a simple chaincode to manage an asset</span></span><br><span class="line"><span class="keyword">type</span> SimpleAsset <span class="keyword">struct</span> &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="实现init方法"><a href="#实现init方法" class="headerlink" title="实现init方法"></a>实现init方法</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Init is called during chaincode instantiation to initialize any</span></span><br><span class="line"><span class="comment">// data. Note that chaincode upgrade also calls this function to reset</span></span><br><span class="line"><span class="comment">// or to migrate data, so be careful to avoid a scenario where you</span></span><br><span class="line"><span class="comment">// inadvertently clobber your ledger&#x27;s data!</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t *SimpleAsset)</span></span> Init(stub shim.ChaincodeStubInterface) peer.Response &#123;</span><br><span class="line">  <span class="comment">// Get the args from the transaction proposal</span></span><br><span class="line">  args := stub.GetStringArgs()</span><br><span class="line">  <span class="keyword">if</span> <span class="built_in">len</span>(args) != <span class="number">2</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> shim.Error(<span class="string">&quot;Incorrect arguments. Expecting a key and a value&quot;</span>)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Set up any variables or assets here by calling stub.PutState()</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// We store the key and the value on the ledger</span></span><br><span class="line">  err := stub.PutState(args[<span class="number">0</span>], []<span class="type">byte</span>(args[<span class="number">1</span>]))</span><br><span class="line">  <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> shim.Error(fmt.Sprintf(<span class="string">&quot;Failed to create asset: %s&quot;</span>, args[<span class="number">0</span>]))</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> shim.Success(<span class="literal">nil</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>验证<blockquote>
+<p>init方法可以是空</p>
+</blockquote>
+</li>
+</ul>
+<h4 id="实现invoke函数"><a href="#实现invoke函数" class="headerlink" title="实现invoke函数"></a>实现invoke函数</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Invoke is called per transaction on the chaincode. Each transaction is</span></span><br><span class="line"><span class="comment">// either a &#x27;get&#x27; or a &#x27;set&#x27; on the asset created by Init function. The Set</span></span><br><span class="line"><span class="comment">// method may create a new asset by specifying a new key-value pair.</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t *SimpleAsset)</span></span> Invoke(stub shim.ChaincodeStubInterface) peer.Response &#123;</span><br><span class="line">    <span class="comment">// Extract the function and args from the transaction proposal</span></span><br><span class="line">    fn, args := stub.GetFunctionAndParameters()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> result <span class="type">string</span></span><br><span class="line">    <span class="keyword">var</span> err <span class="type">error</span></span><br><span class="line">    <span class="keyword">if</span> fn == <span class="string">&quot;set&quot;</span> &#123;</span><br><span class="line">            result, err = set(stub, args)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            result, err = get(stub, args)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> shim.Error(err.Error())</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Return the result as success payload</span></span><br><span class="line">    <span class="keyword">return</span> shim.Success([]<span class="type">byte</span>(result))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>根据stub中的参数，调用get或set方法，并返回结果</li>
+</ul>
+<h4 id="实现get和set"><a href="#实现get和set" class="headerlink" title="实现get和set"></a>实现get和set</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Set stores the asset (both key and value) on the ledger. If the key exists,</span></span><br><span class="line"><span class="comment">// it will override the value with the new one</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">set</span><span class="params">(stub shim.ChaincodeStubInterface, args []<span class="type">string</span>)</span></span> (<span class="type">string</span>, <span class="type">error</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(args) != <span class="number">2</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;&quot;</span>, fmt.Errorf(<span class="string">&quot;Incorrect arguments. Expecting a key and a value&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    err := stub.PutState(args[<span class="number">0</span>], []<span class="type">byte</span>(args[<span class="number">1</span>]))</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;&quot;</span>, fmt.Errorf(<span class="string">&quot;Failed to set asset: %s&quot;</span>, args[<span class="number">0</span>])</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> args[<span class="number">1</span>], <span class="literal">nil</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Get returns the value of the specified asset key</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">get</span><span class="params">(stub shim.ChaincodeStubInterface, args []<span class="type">string</span>)</span></span> (<span class="type">string</span>, <span class="type">error</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(args) != <span class="number">1</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;&quot;</span>, fmt.Errorf(<span class="string">&quot;Incorrect arguments. Expecting a key&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    value, err := stub.GetState(args[<span class="number">0</span>])</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;&quot;</span>, fmt.Errorf(<span class="string">&quot;Failed to get asset: %s with error: %s&quot;</span>, args[<span class="number">0</span>], err)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> value == <span class="literal">nil</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;&quot;</span>, fmt.Errorf(<span class="string">&quot;Asset not found: %s&quot;</span>, args[<span class="number">0</span>])</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="type">string</span>(value), <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>从ledger账本中读写数据</li>
+</ul>
+<h4 id="实现main方法"><a href="#实现main方法" class="headerlink" title="实现main方法"></a>实现main方法</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">if</span> err := shim.Start(<span class="built_in">new</span>(SimpleAsset)); err != <span class="literal">nil</span> &#123;</span><br><span class="line">            fmt.Printf(<span class="string">&quot;Error starting SimpleAsset chaincode: %s&quot;</span>, err)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>在以上步骤的基础上，结合<a target="_blank" rel="noopener" href="https://pkg.go.dev/github.com/hyperledger/fabric-chaincode-go/shim#Chaincode">shim api</a>应该可以开发出其他功能</p>
+</blockquote>
+</div><div class="article-licensing box"><div class="licensing-title"><p>fabric-1.fabric环境配置与搭建</p><p><a href="https://jingtianer.github.io/home/2022/10/22/fedfab/fabric/1.fabric环境配置与搭建/">https://jingtianer.github.io/home/2022/10/22/fedfab/fabric/1.fabric环境配置与搭建/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>Meow Meow Liu</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2022-10-22</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2025-04-15</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/home/tags/fedfab/">fedfab</a></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/home/2022/10/22/fedfab/fabric/2.fabric%E8%87%AA%E5%AE%9A%E4%B9%89%E4%B8%8E%E5%AE%9E%E8%B7%B5/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">fabric-2.fabric自定义与实践</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/home/2022/10/22/LeetCode/LeetCode-%E5%88%B7%E9%A2%98%E6%80%BB%E7%BB%9314/"><span class="level-item">LeetCode-14</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+            id: "dad3ff626ff4680b077ab6dc6fc6cae9",
+            repo: "blog_comment",
+            owner: "jingtianer",
+            clientID: "f0b13fe8021fcd2efe50",
+            clientSecret: "35207c14b34e77c48a3aeee1e94c9da169ffe0c2",
+            admin: ["jingtianer"],
+            createIssueManually: false,
+            distractionFreeMode: false,
+            perPage: 20,
+            pagerDirection: "last",
+            
+            
+            enableHotKey: true,
+            language: "zh-CN",
+        })
+        gitalk.render('comment-container')</script></div></div></div><!--!--><div class="column column-right is-4-tablet is-4-desktop is-4-widescreen  order-3 is-sticky"><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#准备工作"><span class="level-left"><span class="level-item">1</span><span class="level-item">准备工作</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#go环境的安装"><span class="level-left"><span class="level-item">1.1</span><span class="level-item">go环境的安装</span></span></a></li></ul></li><li><a class="level is-mobile" href="#fabric的安装"><span class="level-left"><span class="level-item">2</span><span class="level-item">fabric的安装</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#问题1–docker权限"><span class="level-left"><span class="level-item">2.1</span><span class="level-item">问题1–docker权限</span></span></a></li><li><a class="level is-mobile" href="#问题2–pull缓慢"><span class="level-left"><span class="level-item">2.2</span><span class="level-item">问题2–pull缓慢</span></span></a></li></ul></li><li><a class="level is-mobile" href="#部署一个测试网络"><span class="level-left"><span class="level-item">3</span><span class="level-item">部署一个测试网络</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#查看帮助文本"><span class="level-left"><span class="level-item">3.1</span><span class="level-item">查看帮助文本</span></span></a></li><li><a class="level is-mobile" href="#启动测试网络"><span class="level-left"><span class="level-item">3.2</span><span class="level-item">启动测试网络</span></span></a></li><li><a class="level is-mobile" href="#创建Channel"><span class="level-left"><span class="level-item">3.3</span><span class="level-item">创建Channel</span></span></a></li><li><a class="level is-mobile" href="#运行智能合约"><span class="level-left"><span class="level-item">3.4</span><span class="level-item">运行智能合约</span></span></a></li><li><a class="level is-mobile" href="#销毁网络"><span class="level-left"><span class="level-item">3.5</span><span class="level-item">销毁网络</span></span></a></li><li><a class="level is-mobile" href="#总结"><span class="level-left"><span class="level-item">3.6</span><span class="level-item">总结</span></span></a></li></ul></li><li><a class="level is-mobile" href="#Fabric概要"><span class="level-left"><span class="level-item">4</span><span class="level-item">Fabric概要</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#Server"><span class="level-left"><span class="level-item">4.1</span><span class="level-item">Server</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#Network"><span class="level-left"><span class="level-item">4.1.1</span><span class="level-item">Network</span></span></a></li><li><a class="level is-mobile" href="#Ca"><span class="level-left"><span class="level-item">4.1.2</span><span class="level-item">Ca</span></span></a></li><li><a class="level is-mobile" href="#Ledger"><span class="level-left"><span class="level-item">4.1.3</span><span class="level-item">Ledger</span></span></a></li><li><a class="level is-mobile" href="#Chain-Code"><span class="level-left"><span class="level-item">4.1.4</span><span class="level-item">Chain Code</span></span></a></li></ul></li><li><a class="level is-mobile" href="#Client-Frontend-App"><span class="level-left"><span class="level-item">4.2</span><span class="level-item">Client/Frontend/App</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#SDK"><span class="level-left"><span class="level-item">4.2.1</span><span class="level-item">SDK</span></span></a></li></ul></li></ul></li><li><a class="level is-mobile" href="#Architecture"><span class="level-left"><span class="level-item">5</span><span class="level-item">Architecture</span></span></a></li><li><a class="level is-mobile" href="#知识补充–Node-js"><span class="level-left"><span class="level-item">6</span><span class="level-item">知识补充–Node.js</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#创建Node-js应用"><span class="level-left"><span class="level-item">6.1</span><span class="level-item">创建Node.js应用</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#使用node命令运行"><span class="level-left"><span class="level-item">6.1.1</span><span class="level-item">使用node命令运行</span></span></a></li></ul></li><li><a class="level is-mobile" href="#npm命令"><span class="level-left"><span class="level-item">6.2</span><span class="level-item">npm命令</span></span></a></li><li><a class="level is-mobile" href="#pacjage-json"><span class="level-left"><span class="level-item">6.3</span><span class="level-item">pacjage.json</span></span></a></li><li><a class="level is-mobile" href="#REPL"><span class="level-left"><span class="level-item">6.4</span><span class="level-item">REPL</span></span></a></li></ul></li><li><a class="level is-mobile" href="#Hellow-World"><span class="level-left"><span class="level-item">7</span><span class="level-item">Hellow World</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#具体内容"><span class="level-left"><span class="level-item">7.1</span><span class="level-item">具体内容</span></span></a></li><li><a class="level is-mobile" href="#startFabric-sh"><span class="level-left"><span class="level-item">7.2</span><span class="level-item">startFabric.sh</span></span></a></li></ul></li><li><a class="level is-mobile" href="#chaincode-api"><span class="level-left"><span class="level-item">8</span><span class="level-item">chaincode api</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#开发一个ChainCode（go）"><span class="level-left"><span class="level-item">8.1</span><span class="level-item">开发一个ChainCode（go）</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#创建struct"><span class="level-left"><span class="level-item">8.1.1</span><span class="level-item">创建struct</span></span></a></li><li><a class="level is-mobile" href="#实现init方法"><span class="level-left"><span class="level-item">8.1.2</span><span class="level-item">实现init方法</span></span></a></li><li><a class="level is-mobile" href="#实现invoke函数"><span class="level-left"><span class="level-item">8.1.3</span><span class="level-item">实现invoke函数</span></span></a></li><li><a class="level is-mobile" href="#实现get和set"><span class="level-left"><span class="level-item">8.1.4</span><span class="level-item">实现get和set</span></span></a></li><li><a class="level is-mobile" href="#实现main方法"><span class="level-left"><span class="level-item">8.1.5</span><span class="level-item">实现main方法</span></span></a></li></ul></li></ul></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/home/js/toc.js" defer></script></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/home/">Meow!!</a><p class="is-size-7"><span>&copy; 2025 Meow Meow Liu</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/home/js/column.js"></script><script src="/home/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/home/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/home/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/home/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/home/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script><script type="text/javascript" src="/home/js/fairyDustCursor.js"></script><link rel="stylesheet" type="text/css" href="/home/css/textPopup.css"><script type="text/javascript" src="/home/js/textPopup.js"></script><script type="text/javascript" src="/home/js/clickClipBoard.js"></script><script type="module" src="/home/js/mermaidInitializer.js"></script><script src="/home/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/home/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":200,"height":400},"mobile":{"show":true}});</script></body></html>

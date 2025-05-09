@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>fedml-1.配置＆运行&amp;自定义 - Jingtianer</title><link rel="manifest" href="/home/manifest.json"><meta name="application-name" content="Jingtianer"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Jingtianer"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="官方文档 repo  克隆fedml库1git clone https:&amp;#x2F;&amp;#x2F;github.com&amp;#x2F;FedML-AI&amp;#x2F;FedML.git  参阅源码 参考样例，测试环境 FedML&amp;#x2F;iot&amp;#x2F;anomaly_detection_for_cybersecurity FedML&amp;#x2F;python&amp;#x2F;setup.py    wsl - cuda 参考"><meta property="og:type" content="blog"><meta property="og:title" content="fedml-1.配置＆运行&amp;自定义"><meta property="og:url" content="https://jingtianer.github.io/home/2022/10/22/fedfab/fedml/1.%E9%85%8D%E7%BD%AE%EF%BC%86%E8%BF%90%E8%A1%8C&amp;%E8%87%AA%E5%AE%9A%E4%B9%89/"><meta property="og:site_name" content="Jingtianer"><meta property="og:description" content="官方文档 repo  克隆fedml库1git clone https:&amp;#x2F;&amp;#x2F;github.com&amp;#x2F;FedML-AI&amp;#x2F;FedML.git  参阅源码 参考样例，测试环境 FedML&amp;#x2F;iot&amp;#x2F;anomaly_detection_for_cybersecurity FedML&amp;#x2F;python&amp;#x2F;setup.py    wsl - cuda 参考"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://warehouse-camo.cmh1.psfhosted.org/246e1a9a023b2afe914bb4ba557766c1a0770ee7/68747470733a2f2f757365722d696d616765732e67697468756275736572636f6e74656e742e636f6d2f31333634333233392f34383636333836312d38633965613030302d656139362d313165382d386230342d6431323063353232373661382e706e67"><meta property="og:image" content="https://jingtianer.github.io/home/gpu.png"><meta property="article:published_time" content="2022-10-22T13:15:50.000Z"><meta property="article:modified_time" content="2025-04-15T02:37:55.617Z"><meta property="article:author" content="Meow Meow Liu"><meta property="article:tag" content="fedfab"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://warehouse-camo.cmh1.psfhosted.org/246e1a9a023b2afe914bb4ba557766c1a0770ee7/68747470733a2f2f757365722d696d616765732e67697468756275736572636f6e74656e742e636f6d2f31333634333233392f34383636333836312d38633965613030302d656139362d313165382d386230342d6431323063353232373661382e706e67"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://jingtianer.github.io/home/2022/10/22/fedfab/fedml/1.%E9%85%8D%E7%BD%AE%EF%BC%86%E8%BF%90%E8%A1%8C&%E8%87%AA%E5%AE%9A%E4%B9%89/"},"headline":"fedml-1.配置＆运行&自定义","image":["https://jingtianer.github.io/home/gpu.png"],"datePublished":"2022-10-22T13:15:50.000Z","dateModified":"2025-04-15T02:37:55.617Z","author":{"@type":"Person","name":"Meow Meow Liu"},"publisher":{"@type":"Organization","name":"Jingtianer","logo":{"@type":"ImageObject","url":{"text":"Meow!!"}}},"description":"官方文档 repo  克隆fedml库1git clone https:&#x2F;&#x2F;github.com&#x2F;FedML-AI&#x2F;FedML.git  参阅源码 参考样例，测试环境 FedML&#x2F;iot&#x2F;anomaly_detection_for_cybersecurity FedML&#x2F;python&#x2F;setup.py    wsl - cuda 参考"}</script><link rel="canonical" href="https://jingtianer.github.io/home/2022/10/22/fedfab/fedml/1.%E9%85%8D%E7%BD%AE%EF%BC%86%E8%BF%90%E8%A1%8C&amp;%E8%87%AA%E5%AE%9A%E4%B9%89/"><link rel="alternate" href="/home/atom.xml" title="Jingtianer" type="application/atom+xml"><link rel="icon" href="/home/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/vs.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/home/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const $tabMenu = document.querySelector(`a[href="${location.hash}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(location.hash);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/home/">Meow!!</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/home/">主页</a><a class="navbar-item" href="/home/archives">归档</a><a class="navbar-item" href="/home/categories">分类</a><a class="navbar-item" href="/home/tags">标签</a><a class="navbar-item" href="/home/about">关于我</a><a class="navbar-item" href="/home/tags/gallery">相册</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2022-10-22T13:15:50.000Z" title="2022/10/22 21:15:50">2022-10-22</time>发表</span><span class="level-item"><time dateTime="2025-04-15T02:37:55.617Z" title="2025/4/15 10:37:55">2025-04-15</time>更新</span><span class="level-item"><a class="link-muted" href="/home/categories/fedfab/">fedfab</a></span><span class="level-item">13 分钟读完 (大约1910个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">fedml-1.配置＆运行&amp;自定义</h1><div class="content"><ul>
+<li><a target="_blank" rel="noopener" href="https://doc.fedml.ai/index.html">官方文档</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/FedML-AI/FedML">repo</a></li>
+</ul>
+<h2 id="克隆fedml库"><a href="#克隆fedml库" class="headerlink" title="克隆fedml库"></a>克隆fedml库</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/FedML-AI/FedML.git</span><br></pre></td></tr></table></figure>
+<ul>
+<li>参阅源码</li>
+<li>参考样例，测试环境<ul>
+<li>FedML&#x2F;iot&#x2F;anomaly_detection_for_cybersecurity FedML&#x2F;python&#x2F;setup.py</li>
+</ul>
+</li>
+</ul>
+<h2 id="wsl-cuda"><a href="#wsl-cuda" class="headerlink" title="wsl - cuda"></a>wsl - cuda</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/woshiheweigui/article/details/109067091">参考</a></li>
+</ul>
+<h3 id="安装支持wsl的Nvidia驱动"><a href="#安装支持wsl的Nvidia驱动" class="headerlink" title="安装支持wsl的Nvidia驱动"></a>安装支持wsl的Nvidia驱动</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://developer.nvidia.com/cuda/wsl">下载地址</a></li>
+</ul>
+<h3 id="下载安装cuda"><a href="#下载安装cuda" class="headerlink" title="下载安装cuda"></a>下载安装cuda</h3><ul>
+<li>不要下载最新版11.7，pytorch目前不支持<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt install build-essential <span class="comment">#安装c++ make等环境</span></span><br><span class="line">wget https://developer.download.nvidia.com/compute/cuda/11.6.2/local_installers/cuda_11.6.2_510.47.03_linux.run</span><br><span class="line">sudo bash cuda_11.6.2_510.47.03_linux.run</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h3><ul>
+<li>在目录<code>~/.bashrc</code>下 追加<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> CUDA_HOME=/usr/local/cuda</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$CUDA_HOME</span>/bin</span><br><span class="line"><span class="built_in">export</span> LD_LIBRARY_PATH=/usr/local/cuda-11.7/lib64<span class="variable">$&#123;LD_LIBRARY_PATH:+:<span class="variable">$&#123;LD_LIBRARY_PATH&#125;</span>&#125;</span></span><br></pre></td></tr></table></figure></li>
+<li>生效，并安装需要的库<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br><span class="line">sudo apt-get install freeglut3-dev build-essential libx11-dev libxmu-dev libxi-dev libgl1-mesa-glx libglu1-mesa libglu1-mesa-dev</span><br></pre></td></tr></table></figure></li>
+<li>检查是否成功<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nvcc -V</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">nvcc: NVIDIA (R) Cuda compiler driver</span><br><span class="line">Copyright (c) 2005-2022 NVIDIA Corporation</span><br><span class="line">Built on Tue_May__3_18:49:52_PDT_2022</span><br><span class="line">Cuda compilation tools, release 11.7, V11.7.64</span><br><span class="line">Build cuda_11.7.r11.7/compiler.31294372_0</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="安装-cudnn"><a href="#安装-cudnn" class="headerlink" title="安装 cudnn"></a>安装 cudnn</h2><h3 id="下载安装"><a href="#下载安装" class="headerlink" title="下载安装"></a>下载安装</h3><ul>
+<li><p><a target="_blank" rel="noopener" href="https://docs.nvidia.com/deeplearning/cudnn/install-guide/index.html">参考</a></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install zlib1g</span><br><span class="line">https://developer.nvidia.com/rdp/cudnn-download</span><br><span class="line">tar -xvf cudnn-linux-x86_64-8.4.1.50_cuda11.6-archive.tar.xz</span><br><span class="line">sudo <span class="built_in">cp</span> cudnn-*-archive/include/cudnn*.h /usr/local/cuda/include</span><br><span class="line">sudo <span class="built_in">cp</span> -P cudnn-*-archive/lib/libcudnn* /usr/local/cuda/lib64</span><br><span class="line">sudo <span class="built_in">chmod</span> a+r /usr/local/cuda/include/cudnn*.h /usr/local/cuda/lib64/libcudnn*</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>后来发现这种方式使用cnn时会报错，找不到cudnn cnn的动态链接库，改用以下方法</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda install -c nvidia cudnn</span><br></pre></td></tr></table></figure></li>
+</ul>
+<table cellpadding="4" cellspacing="0" summary="" id="cudnn-cuda-hardware-versions__table_u25_cyj_cjb" class="table"
+   frame="border" border="1" rules="all">
+   <caption><span class="tablecap">Table 1. Supported NVIDIA Hardware and CUDA Version</span></caption>
+   <thead class="thead" align="left">
+      <tr class="row">
+         <th class="entry" valign="top" width="20%" id="d54e101" rowspan="1" colspan="1">cuDNN Package</th>
+         <th class="entry" valign="top" width="20%" id="d54e104" rowspan="1" colspan="1">Supported NVIDIA Hardware</th>
+         <th class="entry" valign="top" width="20%" id="d54e107" rowspan="1" colspan="1"><a class="xref"
+               href="https://developer.nvidia.com/cuda-toolkit-archive" target="_blank" shape="rect">CUDA Toolkit
+               Version</a></th>
+         <th class="entry" valign="top" width="20%" id="d54e111" rowspan="1" colspan="1"><a class="xref"
+               href="https://developer.nvidia.com/cuda-gpus" target="_blank" shape="rect">CUDA Compute Capability</a>
+         </th>
+         <th class="entry" valign="top" width="20%" id="d54e115" rowspan="1" colspan="1">Supports static linking?<a
+               name="fnsrc_1" href="#fntarg_1" shape="rect"><sup>1</sup></a></th>
+      </tr>
+   </thead>
+   <tbody class="tbody">
+      <tr class="row">
+         <td class="entry" rowspan="8" valign="top" width="20%" headers="d54e101" colspan="1">cuDNN 8.4.1 for CUDA
+            11.x<a name="fnsrc_2" href="#fntarg_2" shape="rect"><sup>2</sup></a></td>
+         <td class="entry" rowspan="8" valign="top" width="20%" headers="d54e104" colspan="1"><a
+               name="cudnn-cuda-hardware-versions__ul_s5d_42l_cnb" shape="rect">
+               <!-- -->
+            </a>
+            <ul class="ul" id="cudnn-cuda-hardware-versions__ul_s5d_42l_cnb">
+               <li class="li">NVIDIA Ampere Architecture</li>
+               <li class="li">NVIDIA Turing™</li>
+               <li class="li">NVIDIA Volta™</li>
+               <li class="li">NVIDIA Pascal™</li>
+               <li class="li">NVIDIA Maxwell<sup>®</sup></li>
+               <li class="li">NVIDIA Kepler™</li>
+            </ul>
+         </td>
+         <td class="entry" valign="top" width="20%" headers="d54e107" rowspan="1" colspan="1"><a class="xref"
+               href="https://developer.nvidia.com/cuda-toolkit-archive" target="_blank" shape="rect"><u
+                  class="ph u">11.7</u></a></td>
+         <td class="entry" rowspan="8" valign="top" width="20%" headers="d54e111" colspan="1">SM 3.5 and later</td>
+         <td class="entry" rowspan="5" valign="top" width="20%" headers="d54e115" colspan="1">Yes</td>
+      </tr>
+      <tr class="row">
+         <td class="entry" valign="top" width="20%" headers="d54e107" rowspan="1" colspan="1"><a class="xref"
+               href="https://developer.nvidia.com/cuda-toolkit-archive" target="_blank" shape="rect"><u
+                  class="ph u">11.6</u></a></td>
+      </tr>
+      <tr class="row">
+         <td class="entry" valign="top" width="20%" headers="d54e107" rowspan="1" colspan="1"><a class="xref"
+               href="https://developer.nvidia.com/cuda-toolkit-archive" target="_blank" shape="rect"><u
+                  class="ph u">11.5</u></a></td>
+      </tr>
+      <tr class="row">
+         <td class="entry" valign="top" width="20%" headers="d54e107" rowspan="1" colspan="1"><a class="xref"
+               href="https://developer.nvidia.com/cuda-toolkit-archive" target="_blank" shape="rect"><u
+                  class="ph u">11.4</u></a></td>
+      </tr>
+      <tr class="row">
+         <td class="entry" valign="top" width="20%" headers="d54e107" rowspan="1" colspan="1"><a class="xref"
+               href="https://developer.nvidia.com/cuda-toolkit-archive" target="_blank" shape="rect"><u
+                  class="ph u">11.3</u></a></td>
+      </tr>
+      <tr class="row">
+         <td class="entry" valign="top" width="20%" headers="d54e107" rowspan="1" colspan="1">
+            <p class="p"><a class="xref" href="https://developer.nvidia.com/cuda-toolkit-archive" target="_blank"
+                  shape="rect"><u class="ph u">11.2</u></a></p>
+         </td>
+         <td class="entry" rowspan="3" valign="top" width="20%" headers="d54e115" colspan="1">No</td>
+      </tr>
+      <tr class="row">
+         <td class="entry" valign="top" width="20%" headers="d54e107" rowspan="1" colspan="1"><a class="xref"
+               href="https://developer.nvidia.com/cuda-toolkit-archive" target="_blank" shape="rect"><u
+                  class="ph u">11.1</u></a></td>
+      </tr>
+      <tr class="row">
+         <td class="entry" valign="top" width="20%" headers="d54e107" rowspan="1" colspan="1"><a class="xref"
+               href="https://developer.nvidia.com/cuda-toolkit-archive" target="_blank" shape="rect"><u
+                  class="ph u">11.0</u></a></td>
+      </tr>
+      <tr class="row">
+         <td class="entry" valign="top" width="20%" headers="d54e101" rowspan="1" colspan="1">cuDNN 8.4.1 for CUDA 10.2
+         </td>
+         <td class="entry" valign="top" width="20%" headers="d54e104" rowspan="1" colspan="1"><a
+               name="cudnn-cuda-hardware-versions__ul_bxm_m4v_wlb" shape="rect">
+               <!-- -->
+            </a>
+            <ul class="ul" id="cudnn-cuda-hardware-versions__ul_bxm_m4v_wlb">
+               <li class="li">NVIDIA Turing</li>
+               <li class="li">NVIDIA Volta</li>
+               <li class="li">Xavier™</li>
+               <li class="li">NVIDIA Pascal</li>
+               <li class="li">NVIDIA Maxwell</li>
+               <li class="li">NVIDIA Kepler</li>
+            </ul>
+         </td>
+         <td class="entry" valign="top" width="20%" headers="d54e107" rowspan="1" colspan="1"><a class="xref"
+               href="https://developer.nvidia.com/cuda-toolkit-archive" target="_blank" shape="rect"><u
+                  class="ph u">10.2</u></a></td>
+         <td class="entry" valign="top" width="20%" headers="d54e111" rowspan="1" colspan="1">SM 3.0 and later</td>
+         <td class="entry" valign="top" width="20%" headers="d54e115" rowspan="1" colspan="1">Yes</td>
+      </tr>
+   </tbody>
+</table>
+
+<h2 id="安装配置fedml"><a href="#安装配置fedml" class="headerlink" title="安装配置fedml"></a>安装配置fedml</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://doc.fedml.ai/starter/installation.html">参考-（bilibili视频的方法已经过时）</a></li>
+</ul>
+<h3 id="安装Miniconda"><a href="#安装Miniconda" class="headerlink" title="安装Miniconda"></a>安装Miniconda</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh</span><br><span class="line">./Miniconda3-latest-Linux-x86_64.sh</span><br><span class="line"><span class="comment">## 最后一步选yes，让脚本自动配置环境变量</span></span><br><span class="line"><span class="comment">## 根据输出的内容决定下面source的文件</span></span><br><span class="line"><span class="built_in">source</span> /root/.bashrc</span><br></pre></td></tr></table></figure>
+
+<h3 id="添加Miniconda源"><a href="#添加Miniconda源" class="headerlink" title="添加Miniconda源"></a>添加Miniconda源</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/</span><br><span class="line">conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/</span><br><span class="line">conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/pytorch/</span><br><span class="line">conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge</span><br><span class="line">conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/msys2/</span><br><span class="line">conda config --<span class="built_in">set</span> show_channel_urls <span class="built_in">yes</span> <span class="comment">#设置搜索时显示通道地址</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="安装fedml"><a href="#安装fedml" class="headerlink" title="安装fedml"></a>安装fedml</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">conda create --name fedml python=3.7</span><br><span class="line">conda activate fedml</span><br><span class="line">conda install --name fedml pip</span><br><span class="line">pip install fedml -i https://pypi.douban.com/simple</span><br></pre></td></tr></table></figure>
+
+<h3 id="备忘"><a href="#备忘" class="headerlink" title="备忘"></a>备忘</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">常用pip源：</span><br><span class="line">豆瓣：https://pypi.douban.com/simple</span><br><span class="line">阿里：https://mirrors.aliyun.com/pypi/simple</span><br><span class="line">中国科技大学 ：https://pypi.mirrors.ustc.edu.cn/simple/</span><br><span class="line">清华大学： https://pypi.tuna.tsinghua.edu.cn/simple/</span><br><span class="line">中国科学技术大学 ：https://pypi.mirrors.ustc.edu.cn/simple/</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>python包：wasabi-控制台打印和格式化工具包<br><img src="https://warehouse-camo.cmh1.psfhosted.org/246e1a9a023b2afe914bb4ba557766c1a0770ee7/68747470733a2f2f757365722d696d616765732e67697468756275736572636f6e74656e742e636f6d2f31333634333233392f34383636333836312d38633965613030302d656139362d313165382d386230342d6431323063353232373661382e706e67" alt="wasabi"></li>
+</ul>
+<h3 id="安装fedml环境"><a href="#安装fedml环境" class="headerlink" title="安装fedml环境"></a>安装fedml环境</h3><ul>
+<li>进入FEDML仓库，<a href="FedML/python/setup.py">FedML&#x2F;python</a>，运行setup.py</li>
+<li><a target="_blank" rel="noopener" href="https://pytorch.org/get-started/locally/">pytorch安装地址</a>，根据cuda版本选择命令，去掉 -c forge（不从官网下载）<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 setup.py install</span><br></pre></td></tr></table></figure></li>
+<li>卸载pytorch，重新按照cuda版本进行安装</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">conda uninstall *torch* cudatoolkit</span><br><span class="line">conda install pytorch torchvision torchaudio cudatoolkit=11.6</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="运行demo"><a href="#运行demo" class="headerlink" title="运行demo"></a>运行demo</h2><h3 id="iot"><a href="#iot" class="headerlink" title="iot"></a>iot</h3><ul>
+<li>运行<a href="FedML/iot/anomaly_detection_for_cybersecurity/">iot物联网demo</a></li>
+</ul>
+<h4 id="server"><a href="#server" class="headerlink" title="server"></a>server</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">conda activate fedml</span><br><span class="line">bash run_server.sh</span><br></pre></td></tr></table></figure>
+<h4 id="client-1"><a href="#client-1" class="headerlink" title="client-1"></a>client-1</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">conda activate fedml</span><br><span class="line">bash run_client.sh 1</span><br></pre></td></tr></table></figure>
+<h4 id="client-2"><a href="#client-2" class="headerlink" title="client-2"></a>client-2</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">conda activate fedml</span><br><span class="line">bash run_client.sh 2</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>后来发现这个demo适用于树莓派、Jeston Nano设备，需要进行一定的配置</li>
+<li>这个样例中有自定义data loader和trainer，比较有参考价值</li>
+</ul>
+<h3 id="mpi-torch-fedopt-mnist-lr-example"><a href="#mpi-torch-fedopt-mnist-lr-example" class="headerlink" title="mpi_torch_fedopt_mnist_lr_example"></a>mpi_torch_fedopt_mnist_lr_example</h3><ul>
+<li>配置文件中，以simulation模式运行的</li>
+<li><a href="FedML/python/examples/simulation/mpi_torch_fedopt_mnist_lr_example">位置</a>，以simulation模式运行，单进程</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash run_step_by_step_example.sh 2</span><br></pre></td></tr></table></figure>
+<ul>
+<li>参数为2时可以完成训练，参数（即worker）过大，会出现以下提示，怀疑是内存不够<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">===================================================================================</span><br><span class="line">=   BAD TERMINATION OF ONE OF YOUR APPLICATION PROCESSES</span><br><span class="line">=   PID 5218 RUNNING AT tt</span><br><span class="line">=   EXIT CODE: 9</span><br><span class="line">=   CLEANING UP REMAINING PROCESSES</span><br><span class="line">=   YOU CAN IGNORE THE BELOW CLEANUP MESSAGES</span><br><span class="line">===================================================================================</span><br><span class="line">YOUR APPLICATION TERMINATED WITH THE EXIT STRING: Killed (signal 9)</span><br><span class="line">This typically refers to a problem with your application.</span><br><span class="line">Please see the FAQ page <span class="keyword">for</span> debugging suggestions</span><br></pre></td></tr></table></figure></li>
+<li>训练完成后会在目录<code>./tmp/</code>下生成一个模型文件<code>fedml</code>，执行cat<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> fedml</span><br></pre></td></tr></table></figure>
+输出为<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">training is finished!</span><br><span class="line">&lt;fedml.arguments.Arguments object at 0x7ff03c13b210&gt;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="使用GPU进行训练"><a href="#使用GPU进行训练" class="headerlink" title="使用GPU进行训练"></a>使用GPU进行训练</h2><h3 id="修改配置文件"><a href="#修改配置文件" class="headerlink" title="修改配置文件"></a>修改配置文件</h3><ul>
+<li>修改<code>config/fedml_config.yaml</code>文件<code>device_args</code>标签下的内容<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">device_args:</span></span><br><span class="line">  <span class="attr">worker_num:</span> <span class="number">3</span></span><br><span class="line">  <span class="attr">using_gpu:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">gpu_mapping_file:</span> <span class="string">config/gpu_mapping.yaml</span> <span class="comment">#mapping文件位置</span></span><br><span class="line">  <span class="attr">gpu_mapping_key:</span> <span class="string">mapping_tt</span> <span class="comment">#使用的mapping</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="修改mapping文件"><a href="#修改mapping文件" class="headerlink" title="修改mapping文件"></a>修改mapping文件</h3><ul>
+<li>在文件<code>config/gpu_mapping.yaml</code>下增加节点<code>mapping_tt</code></li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">mapping_tt:</span></span><br><span class="line">    <span class="attr">tt:</span> [<span class="number">4</span>] <span class="comment">#只有一个节点tt，一个gpu</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>增加节点的格式如下，为每个hostname指定在每个gpu下有多少进程</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## config_cluster0:</span></span><br><span class="line"><span class="comment">##     host_name_node0: [num_of_processes_on_GPU0, num_of_processes_on_GPU1, num_of_processes_on_GPU2, num_of_processes_on_GPU3, ..., num_of_processes_on_GPU_n]</span></span><br><span class="line"><span class="comment">##     host_name_node1: [num_of_processes_on_GPU0, num_of_processes_on_GPU1, num_of_processes_on_GPU2, num_of_processes_on_GPU3, ..., num_of_processes_on_GPU_n]</span></span><br><span class="line"><span class="comment">##     ......</span></span><br><span class="line"><span class="comment">##     host_name_node_m: [num_of_processes_on_GPU0, num_of_processes_on_GPU1, num_of_processes_on_GPU2, num_of_processes_on_GPU3, ..., num_of_processes_on_GPU_n]</span></span><br></pre></td></tr></table></figure></li>
+<li><p>运行，前面配置了4个进程，<code>worker_num</code>配置为3，这里参数就写3， 3个worker + 1个server</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash run_step_by_step_example.sh 3</span><br></pre></td></tr></table></figure></li>
+<li><p>过程中在bash中看到输出</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[FedML-Server(0) @device-id-0] [Thu, 28 Jul 2022 20:54:06] [INFO] [gpu_mapping_mpi.py:51:mapping_processes_to_gpu_device_from_yaml_file_mpi] process_id = 2, GPU device = cuda:0</span><br><span class="line">[FedML-Server(0) @device-id-0] [Thu, 28 Jul 2022 20:54:06] [INFO] [device.py:78:get_device] device = cuda:0</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>taskmgr中查看独显占用情况<br><img src="/home/gpu.png"></p>
+</li>
+<li><p>说明确实使用了gpu</p>
+</li>
+</ul>
+<h2 id="cross-silo-运行"><a href="#cross-silo-运行" class="headerlink" title="cross_silo 运行"></a>cross_silo 运行</h2><ul>
+<li>非单进程模拟，多个设备运行</li>
+</ul>
+<h3 id="config-fedml-config-yaml"><a href="#config-fedml-config-yaml" class="headerlink" title="config&#x2F;fedml_config.yaml"></a>config&#x2F;fedml_config.yaml</h3><ul>
+<li>配置节点comm_args<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">comm_args:</span><br><span class="line">  backend: <span class="string">&quot;GRPC&quot;</span></span><br><span class="line">  grpc_ipconfig_path: config/grpc_ipconfig.csv</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="grpc-ipconfig-csv"><a href="#grpc-ipconfig-csv" class="headerlink" title="grpc_ipconfig.csv"></a>grpc_ipconfig.csv</h3><ul>
+<li>安装<code>pip install grpcio</code>，使用grpc协议进行通信</li>
+<li>在<code>/config</code>下创建该文件，写入<code>编号-ip</code>，<code>0</code>为server，<code>1...n</code>为worker</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>receiver_id</th>
+<th>ip</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>127.0.0.1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>127.0.0.1</td>
+</tr>
+<tr>
+<td>2</td>
+<td>127.0.0.1</td>
+</tr>
+</tbody></table>
+<h3 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h3><ul>
+<li>没有找到输出的模型文件，只在最后一轮结束后找到了以下输出<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[FedML-Server(0) @device-id-0] [Fri, 29 Jul 2022 22:54:08] [INFO] [fedml_aggregator.py:195:test_on_server_for_all_clients] <span class="comment">################test_on_server_for_all_clients : 49</span></span><br><span class="line">[FedML-Server(0) @device-id-0] [Fri, 29 Jul 2022 22:54:12] [INFO] [fedml_aggregator.py:225:test_on_server_for_all_clients] &#123;<span class="string">&#x27;training_acc&#x27;</span>: 0.796526336274001, <span class="string">&#x27;training_loss&#x27;</span>: 1.8660167525693983&#125;</span><br><span class="line">[FedML-Server(0) @device-id-0] [Fri, 29 Jul 2022 22:54:13] [INFO] [fedml_aggregator.py:257:test_on_server_for_all_clients] &#123;<span class="string">&#x27;test_acc&#x27;</span>: 0.8005698005698005, <span class="string">&#x27;test_loss&#x27;</span>: 1.8635211240936371&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="fedml自定义"><a href="#fedml自定义" class="headerlink" title="fedml自定义"></a>fedml自定义</h2><h3 id="fedml运行参数"><a href="#fedml运行参数" class="headerlink" title="fedml运行参数"></a>fedml运行参数</h3><ul>
+<li>fedml运行时需要几个参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>含义</th>
+<th>可选值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>–cf</td>
+<td>配置文件</td>
+<td>&#x2F;</td>
+</tr>
+<tr>
+<td>–rank</td>
+<td>序号，server为0</td>
+<td>0,1,2,3</td>
+</tr>
+<tr>
+<td>–role</td>
+<td>server 或 client</td>
+<td>server, client</td>
+</tr>
+</tbody></table>
+<h3 id="fedml运行流程"><a href="#fedml运行流程" class="headerlink" title="fedml运行流程"></a>fedml运行流程</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">args = fedml.init()</span><br><span class="line"></span><br><span class="line"><span class="comment">## init device</span></span><br><span class="line">device = fedml.device.get_device(args)</span><br><span class="line"></span><br><span class="line"><span class="comment">## load data</span></span><br><span class="line">dataset, output_dim = fedml.data.load(args)</span><br><span class="line"></span><br><span class="line"><span class="comment">## load model</span></span><br><span class="line">model = fedml.model.create(args, output_dim)</span><br><span class="line"></span><br><span class="line"><span class="comment">## start training</span></span><br><span class="line">fedml_runner = FedMLRunner(args, device, dataset, model)</span><br><span class="line">fedml_runner.run()</span><br></pre></td></tr></table></figure>
+<ul>
+<li>DataLoader, Model, Trainer都是可以自定义的</li>
+<li><a href="./FedML/python/app/fedgraphnn/README.md">参考</a></li>
+</ul>
+<h3 id="DataLoader的自定义"><a href="#DataLoader的自定义" class="headerlink" title="DataLoader的自定义"></a>DataLoader的自定义</h3><ul>
+<li>支持MNN，pytorch的DataLoader</li>
+<li>输出数据集和输出的维数</li>
+</ul>
+<h3 id="模型的自定义"><a href="#模型的自定义" class="headerlink" title="模型的自定义"></a>模型的自定义</h3><ul>
+<li>支持pytorch的神经网络模型，<code>torch.nn</code></li>
+</ul>
+<h3 id="Trainer的自定义"><a href="#Trainer的自定义" class="headerlink" title="Trainer的自定义"></a>Trainer的自定义</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> fedml.core <span class="keyword">import</span> ClientTrainer</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyModelTrainer</span>(<span class="title class_ inherited__">ClientTrainer</span>): <span class="comment">#继承ClientTrainer</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_model_params</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> self.model.cpu().state_dict()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">set_model_params</span>(<span class="params">self, model_parameters</span>):</span><br><span class="line">        self.model.load_state_dict(model_parameters)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">train</span>(<span class="params">self, train_data, device, args</span>): <span class="comment">#实现模型的训练</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">test</span>(<span class="params">self, test_data, device, args</span>):</span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">test_on_the_server</span>(<span class="params"></span></span><br><span class="line"><span class="params">        self, train_data_local_dict, test_data_local_dict, device, args=<span class="literal">None</span></span></span><br><span class="line"><span class="params">    </span>) -&gt; <span class="built_in">bool</span>: <span class="comment">#实现对模型的评估</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="用qemu虚拟机模拟多台机器（未完成）"><a href="#用qemu虚拟机模拟多台机器（未完成）" class="headerlink" title="用qemu虚拟机模拟多台机器（未完成）"></a>用qemu虚拟机模拟多台机器（未完成）</h2><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><ul>
+<li>参考<a target="_blank" rel="noopener" href="https://www.qemu.org/download/">连接</a></li>
+</ul>
+<h4 id="Ninja的安装"><a href="#Ninja的安装" class="headerlink" title="Ninja的安装"></a>Ninja的安装</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install ninja-build</span><br></pre></td></tr></table></figure>
+<h4 id="pkg-config"><a href="#pkg-config" class="headerlink" title="pkg-config"></a>pkg-config</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">wget https://download.qemu.org/qemu-7.1.0-rc0.tar.xz</span><br><span class="line">tar xvJf qemu-7.1.0-rc0.tar.xz</span><br><span class="line"><span class="built_in">cd</span> qemu-7.1.0-rc0</span><br><span class="line">./configure</span><br><span class="line">make</span><br></pre></td></tr></table></figure>
+<ul>
+<li>使用虚拟机环境，需要对qemu配置显卡直通</li>
+</ul>
+</div><div class="article-licensing box"><div class="licensing-title"><p>fedml-1.配置＆运行&amp;自定义</p><p><a href="https://jingtianer.github.io/home/2022/10/22/fedfab/fedml/1.配置＆运行&amp;自定义/">https://jingtianer.github.io/home/2022/10/22/fedfab/fedml/1.配置＆运行&amp;自定义/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>Meow Meow Liu</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2022-10-22</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2025-04-15</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/home/tags/fedfab/">fedfab</a></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/home/2022/10/22/fedfab/fedml/2.Docker%E5%A4%9A%E5%AE%B9%E5%99%A8%E9%85%8D%E7%BD%AE/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">fedml-2.Docker多容器配置</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/home/2022/10/22/fedfab/fabric/9.%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE/"><span class="level-item">fabric-9.服务器配置</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+            id: "12db30e45dd7d108b6a9d471f997423a",
+            repo: "blog_comment",
+            owner: "jingtianer",
+            clientID: "f0b13fe8021fcd2efe50",
+            clientSecret: "35207c14b34e77c48a3aeee1e94c9da169ffe0c2",
+            admin: ["jingtianer"],
+            createIssueManually: false,
+            distractionFreeMode: false,
+            perPage: 20,
+            pagerDirection: "last",
+            
+            
+            enableHotKey: true,
+            language: "zh-CN",
+        })
+        gitalk.render('comment-container')</script></div></div></div><!--!--><div class="column column-right is-4-tablet is-4-desktop is-4-widescreen  order-3 is-sticky"><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#克隆fedml库"><span class="level-left"><span class="level-item">1</span><span class="level-item">克隆fedml库</span></span></a></li><li><a class="level is-mobile" href="#wsl-cuda"><span class="level-left"><span class="level-item">2</span><span class="level-item">wsl - cuda</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#安装支持wsl的Nvidia驱动"><span class="level-left"><span class="level-item">2.1</span><span class="level-item">安装支持wsl的Nvidia驱动</span></span></a></li><li><a class="level is-mobile" href="#下载安装cuda"><span class="level-left"><span class="level-item">2.2</span><span class="level-item">下载安装cuda</span></span></a></li><li><a class="level is-mobile" href="#环境变量"><span class="level-left"><span class="level-item">2.3</span><span class="level-item">环境变量</span></span></a></li></ul></li><li><a class="level is-mobile" href="#安装-cudnn"><span class="level-left"><span class="level-item">3</span><span class="level-item">安装 cudnn</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#下载安装"><span class="level-left"><span class="level-item">3.1</span><span class="level-item">下载安装</span></span></a></li></ul></li><li><a class="level is-mobile" href="#安装配置fedml"><span class="level-left"><span class="level-item">4</span><span class="level-item">安装配置fedml</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#安装Miniconda"><span class="level-left"><span class="level-item">4.1</span><span class="level-item">安装Miniconda</span></span></a></li><li><a class="level is-mobile" href="#添加Miniconda源"><span class="level-left"><span class="level-item">4.2</span><span class="level-item">添加Miniconda源</span></span></a></li><li><a class="level is-mobile" href="#安装fedml"><span class="level-left"><span class="level-item">4.3</span><span class="level-item">安装fedml</span></span></a></li><li><a class="level is-mobile" href="#备忘"><span class="level-left"><span class="level-item">4.4</span><span class="level-item">备忘</span></span></a></li><li><a class="level is-mobile" href="#安装fedml环境"><span class="level-left"><span class="level-item">4.5</span><span class="level-item">安装fedml环境</span></span></a></li></ul></li><li><a class="level is-mobile" href="#运行demo"><span class="level-left"><span class="level-item">5</span><span class="level-item">运行demo</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#iot"><span class="level-left"><span class="level-item">5.1</span><span class="level-item">iot</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#server"><span class="level-left"><span class="level-item">5.1.1</span><span class="level-item">server</span></span></a></li><li><a class="level is-mobile" href="#client-1"><span class="level-left"><span class="level-item">5.1.2</span><span class="level-item">client-1</span></span></a></li><li><a class="level is-mobile" href="#client-2"><span class="level-left"><span class="level-item">5.1.3</span><span class="level-item">client-2</span></span></a></li></ul></li><li><a class="level is-mobile" href="#mpi-torch-fedopt-mnist-lr-example"><span class="level-left"><span class="level-item">5.2</span><span class="level-item">mpi_torch_fedopt_mnist_lr_example</span></span></a></li></ul></li><li><a class="level is-mobile" href="#使用GPU进行训练"><span class="level-left"><span class="level-item">6</span><span class="level-item">使用GPU进行训练</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#修改配置文件"><span class="level-left"><span class="level-item">6.1</span><span class="level-item">修改配置文件</span></span></a></li><li><a class="level is-mobile" href="#修改mapping文件"><span class="level-left"><span class="level-item">6.2</span><span class="level-item">修改mapping文件</span></span></a></li></ul></li><li><a class="level is-mobile" href="#cross-silo-运行"><span class="level-left"><span class="level-item">7</span><span class="level-item">cross_silo 运行</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#config-fedml-config-yaml"><span class="level-left"><span class="level-item">7.1</span><span class="level-item">config/fedml_config.yaml</span></span></a></li><li><a class="level is-mobile" href="#grpc-ipconfig-csv"><span class="level-left"><span class="level-item">7.2</span><span class="level-item">grpc_ipconfig.csv</span></span></a></li><li><a class="level is-mobile" href="#结果"><span class="level-left"><span class="level-item">7.3</span><span class="level-item">结果</span></span></a></li></ul></li><li><a class="level is-mobile" href="#fedml自定义"><span class="level-left"><span class="level-item">8</span><span class="level-item">fedml自定义</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#fedml运行参数"><span class="level-left"><span class="level-item">8.1</span><span class="level-item">fedml运行参数</span></span></a></li><li><a class="level is-mobile" href="#fedml运行流程"><span class="level-left"><span class="level-item">8.2</span><span class="level-item">fedml运行流程</span></span></a></li><li><a class="level is-mobile" href="#DataLoader的自定义"><span class="level-left"><span class="level-item">8.3</span><span class="level-item">DataLoader的自定义</span></span></a></li><li><a class="level is-mobile" href="#模型的自定义"><span class="level-left"><span class="level-item">8.4</span><span class="level-item">模型的自定义</span></span></a></li><li><a class="level is-mobile" href="#Trainer的自定义"><span class="level-left"><span class="level-item">8.5</span><span class="level-item">Trainer的自定义</span></span></a></li></ul></li><li><a class="level is-mobile" href="#用qemu虚拟机模拟多台机器（未完成）"><span class="level-left"><span class="level-item">9</span><span class="level-item">用qemu虚拟机模拟多台机器（未完成）</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#安装"><span class="level-left"><span class="level-item">9.1</span><span class="level-item">安装</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#Ninja的安装"><span class="level-left"><span class="level-item">9.1.1</span><span class="level-item">Ninja的安装</span></span></a></li><li><a class="level is-mobile" href="#pkg-config"><span class="level-left"><span class="level-item">9.1.2</span><span class="level-item">pkg-config</span></span></a></li></ul></li></ul></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/home/js/toc.js" defer></script></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/home/">Meow!!</a><p class="is-size-7"><span>&copy; 2025 Meow Meow Liu</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/home/js/column.js"></script><script src="/home/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/home/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/home/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/home/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/home/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script><script type="text/javascript" src="/home/js/fairyDustCursor.js"></script><link rel="stylesheet" type="text/css" href="/home/css/textPopup.css"><script type="text/javascript" src="/home/js/textPopup.js"></script><script type="text/javascript" src="/home/js/clickClipBoard.js"></script><script type="module" src="/home/js/mermaidInitializer.js"></script><script src="/home/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/home/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":200,"height":400},"mobile":{"show":true}});</script></body></html>

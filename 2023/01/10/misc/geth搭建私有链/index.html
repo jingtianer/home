@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>geth搭建私链 - Jingtianer</title><link rel="manifest" href="/home/manifest.json"><meta name="application-name" content="Jingtianer"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Jingtianer"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="主要工作参考go-ethereum官网的Private Networks文档搭建了一个私有链，并总结出几个脚本，可以半自动化地实现geth网络的搭建，脚本已上传至github仓库DLCCB setup.sh 这一步使用了以下几个工具 geth命令，用于生成初始两个节点的账户，使用创世块配置文件对两个账户进行初始化 puppeth 用于生成创世块的配置文件，这个命令是交互式的，编写了一个puppet"><meta property="og:type" content="blog"><meta property="og:title" content="geth搭建私链"><meta property="og:url" content="https://jingtianer.github.io/home/2023/01/10/misc/geth%E6%90%AD%E5%BB%BA%E7%A7%81%E6%9C%89%E9%93%BE/"><meta property="og:site_name" content="Jingtianer"><meta property="og:description" content="主要工作参考go-ethereum官网的Private Networks文档搭建了一个私有链，并总结出几个脚本，可以半自动化地实现geth网络的搭建，脚本已上传至github仓库DLCCB setup.sh 这一步使用了以下几个工具 geth命令，用于生成初始两个节点的账户，使用创世块配置文件对两个账户进行初始化 puppeth 用于生成创世块的配置文件，这个命令是交互式的，编写了一个puppet"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://jingtianer.github.io/home/img/og_image.png"><meta property="article:published_time" content="2023-01-10T03:28:00.000Z"><meta property="article:modified_time" content="2025-04-15T02:37:55.625Z"><meta property="article:author" content="Meow Meow Liu"><meta property="article:tag" content="linux"><meta property="article:tag" content="geth"><meta property="article:tag" content="blockchain"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://jingtianer.github.io/home/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://jingtianer.github.io/home/2023/01/10/misc/geth%E6%90%AD%E5%BB%BA%E7%A7%81%E6%9C%89%E9%93%BE/"},"headline":"geth搭建私链","image":["https://jingtianer.github.io/home/img/og_image.png"],"datePublished":"2023-01-10T03:28:00.000Z","dateModified":"2025-04-15T02:37:55.625Z","author":{"@type":"Person","name":"Meow Meow Liu"},"publisher":{"@type":"Organization","name":"Jingtianer","logo":{"@type":"ImageObject","url":{"text":"Meow!!"}}},"description":"主要工作参考go-ethereum官网的Private Networks文档搭建了一个私有链，并总结出几个脚本，可以半自动化地实现geth网络的搭建，脚本已上传至github仓库DLCCB setup.sh 这一步使用了以下几个工具 geth命令，用于生成初始两个节点的账户，使用创世块配置文件对两个账户进行初始化 puppeth 用于生成创世块的配置文件，这个命令是交互式的，编写了一个puppet"}</script><link rel="canonical" href="https://jingtianer.github.io/home/2023/01/10/misc/geth%E6%90%AD%E5%BB%BA%E7%A7%81%E6%9C%89%E9%93%BE/"><link rel="alternate" href="/home/atom.xml" title="Jingtianer" type="application/atom+xml"><link rel="icon" href="/home/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/vs.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/home/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const $tabMenu = document.querySelector(`a[href="${location.hash}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(location.hash);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/home/">Meow!!</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/home/">主页</a><a class="navbar-item" href="/home/archives">归档</a><a class="navbar-item" href="/home/categories">分类</a><a class="navbar-item" href="/home/tags">标签</a><a class="navbar-item" href="/home/about">关于我</a><a class="navbar-item" href="/home/tags/gallery">相册</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2023-01-10T03:28:00.000Z" title="2023/1/10 11:28:00">2023-01-10</time>发表</span><span class="level-item"><time dateTime="2025-04-15T02:37:55.625Z" title="2025/4/15 10:37:55">2025-04-15</time>更新</span><span class="level-item"><a class="link-muted" href="/home/categories/misc/">misc</a></span><span class="level-item">10 分钟读完 (大约1556个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">geth搭建私链</h1><div class="content"><h2 id="主要工作"><a href="#主要工作" class="headerlink" title="主要工作"></a>主要工作</h2><p>参考<code>go-ethereum</code>官网的<a target="_blank" rel="noopener" href="https://geth.ethereum.org/docs/fundamentals/private-network">Private Networks</a>文档搭建了一个私有链，并总结出几个脚本，可以半自动化地实现geth网络的搭建，脚本已上传至github仓库<a target="_blank" rel="noopener" href="https://github.com/jingtianer/DLCCB">DLCCB</a></p>
+<h2 id="setup-sh"><a href="#setup-sh" class="headerlink" title="setup.sh"></a>setup.sh</h2><ul>
+<li>这一步使用了以下几个工具<ul>
+<li><code>geth</code>命令，用于生成初始两个节点的账户，使用创世块配置文件对两个账户进行初始化</li>
+<li><code>puppeth</code> 用于生成创世块的配置文件，这个命令是交互式的，编写了一个<code>puppeth.txt</code>作为其输入，默认生成一个基于pow的区块链</li>
+<li><code>bootnode</code> 用于生成启动bootnode</li>
+</ul>
+</li>
+<li>这一步使用了以下几个linux命令<ul>
+<li><code>sed</code> 非交互式的文本编辑器，用于读取生成的账户的区块链地址，写入<code>puppeth.txt</code>中，使得<code>puppeth</code>工具能为初始的两个节点分配一定的以太币</li>
+<li><code>awk</code>，用于对文本的处理</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight sh"><figcaption><span>setup.sh</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> node1 node2</span><br><span class="line">geth --datadir node1 account new &lt; password.txt</span><br><span class="line">geth --datadir node2 account new &lt; password.txt</span><br><span class="line"></span><br><span class="line">sed -i <span class="string">&quot;5i<span class="subst">$(cat node1/keystore/UTC--* | awk &#x27;&#123;split($0, arr, <span class="string">&quot;\&quot;&quot;</span>)</span>; print arr[4]&#125;&#x27;)&quot;</span> puppeth.txt </span><br><span class="line">sed -i <span class="string">&quot;5i<span class="subst">$(cat node2/keystore/UTC--* | awk &#x27;&#123;split($0, arr, <span class="string">&quot;\&quot;&quot;</span>)</span>; print arr[4]&#125;&#x27;)&quot;</span> puppeth.txt </span><br><span class="line">puppeth &lt; puppeth.txt</span><br><span class="line">sed -i <span class="string">&quot;5d&quot;</span> puppeth.txt</span><br><span class="line">sed -i <span class="string">&quot;5d&quot;</span> puppeth.txt</span><br><span class="line"></span><br><span class="line">geth init --datadir node1 tianer.json</span><br><span class="line">geth init --datadir node2 tianer.json</span><br><span class="line"></span><br><span class="line"><span class="built_in">cat</span> password.txt | <span class="built_in">head</span> -n 1 | <span class="built_in">tee</span> node1/password.txt</span><br><span class="line"><span class="built_in">cat</span> password.txt | <span class="built_in">head</span> -n 1 | <span class="built_in">tee</span> node2/password.txt</span><br><span class="line"></span><br><span class="line">bootnode -genkey boot.key</span><br><span class="line">bootnode -nodekey boot.key -addr :30305</span><br></pre></td></tr></table></figure>
+
+<h3 id="两个输入文件的内容"><a href="#两个输入文件的内容" class="headerlink" title="两个输入文件的内容"></a>两个输入文件的内容</h3><figure class="highlight plaintext"><figcaption><span>password.txt</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1234567890</span><br><span class="line">1234567890</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>这里两个节点的密码是相同的，也可以单独为每个节点写一个密码文件，但是密码文件必须两行相同，因为创建账户时需要输入两次密码</p>
+</blockquote>
+<figure class="highlight plaintext"><figcaption><span>puppeth.txt</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">tianer</span><br><span class="line">2</span><br><span class="line">1</span><br><span class="line">1</span><br><span class="line"></span><br><span class="line">yes</span><br><span class="line">12345</span><br><span class="line">2</span><br><span class="line">2</span><br><span class="line"></span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>从上到下依次对配置创世块的配置文件进行创建，导出保存，删除。<br>会使用sed命令在第五行临时插入刚刚生成的账户文件的区块链地址，这样<code>puppeth</code>命令就知道要给哪些地址分配初始的以太币</p>
+</blockquote>
+<h3 id="sed命令"><a href="#sed命令" class="headerlink" title="sed命令"></a>sed命令</h3><p>sed 命令是一个面向行处理的工具，它以“行”为处理单位，针对每一行进行处理，处理后的结果会输出到标准输出（STDOUT）。你会发现 sed 命令是很懂礼貌的一个命令，它不会对读取的文件做任何贸然的修改，而是将内容都输出到标准输出中。</p>
+<ul>
+<li><p>基本用法</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sed [选项] <span class="string">&quot;指令&quot;</span> 文件</span><br></pre></td></tr></table></figure></li>
+<li><p>选项，如果希望sed命令对文件直接进行更改，需要添加<code>-i</code>参数， 以下是几个查那个用的参数</p>
+<ul>
+<li><code>-e</code> 　　–它告诉sed将下一个参数解释为一个sed指令，只有当命令行上给出多个sed指令时使用</li>
+<li><code>-f</code> 　　–后跟保存了sed指令的文件</li>
+<li><code>-i</code> 　　–直接对内容进行修改，不加 i 时默认只是预览，不会对文件进行实际修改</li>
+<li><code>-n</code> 　　–取消默认输出，sed默认会输出所有文本内容，使用 -n 参数后只显示处理过的行</li>
+</ul>
+</li>
+<li><p>指令，类似vim，sed也有编辑命令</p>
+<ul>
+<li><code>a</code> 　　  –追加，向匹配行后插入内容</li>
+<li><code>c</code> 　    –更改，更改匹配行的内容</li>
+<li><code>i</code> 　    –插入，向匹配行前插入内容</li>
+<li><code>d</code>   　　–删除，删除匹配的内容</li>
+<li><code>s</code>   　　–替换，替换匹配到的内容</li>
+<li><code>p</code> 　    –打印，打印匹配到的内容，通常与 -n 和用</li>
+<li><code>=</code> 　　  –用来打印被匹配到的行的行号</li>
+<li><code>n</code>　　   –读取下一行，遇到n时会自动跳入下一行</li>
+<li><code>r,w</code> 　　–读和写，r用于将内容读入文件，w用于将匹配内容写入到文件</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>其中<code>s</code>命令后跟正则串和目标串，可以起到文本的匹配替换<br><code>sed</code>的指令使用<code>/</code>作为定界符，转义符为<code>\</code></p>
+</blockquote>
+<p>例子：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sed -i <span class="string">&#x27;s/book/books/&#x27;</span> file</span><br><span class="line">sed -i <span class="string">&#x27;s/book/books/g&#x27;</span> file <span class="comment"># 后缀g对每行的所有匹配进行替换</span></span><br><span class="line">sed -i <span class="string">&#x27;2d&#x27;</span> file <span class="comment">#删除指定行</span></span><br><span class="line">sed -i <span class="string">&#x27;5ixxxxx&#x27;</span> file <span class="comment">#在指定行插入xxxxx</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>具体可以参考<a target="_blank" rel="noopener" href="https://blog.csdn.net/L1259863243/article/details/79364094">这里</a></li>
+</ul>
+<h3 id="awk命令"><a href="#awk命令" class="headerlink" title="awk命令"></a>awk命令</h3><p>AWK 是一种处理文本文件的语言，是一个强大的文本分析工具。<br>之所以叫 AWK 是因为其取了三位创始人 Alfred Aho，Peter Weinberger, 和 Brian Kernighan 的 Family Name 的首字符<br>linux中有三剑客之称：<br>三剑客之首就是 AWK<br>三剑客功能:<br>grep ： 过滤文本<br>sed  :  修改文本<br>awk  :  处理文本</p>
+<ul>
+<li>语法格式</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk [参数] [处理内容] [操作对象]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>具体可以参考<a target="_blank" rel="noopener" href="http://c.biancheng.net/view/4082.html">这里</a></li>
+</ul>
+<h2 id="mine-sh"><a href="#mine-sh" class="headerlink" title="mine.sh"></a>mine.sh</h2><p>用于启动创建的两个节点</p>
+<figure class="highlight sh"><figcaption><span>mine.sh</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">NODE=<span class="variable">$2</span></span><br><span class="line">ENODE=<span class="variable">$1</span></span><br><span class="line">AUTHRPCPORT=$((<span class="variable">$2</span>+<span class="number">8554</span>))</span><br><span class="line">PORT=$((<span class="variable">$2</span>+<span class="number">30308</span>))</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> geth --datadir node<span class="variable">$NODE</span> --port <span class="variable">$PORT</span> --bootnodes <span class="variable">$ENODE</span> --networkid 12345 --unlock 0x$(<span class="built_in">cat</span> node<span class="variable">$NODE</span>/keystore/UTC--* | awk <span class="string">&#x27;&#123;split($0, arr, &quot;\&quot;&quot;); print arr[4]&#125;&#x27;</span>) --password node1/password.txt --authrpc.port <span class="variable">$AUTHRPCPORT</span></span><br><span class="line"></span><br><span class="line">geth --datadir node<span class="variable">$NODE</span> --port <span class="variable">$PORT</span> --bootnodes <span class="variable">$ENODE</span> --networkid 12345 --unlock 0x$(<span class="built_in">cat</span> node<span class="variable">$NODE</span>/keystore/UTC--* | awk <span class="string">&#x27;&#123;split($0, arr, &quot;\&quot;&quot;); print arr[4]&#125;&#x27;</span>) --password node1/password.txt --authrpc.port <span class="variable">$AUTHRPCPORT</span> --mine</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>前一个脚本执行后，会输出enode， 将其复制下来，打开两个新的terminal窗口，enode作为这个脚本的第一个参数，第二个参数是希望启动的节点的编号</p>
+</blockquote>
+<h2 id="attach-sh"><a href="#attach-sh" class="headerlink" title="attach.sh"></a>attach.sh</h2><p>用于让两个节点开始挖矿，使用<code>geth attach</code>打开js交互界面，<code>miner.txt</code>作为输入文件，执行命令<code>miner.start(1)</code>开始挖矿</p>
+<figure class="highlight sh"><figcaption><span>attach.sh</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">NODE=<span class="variable">$1</span></span><br><span class="line"><span class="built_in">echo</span> geth attach node<span class="variable">$NODE</span>/geth.ipc</span><br><span class="line">geth attach node<span class="variable">$NODE</span>/geth.ipc  &lt; miner.txt</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>参数为希望开始挖矿的节点编号，也需要打开新的terminal执行</p>
+</blockquote>
+<figure class="highlight js"><figcaption><span>miner.txt</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">net.<span class="property">peerCount</span></span><br><span class="line">eth.<span class="title function_">getBalance</span>(eth.<span class="property">accounts</span>[<span class="number">0</span>])</span><br><span class="line">miner.<span class="title function_">start</span>(<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="sk-js"><a href="#sk-js" class="headerlink" title="sk.js"></a>sk.js</h2><p>用于获取节点的私钥，在开发时私钥很重要</p>
+<figure class="highlight js"><figcaption><span>sk.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> keythereum = <span class="built_in">require</span>(<span class="string">&quot;keythereum&quot;</span>);</span><br><span class="line"><span class="keyword">var</span> datadir = <span class="string">&quot;/home/tt/eth/net/node2/&quot;</span>;</span><br><span class="line"><span class="keyword">var</span> address= <span class="string">&quot;e43b98ac32beb344c94b15b9af5b46674d6c3e6d&quot;</span>;<span class="comment">//要小写</span></span><br><span class="line"><span class="keyword">const</span> password = <span class="string">&quot;1234567890&quot;</span>;</span><br><span class="line"><span class="keyword">var</span> keyObject = keythereum.<span class="title function_">importFromFile</span>(address, datadir);</span><br><span class="line"><span class="keyword">var</span> privateKey = keythereum.<span class="title function_">recover</span>(password, keyObject);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(privateKey.<span class="title function_">toString</span>(<span class="string">&#x27;hex&#x27;</span>));</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>需要节点的<code>datadir</code>和节点的<code>address</code></p>
+</blockquote>
+</div><div class="article-licensing box"><div class="licensing-title"><p>geth搭建私链</p><p><a href="https://jingtianer.github.io/home/2023/01/10/misc/geth搭建私有链/">https://jingtianer.github.io/home/2023/01/10/misc/geth搭建私有链/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>Meow Meow Liu</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2023-01-10</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2025-04-15</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/home/tags/linux/">linux</a><a class="link-muted mr-2" rel="tag" href="/home/tags/geth/">geth</a><a class="link-muted mr-2" rel="tag" href="/home/tags/blockchain/">blockchain</a></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/home/2023/02/13/LeetCode/LeetCode-%E5%88%B7%E9%A2%98%E6%80%BB%E7%BB%9321/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">LeetCode-21</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/home/2022/11/28/LeetCode/LeetCode-%E5%88%B7%E9%A2%98%E6%80%BB%E7%BB%9320/"><span class="level-item">LeetCode-20</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+            id: "d1d6d3aeb4c24d4d83e43bb279ea7f54",
+            repo: "blog_comment",
+            owner: "jingtianer",
+            clientID: "f0b13fe8021fcd2efe50",
+            clientSecret: "35207c14b34e77c48a3aeee1e94c9da169ffe0c2",
+            admin: ["jingtianer"],
+            createIssueManually: false,
+            distractionFreeMode: false,
+            perPage: 20,
+            pagerDirection: "last",
+            
+            
+            enableHotKey: true,
+            language: "zh-CN",
+        })
+        gitalk.render('comment-container')</script></div></div></div><!--!--><div class="column column-right is-4-tablet is-4-desktop is-4-widescreen  order-3 is-sticky"><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#主要工作"><span class="level-left"><span class="level-item">1</span><span class="level-item">主要工作</span></span></a></li><li><a class="level is-mobile" href="#setup-sh"><span class="level-left"><span class="level-item">2</span><span class="level-item">setup.sh</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#两个输入文件的内容"><span class="level-left"><span class="level-item">2.1</span><span class="level-item">两个输入文件的内容</span></span></a></li><li><a class="level is-mobile" href="#sed命令"><span class="level-left"><span class="level-item">2.2</span><span class="level-item">sed命令</span></span></a></li><li><a class="level is-mobile" href="#awk命令"><span class="level-left"><span class="level-item">2.3</span><span class="level-item">awk命令</span></span></a></li></ul></li><li><a class="level is-mobile" href="#mine-sh"><span class="level-left"><span class="level-item">3</span><span class="level-item">mine.sh</span></span></a></li><li><a class="level is-mobile" href="#attach-sh"><span class="level-left"><span class="level-item">4</span><span class="level-item">attach.sh</span></span></a></li><li><a class="level is-mobile" href="#sk-js"><span class="level-left"><span class="level-item">5</span><span class="level-item">sk.js</span></span></a></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/home/js/toc.js" defer></script></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/home/">Meow!!</a><p class="is-size-7"><span>&copy; 2025 Meow Meow Liu</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/home/js/column.js"></script><script src="/home/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/home/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/home/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/home/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/home/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script><script type="text/javascript" src="/home/js/fairyDustCursor.js"></script><link rel="stylesheet" type="text/css" href="/home/css/textPopup.css"><script type="text/javascript" src="/home/js/textPopup.js"></script><script type="text/javascript" src="/home/js/clickClipBoard.js"></script><script type="module" src="/home/js/mermaidInitializer.js"></script><script src="/home/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/home/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":200,"height":400},"mobile":{"show":true}});</script></body></html>

@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>LeetCode-数据库-1 - Jingtianer</title><link rel="manifest" href="/home/manifest.json"><meta name="application-name" content="Jingtianer"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Jingtianer"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="181. 超过经理收入的员工思路 Employee表中给出员工id，员工的manager的id 按照managerid和员工id自连接一下，使用内连接去掉null 筛选员工工资大于管理员工资的  知识点 判断相等用单引号  代码"><meta property="og:type" content="blog"><meta property="og:title" content="LeetCode-数据库-1"><meta property="og:url" content="https://jingtianer.github.io/home/2024/03/03/LeetCode/LeetCode-%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%88%B7%E9%A2%98%E6%80%BB%E7%BB%931/"><meta property="og:site_name" content="Jingtianer"><meta property="og:description" content="181. 超过经理收入的员工思路 Employee表中给出员工id，员工的manager的id 按照managerid和员工id自连接一下，使用内连接去掉null 筛选员工工资大于管理员工资的  知识点 判断相等用单引号  代码"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://jingtianer.github.io/home/img/og_image.png"><meta property="article:published_time" content="2024-03-03T03:14:34.000Z"><meta property="article:modified_time" content="2025-04-15T02:37:55.604Z"><meta property="article:author" content="Meow Meow Liu"><meta property="article:tag" content="LeetCode"><meta property="article:tag" content="数据库"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://jingtianer.github.io/home/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://jingtianer.github.io/home/2024/03/03/LeetCode/LeetCode-%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%88%B7%E9%A2%98%E6%80%BB%E7%BB%931/"},"headline":"LeetCode-数据库-1","image":["https://jingtianer.github.io/home/img/og_image.png"],"datePublished":"2024-03-03T03:14:34.000Z","dateModified":"2025-04-15T02:37:55.604Z","author":{"@type":"Person","name":"Meow Meow Liu"},"publisher":{"@type":"Organization","name":"Jingtianer","logo":{"@type":"ImageObject","url":{"text":"Meow!!"}}},"description":"181. 超过经理收入的员工思路 Employee表中给出员工id，员工的manager的id 按照managerid和员工id自连接一下，使用内连接去掉null 筛选员工工资大于管理员工资的  知识点 判断相等用单引号  代码"}</script><link rel="canonical" href="https://jingtianer.github.io/home/2024/03/03/LeetCode/LeetCode-%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%88%B7%E9%A2%98%E6%80%BB%E7%BB%931/"><link rel="alternate" href="/home/atom.xml" title="Jingtianer" type="application/atom+xml"><link rel="icon" href="/home/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/vs.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/home/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const $tabMenu = document.querySelector(`a[href="${location.hash}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(location.hash);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/home/">Meow!!</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/home/">主页</a><a class="navbar-item" href="/home/archives">归档</a><a class="navbar-item" href="/home/categories">分类</a><a class="navbar-item" href="/home/tags">标签</a><a class="navbar-item" href="/home/about">关于我</a><a class="navbar-item" href="/home/tags/gallery">相册</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2024-03-03T03:14:34.000Z" title="2024/3/3 11:14:34">2024-03-03</time>发表</span><span class="level-item"><time dateTime="2025-04-15T02:37:55.604Z" title="2025/4/15 10:37:55">2025-04-15</time>更新</span><span class="level-item"><a class="link-muted" href="/home/categories/LeetCode/">LeetCode</a><span> / </span><a class="link-muted" href="/home/categories/LeetCode/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></span><span class="level-item">19 分钟读完 (大约2820个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">LeetCode-数据库-1</h1><div class="content"><h2 id="181-超过经理收入的员工"><a href="#181-超过经理收入的员工" class="headerlink" title="181. 超过经理收入的员工"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/employees-earning-more-than-their-managers/description/">181. 超过经理收入的员工</a></h2><h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><ul>
+<li><code>Employee</code>表中给出员工id，员工的manager的id</li>
+<li>按照managerid和员工id自连接一下，使用内连接去掉null</li>
+<li>筛选员工工资大于管理员工资的</li>
+</ul>
+<h3 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h3><ul>
+<li>判断相等用单引号</li>
+</ul>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> E1.name <span class="keyword">AS</span> Employee</span><br><span class="line"><span class="keyword">FROM</span> Employee E1 </span><br><span class="line"><span class="keyword">INNER</span> <span class="keyword">JOIN</span> Employee E2 </span><br><span class="line"><span class="keyword">ON</span> E1.managerId <span class="operator">=</span> E2.id </span><br><span class="line"><span class="keyword">AND</span> E1.salary <span class="operator">&gt;</span> E2.salary</span><br></pre></td></tr></table></figure>
+
+<h2 id="182-查找重复的电子邮箱"><a href="#182-查找重复的电子邮箱" class="headerlink" title="182. 查找重复的电子邮箱"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/duplicate-emails/description/">182. 查找重复的电子邮箱</a></h2><h3 id="知识点-1"><a href="#知识点-1" class="headerlink" title="知识点"></a>知识点</h3><ul>
+<li>group by 根据元组进行分组</li>
+<li>having 根据条件将聚合后的分组进行筛选（可否理解为对分组整体的where语句？）</li>
+</ul>
+<h3 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">SELECT Email</span></span><br><span class="line"><span class="function">FROM Person</span></span><br><span class="line"><span class="function">GROUP BY email</span></span><br><span class="line"><span class="function">HAVING <span class="title">count</span><span class="params">(email)</span> &gt; 1</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="183-从不订购的客户"><a href="#183-从不订购的客户" class="headerlink" title="183. 从不订购的客户"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/customers-who-never-order/description/">183. 从不订购的客户</a></h2><h3 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h3><ul>
+<li>一个顾客表，一个订单表</li>
+<li>顾客表和订单表左连接，按照顾客id连接</li>
+<li>没有订单的顾客通过左连接会产生null，用where找出含有null的行</li>
+</ul>
+<h3 id="知识点-2"><a href="#知识点-2" class="headerlink" title="知识点"></a>知识点</h3><ul>
+<li>左连接，右边存在null依然保留左边，左边有null就不保留</li>
+<li>右连接，右边存在null不保留左边，右边有null就不保留</li>
+<li>内连接，不论左右，有null就不保留</li>
+</ul>
+<h3 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> name <span class="keyword">AS</span> Customers</span><br><span class="line"><span class="keyword">FROM</span> Customers <span class="keyword">LEFT</span> <span class="keyword">JOIN</span> Orders O <span class="keyword">ON</span> O.customerId <span class="operator">=</span> Customers.id </span><br><span class="line"><span class="keyword">WHERE</span> O.customerId <span class="keyword">IS</span> <span class="keyword">NULL</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="196-删除重复的电子邮箱"><a href="#196-删除重复的电子邮箱" class="headerlink" title="196. 删除重复的电子邮箱"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/delete-duplicate-emails/description/">196. 删除重复的电子邮箱</a></h2><h3 id="思路-2"><a href="#思路-2" class="headerlink" title="思路"></a>思路</h3><ul>
+<li>对于有重复的email，保留id最小的一项，删除剩余的重复项</li>
+<li>依照email进行group by</li>
+<li>使用min找到每个email的最小值</li>
+<li>将上面的结果作为子查询，若id不在其中，则删除</li>
+<li>不允许删除表时对表作查询，需要再嵌套一层子查询</li>
+</ul>
+<h3 id="知识点-3"><a href="#知识点-3" class="headerlink" title="知识点"></a>知识点</h3><ul>
+<li>子查询必须指定别名<code>紧跟在子查询的括号后面</code></li>
+<li>一般来说，<code>DELETE FROM XXX WHERE &lt;-condition-&gt;</code></li>
+</ul>
+<h3 id="代码-3"><a href="#代码-3" class="headerlink" title="代码"></a>代码</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> Person</span><br><span class="line"><span class="keyword">WHERE</span> </span><br><span class="line">id <span class="keyword">NOT</span> <span class="keyword">IN</span> (<span class="keyword">SELECT</span> T.id <span class="keyword">FROM</span> (<span class="keyword">SELECT</span> <span class="built_in">MIN</span>(id) <span class="keyword">as</span> id <span class="keyword">FROM</span> Person <span class="keyword">GROUP</span> <span class="keyword">BY</span> email) T);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 不允许删除与查询在同一个表上</span></span><br><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> Person</span><br><span class="line"><span class="keyword">WHERE</span> </span><br><span class="line">id <span class="keyword">NOT</span> <span class="keyword">IN</span> (<span class="keyword">SELECT</span> <span class="built_in">MIN</span>(id) <span class="keyword">as</span> id <span class="keyword">FROM</span> Person <span class="keyword">GROUP</span> <span class="keyword">BY</span> email);</span><br></pre></td></tr></table></figure>
+
+<h2 id="197-上升的温度"><a href="#197-上升的温度" class="headerlink" title="197. 上升的温度"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/rising-temperature/description/">197. 上升的温度</a></h2><h3 id="思路-3"><a href="#思路-3" class="headerlink" title="思路"></a>思路</h3><ul>
+<li>如果第二天温度比第一天高，就输出</li>
+<li>同一张表自连接，筛选出日期相差一天且温度升高的</li>
+</ul>
+<h3 id="知识点-4"><a href="#知识点-4" class="headerlink" title="知识点"></a>知识点</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> A, B, C, ... <span class="keyword">WHERE</span> <span class="operator">&lt;</span><span class="operator">-</span><span class="keyword">condition</span><span class="operator">-</span><span class="operator">&gt;</span></span><br></pre></td></tr></table></figure>
+<p>相当于对所有表全连接，然后根据WHERE筛选</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> A XXX <span class="keyword">JOIN</span> B <span class="keyword">ON</span> <span class="operator">&lt;</span><span class="operator">-</span>condition1<span class="operator">-</span><span class="operator">&gt;</span> XXX <span class="keyword">JOIN</span> C <span class="keyword">ON</span> <span class="operator">&lt;</span><span class="operator">-</span>condition2<span class="operator">-</span><span class="operator">&gt;</span> ...</span><br></pre></td></tr></table></figure>
+<p>相当依次连接各个表，且可以控制连接的方式（左、右、全），并根据条件筛选</p>
+<ul>
+<li>timestampdiff(expr, date1, date2)<ul>
+<li>根据expr计算两个date的差值</li>
+<li>如果expr是day，就是算差距多少天</li>
+</ul>
+</li>
+</ul>
+<h3 id="代码-4"><a href="#代码-4" class="headerlink" title="代码"></a>代码</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> W2.id</span><br><span class="line"><span class="keyword">FROM</span> Weather W1 <span class="keyword">JOIN</span>  Weather W2</span><br><span class="line"><span class="keyword">ON</span> timestampdiff(<span class="keyword">day</span>, W2.recordDate, W1.recordDate) <span class="operator">=</span> <span class="number">-1</span></span><br><span class="line"><span class="keyword">AND</span> W2.temperature <span class="operator">&gt;</span> W1.temperature;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> W2.id</span><br><span class="line"><span class="keyword">FROM</span> Weather W1, Weather W2</span><br><span class="line"><span class="keyword">WHERE</span> timestampdiff(<span class="keyword">day</span>, W2.recordDate, W1.recordDate) <span class="operator">=</span> <span class="number">-1</span></span><br><span class="line"><span class="keyword">AND</span> W2.temperature <span class="operator">&gt;</span> W1.temperature;</span><br></pre></td></tr></table></figure>
+
+<h2 id="511-游戏玩法分析-I"><a href="#511-游戏玩法分析-I" class="headerlink" title="511. 游戏玩法分析 I"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/game-play-analysis-i/description/">511. 游戏玩法分析 I</a></h2><h3 id="思路-4"><a href="#思路-4" class="headerlink" title="思路"></a>思路</h3><ul>
+<li>找到每个用户第一次登录的时间</li>
+<li>group by用户id，然后通过min计算最小日期</li>
+</ul>
+<h3 id="代码-5"><a href="#代码-5" class="headerlink" title="代码"></a>代码</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> player_id, <span class="built_in">min</span>(event_date) <span class="keyword">AS</span> first_login</span><br><span class="line"><span class="keyword">FROM</span> Activity</span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> player_id</span><br></pre></td></tr></table></figure>
+
+<h2 id="550-游戏玩法分析-IV"><a href="#550-游戏玩法分析-IV" class="headerlink" title="550. 游戏玩法分析 IV"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/game-play-analysis-iv/description/">550. 游戏玩法分析 IV</a></h2><h3 id="思路-5"><a href="#思路-5" class="headerlink" title="思路"></a>思路</h3><ul>
+<li>判断有多少用户在第一次登录后的第二天也登录游戏了</li>
+<li>创建子查询查找每个用户的第一次登录时间</li>
+<li>子查询与用户登录时间表左连接，按照用户id</li>
+<li>找到登录日期与第一次登录时间相差1天的行，如果第二天登陆了，则登录时间非空，否则登录时间为空</li>
+<li>统计登录时间为空的个数，除以总用户个数</li>
+</ul>
+<h3 id="知识点-5"><a href="#知识点-5" class="headerlink" title="知识点"></a>知识点</h3><ul>
+<li>ADDDATE(date, expr)<ul>
+<li>根据expr在date的基础上相加</li>
+<li>expr &#x3D; <code>INTERVAL 1 DAY</code>表示在date的基础上加一天</li>
+</ul>
+</li>
+<li>ROUND(number, n)<ul>
+<li>number精确到小数点后n位</li>
+</ul>
+</li>
+</ul>
+<h3 id="代码-6"><a href="#代码-6" class="headerlink" title="代码"></a>代码</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> ROUND(<span class="built_in">count</span>(event_date)<span class="operator">/</span><span class="built_in">count</span>(First_Login.player_id), <span class="number">2</span>) <span class="keyword">AS</span> fraction</span><br><span class="line"><span class="keyword">FROM</span> (</span><br><span class="line">    <span class="keyword">SELECT</span> player_id, <span class="built_in">min</span>(event_date) <span class="keyword">AS</span> first_login</span><br><span class="line">    <span class="keyword">FROM</span> Activity</span><br><span class="line">    <span class="keyword">GROUP</span> <span class="keyword">BY</span> player_id) First_Login </span><br><span class="line"><span class="keyword">LEFT</span> <span class="keyword">JOIN</span> Activity</span><br><span class="line"><span class="keyword">ON</span> First_Login.player_id <span class="operator">=</span> Activity.player_id</span><br><span class="line"><span class="keyword">AND</span> ADDDATE(First_Login.first_login, <span class="type">INTERVAL</span> <span class="number">1</span> <span class="keyword">DAY</span>) <span class="operator">=</span> Activity.event_date</span><br></pre></td></tr></table></figure>
+
+<h2 id="180-连续出现的数字"><a href="#180-连续出现的数字" class="headerlink" title="180. 连续出现的数字"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/consecutive-numbers/description/">180. 连续出现的数字</a></h2><h3 id="思路-6"><a href="#思路-6" class="headerlink" title="思路"></a>思路</h3><ul>
+<li>表格自连接三次，筛选出id递增且num一样的</li>
+</ul>
+<h3 id="代码-7"><a href="#代码-7" class="headerlink" title="代码"></a>代码</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> L3.num <span class="keyword">AS</span> ConsecutiveNums </span><br><span class="line"><span class="keyword">FROM</span></span><br><span class="line">    Logs L1,</span><br><span class="line">    Logs L2,</span><br><span class="line">    Logs L3</span><br><span class="line"><span class="keyword">WHERE</span> </span><br><span class="line">    L1.id <span class="operator">=</span> L2.id<span class="number">-1</span> <span class="keyword">AND</span></span><br><span class="line">    L1.num <span class="operator">=</span> L2.num <span class="keyword">AND</span></span><br><span class="line">    L2.id <span class="operator">=</span> L3.id<span class="number">-1</span> <span class="keyword">AND</span></span><br><span class="line">    L2.num <span class="operator">=</span> L3.num</span><br></pre></td></tr></table></figure>
+
+<h2 id="178-分数排名"><a href="#178-分数排名" class="headerlink" title="178. 分数排名"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/rank-scores/description/">178. 分数排名</a></h2><ul>
+<li>对分数进行排序，并给出排名，同分同排</li>
+</ul>
+<h3 id="思路1-知识点"><a href="#思路1-知识点" class="headerlink" title="思路1+知识点"></a>思路1+知识点</h3><ul>
+<li><code>row_number()</code> + <code>over(ORDER BY column_name [desc])</code>函数可以按照列排序，并给出行号</li>
+<li>但行号不能实现同分同排</li>
+<li>按照分数GROUP BY，然后<code>row_number</code> + <code>over</code>计算出每个分数对应的排序</li>
+<li>将上面的内容作为子查询，与成绩表相连接，就可以得到同分同排名了</li>
+</ul>
+<h3 id="代码-8"><a href="#代码-8" class="headerlink" title="代码"></a>代码</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> T.score, T.rank <span class="keyword">FROM</span> (</span><br><span class="line">    <span class="keyword">SELECT</span> score, (<span class="built_in">row_number</span>() <span class="keyword">over</span>(<span class="keyword">ORDER</span> <span class="keyword">BY</span> score <span class="keyword">DESC</span>)) <span class="keyword">AS</span> <span class="string">&#x27;rank&#x27;</span></span><br><span class="line">    <span class="keyword">FROM</span> Scores </span><br><span class="line">    <span class="keyword">GROUP</span> <span class="keyword">BY</span> score </span><br><span class="line">    <span class="keyword">ORDER</span> <span class="keyword">BY</span> score <span class="keyword">DESC</span></span><br><span class="line">) T <span class="keyword">INNER</span> <span class="keyword">JOIN</span> Scores <span class="keyword">on</span> T.score <span class="operator">=</span> Scores.score</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> score <span class="keyword">DESC</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="思路2-知识点"><a href="#思路2-知识点" class="headerlink" title="思路2+知识点"></a>思路2+知识点</h3><ul>
+<li><code>dense_rank()</code> + <code>over()</code> 可以给出同分同排名</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> score, <span class="built_in">dense_rank</span>() <span class="keyword">over</span>(<span class="keyword">ORDER</span> <span class="keyword">BY</span> score <span class="keyword">DESC</span>) <span class="keyword">AS</span> <span class="string">&#x27;rank&#x27;</span></span><br><span class="line"><span class="keyword">FROM</span> Scores</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> score <span class="keyword">DESC</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="184-部门工资最高的员工"><a href="#184-部门工资最高的员工" class="headerlink" title="184. 部门工资最高的员工"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/department-highest-salary/description/">184. 部门工资最高的员工</a></h2><h3 id="思路1"><a href="#思路1" class="headerlink" title="思路1"></a>思路1</h3><ul>
+<li>子查询，通过group by找出每个部门最大salary</li>
+<li>与员工表连接，筛选出部门id相同，薪资与部门最高薪资相同的行</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> T.Department, E.name <span class="keyword">AS</span> Employee, T.Salary</span><br><span class="line"><span class="keyword">FROM</span> Employee E <span class="keyword">INNER</span> <span class="keyword">JOIN</span> (</span><br><span class="line">    <span class="keyword">SELECT</span> D.id <span class="keyword">as</span> DID, D.name <span class="keyword">AS</span> Department, E.name <span class="keyword">AS</span> Employee, <span class="built_in">MAX</span>(E.salary) <span class="keyword">AS</span> Salary</span><br><span class="line">    <span class="keyword">FROM</span> Employee E <span class="keyword">JOIN</span> Department D <span class="keyword">ON</span> E.departmentId <span class="operator">=</span> D.id</span><br><span class="line">    <span class="keyword">GROUP</span> <span class="keyword">BY</span> E.departmentId</span><br><span class="line">) T </span><br><span class="line"><span class="keyword">ON</span> T.Salary <span class="operator">=</span> E.salary </span><br><span class="line"><span class="keyword">AND</span> T.DID <span class="operator">=</span> E.departmentId;</span><br></pre></td></tr></table></figure>
+
+<h3 id="思路2"><a href="#思路2" class="headerlink" title="思路2"></a>思路2</h3><ul>
+<li>子查询，通过group by找出每个部门最大salary</li>
+<li>员工表啊与部门表合并，若(员工薪水, 部门id)存在于子查询中，则筛选出来</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span></span><br><span class="line">    Department.name <span class="keyword">AS</span> <span class="string">&#x27;Department&#x27;</span>,</span><br><span class="line">    Employee.name <span class="keyword">AS</span> <span class="string">&#x27;Employee&#x27;</span>,</span><br><span class="line">    Salary</span><br><span class="line"><span class="keyword">FROM</span></span><br><span class="line">    Employee</span><br><span class="line">        <span class="keyword">JOIN</span></span><br><span class="line">    Department <span class="keyword">ON</span> Employee.DepartmentId <span class="operator">=</span> Department.Id</span><br><span class="line"><span class="keyword">WHERE</span></span><br><span class="line">    (Employee.DepartmentId , Salary) <span class="keyword">IN</span></span><br><span class="line">    (   <span class="keyword">SELECT</span></span><br><span class="line">            DepartmentId, <span class="built_in">MAX</span>(Salary)</span><br><span class="line">        <span class="keyword">FROM</span></span><br><span class="line">            Employee</span><br><span class="line">        <span class="keyword">GROUP</span> <span class="keyword">BY</span> DepartmentId</span><br><span class="line">	)</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="176-第二高的薪水"><a href="#176-第二高的薪水" class="headerlink" title="176. 第二高的薪水"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/second-highest-salary/description/">176. 第二高的薪水</a></h2><h3 id="思路1-知识点-1"><a href="#思路1-知识点-1" class="headerlink" title="思路1 + 知识点"></a>思路1 + 知识点</h3><ul>
+<li><p>IFNULL(a, b) 如果a是NULL则值替换为b</p>
+</li>
+<li><p>LIMIT N，只选出前N个（最多N个）</p>
+</li>
+<li><p>LIMIT M OFFSET M，从第M个开始选出N个（最多N个）</p>
+</li>
+<li><p>LIMIT 1 OFFSET 1则表示第二个，如果没有第二个，返回空列表</p>
+</li>
+<li><p>子查询根据salary排序，使用<code>LIMIT 1 OFFSET 1</code>找出第二个</p>
+</li>
+<li><p>如果没有第二个需要返回NULL，则根据</p>
+</li>
+<li><p>题目需要返回列表为指定名称，通过<code>AS 别名</code>可以为列取别名</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> IFNULL(</span><br><span class="line">    (<span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> salary <span class="keyword">FROM</span> Employee <span class="keyword">ORDER</span> <span class="keyword">BY</span> salary <span class="keyword">DESC</span></span><br><span class="line">LIMIT <span class="number">1</span> <span class="keyword">OFFSET</span> <span class="number">1</span>)</span><br><span class="line">, <span class="keyword">NULL</span>) <span class="keyword">AS</span> SecondHighestSalary </span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="思路2-知识点-1"><a href="#思路2-知识点-1" class="headerlink" title="思路2 + 知识点"></a>思路2 + 知识点</h3><ul>
+<li>子查询通过max找到最大的</li>
+<li>同where筛选所有小于max的</li>
+<li>对所有小于max的行，再次使用max，获得第二大的<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="built_in">MAX</span>(salary) <span class="keyword">AS</span> SecondHighestSalary <span class="keyword">FROM</span> Employee</span><br><span class="line"><span class="keyword">WHERE</span> salary <span class="operator">&lt;</span> (<span class="keyword">SELECT</span> <span class="built_in">MAX</span>(salary) <span class="keyword">FROM</span> Employee)</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="177-第N高的薪水"><a href="#177-第N高的薪水" class="headerlink" title="177. 第N高的薪水"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/nth-highest-salary/description/">177. 第N高的薪水</a></h2><ul>
+<li>这道题需要我们实现一个函数，参数是N</li>
+<li>与上一题一样，通过<code>LIMIT 1 OFFSET M</code></li>
+<li>OFFSET后面不能跟表达式<ul>
+<li>需要声明一个新变量M<code>DECLARE M INT; </code></li>
+<li>并置值为N-1<code>SET M = N-1;</code></li>
+<li>通过return语句返回<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">FUNCTION</span> getNthHighestSalary(N <span class="type">INT</span>) <span class="keyword">RETURNS</span> <span class="type">INT</span></span><br><span class="line"><span class="keyword">BEGIN</span></span><br><span class="line"><span class="keyword">DECLARE</span> M <span class="type">INT</span>; </span><br><span class="line">    <span class="keyword">SET</span> M <span class="operator">=</span> N<span class="number">-1</span>; </span><br><span class="line">  <span class="keyword">RETURN</span> (</span><br><span class="line">      <span class="keyword">SELECT</span> IFNULL((<span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> salary <span class="keyword">FROM</span> Employee <span class="keyword">ORDER</span> <span class="keyword">BY</span> salary <span class="keyword">DESC</span> LIMIT <span class="number">1</span> <span class="keyword">OFFSET</span> M), <span class="keyword">NULL</span>)</span><br><span class="line">  );</span><br><span class="line"><span class="keyword">END</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h2 id="185-部门工资前三高的所有员工"><a href="#185-部门工资前三高的所有员工" class="headerlink" title="185. 部门工资前三高的所有员工"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/department-top-three-salaries/description/">185. 部门工资前三高的所有员工</a></h2><h3 id="知识点-6"><a href="#知识点-6" class="headerlink" title="知识点"></a>知识点</h3><ul>
+<li>count(column_name): 计算列中非null的个数</li>
+<li>count(distinct column_name): 计算列中非null的互不相同的个数</li>
+<li>count(*): 统计总行数，包括NULL和重复的</li>
+<li>count(1), count(2), …<ul>
+<li>1,2,… 表示恒真表达式</li>
+<li>记录总数，包括重复和NULL</li>
+</ul>
+</li>
+<li>having count(xxx) &gt; 0<ul>
+<li>相当于将值为NULL的筛选出去，如果整个分组空了，就移除整个分组</li>
+</ul>
+</li>
+<li>having count(xxx) &lt;&#x3D; N<ul>
+<li>相当于将组内多于N个的行删除</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>?: having相当于，若组满足条件，则整组留下，若不满足，则去掉不满足的行，直到组满足为止</p>
+</blockquote>
+<h3 id="思路-7"><a href="#思路-7" class="headerlink" title="思路"></a>思路</h3><ul>
+<li>找出各部门前三高的不同工资</li>
+<li>通过having筛选</li>
+</ul>
+<h3 id="代码-9"><a href="#代码-9" class="headerlink" title="代码"></a>代码</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> D.name <span class="keyword">AS</span> Department, E.name <span class="keyword">AS</span> Employee, E.salary <span class="keyword">AS</span> Salary</span><br><span class="line"><span class="keyword">FROM</span> Employee E, Department <span class="keyword">AS</span> D, Employee E2</span><br><span class="line"><span class="keyword">WHERE</span> D.id <span class="operator">=</span> E.departmentId <span class="keyword">AND</span> E2.departmentId <span class="operator">=</span> E.departmentId <span class="keyword">AND</span> E.salary <span class="operator">&lt;=</span> E2.salary</span><br><span class="line"><span class="keyword">group</span> <span class="keyword">by</span> D.ID,E.Name <span class="keyword">having</span> <span class="built_in">count</span>(<span class="keyword">distinct</span> E2.Salary) <span class="operator">&lt;=</span> <span class="number">3</span></span><br><span class="line"><span class="keyword">order</span> <span class="keyword">by</span> D.Name, E.Salary <span class="keyword">desc</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="262-行程和用户"><a href="#262-行程和用户" class="headerlink" title="262. 行程和用户"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/trips-and-users/description/">262. 行程和用户</a></h2><h3 id="知识点-7"><a href="#知识点-7" class="headerlink" title="知识点"></a>知识点</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">count</span>(<span class="keyword">CASE</span> <span class="keyword">WHEN</span> <span class="keyword">condition</span> <span class="keyword">THEN</span> A <span class="keyword">ELSE</span> B <span class="keyword">END</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>根据条件，若某一行满足条件，则该行统计是，按照值A，否则按照值B</li>
+<li>统计非NULL的个数，所以一般A和B中一个为NULL一个为非NULL</li>
+</ul>
+<h3 id="思路-8"><a href="#思路-8" class="headerlink" title="思路"></a>思路</h3><ul>
+<li>先将路程表，用户表根据司机id，乘客id和用户id进行连接，排除被禁用户的订单，排除掉时间在<code>2023-10-01</code>到<code>2013-10-03</code>之外的订单</li>
+<li>使用<code>count(status)</code>筛选出分母</li>
+<li>使用<code>count(case when then else end)</code>筛选出分子</li>
+</ul>
+<h3 id="代码-10"><a href="#代码-10" class="headerlink" title="代码"></a>代码</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> </span><br><span class="line">    T.request_at <span class="keyword">AS</span> <span class="keyword">Day</span>, </span><br><span class="line">    ROUND(<span class="built_in">sum</span>(<span class="keyword">CASE</span> <span class="keyword">WHEN</span> T.status <span class="operator">=</span> <span class="string">&#x27;completed&#x27;</span> <span class="keyword">THEN</span> <span class="number">0</span> <span class="keyword">ELSE</span> <span class="number">1</span> <span class="keyword">END</span>) <span class="operator">/</span> <span class="built_in">count</span>(T.status), <span class="number">2</span>) <span class="keyword">AS</span> <span class="string">&#x27;Cancellation Rate&#x27;</span></span><br><span class="line"><span class="keyword">FROM</span> Trips T <span class="keyword">LEFT</span> <span class="keyword">JOIN</span> Users U1</span><br><span class="line"><span class="keyword">ON</span> T.client_id <span class="operator">=</span> U1.users_id</span><br><span class="line"><span class="keyword">LEFT</span> <span class="keyword">JOIN</span> Users U2</span><br><span class="line"><span class="keyword">ON</span> T.driver_id <span class="operator">=</span> U2.users_id</span><br><span class="line"><span class="keyword">WHERE</span> U1.banned <span class="operator">=</span> <span class="string">&#x27;No&#x27;</span> <span class="keyword">AND</span> U2.banned <span class="operator">=</span> <span class="string">&#x27;No&#x27;</span></span><br><span class="line"><span class="keyword">AND</span> T.request_at </span><br><span class="line"><span class="keyword">BETWEEN</span> <span class="type">DATE</span>(&quot;2013-10-01&quot;) <span class="keyword">AND</span> <span class="type">DATE</span>(&quot;2013-10-03&quot;)</span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> T.request_at</span><br></pre></td></tr></table></figure>
+
+<h2 id="SQL性能优化"><a href="#SQL性能优化" class="headerlink" title="SQL性能优化"></a>SQL性能优化</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/youzhibing/p/11909821.html">神奇的 SQL 之性能优化 → 让 SQL 飞起来</a></li>
+</ul>
+<h3 id="用EXISTS代替IN"><a href="#用EXISTS代替IN" class="headerlink" title="用EXISTS代替IN"></a>用<code>EXISTS</code>代替<code>IN</code></h3><ul>
+<li>使用<code>IN</code>会产生一张临时表（内联视图），且在匹配时会扫描全表</li>
+<li>使用<code>EXISTS</code>不会产生临时表，在匹配时不会扫描全表，满足条件则停止</li>
+</ul>
+<h3 id="用连接替代IN"><a href="#用连接替代IN" class="headerlink" title="用连接替代IN"></a>用连接替代IN</h3><ul>
+<li>在有索引时，连接与<code>EXISTS</code>性能相近</li>
+<li>没有索引，<code>EXISTS</code>更好</li>
+</ul>
+<h3 id="避免排序"><a href="#避免排序" class="headerlink" title="避免排序"></a>避免排序</h3><ul>
+<li>很多关键字都存在排序的过程<ul>
+<li>ORDER BY</li>
+<li>GROUP BY</li>
+<li>DISTINCT</li>
+<li>聚合函数(MIN,MAX,SUM,AVG,COUNT)</li>
+<li>集合函数(UNION,INTERSECT,EXCEPT)<ul>
+<li>为了去重而排序</li>
+<li>使用(UNION ALL,INTERSECT ALL,EXCEPT ALL)不去重</li>
+</ul>
+</li>
+<li>窗口函数(row_number, rank等)</li>
+</ul>
+</li>
+</ul>
+<h4 id="使用-EXISTS-代替-DISTINCT"><a href="#使用-EXISTS-代替-DISTINCT" class="headerlink" title="使用 EXISTS 代替 DISTINCT"></a>使用 <code>EXISTS</code> 代替 <code>DISTINCT</code></h4><h4 id="能写在where中的条件不要写在having里"><a href="#能写在where中的条件不要写在having里" class="headerlink" title="能写在where中的条件不要写在having里"></a>能写在<code>where</code>中的条件不要写在<code>having</code>里</h4><h4 id="在极值函数中使用索引"><a href="#在极值函数中使用索引" class="headerlink" title="在极值函数中使用索引"></a>在极值函数中使用索引</h4><ul>
+<li>min，max会全表扫描+排序</li>
+<li>对需要求min,max的列创建索引，加快查找速度</li>
+</ul>
+<h4 id="在-GROUP-BY-子句和-ORDER-BY-子句中使用索引"><a href="#在-GROUP-BY-子句和-ORDER-BY-子句中使用索引" class="headerlink" title="在 GROUP BY 子句和 ORDER BY 子句中使用索引"></a>在 <code>GROUP BY</code> 子句和 <code>ORDER BY</code> 子句中使用索引</h4><h3 id="使用索引"><a href="#使用索引" class="headerlink" title="使用索引"></a>使用索引</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/youzhibing/p/14175374.html">神奇的 SQL 之擦肩而过 → 真的用到索引了吗</a></li>
+</ul>
+<h3 id="减少临时表"><a href="#减少临时表" class="headerlink" title="减少临时表"></a>减少临时表</h3><ul>
+<li>临时表会消耗内存资源</li>
+<li>临时表有时无法继承索引，导致效率低下</li>
+</ul>
+<h4 id="尽量使用having而不是临时表"><a href="#尽量使用having而不是临时表" class="headerlink" title="尽量使用having而不是临时表"></a>尽量使用<code>having</code>而不是临时表</h4><h4 id="需要对多个字段使用IN谓词时，将它们汇总到一处"><a href="#需要对多个字段使用IN谓词时，将它们汇总到一处" class="headerlink" title="需要对多个字段使用IN谓词时，将它们汇总到一处"></a>需要对多个字段使用<code>IN</code>谓词时，将它们汇总到一处</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> A</span><br><span class="line"><span class="keyword">from</span> tableA A1</span><br><span class="line"><span class="keyword">where</span> col1 <span class="keyword">in</span> (</span><br><span class="line">  <span class="keyword">select</span> col1 </span><br><span class="line">  <span class="keyword">from</span> tableA A2</span><br><span class="line">  <span class="keyword">where</span> A1.xxx <span class="operator">=</span> A2.xxx</span><br><span class="line">) <span class="keyword">and</span> col2 <span class="keyword">in</span> (</span><br><span class="line">  <span class="keyword">select</span> col2 </span><br><span class="line">  <span class="keyword">from</span> tableA A2</span><br><span class="line">  <span class="keyword">where</span> A1.xxx <span class="operator">=</span> A2.xxx</span><br><span class="line">) <span class="keyword">and</span> col3 <span class="keyword">in</span> (</span><br><span class="line">  <span class="keyword">select</span> col2 </span><br><span class="line">  <span class="keyword">from</span> tableA A2</span><br><span class="line">  <span class="keyword">where</span> A1.xxx <span class="operator">=</span> A2.xxx</span><br><span class="line">)</span><br><span class="line"><span class="comment">-- 可以优化为</span></span><br><span class="line"><span class="keyword">select</span> A</span><br><span class="line"><span class="keyword">from</span> tableA A1</span><br><span class="line"><span class="keyword">where</span> col1 <span class="operator">||</span> col2 <span class="operator">||</span> col3</span><br><span class="line"><span class="keyword">in</span> (</span><br><span class="line">  <span class="keyword">select</span> col1 <span class="operator">||</span> col2 <span class="operator">||</span> col3</span><br><span class="line">  <span class="keyword">from</span> tableA A2</span><br><span class="line">)</span><br><span class="line"><span class="comment">-- or</span></span><br><span class="line"><span class="keyword">select</span> A</span><br><span class="line"><span class="keyword">from</span> tableA A1</span><br><span class="line"><span class="keyword">where</span> (col1, col2, col3)</span><br><span class="line"><span class="keyword">in</span> (</span><br><span class="line">  <span class="keyword">select</span> col1, col2, col3</span><br><span class="line">  <span class="keyword">from</span> tableA A2</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<h4 id="先进行连接再进行聚合"><a href="#先进行连接再进行聚合" class="headerlink" title="先进行连接再进行聚合"></a>先进行连接再进行聚合</h4><h4 id="定义视图时避免集合函数和聚合函数"><a href="#定义视图时避免集合函数和聚合函数" class="headerlink" title="定义视图时避免集合函数和聚合函数"></a>定义视图时避免集合函数和聚合函数</h4></div><div class="article-licensing box"><div class="licensing-title"><p>LeetCode-数据库-1</p><p><a href="https://jingtianer.github.io/home/2024/03/03/LeetCode/LeetCode-数据库-刷题总结1/">https://jingtianer.github.io/home/2024/03/03/LeetCode/LeetCode-数据库-刷题总结1/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>Meow Meow Liu</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2024-03-03</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2025-04-15</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/home/tags/LeetCode/">LeetCode</a><a class="link-muted mr-2" rel="tag" href="/home/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/home/2024/03/04/LeetCode/LeetCode-%E5%88%B7%E9%A2%98%E6%80%BB%E7%BB%9333/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">LeetCode-33</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/home/2024/02/23/LeetCode/LeetCode-%E5%88%B7%E9%A2%98%E6%80%BB%E7%BB%9332/"><span class="level-item">LeetCode-32</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+            id: "b9db4afaf3ab338fa69d3dd139709ee9",
+            repo: "blog_comment",
+            owner: "jingtianer",
+            clientID: "f0b13fe8021fcd2efe50",
+            clientSecret: "35207c14b34e77c48a3aeee1e94c9da169ffe0c2",
+            admin: ["jingtianer"],
+            createIssueManually: false,
+            distractionFreeMode: false,
+            perPage: 20,
+            pagerDirection: "last",
+            
+            
+            enableHotKey: true,
+            language: "zh-CN",
+        })
+        gitalk.render('comment-container')</script></div></div></div><!--!--><div class="column column-right is-4-tablet is-4-desktop is-4-widescreen  order-3 is-sticky"><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#181-超过经理收入的员工"><span class="level-left"><span class="level-item">1</span><span class="level-item">181. 超过经理收入的员工</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#思路"><span class="level-left"><span class="level-item">1.1</span><span class="level-item">思路</span></span></a></li><li><a class="level is-mobile" href="#知识点"><span class="level-left"><span class="level-item">1.2</span><span class="level-item">知识点</span></span></a></li><li><a class="level is-mobile" href="#代码"><span class="level-left"><span class="level-item">1.3</span><span class="level-item">代码</span></span></a></li></ul></li><li><a class="level is-mobile" href="#182-查找重复的电子邮箱"><span class="level-left"><span class="level-item">2</span><span class="level-item">182. 查找重复的电子邮箱</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#知识点-1"><span class="level-left"><span class="level-item">2.1</span><span class="level-item">知识点</span></span></a></li><li><a class="level is-mobile" href="#代码-1"><span class="level-left"><span class="level-item">2.2</span><span class="level-item">代码</span></span></a></li></ul></li><li><a class="level is-mobile" href="#183-从不订购的客户"><span class="level-left"><span class="level-item">3</span><span class="level-item">183. 从不订购的客户</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#思路-1"><span class="level-left"><span class="level-item">3.1</span><span class="level-item">思路</span></span></a></li><li><a class="level is-mobile" href="#知识点-2"><span class="level-left"><span class="level-item">3.2</span><span class="level-item">知识点</span></span></a></li><li><a class="level is-mobile" href="#代码-2"><span class="level-left"><span class="level-item">3.3</span><span class="level-item">代码</span></span></a></li></ul></li><li><a class="level is-mobile" href="#196-删除重复的电子邮箱"><span class="level-left"><span class="level-item">4</span><span class="level-item">196. 删除重复的电子邮箱</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#思路-2"><span class="level-left"><span class="level-item">4.1</span><span class="level-item">思路</span></span></a></li><li><a class="level is-mobile" href="#知识点-3"><span class="level-left"><span class="level-item">4.2</span><span class="level-item">知识点</span></span></a></li><li><a class="level is-mobile" href="#代码-3"><span class="level-left"><span class="level-item">4.3</span><span class="level-item">代码</span></span></a></li></ul></li><li><a class="level is-mobile" href="#197-上升的温度"><span class="level-left"><span class="level-item">5</span><span class="level-item">197. 上升的温度</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#思路-3"><span class="level-left"><span class="level-item">5.1</span><span class="level-item">思路</span></span></a></li><li><a class="level is-mobile" href="#知识点-4"><span class="level-left"><span class="level-item">5.2</span><span class="level-item">知识点</span></span></a></li><li><a class="level is-mobile" href="#代码-4"><span class="level-left"><span class="level-item">5.3</span><span class="level-item">代码</span></span></a></li></ul></li><li><a class="level is-mobile" href="#511-游戏玩法分析-I"><span class="level-left"><span class="level-item">6</span><span class="level-item">511. 游戏玩法分析 I</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#思路-4"><span class="level-left"><span class="level-item">6.1</span><span class="level-item">思路</span></span></a></li><li><a class="level is-mobile" href="#代码-5"><span class="level-left"><span class="level-item">6.2</span><span class="level-item">代码</span></span></a></li></ul></li><li><a class="level is-mobile" href="#550-游戏玩法分析-IV"><span class="level-left"><span class="level-item">7</span><span class="level-item">550. 游戏玩法分析 IV</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#思路-5"><span class="level-left"><span class="level-item">7.1</span><span class="level-item">思路</span></span></a></li><li><a class="level is-mobile" href="#知识点-5"><span class="level-left"><span class="level-item">7.2</span><span class="level-item">知识点</span></span></a></li><li><a class="level is-mobile" href="#代码-6"><span class="level-left"><span class="level-item">7.3</span><span class="level-item">代码</span></span></a></li></ul></li><li><a class="level is-mobile" href="#180-连续出现的数字"><span class="level-left"><span class="level-item">8</span><span class="level-item">180. 连续出现的数字</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#思路-6"><span class="level-left"><span class="level-item">8.1</span><span class="level-item">思路</span></span></a></li><li><a class="level is-mobile" href="#代码-7"><span class="level-left"><span class="level-item">8.2</span><span class="level-item">代码</span></span></a></li></ul></li><li><a class="level is-mobile" href="#178-分数排名"><span class="level-left"><span class="level-item">9</span><span class="level-item">178. 分数排名</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#思路1-知识点"><span class="level-left"><span class="level-item">9.1</span><span class="level-item">思路1+知识点</span></span></a></li><li><a class="level is-mobile" href="#代码-8"><span class="level-left"><span class="level-item">9.2</span><span class="level-item">代码</span></span></a></li><li><a class="level is-mobile" href="#思路2-知识点"><span class="level-left"><span class="level-item">9.3</span><span class="level-item">思路2+知识点</span></span></a></li></ul></li><li><a class="level is-mobile" href="#184-部门工资最高的员工"><span class="level-left"><span class="level-item">10</span><span class="level-item">184. 部门工资最高的员工</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#思路1"><span class="level-left"><span class="level-item">10.1</span><span class="level-item">思路1</span></span></a></li><li><a class="level is-mobile" href="#思路2"><span class="level-left"><span class="level-item">10.2</span><span class="level-item">思路2</span></span></a></li></ul></li><li><a class="level is-mobile" href="#176-第二高的薪水"><span class="level-left"><span class="level-item">11</span><span class="level-item">176. 第二高的薪水</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#思路1-知识点-1"><span class="level-left"><span class="level-item">11.1</span><span class="level-item">思路1 + 知识点</span></span></a></li><li><a class="level is-mobile" href="#思路2-知识点-1"><span class="level-left"><span class="level-item">11.2</span><span class="level-item">思路2 + 知识点</span></span></a></li></ul></li><li><a class="level is-mobile" href="#177-第N高的薪水"><span class="level-left"><span class="level-item">12</span><span class="level-item">177. 第N高的薪水</span></span></a></li><li><a class="level is-mobile" href="#185-部门工资前三高的所有员工"><span class="level-left"><span class="level-item">13</span><span class="level-item">185. 部门工资前三高的所有员工</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#知识点-6"><span class="level-left"><span class="level-item">13.1</span><span class="level-item">知识点</span></span></a></li><li><a class="level is-mobile" href="#思路-7"><span class="level-left"><span class="level-item">13.2</span><span class="level-item">思路</span></span></a></li><li><a class="level is-mobile" href="#代码-9"><span class="level-left"><span class="level-item">13.3</span><span class="level-item">代码</span></span></a></li></ul></li><li><a class="level is-mobile" href="#262-行程和用户"><span class="level-left"><span class="level-item">14</span><span class="level-item">262. 行程和用户</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#知识点-7"><span class="level-left"><span class="level-item">14.1</span><span class="level-item">知识点</span></span></a></li><li><a class="level is-mobile" href="#思路-8"><span class="level-left"><span class="level-item">14.2</span><span class="level-item">思路</span></span></a></li><li><a class="level is-mobile" href="#代码-10"><span class="level-left"><span class="level-item">14.3</span><span class="level-item">代码</span></span></a></li></ul></li><li><a class="level is-mobile" href="#SQL性能优化"><span class="level-left"><span class="level-item">15</span><span class="level-item">SQL性能优化</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#用EXISTS代替IN"><span class="level-left"><span class="level-item">15.1</span><span class="level-item">用EXISTS代替IN</span></span></a></li><li><a class="level is-mobile" href="#用连接替代IN"><span class="level-left"><span class="level-item">15.2</span><span class="level-item">用连接替代IN</span></span></a></li><li><a class="level is-mobile" href="#避免排序"><span class="level-left"><span class="level-item">15.3</span><span class="level-item">避免排序</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#使用-EXISTS-代替-DISTINCT"><span class="level-left"><span class="level-item">15.3.1</span><span class="level-item">使用 EXISTS 代替 DISTINCT</span></span></a></li><li><a class="level is-mobile" href="#能写在where中的条件不要写在having里"><span class="level-left"><span class="level-item">15.3.2</span><span class="level-item">能写在where中的条件不要写在having里</span></span></a></li><li><a class="level is-mobile" href="#在极值函数中使用索引"><span class="level-left"><span class="level-item">15.3.3</span><span class="level-item">在极值函数中使用索引</span></span></a></li><li><a class="level is-mobile" href="#在-GROUP-BY-子句和-ORDER-BY-子句中使用索引"><span class="level-left"><span class="level-item">15.3.4</span><span class="level-item">在 GROUP BY 子句和 ORDER BY 子句中使用索引</span></span></a></li></ul></li><li><a class="level is-mobile" href="#使用索引"><span class="level-left"><span class="level-item">15.4</span><span class="level-item">使用索引</span></span></a></li><li><a class="level is-mobile" href="#减少临时表"><span class="level-left"><span class="level-item">15.5</span><span class="level-item">减少临时表</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#尽量使用having而不是临时表"><span class="level-left"><span class="level-item">15.5.1</span><span class="level-item">尽量使用having而不是临时表</span></span></a></li><li><a class="level is-mobile" href="#需要对多个字段使用IN谓词时，将它们汇总到一处"><span class="level-left"><span class="level-item">15.5.2</span><span class="level-item">需要对多个字段使用IN谓词时，将它们汇总到一处</span></span></a></li><li><a class="level is-mobile" href="#先进行连接再进行聚合"><span class="level-left"><span class="level-item">15.5.3</span><span class="level-item">先进行连接再进行聚合</span></span></a></li><li><a class="level is-mobile" href="#定义视图时避免集合函数和聚合函数"><span class="level-left"><span class="level-item">15.5.4</span><span class="level-item">定义视图时避免集合函数和聚合函数</span></span></a></li></ul></li></ul></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/home/js/toc.js" defer></script></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/home/">Meow!!</a><p class="is-size-7"><span>&copy; 2025 Meow Meow Liu</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/home/js/column.js"></script><script src="/home/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/home/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/home/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/home/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/home/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script><script type="text/javascript" src="/home/js/fairyDustCursor.js"></script><link rel="stylesheet" type="text/css" href="/home/css/textPopup.css"><script type="text/javascript" src="/home/js/textPopup.js"></script><script type="text/javascript" src="/home/js/clickClipBoard.js"></script><script type="module" src="/home/js/mermaidInitializer.js"></script><script src="/home/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/home/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":200,"height":400},"mobile":{"show":true}});</script></body></html>
