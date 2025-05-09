@@ -5,9 +5,7 @@ function initMermaid() {
         { 
             startOnLoad: true, 
             theme: "neutral",
-            fontSize: '16px',
             look: "handDrawn", 
-            sequence: {showSequenceNumbers: true},
             fontFamily: "system-ui",
             forceLegacyMathML: true
         }
