@@ -341,6 +341,8 @@ public static void switchCaseString(String input) {
 
 可以看到，Java提前计算了字符串的hashcode，根据字符串的hashcode进行跳转。跳转后，为避免hash冲突，调用equals进行字符串比较进行检查，最后根据比较结果跳转到最终的代码块
 
+同时注意到，进入函数后直接调用了hashcode方法，并没有判空操作。
+
 ## enum的WhenElse
 
 ```kotlin
@@ -356,7 +358,7 @@ private fun whenElseNullableEnum(switchType: SwitchType?) {
 ```
 
 ```java
-private final static whenElseNullableEnum(Lswitch_cmp/SwitchCaseDemo$SwitchType;)V
+private final static whenElseNullableEnum(Lswitchcase/SwitchCaseDemo$SwitchType;)V
    L0
     LINENUMBER 62 L0
     ALOAD 0
@@ -366,10 +368,10 @@ private final static whenElseNullableEnum(Lswitch_cmp/SwitchCaseDemo$SwitchType;
     ICONST_M1
     GOTO L2
    L1
-   FRAME SAME1 switch_cmp/SwitchCaseDemo$SwitchType
-    GETSTATIC switch_cmp/WhenDemoKt$WhenMappings.$EnumSwitchMapping$0 : [I
+   FRAME SAME1 switchcase/SwitchCaseDemo$SwitchType
+    GETSTATIC switchcase/WhenDemoKt$WhenMappings.$EnumSwitchMapping$0 : [I
     SWAP
-    INVOKEVIRTUAL switch_cmp/SwitchCaseDemo$SwitchType.ordinal ()I
+    INVOKEVIRTUAL switchcase/SwitchCaseDemo$SwitchType.ordinal ()I
     IALOAD
    L2
    FRAME SAME1 I
@@ -411,7 +413,7 @@ private final static whenElseNullableEnum(Lswitch_cmp/SwitchCaseDemo$SwitchType;
     RETURN
    L10
     LOCALVARIABLE enumStr Ljava/lang/String; L8 L10 1
-    LOCALVARIABLE switchType Lswitch_cmp/SwitchCaseDemo$SwitchType; L0 L10 0
+    LOCALVARIABLE switchType Lswitchcase/SwitchCaseDemo$SwitchType; L0 L10 0
     MAXSTACK = 2
     MAXLOCALS = 2
 ```
@@ -434,7 +436,6 @@ private fun whenElseEnumMember(enum: SwitchType?) {
 
 ```kotlin
 private fun whenElseWithConst(enum: SwitchType?) {
-    enum ?: return
     val enumStr: String = when(enum.switchTypeInt) { // 有 TABLESWITCH 指令
         SwitchType.A_INT_VALUE -> "Enum.Zero"
         SwitchType.B_INT_VALUE -> "Enum.One"
@@ -445,7 +446,69 @@ private fun whenElseWithConst(enum: SwitchType?) {
 }
 ```
 
-- `SwitchType.A_INT_VALUE`, `SwitchType.B_INT_VALUE` 和 `SwitchType.C_INT_VALUE`是`const val`/`private static final`的
+```java
+  private final static whenElseEnum(Lswitchcase/SwitchCaseDemo$SwitchType;)V
+   L0
+    LINENUMBER 55 L0
+    ALOAD 0
+    DUP
+    IFNONNULL L1
+    POP
+    ICONST_M1
+    GOTO L2
+   L1
+   FRAME SAME1 switchcase/SwitchCaseDemo$SwitchType
+    GETSTATIC switchcase/WhenDemoKt$WhenMappings.$EnumSwitchMapping$0 : [I
+    SWAP
+    INVOKEVIRTUAL switchcase/SwitchCaseDemo$SwitchType.ordinal ()I
+    IALOAD
+   L2
+   FRAME SAME1 I
+    TABLESWITCH
+      1: L3
+      2: L4
+      3: L5
+      default: L6
+   L3
+    LINENUMBER 56 L3
+   FRAME SAME
+    LDC "Enum.Zero"
+    GOTO L7
+   L4
+    LINENUMBER 57 L4
+   FRAME SAME
+    LDC "Enum.One"
+    GOTO L7
+   L5
+    LINENUMBER 58 L5
+   FRAME SAME
+    LDC "Enum.Two"
+    GOTO L7
+   L6
+    LINENUMBER 59 L6
+   FRAME SAME
+    LDC "Enum.Unknown"
+   L7
+    LINENUMBER 55 L7
+   FRAME SAME1 java/lang/String
+    ASTORE 1
+   L8
+    LINENUMBER 61 L8
+    GETSTATIC java/lang/System.out : Ljava/io/PrintStream;
+    ALOAD 1
+    INVOKEVIRTUAL java/io/PrintStream.println (Ljava/lang/Object;)V
+   L9
+    LINENUMBER 62 L9
+    RETURN
+   L10
+    LOCALVARIABLE enumStr Ljava/lang/String; L8 L10 1
+    LOCALVARIABLE enum Lswitchcase/SwitchCaseDemo$SwitchType; L0 L10 0
+    MAXSTACK = 2
+    MAXLOCALS = 2
+```
+
+- `SwitchType.A_INT_VALUE`, `SwitchType.B_INT_VALUE` 和 `SwitchType.C_INT_VALUE`是`const val`/`private static final`的，可以生成`TABLESWITCH`指令
+- Kotlin枚举可以不判空，可以自动生成判空的代码
 
 ## 类型判断
 ```kotlin
@@ -519,6 +582,10 @@ private fun whenElseClassCheck(obj: Any) {
 - 在Java中，switch-case语句总是可以被翻译成`TABLESWITCH`，实现跳转，然而其语法限制较多
     - 可接收的类型受限，char, byte, short, int, Character, Byte, Short, Integer, String, or an enum
     - 每个case必须是字面量、常量，或枚举
+- Java的switch-case如果是字符串，会自动调用hashcode函数，且没有判空，需要注意空指针问题
+- Java的switch-case如果是枚举，会自动调用oridinal，且没有判空，需要注意空指针问题
+- Java的switch-case如果是Integer等包装类型，会调用intValue等函数拆箱，没有进行判空，也需要注意空指针问题
+
 - 在Kotlin中，WhenElse语句只有在特定情况下会被优化为`TABLESWITCH`语句，大多数时间下是一种增强型的if-else。在一些情况下，会编译为if-else，如：
     - 可空的基本类型
     - 使用Integer等包装类型
@@ -527,3 +594,10 @@ private fun whenElseClassCheck(obj: Any) {
     - 某些case并非常数、字面量
     - 类型判断
     - 无参数的whenElse
+
+## Tips
+- 在使用switch-case前，如果是String，枚举，包装类型，需要主要判空
+- 在使用WhenElse语句时，要注意
+    - 如果是可空的基本类型，要判空，否则无法生成`TABLESWITCH`语句（枚举可以不判空）
+    - 对于字符串，如果每个case都是字符串常量，尽量不要使用WhenElse判断字符串，使用Java的switch-case更佳
+    - 尽可能的保证每个case都是常量、字面量、枚举常量
