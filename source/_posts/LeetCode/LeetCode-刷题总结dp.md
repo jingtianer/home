@@ -470,6 +470,72 @@ public:
 > $$ dp[i] = min_{ j=1 }^{ \sqrt i }(dp[i-j \times j]) + 1 $$
 
 
+#### 2026.3.21 二刷
+
+##### 二维dp
+
+```c++
+class Solution {
+public:
+    int numSquares(int n) {
+        int i = sqrt(n);
+        while(i*i <= n) {
+            i++;
+        }
+        i--; // 计算小于等于n的最大的平方数 （物品）
+        vector<vector<int>> dp(n + 1, vector<int>(i + 1, n));
+        dp[0][0] = 0;
+        for(int k = 1; k <= n; k++) {
+            dp[k][0] = n;
+        }
+        for(int k = 1; k <= i; k++) {
+            dp[0][k] = 0;
+        }
+        for(int v = 1; v <= i; v++) {
+            for(int w = 1; w <= n; w++) {
+                if (w >= v*v) {
+                    dp[w][v] = min(dp[w][v - 1], dp[w - v*v][v] + 1); // 完全背包
+                } else {
+                    dp[w][v] = dp[w][v - 1];
+                }
+            }
+        }
+        return *min_element(dp[n].begin(), dp[n].end());
+    }
+};
+```
+
+- 几个可优化的点
+  - 根据状态转移方程，可以压缩成一维数组
+  - 全局保存运算结果，计算一次即可
+
+```c++
+const int N = 10000;
+const int M = 100;
+vector<int> dp(N + 1, N);
+auto _ = []()->int{
+    dp[0] = 0;
+    for(int w = 0; w <= N; w++) {
+        for(int v = 1; v <= M; v++) {
+            if (w >= v*v) {
+                dp[w] = min(dp[w], dp[w - v*v] + 1);
+            }
+        }
+    }
+    return 0;
+}();
+class Solution {
+public:
+    int numSquares(int n) {
+        return dp[n];
+    }
+};
+```
+
+执行用时分布`0ms`击败`100.00%`
+
+消耗内存分布`8.31MB`击败`94.83%`
+
 
 ### [91. 解码方法](https://leetcode.cn/problems/decode-ways/)
 
