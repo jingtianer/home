@@ -54,7 +54,7 @@ tag: resume
 - notes for leetcode and other oj
 - [repo](https://github.com/jingtianer/algorithm)
 
-### AFLGO挖掘项目【涉密】
+<!-- ### AFLGO挖掘项目【涉密】
 - 对AFLGO修改，添加代码访问次数统计功能
   - keywords: llvm
   - <span class="Label Label--secondary v-align-middle mr-1">Private</span>[repo](https://github.com/jingtianer/aflgo-dns) 
@@ -62,12 +62,12 @@ tag: resume
   - keywords: socket编程, pthread, asan
 - 对AFLGO修改，添加目标块命中次数统计
   - keywords: 系统调用, I/O, llvm IR插装, 共享内存
-  - <span class="Label Label--secondary v-align-middle mr-1">Private</span>[repo](https://github.com/jingtianer/aflgo_distance)
+  - <span class="Label Label--secondary v-align-middle mr-1">Private</span>[repo](https://github.com/jingtianer/aflgo_distance) -->
 
-## 实习经历
+<!-- ## 实习经历
 ### ***字节跳动*** 今日头条
 - 部门: 今日头条-架构
-> 负责基础组件的升级包括官方fragment,自研sdk
+> 负责基础组件的升级包括官方fragment,自研sdk -->
 
 ## leetcode题解
 
