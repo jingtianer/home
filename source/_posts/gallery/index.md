@@ -1,5 +1,5 @@
 ---
-title: gallery
+title: 旅游摄影
 date: 2024-04-23 00:38:11
 comments: true
 photos: 
