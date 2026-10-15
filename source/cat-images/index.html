@@ -1,9 +1,5 @@
 <!DOCTYPE html>
-<html lang=zh-CN><!--
- Page saved with SingleFile 
- url: https://xn--fiqs8sj3bywcoy8d4lqq1y.com/ 
- saved date: Wed Oct 14 2026 16:33:35 GMT+0800 (中国标准时间)
--->
+<html lang=zh-CN>
 <meta charset=utf-8>
 <meta name=viewport content="width=device-width, initial-scale=1">
 <meta name=theme-color content=#f7f7f3>
@@ -56,7 +52,6 @@
         content: "";
         position: absolute;
         inset: 0;
-        pointer-events: none;
         opacity: .18;
         background: radial-gradient(#a8a89f .55px, transparent .65px);
         background-size: 9px 11px
@@ -92,13 +87,18 @@
         left: var(--x);
         top: var(--y);
         z-index: var(--z);
-        opacity: var(--opacity, 1);
-        transform: rotate(var(--r));
+        opacity: 1;
         padding: 5px;
+        transition: transform 0.2s ease;
         border: 1px solid rgba(255, 255, 255, .8);
         background: rgba(255, 255, 255, .43);
         box-shadow: 0 18px 35px -17px rgba(40, 34, 17, .3), 0 1px 2px rgba(255, 255, 255, .8) inset;
         backdrop-filter: blur(12px)
+    }
+
+    .shot:hover {
+        z-index: 999;
+        transform: scale(1.08);
     }
 
     .shot img {
@@ -183,20 +183,6 @@
         --focus: 50% 59%
     }
 
-    .echo {
-        position: absolute;
-        left: 34%;
-        top: -17%;
-        width: 26%;
-        height: 101%;
-        object-fit: cover;
-        opacity: .075;
-        filter: blur(1.5px);
-        transform: rotate(-13deg);
-        z-index: 0;
-        mask-image: linear-gradient(transparent, black 18%, black 75%, transparent)
-    }
-
     .glass {
         position: absolute;
         left: 9%;
@@ -204,7 +190,6 @@
         width: 80%;
         height: 20%;
         z-index: 9;
-        pointer-events: none;
         opacity: .45;
         border: 1px solid rgba(255, 255, 255, .38);
         background: linear-gradient(110deg, transparent, rgba(255, 255, 255, .12), transparent);
@@ -226,8 +211,6 @@
         box-shadow: none;
         translate: -50% -50%;
         transform: none;
-        opacity: 1;
-        pointer-events: none;
         filter: none
     }
 
@@ -261,14 +244,6 @@
 
     }
 </style>
-<meta name=referrer content=no-referrer>
-<link type=image/x-icon rel="shortcut icon" href=data:application/octet-stream;base64,>
-<style>
-    .sf-hidden {
-        display: none !important
-    }
-</style>
-<link rel=canonical href=https://xn--fiqs8sj3bywcoy8d4lqq1y.com />
 <meta http-equiv=content-security-policy
     content="default-src 'none'; font-src 'self' data:; img-src 'self' data:; style-src 'unsafe-inline'; media-src 'self' data:; script-src 'unsafe-inline' data:; object-src 'self' data:; frame-src 'self' data:; form-action 'none'; base-uri 'none';">
 </head>
@@ -277,8 +252,8 @@
     <main class="page portal">
         <div class="gallery" aria-label=刘猫猫馆藏图片层叠>
             <figure class="shot wave"><img src="/home/cat-images/lmm/1.png"/></figure>
-            <figure class="shot crystal"><img src="/home/cat-images/lmm/3.jpg"/></figure>
-            <figure class="shot starry"><img src="/home/cat-images/lmm/2.jpg"/></figure>
+            <figure class="shot crystal"><img src="/home/cat-images/lmm/2.jpg"/></figure>
+            <figure class="shot starry"><img src="/home/cat-images/lmm/3.jpg"/></figure>
             <figure class="shot portrait"><img src="/home/cat-images/lmm/4.jpg"/></figure>
             <figure class="shot scream"><img src="/home/cat-images/lmm/5.jpg"/></figure>
             <figure class="shot bust"><img src="/home/cat-images/lmm/6.jpg"/></figure>
