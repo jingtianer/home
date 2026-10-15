@@ -3,7 +3,8 @@
   position: fixed;
   left: 20px;
   bottom: 20px;
-  width: 360px;
+  width: 80%;
+  max-width: 320px;
   padding:12px;
   background: rgba(255,255,255,0.88);
   backdrop-filter: blur(10px);
