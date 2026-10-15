@@ -10,11 +10,18 @@ $(function(){
   // ========== 全局单例 ==========
   if(!window.__jingtianAudioPlayer){
     const audioDom = document.createElement('audio');
-    audioDom.controls = true; // 开启原生控件
+    audioDom.controls = false;
+    audioDom.preload = 'auto';
     window.__jingtianAudioPlayer = {
       audio: audioDom,
       currentIndex: 0,
       floatBox: null,
+      updatePlayingState: function(){
+        if(!this.floatBox) return;
+        const isPlaying = !this.audio.paused;
+        this.floatBox.toggleClass('is-playing', isPlaying);
+        this.floatBox.attr('aria-label', isPlaying ? '暂停背景音乐' : '播放背景音乐');
+      },
       loadMusic: function(idx){
         if(idx <0 || idx >= musicList.length) return;
         this.currentIndex = idx;
@@ -27,6 +34,8 @@ $(function(){
     };
     const player = window.__jingtianAudioPlayer;
     player.audio.volume = 1.0;
+    player.audio.addEventListener('play', ()=>player.updatePlayingState());
+    player.audio.addEventListener('pause', ()=>player.updatePlayingState());
 
     // 播放结束事件：循环列表，播完回到第一首
     player.audio.addEventListener('ended', ()=>{
@@ -41,13 +50,34 @@ $(function(){
   }
 
 let hasPlayed = false;
+const audioUnlockEvents = [
+  'click',
+  'dblclick',
+  'mousedown',
+  'mouseup',
+  'pointerdown',
+  'pointerup',
+  'touchstart',
+  'touchend',
+  'keydown',
+  'keyup',
+  'wheel'
+];
+
+function addMusicAutoPlayEvent() {
+  // 绑定交互事件
+  audioUnlockEvents.forEach(evt => {
+    document.addEventListener(evt, firstUserInteraction);
+  });
+}
 
 // 监听常见用户交互事件，只触发一次
-async function firstUserInteraction() {
+async function firstUserInteraction(e) {
+  if(e && $(e.target).closest('.jingtian-bg-player').length) return;
   if (hasPlayed) return;
   hasPlayed = true;
   // 移除所有监听，避免重复
-  ['click', 'touchstart', 'keydown'].forEach(evt => {
+  audioUnlockEvents.forEach(evt => {
     document.removeEventListener(evt, firstUserInteraction);
   });
 
@@ -57,13 +87,12 @@ async function firstUserInteraction() {
     console.log('播放成功，触发于用户第一次交互');
   } catch (err) {
     console.error('播放失败', err);
+    hasPlayed = false;
+    addMusicAutoPlayEvent();
   }
 }
 
-// 绑定交互事件
-['click', 'touchstart', 'keydown'].forEach(evt => {
-  document.addEventListener(evt, firstUserInteraction);
-});
+addMusicAutoPlayEvent()
 
   const player = window.__jingtianAudioPlayer;
 
@@ -72,11 +101,14 @@ async function firstUserInteraction() {
   }
 
   const $floatBox = $(`
-    <div class="jingtian-bg-player">
-      <div class="jingtian-bg-player__header">
-        <div class="jingtian-bg-player__title">--</div>
-        <button class="jingtian-bg-player__close-btn">×</button>
+    <div class="jingtian-bg-player" aria-label="播放背景音乐">
+      <div class="jingtian-bg-player__film">
+        <div class="jingtian-bg-player__record"></div>
       </div>
+      <div class="jingtian-bg-player__volume-control">
+        <input class="jingtian-bg-player__volume" type="range" min="0" max="1" step="0.01" value="1" aria-label="背景音乐音量">
+      </div>
+      <div class="jingtian-bg-player__title">--</div>
       <div class="jingtian-bg-player__audio-wrap"></div>
     </div>
   `);
@@ -87,26 +119,37 @@ async function firstUserInteraction() {
   $floatBox.find('.jingtian-bg-player__audio-wrap').append(player.audio);
 
   const $title = $floatBox.find('.jingtian-bg-player__title');
-  const $closeBtn = $floatBox.find('.jingtian-bg-player__close-btn');
+  const $volume = $floatBox.find('.jingtian-bg-player__volume');
 
   const curSong = musicList[player.currentIndex];
   $title.text(curSong.name);
+  $volume.val(player.audio.volume);
+  player.updatePlayingState();
 
-  //关闭按钮：移回audio到body，防止被删除
-  $closeBtn.on('click',function(){
-    $(player.audio).appendTo('body');
-    $floatBox.remove();
-    player.floatBox = null;
-    player.audio.pause();
-  })
+  async function togglePlay(){
+    if(player.audio.paused){
+      try {
+        await player.audio.play();
+      } catch (err) {
+        console.error('播放失败', err);
+      }
+    } else {
+      player.audio.pause();
+    }
+    player.updatePlayingState();
+  }
 
   //拖拽
   let isDrag = false;
+  let hasDragged = false;
   let offsetX, offsetY;
+  let startX, startY;
   $floatBox.on('mousedown',function(e){
-    const target = e.target;
-    if(target.tagName === 'BUTTON') return;
+    if($(e.target).closest('.jingtian-bg-player__volume-control').length) return;
     isDrag = true;
+    hasDragged = false;
+    startX = e.clientX;
+    startY = e.clientY;
     const rect = this.getBoundingClientRect();
     offsetX = e.clientX - rect.left;
     offsetY = e.clientY - rect.top;
@@ -114,6 +157,9 @@ async function firstUserInteraction() {
   })
   $(document).on('mousemove',function(e){
     if(!isDrag) return;
+    if(Math.abs(e.clientX - startX) > 3 || Math.abs(e.clientY - startY) > 3){
+      hasDragged = true;
+    }
     let x = e.clientX - offsetX;
     let y = e.clientY - offsetY;
     const w = $floatBox.outerWidth();
@@ -125,5 +171,15 @@ async function firstUserInteraction() {
   $(document).on('mouseup',()=>{
     isDrag = false;
     $floatBox.css('cursor','move');
+  })
+  $floatBox.on('click',function(e){
+    e.stopPropagation();
+    if($(e.target).closest('.jingtian-bg-player__volume-control').length) return;
+    if(hasDragged) return;
+    togglePlay();
+  })
+  $volume.on('mousedown mouseup click input change keydown', function(e){
+    e.stopPropagation();
+    player.audio.volume = Number(this.value);
   })
 })

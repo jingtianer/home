@@ -28,7 +28,40 @@
       switchTab();
       window.addEventListener('hashchange', switchTab, false);
   })();
-  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/home/">Meow!!</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/home/">主页</a><a class="navbar-item" href="/home/archives">归档</a><a class="navbar-item" href="/home/categories">分类</a><a class="navbar-item" href="/home/tags">标签</a><a class="navbar-item" href="/home/about">关于我</a><a class="navbar-item" href="/home/cat-images">猫照片</a><a class="navbar-item is-active" href="/home/tags/gallery">相册</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/"><i class="fab fa-github"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><div class="card-content"><nav class="breadcrumb" aria-label="breadcrumbs"><ul><li><a href="/home/tags">标签</a></li><li class="is-active"><a href="#" aria-current="page">gallery</a></li></ul></nav></div></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2024-04-22T16:38:11.000Z" title="2024/4/23 00:38:11">2024-04-23</time>发表</span><span class="level-item"><time dateTime="2026-10-14T10:17:34.759Z" title="2026/10/14 18:17:34">2026-10-14</time>更新</span><span class="level-item"><a class="link-muted" href="/home/categories/gallery/">gallery</a></span><span class="level-item">几秒读完 (大约46个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/home/2024/04/23/gallery/index/">旅游摄影</a></h1><div class="content"><head>
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/home/">Meow!!</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/home/">主页</a><a class="navbar-item" href="/home/archives">归档</a><a class="navbar-item" href="/home/categories">分类</a><a class="navbar-item" href="/home/tags">标签</a><a class="navbar-item" href="/home/about">关于我</a><a class="navbar-item" href="/home/cat-images">猫照片</a><a class="navbar-item is-active" href="/home/tags/gallery">相册</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/"><i class="fab fa-github"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><div class="card-content"><nav class="breadcrumb" aria-label="breadcrumbs"><ul><li><a href="/home/tags">标签</a></li><li class="is-active"><a href="#" aria-current="page">gallery</a></li></ul></nav></div></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2024-04-22T16:38:11.000Z" title="2024/4/23 00:38:11">2024-04-23</time>发表</span><span class="level-item"><time dateTime="2026-10-14T10:17:27.566Z" title="2026/10/14 18:17:27">2026-10-14</time>更新</span><span class="level-item"><a class="link-muted" href="/home/categories/gallery/">gallery</a></span><span class="level-item">几秒读完 (大约46个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/home/2024/04/23/gallery/%E7%8C%AB%E7%8C%AB%E5%9B%BE/">猫照片</a></h1><div class="content"><head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/galleria/1.5.7/galleria.min.js"></script>
+</head>
+<style>
+    .galleria{ 
+        width: 100%; 
+        height: 100vh; 
+    }
+</style>
+<div class="galleria">
+    <img src="/home/cat-images/lmm/1.png">
+    <img src="/home/cat-images/lmm/2.jpg">
+    <img src="/home/cat-images/lmm/3.jpg">
+    <img src="/home/cat-images/lmm/4.jpg">
+    <img src="/home/cat-images/lmm/5.jpg">
+    <img src="/home/cat-images/lmm/6.jpg">
+    <img src="/home/cat-images/lmm/7.jpg">
+</div>
+<script>
+(function() {
+    Galleria.loadTheme('https://cdnjs.cloudflare.com/ajax/libs/galleria/1.5.7/themes/classic/galleria.classic.min.js');
+    Galleria.run('.galleria', {
+        extend: function() {
+            var gallery = this; // "this" is the gallery instance
+            $('.galleria').click(function() {
+                console.log("click");
+                gallery.playToggle(1000).toggleFullscreen(); // call the play method
+            });
+        }
+    });
+}());
+</script>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2024-04-22T16:38:11.000Z" title="2024/4/23 00:38:11">2024-04-23</time>发表</span><span class="level-item"><time dateTime="2026-10-14T10:17:34.759Z" title="2026/10/14 18:17:34">2026-10-14</time>更新</span><span class="level-item"><a class="link-muted" href="/home/categories/gallery/">gallery</a></span><span class="level-item">几秒读完 (大约46个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/home/2024/04/23/gallery/index/">旅游摄影</a></h1><div class="content"><head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/galleria/1.5.7/galleria.min.js"></script>
 </head>
@@ -71,39 +104,6 @@
     <img src="/home/images/gallery/gallery5.jpeg">
     <img src="/home/images/gallery/gallery6.jpeg">
     <img src="/home/images/gallery/gallery7.jpeg">
-</div>
-<script>
-(function() {
-    Galleria.loadTheme('https://cdnjs.cloudflare.com/ajax/libs/galleria/1.5.7/themes/classic/galleria.classic.min.js');
-    Galleria.run('.galleria', {
-        extend: function() {
-            var gallery = this; // "this" is the gallery instance
-            $('.galleria').click(function() {
-                console.log("click");
-                gallery.playToggle(1000).toggleFullscreen(); // call the play method
-            });
-        }
-    });
-}());
-</script>
-</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2024-04-22T16:38:11.000Z" title="2024/4/23 00:38:11">2024-04-23</time>发表</span><span class="level-item"><time dateTime="2026-10-14T10:17:27.566Z" title="2026/10/14 18:17:27">2026-10-14</time>更新</span><span class="level-item"><a class="link-muted" href="/home/categories/gallery/">gallery</a></span><span class="level-item">几秒读完 (大约46个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/home/2024/04/23/gallery/%E7%8C%AB%E7%8C%AB%E5%9B%BE/">猫照片</a></h1><div class="content"><head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/galleria/1.5.7/galleria.min.js"></script>
-</head>
-<style>
-    .galleria{ 
-        width: 100%; 
-        height: 100vh; 
-    }
-</style>
-<div class="galleria">
-    <img src="/home/cat-images/lmm/1.png">
-    <img src="/home/cat-images/lmm/2.jpg">
-    <img src="/home/cat-images/lmm/3.jpg">
-    <img src="/home/cat-images/lmm/4.jpg">
-    <img src="/home/cat-images/lmm/5.jpg">
-    <img src="/home/cat-images/lmm/6.jpg">
-    <img src="/home/cat-images/lmm/7.jpg">
 </div>
 <script>
 (function() {
