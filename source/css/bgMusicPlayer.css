@@ -1,0 +1,49 @@
+/* jingtian-bg-player.css */
+:where(.jingtian-bg-player) {
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
+  width: 360px;
+  padding:12px;
+  background: rgba(255,255,255,0.88);
+  backdrop-filter: blur(10px);
+  border-radius:12px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  z-index: 999;
+  cursor: move;
+  user-select: none;
+}
+:where(.jingtian-bg-player__header){
+  display:flex;
+  justify-content: space-between;
+  align-items:center;
+  margin-bottom:8px;
+}
+:where(.jingtian-bg-player__title){
+  font-size:14px;
+  color:#333;
+  white-space: nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  flex:1;
+}
+:where(.jingtian-bg-player__close-btn){
+  background: #eee;
+  border:none;
+  border-radius:4px;
+  width:22px;
+  height:22px;
+  cursor:pointer;
+  font-size:14px;
+  margin-left:6px;
+  padding:0;
+}
+:where(.jingtian-bg-player__audio-wrap){
+  margin:8px 0;
+}
+/* 重点：audio 100%适应父容器，不能超出 */
+:where(.jingtian-bg-player__audio-wrap audio) {
+  width:100%;
+  max-width:100%;
+  box-sizing:border-box;
+}
