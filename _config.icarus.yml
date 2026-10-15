@@ -3,7 +3,7 @@ variant: default
 logo:
     text: Meow!!
 head:
-    favicon: /img/favicon.svg
+    favicon: images/avatar.jpg
     manifest:
         name: Jingtianer
         short_name: Meow!!
