@@ -1,11 +1,36 @@
 // jingtian-bg-player.js
 $(function(){
+  const STORAGE_KEY = 'jingtian-bg-player-state';
   const musicList = [
     { name: "稻香-周杰伦.mp3", src: "/home/audio/background/稻香-周杰伦.mp3" },
     { name: "七里香-周杰伦.mp3", src: "/home/audio/background/七里香-周杰伦.mp3" },
     { name: "晴天-周杰伦.mp3", src: "/home/audio/background/晴天-周杰伦.mp3" },
     { name: "时光机-周杰伦.mp3", src: "/home/audio/background/时光机-周杰伦.mp3" },
   ];
+
+  function readSavedState() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      return raw ? JSON.parse(raw) : null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function savePlayerState(player) {
+    if(!player || !player.audio) return;
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({
+        currentIndex: player.currentIndex,
+        currentTime: player.audio.currentTime || 0,
+        volume: player.audio.volume,
+        paused: player.audio.paused,
+        savedAt: Date.now()
+      }));
+    } catch (e) {}
+  }
+
+  const savedState = readSavedState();
 
   // ========== 全局单例 ==========
   if(!window.__jingtianAudioPlayer){
@@ -33,9 +58,17 @@ $(function(){
       }
     };
     const player = window.__jingtianAudioPlayer;
-    player.audio.volume = 1.0;
-    player.audio.addEventListener('play', ()=>player.updatePlayingState());
-    player.audio.addEventListener('pause', ()=>player.updatePlayingState());
+    player.audio.volume = savedState && typeof savedState.volume === 'number' ? savedState.volume : 1.0;
+    player.audio.addEventListener('play', ()=>{
+      player.updatePlayingState();
+      savePlayerState(player);
+    });
+    player.audio.addEventListener('pause', ()=>{
+      player.updatePlayingState();
+      savePlayerState(player);
+    });
+    player.audio.addEventListener('timeupdate', ()=>savePlayerState(player));
+    player.audio.addEventListener('volumechange', ()=>savePlayerState(player));
 
     // 播放结束事件：循环列表，播完回到第一首
     player.audio.addEventListener('ended', ()=>{
@@ -44,9 +77,25 @@ $(function(){
       player.audio.play().catch(e=>console.log('自动切歌播放失败',e));
     })
 
-    // 加载第一首
-    player.loadMusic(0);
-    player.audio.play().catch(e=>console.log(e));
+    const restoredIndex = savedState && Number.isInteger(savedState.currentIndex)
+      ? savedState.currentIndex
+      : 0;
+
+    player.loadMusic(restoredIndex);
+
+    if(savedState && typeof savedState.currentTime === 'number' && savedState.currentTime > 0){
+      player.audio.addEventListener('loadedmetadata', function restoreProgress(){
+        player.audio.removeEventListener('loadedmetadata', restoreProgress);
+        const safeTime = Math.min(savedState.currentTime, player.audio.duration || savedState.currentTime);
+        player.audio.currentTime = safeTime;
+        savePlayerState(player);
+        if(!savedState.paused){
+          player.audio.play().catch(e=>console.log(e));
+        }
+      });
+    } else {
+      player.audio.play().catch(e=>console.log(e));
+    }
   }
 
 let hasPlayed = false;
@@ -125,6 +174,10 @@ addMusicAutoPlayEvent()
   $title.text(curSong.name);
   $volume.val(player.audio.volume);
   player.updatePlayingState();
+  savePlayerState(player);
+
+  window.addEventListener('pagehide', ()=>savePlayerState(player));
+  window.addEventListener('beforeunload', ()=>savePlayerState(player));
 
   async function togglePlay(){
     if(player.audio.paused){
@@ -137,6 +190,7 @@ addMusicAutoPlayEvent()
       player.audio.pause();
     }
     player.updatePlayingState();
+    savePlayerState(player);
   }
 
   //拖拽
@@ -181,5 +235,6 @@ addMusicAutoPlayEvent()
   $volume.on('mousedown mouseup click input change keydown', function(e){
     e.stopPropagation();
     player.audio.volume = Number(this.value);
+    savePlayerState(player);
   })
 })

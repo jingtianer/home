@@ -691,7 +691,7 @@
             <figure class="shot academy"><img src="/home/cat-images/lmm/7.jpg" /></figure>
             <div class=glass aria-hidden=true></div>
         </div>
-        <a class=entry href="https://jingtianer.github.io/home" aria-label=前往刘猫猫主页>前往刘猫猫主页<span class=arrow
+        <a class="entry navbar-item is-active" href="/home/" aria-label=前往刘猫猫主页>前往刘猫猫主页<span class=arrow
                 aria-hidden=true>→</span></a>
         <div class=progress aria-hidden=true><span id=progress style=transform:scaleX(0.3812)></span></div>
         <section class=portal aria-label=刘猫猫主页过渡窗口>
@@ -707,4 +707,10 @@
         <button class="replay sf-hidden" id=replay type=button hidden>重播动画 ↻</button>
         <p class=sr-only role=status>图片加载完成后展示两秒，随后自动前往刘猫猫主页官方网站。</p>
     </main>
+    <script>
+        const cardElements = document.querySelectorAll('.card');
+        cardElements.forEach(el => {
+            el.classList.remove('card');
+        });
+    </script>
 </body>
