@@ -10,17 +10,6 @@ categories:
 tags:
     - gallery
 ---
-
-<head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/galleria/1.5.7/galleria.min.js"></script>
-</head>
-<style>
-    .galleria{ 
-        width: 100%; 
-        height: 100vh; 
-    }
-</style>
 <div class="galleria">
     <img src="/home/images/gallery/gallery9.jpeg">
     <img src="/home/images/gallery/gallery13.jpeg">
@@ -55,17 +44,3 @@ tags:
     <img src="/home/images/gallery/gallery6.jpeg">
     <img src="/home/images/gallery/gallery7.jpeg">
 </div>
-<script>
-(function() {
-    Galleria.loadTheme('https://cdnjs.cloudflare.com/ajax/libs/galleria/1.5.7/themes/classic/galleria.classic.min.js');
-    Galleria.run('.galleria', {
-        extend: function() {
-            var gallery = this; // "this" is the gallery instance
-            $('.galleria').click(function() {
-                console.log("click");
-                gallery.playToggle(1000).toggleFullscreen(); // call the play method
-            });
-        }
-    });
-}());
-</script>
