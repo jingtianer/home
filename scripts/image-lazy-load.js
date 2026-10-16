@@ -16,9 +16,7 @@ hexo.extend.filter.register('after_render:html', function(html) {
       $img.attr('loading', 'lazy');
 
       const realSrc = $img.attr('src');
-      $img.attr('data-processed', '1');
       $img.attr('galleria-src', realSrc);
-      $img.attr('loading', 'lazy');
       $img.attr('src', "/home/images/loading.gif");
     })
   })
