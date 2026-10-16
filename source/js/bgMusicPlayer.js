@@ -119,6 +119,7 @@ function addMusicAutoPlayEvent() {
     document.addEventListener(evt, firstUserInteraction);
   });
 }
+firstUserInteraction();
 
 // 监听常见用户交互事件，只触发一次
 async function firstUserInteraction(e) {
@@ -141,7 +142,7 @@ async function firstUserInteraction(e) {
   }
 }
 
-addMusicAutoPlayEvent()
+addMusicAutoPlayEvent();
 
   const player = window.__jingtianAudioPlayer;
 
