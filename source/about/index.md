@@ -29,7 +29,7 @@ tag: resume
 | 项目     | 值                                                                  |
 | -------- | ------------------------------------------------------------------- |
 | 姓名     | 刘景天                                                              |
-| 昵称     | 刘喵喵                                                              |
+| 昵称     | 刘猫猫                                                              |
 | 出生年月 | 2000/02                                                             |
 | 邮箱     | [jingtian.liu@foxmail.com](mailto:jingtian.liu@foxmail.com)         |
 | qq       | [点击这里](https://jingtianer.github.io/home/2022/10/22/social/qq/) |

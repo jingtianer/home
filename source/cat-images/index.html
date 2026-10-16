@@ -3,261 +3,261 @@
 <meta charset=utf-8>
 <meta name=viewport content="width=device-width, initial-scale=1">
 <meta name=theme-color content=#f7f7f3>
-<title>前往刘猫猫科学院</title>
-<style>
-    .column-left,
-    .column-right,
-    .column-right-shadow {
-        display: none !important
-    }
 
-    .column-main {
-        flex: none !important;
-        max-width: 100% !important;
-        width: 100% !important
-    }
-</style>
-<style>
-    :root {
-        color-scheme: light;
-        --blue: #009ff0;
-        --paper: #f7f7f3
-    }
+<head>
+    <title>刘猫猫主页</title>
+    <style>
+        .column-left,
+        .column-right,
+        .column-right-shadow {
+            display: none !important
+        }
 
-    * {
-        box-sizing: border-box
-    }
+        .column-main {
+            flex: none !important;
+            max-width: 100% !important;
+            width: 100% !important
+        }
+    </style>
+    <style>
+        :root {
+            color-scheme: light;
+            --blue: #009ff0;
+            --paper: #f7f7f3
+        }
 
-    html,
-    body {
-        margin: 0;
-        min-width: 320px;
-        min-height: 100%
-    }
+        * {
+            box-sizing: border-box
+        }
 
-    body {
-        background: var(--paper);
-        color: #161918;
-        font-family: "Microsoft YaHei", "PingFang SC", sans-serif
-    }
+        html,
+        body {
+            margin: 0;
+            min-width: 320px;
+            min-height: 100%
+        }
 
-    .page {
-        min-height: 100svh;
-        position: relative;
-        overflow: hidden;
-        isolation: isolate
-    }
+        body {
+            background: var(--paper);
+            color: #161918;
+            font-family: "Microsoft YaHei", "PingFang SC", sans-serif
+        }
 
-    .page::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        opacity: .18;
-        background: radial-gradient(#a8a89f .55px, transparent .65px);
-        background-size: 9px 11px
-    }
+        .page {
+            min-height: 100svh;
+            position: relative;
+            overflow: hidden;
+            isolation: isolate
+        }
 
-    .page::after {
-        content: "";
-        position: absolute;
-        width: 65vw;
-        height: 65vw;
-        top: -30vw;
-        right: -25vw;
-        z-index: -1;
-        border-radius: 50%;
-        background: radial-gradient(circle, #e6edf0, transparent 65%);
-        opacity: .45
-    }
+        .page::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            opacity: .18;
+            background: radial-gradient(#a8a89f .55px, transparent .65px);
+            background-size: 9px 11px
+        }
 
-    .gallery {
-        position: absolute;
-        top: 19%;
-        left: 50%;
-        width: min(1120px, 88vw);
-        aspect-ratio: 2.5;
-        transform: translateX(-50%)
-    }
+        .page::after {
+            content: "";
+            position: absolute;
+            width: 65vw;
+            height: 65vw;
+            top: -30vw;
+            right: -25vw;
+            z-index: -1;
+            border-radius: 50%;
+            background: radial-gradient(circle, #e6edf0, transparent 65%);
+            opacity: .45
+        }
 
-    .shot {
-        position: absolute;
-        margin: 0;
-        width: var(--w);
-        height: var(--h);
-        left: var(--x);
-        top: var(--y);
-        z-index: var(--z);
-        opacity: 1;
-        padding: 5px;
-        transition: transform 0.2s ease;
-        border: 1px solid rgba(255, 255, 255, .8);
-        background: rgba(255, 255, 255, .43);
-        box-shadow: 0 18px 35px -17px rgba(40, 34, 17, .3), 0 1px 2px rgba(255, 255, 255, .8) inset;
-        backdrop-filter: blur(12px)
-    }
-
-    .shot:hover {
-        z-index: 999;
-        transform: scale(1.08);
-    }
-
-    .shot img {
-        display: block;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        object-position: var(--focus, 50% 50%)
-    }
-
-    .wave {
-        --x: 0%;
-        --y: 28%;
-        --w: 22%;
-        --h: 52%;
-        --r: -9deg;
-        --z: 2;
-        --opacity: .72;
-        --focus: 79% 68%
-    }
-
-    .crystal {
-        --x: 17%;
-        --y: 11%;
-        --w: 18%;
-        --h: 78%;
-        --r: -5deg;
-        --z: 4;
-        --focus: 58% 28%
-    }
-
-    .starry {
-        --x: 30%;
-        --y: -7%;
-        --w: 32%;
-        --h: 63%;
-        --r: 4deg;
-        --z: 3;
-        --opacity: .86;
-        --focus: 66% 38%
-    }
-
-    .portrait {
-        --x: 40%;
-        --y: 14%;
-        --w: 23%;
-        --h: 88%;
-        --r: -2deg;
-        --z: 8;
-        --focus: 50% 43%
-    }
-
-    .scream {
-        --x: 60%;
-        --y: 24%;
-        --w: 19%;
-        --h: 78%;
-        --r: 7deg;
-        --z: 6;
-        --focus: 50% 38%
-    }
-
-    .bust {
-        --x: 76%;
-        --y: 4%;
-        --w: 17%;
-        --h: 78%;
-        --r: 9deg;
-        --z: 5;
-        --opacity: .84;
-        --focus: 50% 35%
-    }
-
-    .academy {
-        --x: 80%;
-        --y: 61%;
-        --w: 25%;
-        --h: 43%;
-        --r: -5deg;
-        --z: 7;
-        --opacity: .84;
-        --focus: 50% 59%
-    }
-
-    .glass {
-        position: absolute;
-        left: 9%;
-        top: 44%;
-        width: 80%;
-        height: 20%;
-        z-index: 9;
-        opacity: .45;
-        border: 1px solid rgba(255, 255, 255, .38);
-        background: linear-gradient(110deg, transparent, rgba(255, 255, 255, .12), transparent);
-        backdrop-filter: blur(.6px);
-        transform: rotate(-3deg)
-    }
-
-    .portal {
-        position: fixed;
-        left: 50%;
-        top: 50%;
-        z-index: 11;
-        width: 100vw;
-        height: 100svh;
-        overflow: hidden;
-        border: 1px solid rgba(255, 255, 255, .85);
-        border-radius: 0;
-        background: #faf9f6;
-        box-shadow: none;
-        translate: -50% -50%;
-        transform: none;
-        filter: none
-    }
-
-    @media (max-width:700px) {
         .gallery {
-            width: 156vw;
-            top: 23%;
-            aspect-ratio: 2.15
+            position: absolute;
+            top: 19%;
+            left: 50%;
+            width: min(1120px, 88vw);
+            aspect-ratio: 2.5;
+            transform: translateX(-50%)
         }
 
         .shot {
-            padding: 3px
+            position: absolute;
+            margin: 0;
+            width: var(--w);
+            height: var(--h);
+            left: var(--x);
+            top: var(--y);
+            z-index: var(--z);
+            opacity: 1;
+            padding: 5px;
+            transition: transform 0.2s ease;
+            border: 1px solid rgba(255, 255, 255, .8);
+            background: rgba(255, 255, 255, .43);
+            box-shadow: 0 18px 35px -17px rgba(40, 34, 17, .3), 0 1px 2px rgba(255, 255, 255, .8) inset;
+            backdrop-filter: blur(12px)
+        }
+
+        .shot:hover {
+            z-index: 999;
+            transform: scale(1.08);
+        }
+
+        .shot img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: var(--focus, 50% 50%)
+        }
+
+        .wave {
+            --x: 0%;
+            --y: 28%;
+            --w: 22%;
+            --h: 52%;
+            --r: -9deg;
+            --z: 2;
+            --opacity: .72;
+            --focus: 79% 68%
+        }
+
+        .crystal {
+            --x: 17%;
+            --y: 11%;
+            --w: 18%;
+            --h: 78%;
+            --r: -5deg;
+            --z: 4;
+            --focus: 58% 28%
+        }
+
+        .starry {
+            --x: 30%;
+            --y: -7%;
+            --w: 32%;
+            --h: 63%;
+            --r: 4deg;
+            --z: 3;
+            --opacity: .86;
+            --focus: 66% 38%
         }
 
         .portrait {
-            --x: 39%;
-            --w: 24%
+            --x: 40%;
+            --y: 14%;
+            --w: 23%;
+            --h: 88%;
+            --r: -2deg;
+            --z: 8;
+            --focus: 50% 43%
         }
 
-        .wave,
+        .scream {
+            --x: 60%;
+            --y: 24%;
+            --w: 19%;
+            --h: 78%;
+            --r: 7deg;
+            --z: 6;
+            --focus: 50% 38%
+        }
+
+        .bust {
+            --x: 76%;
+            --y: 4%;
+            --w: 17%;
+            --h: 78%;
+            --r: 9deg;
+            --z: 5;
+            --opacity: .84;
+            --focus: 50% 35%
+        }
+
         .academy {
-            opacity: .48
+            --x: 80%;
+            --y: 61%;
+            --w: 25%;
+            --h: 43%;
+            --r: -5deg;
+            --z: 7;
+            --opacity: .84;
+            --focus: 50% 59%
         }
-    }
 
-    @media (max-height:580px) and (min-width:701px) {
-        .gallery {
-            top: 7%;
-            width: min(850px, 76vw)
+        .glass {
+            position: absolute;
+            left: 9%;
+            top: 44%;
+            width: 80%;
+            height: 20%;
+            z-index: 9;
+            opacity: .45;
+            border: 1px solid rgba(255, 255, 255, .38);
+            background: linear-gradient(110deg, transparent, rgba(255, 255, 255, .12), transparent);
+            backdrop-filter: blur(.6px);
+            transform: rotate(-3deg)
         }
 
-    }
-</style>
-<meta http-equiv=content-security-policy
-    content="default-src 'none'; font-src 'self' data:; img-src 'self' data:; style-src 'unsafe-inline'; media-src 'self' data:; script-src 'unsafe-inline' data:; object-src 'self' data:; frame-src 'self' data:; form-action 'none'; base-uri 'none';">
+        .portal {
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            z-index: 11;
+            width: 100vw;
+            height: 100svh;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, .85);
+            border-radius: 0;
+            background: #faf9f6;
+            box-shadow: none;
+            translate: -50% -50%;
+            transform: none;
+            filter: none
+        }
+
+        @media (max-width:700px) {
+            .gallery {
+                width: 156vw;
+                top: 23%;
+                aspect-ratio: 2.15
+            }
+
+            .shot {
+                padding: 3px
+            }
+
+            .portrait {
+                --x: 39%;
+                --w: 24%
+            }
+
+            .wave,
+            .academy {
+                opacity: .48
+            }
+        }
+
+        @media (max-height:580px) and (min-width:701px) {
+            .gallery {
+                top: 7%;
+                width: min(850px, 76vw)
+            }
+
+        }
+    </style>
 </head>
 
 <body>
     <main class="page portal">
         <div class="gallery" aria-label=刘猫猫馆藏图片层叠>
-            <figure class="shot wave"><img src="/home/cat-images/lmm/1.png"/></figure>
-            <figure class="shot crystal"><img src="/home/cat-images/lmm/2.jpg"/></figure>
-            <figure class="shot starry"><img src="/home/cat-images/lmm/3.jpg"/></figure>
-            <figure class="shot portrait"><img src="/home/cat-images/lmm/4.jpg"/></figure>
-            <figure class="shot scream"><img src="/home/cat-images/lmm/5.jpg"/></figure>
-            <figure class="shot bust"><img src="/home/cat-images/lmm/6.jpg"/></figure>
-            <figure class="shot academy"><img src="/home/cat-images/lmm/7.jpg"/></figure>
-            <div class=glass aria-hidden=true></div>
+            <figure class="shot wave"><img src="/home/cat-images/lmm/1.png" /></figure>
+            <figure class="shot crystal"><img src="/home/cat-images/lmm/2.jpg" /></figure>
+            <figure class="shot starry"><img src="/home/cat-images/lmm/3.jpg" /></figure>
+            <figure class="shot portrait"><img src="/home/cat-images/lmm/4.jpg" /></figure>
+            <figure class="shot scream"><img src="/home/cat-images/lmm/5.jpg" /></figure>
+            <figure class="shot bust"><img src="/home/cat-images/lmm/6.jpg" /></figure>
+            <figure class="shot academy"><img src="/home/cat-images/lmm/7.jpg" /></figure>
         </div>
     </main>
+</body>
