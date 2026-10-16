@@ -137,7 +137,7 @@ $(function () {
     try {
       const player = window.__jingtianAudioPlayer;
       await player.audio.play();
-      console.log('播放成功，触发于用户第一次交互');
+      // console.log('播放成功，触发于用户第一次交互');
     } catch (err) {
       console.error('播放失败', err);
       hasPlayed = false;

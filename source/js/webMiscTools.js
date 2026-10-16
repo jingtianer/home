@@ -17,11 +17,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function handleImg(img) {
         if (img.loading.toLowerCase() == "eager") {
-            console.log("pass eager:" + img.src)
+            // console.log("pass eager:" + img.src)
             return;
         }
         if (!img.dataset.src) {
-            console.log("pass undifined:" + img.src)
+            // console.log("pass undifined:" + img.src)
             return;
         }
         observer.observe(img)
@@ -141,29 +141,26 @@ document.addEventListener('DOMContentLoaded', function () {
                 el.parentElement.href = url;
             }
         });
-        console.log("所有 galleria-src 图片预加载完毕，已更新src");
+        // console.log("所有 galleria-src 图片预加载完毕，已更新src");
     }
 
-    function loadGalleriaLib() {
+    async function loadGalleriaLib() {
         // 串行加载 jquery -> galleria
-        return loadScript('https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js')
-            .then(() => loadScript('https://cdnjs.cloudflare.com/ajax/libs/galleria/1.5.7/galleria.min.js'))
-            .then(() => {
-                Galleria.loadTheme('https://cdnjs.cloudflare.com/ajax/libs/galleria/1.5.7/themes/classic/galleria.classic.min.js');
+        try {
+            await loadScript('https://cdnjs.cloudflare.com/ajax/libs/galleria/1.5.7/galleria.min.js');
+            Galleria.loadTheme('https://cdnjs.cloudflare.com/ajax/libs/galleria/1.5.7/themes/classic/galleria.classic.min.js');
 
-                Galleria.run('.galleria', {
-                    extend: function () {
-                        var gallery = this;
-                        gallery.$('container').click(function () {
-                            console.log("click");
-                            gallery.playToggle(1000).toggleFullscreen();
-                        });
-                    }
-                });
-            })
-            .catch(err => {
-                console.error('Galleria 脚本加载失败', err);
+            Galleria.run('.galleria', {
+                extend: function () {
+                    var gallery = this;
+                    gallery.$('container').click(function () {
+                        gallery.playToggle(1000).toggleFullscreen();
+                    });
+                }
             });
+        } catch (err) {
+            console.error('Galleria 脚本加载失败', err);
+        }
     }
 
     preloadGalleriaImages().then(loadGalleriaLib).catch(e => {
