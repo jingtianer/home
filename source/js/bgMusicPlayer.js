@@ -1,5 +1,5 @@
 // jingtian-bg-player.js
-$(function(){
+$(function () {
   const STORAGE_KEY = 'jingtian-bg-player-state';
   const musicList = [
     { name: "稻香-周杰伦.mp3", src: "/home/audio/background/稻香-周杰伦.mp3" },
@@ -18,7 +18,7 @@ $(function(){
   }
 
   function savePlayerState(player) {
-    if(!player || !player.audio) return;
+    if (!player || !player.audio) return;
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify({
         currentIndex: player.currentIndex,
@@ -27,13 +27,13 @@ $(function(){
         paused: player.audio.paused,
         savedAt: Date.now()
       }));
-    } catch (e) {}
+    } catch (e) { }
   }
 
   const savedState = readSavedState();
 
   // ========== 全局单例 ==========
-  if(!window.__jingtianAudioPlayer){
+  if (!window.__jingtianAudioPlayer) {
     const audioDom = document.createElement('audio');
     audioDom.controls = false;
     audioDom.preload = 'auto';
@@ -41,40 +41,40 @@ $(function(){
       audio: audioDom,
       currentIndex: 0,
       floatBox: null,
-      updatePlayingState: function(){
-        if(!this.floatBox) return;
+      updatePlayingState: function () {
+        if (!this.floatBox) return;
         const isPlaying = !this.audio.paused;
         this.floatBox.toggleClass('is-playing', isPlaying);
         this.floatBox.attr('aria-label', isPlaying ? '暂停背景音乐' : '播放背景音乐');
       },
-      loadMusic: function(idx){
-        if(idx <0 || idx >= musicList.length) return;
+      loadMusic: function (idx) {
+        if (idx < 0 || idx >= musicList.length) return;
         this.currentIndex = idx;
         const m = musicList[idx];
         this.audio.src = m.src;
-        if(this.floatBox){
+        if (this.floatBox) {
           this.floatBox.find('.jingtian-bg-player__title').text(m.name);
         }
       }
     };
     const player = window.__jingtianAudioPlayer;
     player.audio.volume = savedState && typeof savedState.volume === 'number' ? savedState.volume : 1.0;
-    player.audio.addEventListener('play', ()=>{
+    player.audio.addEventListener('play', () => {
       player.updatePlayingState();
       savePlayerState(player);
     });
-    player.audio.addEventListener('pause', ()=>{
+    player.audio.addEventListener('pause', () => {
       player.updatePlayingState();
       savePlayerState(player);
     });
-    player.audio.addEventListener('timeupdate', ()=>savePlayerState(player));
-    player.audio.addEventListener('volumechange', ()=>savePlayerState(player));
+    player.audio.addEventListener('timeupdate', () => savePlayerState(player));
+    player.audio.addEventListener('volumechange', () => savePlayerState(player));
 
     // 播放结束事件：循环列表，播完回到第一首
-    player.audio.addEventListener('ended', ()=>{
-      player.currentIndex = (player.currentIndex +1) % musicList.length;
+    player.audio.addEventListener('ended', () => {
+      player.currentIndex = (player.currentIndex + 1) % musicList.length;
       player.loadMusic(player.currentIndex);
-      player.audio.play().catch(e=>console.log('自动切歌播放失败',e));
+      player.audio.play().catch(e => console.log('自动切歌播放失败', e));
     })
 
     const restoredIndex = savedState && Number.isInteger(savedState.currentIndex)
@@ -83,70 +83,71 @@ $(function(){
 
     player.loadMusic(restoredIndex);
 
-    if(savedState && typeof savedState.currentTime === 'number' && savedState.currentTime > 0){
-      player.audio.addEventListener('loadedmetadata', function restoreProgress(){
+    if (savedState && typeof savedState.currentTime === 'number' && savedState.currentTime > 0) {
+      player.audio.addEventListener('loadedmetadata', function restoreProgress() {
         player.audio.removeEventListener('loadedmetadata', restoreProgress);
         const safeTime = Math.min(savedState.currentTime, player.audio.duration || savedState.currentTime);
         player.audio.currentTime = safeTime;
         savePlayerState(player);
-        if(!savedState.paused){
-          player.audio.play().catch(e=>console.log(e));
+        if (!savedState.paused) {
+          player.audio.play().catch(e => console.log(e));
         }
       });
     } else {
-      player.audio.play().catch(e=>console.log(e));
+      player.audio.play().catch(e => console.log(e));
     }
   }
 
-let hasPlayed = false;
-const audioUnlockEvents = [
-  'click',
-  'dblclick',
-  'mousedown',
-  'mouseup',
-  'pointerdown',
-  'pointerup',
-  'touchstart',
-  'touchend',
-  'keydown',
-  'keyup',
-  'wheel'
-];
+  let hasPlayed = false;
+  const audioUnlockEvents = [
+    'click',
+    'dblclick',
+    'mousedown',
+    'mouseup',
+    'pointerdown',
+    'pointerup',
+    'touchstart',
+    'touchend',
+    'keydown',
+    'keyup',
+    'wheel'
+  ];
 
-function addMusicAutoPlayEvent() {
-  // 绑定交互事件
-  audioUnlockEvents.forEach(evt => {
-    document.addEventListener(evt, firstUserInteraction);
-  });
-}
-firstUserInteraction();
-
-// 监听常见用户交互事件，只触发一次
-async function firstUserInteraction(e) {
-  if(e && $(e.target).closest('.jingtian-bg-player').length) return;
-  if (hasPlayed) return;
-  hasPlayed = true;
-  // 移除所有监听，避免重复
-  audioUnlockEvents.forEach(evt => {
-    document.removeEventListener(evt, firstUserInteraction);
-  });
-
-  try {
-    const player = window.__jingtianAudioPlayer;
-    await player.audio.play();
-    console.log('播放成功，触发于用户第一次交互');
-  } catch (err) {
-    console.error('播放失败', err);
-    hasPlayed = false;
+  function addMusicAutoPlayEvent() {
+    // 绑定交互事件
+    audioUnlockEvents.forEach(evt => {
+      document.addEventListener(evt, firstUserInteraction);
+    });
+  }
+  if (!savedState.paused) {
+    firstUserInteraction();
     addMusicAutoPlayEvent();
   }
-}
 
-addMusicAutoPlayEvent();
+  // 监听常见用户交互事件，只触发一次
+  async function firstUserInteraction(e) {
+    if (e && $(e.target).closest('.jingtian-bg-player').length) return;
+    if (hasPlayed) return;
+    hasPlayed = true;
+    // 移除所有监听，避免重复
+    audioUnlockEvents.forEach(evt => {
+      document.removeEventListener(evt, firstUserInteraction);
+    });
+
+    try {
+      const player = window.__jingtianAudioPlayer;
+      await player.audio.play();
+      console.log('播放成功，触发于用户第一次交互');
+    } catch (err) {
+      console.error('播放失败', err);
+      hasPlayed = false;
+      addMusicAutoPlayEvent();
+    }
+  }
 
   const player = window.__jingtianAudioPlayer;
 
-  if(player.floatBox && player.floatBox.length && player.floatBox.parent().length){
+  if (player.floatBox && player.floatBox.length && player.floatBox.parent().length) {
     return;
   }
 
@@ -177,11 +178,11 @@ addMusicAutoPlayEvent();
   player.updatePlayingState();
   savePlayerState(player);
 
-  window.addEventListener('pagehide', ()=>savePlayerState(player));
-  window.addEventListener('beforeunload', ()=>savePlayerState(player));
+  window.addEventListener('pagehide', () => savePlayerState(player));
+  window.addEventListener('beforeunload', () => savePlayerState(player));
 
-  async function togglePlay(){
-    if(player.audio.paused){
+  async function togglePlay() {
+    if (player.audio.paused) {
       try {
         await player.audio.play();
       } catch (err) {
@@ -199,8 +200,8 @@ addMusicAutoPlayEvent();
   let hasDragged = false;
   let offsetX, offsetY;
   let startX, startY;
-  $floatBox.on('mousedown',function(e){
-    if($(e.target).closest('.jingtian-bg-player__volume-control').length) return;
+  $floatBox.on('mousedown', function (e) {
+    if ($(e.target).closest('.jingtian-bg-player__volume-control').length) return;
     isDrag = true;
     hasDragged = false;
     startX = e.clientX;
@@ -208,11 +209,11 @@ addMusicAutoPlayEvent();
     const rect = this.getBoundingClientRect();
     offsetX = e.clientX - rect.left;
     offsetY = e.clientY - rect.top;
-    $(this).css('cursor','grabbing');
+    $(this).css('cursor', 'grabbing');
   })
-  $(document).on('mousemove',function(e){
-    if(!isDrag) return;
-    if(Math.abs(e.clientX - startX) > 3 || Math.abs(e.clientY - startY) > 3){
+  $(document).on('mousemove', function (e) {
+    if (!isDrag) return;
+    if (Math.abs(e.clientX - startX) > 3 || Math.abs(e.clientY - startY) > 3) {
       hasDragged = true;
     }
     let x = e.clientX - offsetX;
@@ -221,19 +222,19 @@ addMusicAutoPlayEvent();
     const h = $floatBox.outerHeight();
     x = Math.max(0, Math.min(window.innerWidth - w, x));
     y = Math.max(0, Math.min(window.innerHeight - h, y));
-    $floatBox.css({left:x+'px',bottom:'auto',top:y+'px'})
+    $floatBox.css({ left: x + 'px', bottom: 'auto', top: y + 'px' })
   })
-  $(document).on('mouseup',()=>{
+  $(document).on('mouseup', () => {
     isDrag = false;
-    $floatBox.css('cursor','move');
+    $floatBox.css('cursor', 'move');
   })
-  $floatBox.on('click',function(e){
+  $floatBox.on('click', function (e) {
     e.stopPropagation();
-    if($(e.target).closest('.jingtian-bg-player__volume-control').length) return;
-    if(hasDragged) return;
+    if ($(e.target).closest('.jingtian-bg-player__volume-control').length) return;
+    if (hasDragged) return;
     togglePlay();
   })
-  $volume.on('mousedown mouseup click input change keydown', function(e){
+  $volume.on('mousedown mouseup click input change keydown', function (e) {
     e.stopPropagation();
     player.audio.volume = Number(this.value);
     savePlayerState(player);
