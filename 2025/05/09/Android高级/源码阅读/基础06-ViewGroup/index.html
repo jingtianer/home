@@ -45,7 +45,7 @@
 <li>如果this存在flag:<code>FILTER_TOUCHES_WHEN_OBSCURED</code>，event存在flag:<code>FLAG_WINDOW_IS_OBSCURED</code>，就丢掉</li>
 <li>window被上面的window遮住了，不管这个时间了</li>
 </ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setFilterTouchesWhenObscured</span><span class="params">(<span class="type">boolean</span> enabled)</span> &#123;</span><br><span class="line">    setFlags(enabled ? FILTER_TOUCHES_WHEN_OBSCURED : <span class="number">0</span>,</span><br><span class="line">            FILTER_TOUCHES_WHEN_OBSCURED);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="type">void</span> <span class="title function_">setFilterTouchesWhenObscured</span><span class="params">(<span class="type">boolean</span> enabled)</span> &#123;</span><br><span class="line">    setFlags(enabled ? FILTER_TOUCHES_WHEN_OBSCURED : <span class="number">0</span>,</span><br><span class="line">            FILTER_TOUCHES_WHEN_OBSCURED);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>调用view的这个函数，就会设置这个flag</p>
 <ul>
