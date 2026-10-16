@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function () {
     style.textContent = `
     .galleria{ 
         width: 100%; 
-        height: 100vh; 
+        height: 100dvh; 
     }
   `;
     document.head.appendChild(style);
@@ -154,7 +154,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 Galleria.run('.galleria', {
                     extend: function () {
                         var gallery = this;
-                        $('.galleria').click(function () {
+                        gallery.$('container').click(function () {
                             console.log("click");
                             gallery.playToggle(1000).toggleFullscreen();
                         });
