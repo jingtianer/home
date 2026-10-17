@@ -2,11 +2,11 @@
 $(function () {
   const STORAGE_KEY = 'jingtian-bg-player-state';
   const musicList = [
+    { name: "周杰伦-麦芽糖.mp3", src: "/home/audio/background/周杰伦-麦芽糖.mp3" },
+    { name: "时光机-周杰伦.mp3", src: "/home/audio/background/时光机-周杰伦.mp3" },
     { name: "稻香-周杰伦.mp3", src: "/home/audio/background/稻香-周杰伦.mp3" },
     { name: "七里香-周杰伦.mp3", src: "/home/audio/background/七里香-周杰伦.mp3" },
     { name: "晴天-周杰伦.mp3", src: "/home/audio/background/晴天-周杰伦.mp3" },
-    { name: "时光机-周杰伦.mp3", src: "/home/audio/background/时光机-周杰伦.mp3" },
-    { name: "周杰伦-麦芽糖.mp3", src: "/home/audio/background/周杰伦-麦芽糖.mp3" },
   ];
 
   function readSavedState() {

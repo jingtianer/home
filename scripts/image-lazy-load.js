@@ -16,6 +16,14 @@ hexo.extend.filter.register('after_render:html', function (html) {
     width: 100%; 
     height: 100dvh; 
 }
+.galleria-stage {
+  top: 0px !important;
+  bottom: 0px !important;
+  left: 0px !important;
+  right: 0px !important;
+  width: 100% !important;
+  height: 100% !important;
+}
 `;
   // 注入样式
   $('<style>').text(cssText).appendTo('head');

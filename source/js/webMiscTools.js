@@ -201,7 +201,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 $(galleria).click(function () {
                     gallery.playToggle(1000).toggleFullscreen();
                 });
-            }
+            },
+            thumbnails: false,
         });
         // console.log("所有 galleria-src 图片预加载完毕，已更新src");
     }
