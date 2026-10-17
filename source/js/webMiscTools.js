@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     el.src = url;
                     el.dataset.globalLazyloaded = "1";
                     el.classList.remove('global-lazy-loading-img');
-                    if(el.parentElement && el.parentElement.tagName === 'A'){
+                    if (el.parentElement && el.parentElement.tagName === 'A') {
                         el.parentElement.href = url;
                     }
                 } else {
@@ -134,28 +134,30 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    function recoverImgSrc(el, url) {
+        el.src = url;
+        el.classList.remove('global-lazy-loading-img')
+        if (el.parentElement && el.parentElement.tagName === 'A') {
+            el.parentElement.href = url;
+        }
+    }
 
-    async function loadGalleriaImages(galleria, index) {
+    async function loadGalleriaImages(gallery, galleryList) {
+        if (galleryList.length <= 0) {
+            return
+        }
         const concurrencyLimit = 3;
         const tasks = [];
         const pool = [];
-        function recoverImgUrl(el, url) {
-            el.src = url;
-            el.classList.remove('global-lazy-loading-img')
-            if(el.parentElement && el.parentElement.tagName === 'A') {
-                el.parentElement.href = url;
-            }
+        gallery.splice(1, galleryList.length)
+        function appendImage(url) {
+            gallery.push({ image: url });
         }
-        const imgs = Array.from(galleria.querySelectorAll('img[galleria-src]'));
-        if (imgs.length === 0) return;
-
-        for (const imgEl of imgs) {
-            // 防止重复执行
-            if (imgEl.dataset.galleriaLoaded) continue;
-
-            const url = imgEl.getAttribute('galleria-src');
-            if (!url) continue;
-            imgEl.dataset.galleriaLoaded = "1";
+        for (const url of galleryList) {
+            if (!url) {
+                appendImage('/home/images/picture-loading-failed.png');
+                continue;
+            }
             // 单个图片加载Promise
             const loadTask = new Promise((resolve) => {
                 try {
@@ -164,18 +166,18 @@ document.addEventListener('DOMContentLoaded', function () {
                     tempImg.src = url;
 
                     tempImg.onload = () => {
-                        resolve({ ok: true, el: imgEl, url });
-                        recoverImgUrl(imgEl, url);
+                        resolve({ ok: true, url });
+                        appendImage(url);
                     };
                     tempImg.onerror = () => {
                         console.warn('图片预加载失败：', url);
-                        resolve({ ok: false, el: imgEl, url });
-                        recoverImgUrl(imgEl, url);
+                        resolve({ ok: false, url });
+                        appendImage(url);
                     };
-                } catch(err) {
+                } catch (err) {
                     console.warn('图片预加载失败：', url);
-                    resolve({ ok: false, el: imgEl, url });
-                    recoverImgUrl(imgEl, url);
+                    resolve({ ok: false, url });
+                    appendImage(url);
                 }
             });
 
@@ -192,23 +194,10 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         // 等待所有图片预加载完成
-        const results = await Promise.all(tasks);
-        const galleriaName = "global-lazy-galleria-" + index
-        galleria.classList.add(galleriaName)
-        Galleria.run('.' + galleriaName, {
-            extend: function () {
-                var gallery = this;
-                $(galleria).click(function () {
-                    gallery.playToggle(1000).toggleFullscreen();
-                });
-            },
-            thumbnails: false,
-        });
-        // console.log("所有 galleria-src 图片预加载完毕，已更新src");
+        await Promise.all(tasks);
     }
 
     async function loadGalleriaLib() {
-        // 串行加载 jquery -> galleria
         try {
             await loadScript('https://cdnjs.cloudflare.com/ajax/libs/galleria/1.5.7/galleria.min.js');
             Galleria.loadTheme('https://cdnjs.cloudflare.com/ajax/libs/galleria/1.5.7/themes/classic/galleria.classic.min.js');
@@ -216,26 +205,53 @@ document.addEventListener('DOMContentLoaded', function () {
             console.error('Galleria 脚本加载失败', err);
         }
     }
+
+    function getImageList(galleria) {
+        const imgs = Array.from(galleria.querySelectorAll('img[galleria-src]'));
+        const firstImg = imgs[0]
+        recoverImgSrc(imgs[0], firstImg.getAttribute('galleria-src')) // 第一张图默认展示，否则galleria有bug，无法更新封面图
+        return imgs.slice(1).map(function (value, index, array) {
+            return value.getAttribute('galleria-src') || '/home/images/loading.gif';
+        });
+    }
+
     async function lazyLoadImages() {
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     const galleria = entry.target;
                     const index = galleria.dataset.index || 0
-                    loadGalleriaImages(galleria, index)
+                    const galleriaName = "lazy-galleria-" + index
+                    galleria.classList.add(galleriaName)
+                    const galleryList = getImageList(galleria);
+                    Galleria.run('.' + galleriaName, {
+                        extend: function () {
+                            var gallery = this;
+                            $(galleria).click(function () {
+                                gallery.toggleFullscreen();
+                            });
+                            gallery.bind('fullscreen_enter', function(event) {
+                                gallery.play(1200)
+                            })
+                            gallery.bind('fullscreen_exit', function(event) {
+                                gallery.pause()
+                            })
+                            loadGalleriaImages(gallery, galleryList)
+                        },
+                        thumbnails: false,
+                    });
                     observer.unobserve(galleria);
                 }
             });
         }, {
             threshold: 0.01
         });
-        let index = 1;
-        for (const galleria of $galleriaList) { 
+        $galleriaList.forEach(function (galleria, index, arr) {
             galleria.dataset.index = index
-            index++
             observer.observe(galleria);
-        }
+        })
     }
+
     loadGalleriaLib().then(lazyLoadImages).catch(e => {
         console.error("图库初始化异常", e);
     });
