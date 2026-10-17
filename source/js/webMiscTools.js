@@ -139,6 +139,13 @@ document.addEventListener('DOMContentLoaded', function () {
         const concurrencyLimit = 3;
         const tasks = [];
         const pool = [];
+        function recoverImgUrl(el, url) {
+            el.src = url;
+            el.classList.remove('global-lazy-loading-img')
+            if(el.parentElement && el.parentElement.tagName === 'A') {
+                el.parentElement.href = url;
+            }
+        }
         const imgs = Array.from(galleria.querySelectorAll('img[galleria-src]'));
         if (imgs.length === 0) return;
 
@@ -158,18 +165,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     tempImg.onload = () => {
                         resolve({ ok: true, el: imgEl, url });
-                        const el = imgEl
-                        el.src = url;
-                        el.parentElement.href = url;
-                        el.classList.remove('global-lazy-loading-img')
+                        recoverImgUrl(imgEl, url);
                     };
                     tempImg.onerror = () => {
                         console.warn('图片预加载失败：', url);
                         resolve({ ok: false, el: imgEl, url });
+                        recoverImgUrl(imgEl, url);
                     };
                 } catch(err) {
                     console.warn('图片预加载失败：', url);
                     resolve({ ok: false, el: imgEl, url });
+                    recoverImgUrl(imgEl, url);
                 }
             });
 
@@ -187,15 +193,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // 等待所有图片预加载完成
         const results = await Promise.all(tasks);
-
-        // 全部加载完成，统一替换 src
-        results.forEach(({ ok, el, url }) => {
-            if (ok) {
-                el.src = url;
-                el.parentElement.href = url;
-                el.classList.remove('global-lazy-loading-img')
-            }
-        });
         const galleriaName = "global-lazy-galleria-" + index
         galleria.classList.add(galleriaName)
         Galleria.run('.' + galleriaName, {
