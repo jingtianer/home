@@ -158,6 +158,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     tempImg.onload = () => {
                         resolve({ ok: true, el: imgEl, url });
+                        const el = imgEl
+                        el.src = url;
+                        el.parentElement.href = url;
+                        el.classList.remove('global-lazy-loading-img')
                     };
                     tempImg.onerror = () => {
                         console.warn('图片预加载失败：', url);
