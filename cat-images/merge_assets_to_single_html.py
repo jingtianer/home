@@ -308,9 +308,13 @@ def symlink_dir(src: str, dst: str) -> None:
             os.symlink(src.absolute(), dstSymLink)
     walk_and_symlink(Path(src), Path(dst))
 
+def rmtree(path: str):
+    if os.path.exists(path):
+        shutil.rmtree(path)
+
 def prepare_symlink():
-    shutil.rmtree(r'./audio/')
-    shutil.rmtree(r'./lmm/')
+    rmtree(r'./audio/')
+    rmtree(r'./lmm/')
     symlink_dir(r'../source/audio/background/', r'./audio/')
     symlink_dir(r'../source/cat-images/lmm/', r'./lmm/')
 
