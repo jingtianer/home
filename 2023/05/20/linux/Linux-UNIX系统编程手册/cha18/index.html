@@ -38,6 +38,14 @@
     width: 100%; 
     height: 100dvh; 
 }
+.galleria-stage {
+  top: 0px !important;
+  bottom: 0px !important;
+  left: 0px !important;
+  right: 0px !important;
+  width: 100% !important;
+  height: 100% !important;
+}
 </style></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/home/">Meow!!</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/home/">主页</a><a class="navbar-item" href="/home/archives">归档</a><a class="navbar-item" href="/home/categories">分类</a><a class="navbar-item" href="/home/tags">标签</a><a class="navbar-item" href="/home/about">关于我</a><a class="navbar-item" href="/home/cat-images">猫照片</a><a class="navbar-item" href="/home/tags/gallery">相册</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time datetime="2023-05-20T10:05:00.000Z" title="2023/5/20 18:05:00">2023-05-20</time>发表</span><span class="level-item"><time datetime="2025-04-15T02:37:55.620Z" title="2025/4/15 10:37:55">2025-04-15</time>更新</span><span class="level-item"><a class="link-muted" href="/home/categories/linux/">linux</a></span><span class="level-item">7 分钟读完 (大约1033个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">cha18.目录与链接</h1><div class="content"><h2 id="18-1"><a href="#18-1" class="headerlink" title="18.1"></a>18.1</h2><p>4.3.2节曾指出，如果一个文件正处于执行状态，那么要将其打开以执行写操作是不可能的(open)调用返回-1，且将errno置为ETXTBSY。然而，在 shell 中执行如下操作却是可能的:</p>
 <figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">gcc -o longrunner longrunner.c$ ./longrunner &amp;</span><br><span class="line"><span class="comment"># Leave running in background</span></span><br><span class="line">vi longrunner.c</span><br><span class="line"><span class="comment"># Make some changes to the source code</span></span><br><span class="line">gcc -o longrunner longrunner.c</span><br></pre></td></tr></tbody></table></figure>
 <p>最后一条命令覆盖了现有的同名可执行文件。原因何在?(提示:在每次编译后调用ls -li命令来查看可执行文件的i-node编号。)</p>

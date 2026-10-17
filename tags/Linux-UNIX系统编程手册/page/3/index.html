@@ -38,6 +38,14 @@
     width: 100%; 
     height: 100dvh; 
 }
+.galleria-stage {
+  top: 0px !important;
+  bottom: 0px !important;
+  left: 0px !important;
+  right: 0px !important;
+  width: 100% !important;
+  height: 100% !important;
+}
 </style></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/home/">Meow!!</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/home/">主页</a><a class="navbar-item" href="/home/archives">归档</a><a class="navbar-item" href="/home/categories">分类</a><a class="navbar-item" href="/home/tags">标签</a><a class="navbar-item" href="/home/about">关于我</a><a class="navbar-item" href="/home/cat-images">猫照片</a><a class="navbar-item" href="/home/tags/gallery">相册</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/"><i class="fab fa-github"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><div class="card-content"><nav class="breadcrumb" aria-label="breadcrumbs"><ul><li><a href="/home/tags/">标签</a></li><li class="is-active"><a href="#" aria-current="page">Linux/UNIX系统编程手册</a></li></ul></nav></div></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time datetime="2023-06-20T10:05:00.000Z" title="2023/6/20 18:05:00">2023-06-20</time>发表</span><span class="level-item"><time datetime="2025-04-15T02:37:55.621Z" title="2025/4/15 10:37:55">2025-04-15</time>更新</span><span class="level-item"><a class="link-muted" href="/home/categories/linux/">linux</a></span><span class="level-item">8 分钟读完 (大约1160个字)</span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/home/2023/06/20/linux/Linux-UNIX%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B%E6%89%8B%E5%86%8C/cha27/">cha27.进程执行</a></p><div class="content"><h2 id="exec"><a href="#exec" class="headerlink" title="exec()"></a>exec()</h2><ul>
 <li>带e的可以指定环境变量，否则继承</li>
 <li>带p的允许只提供文件名，允许提供不带<code>"/"</code>的路径，在path中寻找<ul>

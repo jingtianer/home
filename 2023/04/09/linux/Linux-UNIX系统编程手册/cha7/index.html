@@ -38,6 +38,14 @@
     width: 100%; 
     height: 100dvh; 
 }
+.galleria-stage {
+  top: 0px !important;
+  bottom: 0px !important;
+  left: 0px !important;
+  right: 0px !important;
+  width: 100% !important;
+  height: 100% !important;
+}
 </style></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/home/">Meow!!</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/home/">主页</a><a class="navbar-item" href="/home/archives">归档</a><a class="navbar-item" href="/home/categories">分类</a><a class="navbar-item" href="/home/tags">标签</a><a class="navbar-item" href="/home/about">关于我</a><a class="navbar-item" href="/home/cat-images">猫照片</a><a class="navbar-item" href="/home/tags/gallery">相册</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time datetime="2023-04-09T10:05:00.000Z" title="2023/4/9 18:05:00">2023-04-09</time>发表</span><span class="level-item"><time datetime="2025-04-15T02:37:55.624Z" title="2025/4/15 10:37:55">2025-04-15</time>更新</span><span class="level-item"><a class="link-muted" href="/home/categories/linux/">linux</a></span><span class="level-item">13 分钟读完 (大约2007个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">cha7.内存分配</h1><div class="content"><h2 id="7-1"><a href="#7-1" class="headerlink" title="7.1"></a>7.1</h2><blockquote>
 <p>修改程序清单7-1中的程序(free_and_sbrk.c)，在每次执行malloc后打印出 program break的当前值。指定一个较小的内存分配尺寸来运行该程序。这将证明malloc不会在每次被调用时都调用sbrk()来调整program break 的位置，而是周期性地分配大块内存，并从中将小片内存返回给调用者。</p>
 </blockquote>

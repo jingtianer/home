@@ -38,6 +38,14 @@
     width: 100%; 
     height: 100dvh; 
 }
+.galleria-stage {
+  top: 0px !important;
+  bottom: 0px !important;
+  left: 0px !important;
+  right: 0px !important;
+  width: 100% !important;
+  height: 100% !important;
+}
 </style></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/home/">Meow!!</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/home/">主页</a><a class="navbar-item" href="/home/archives">归档</a><a class="navbar-item" href="/home/categories">分类</a><a class="navbar-item" href="/home/tags">标签</a><a class="navbar-item" href="/home/about">关于我</a><a class="navbar-item" href="/home/cat-images">猫照片</a><a class="navbar-item" href="/home/tags/gallery">相册</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/"><i class="fab fa-github"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><div class="card-content"><nav class="breadcrumb" aria-label="breadcrumbs"><ul><li><a href="/home/categories/">分类</a></li><li><a href="/home/categories/LeetCode/">LeetCode</a></li><li class="is-active"><a href="#" aria-current="page">算法</a></li></ul></nav></div></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time datetime="2019-02-12T13:15:36.000Z" title="2019/2/12 21:15:36">2019-02-12</time>发表</span><span class="level-item"><time datetime="2025-04-15T02:37:55.603Z" title="2025/4/15 10:37:55">2025-04-15</time>更新</span><span class="level-item"><a class="link-muted" href="/home/categories/LeetCode/">LeetCode</a><span>&nbsp;/&nbsp;</span><a class="link-muted" href="/home/categories/LeetCode/%E7%AE%97%E6%B3%95/">算法</a></span><span class="level-item">11 分钟读完 (大约1712个字)</span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/home/2019/02/12/LeetCode/LeetCode-%E5%88%B7%E9%A2%98%E6%80%BB%E7%BB%939/">LeetCode-9</a></p><div class="content"><h2 id="92-反转链表-II"><a href="#92-反转链表-II" class="headerlink" title="92. 反转链表 II"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/reverse-linked-list-ii/">92. 反转链表 II</a></h2><h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><ol>
 <li>两个指针a、b，分别找到被反转的第一个结点的前一个结点，被反转的结点的最后一个结点，（在开头设置一个哑结点，防止被反转的第一个结点是头结点）</li>
 <li>再来一个指针c，保存被反转的最后一个结点的next，然后把最后一个结点的next设为null</li>

@@ -38,6 +38,14 @@
     width: 100%; 
     height: 100dvh; 
 }
+.galleria-stage {
+  top: 0px !important;
+  bottom: 0px !important;
+  left: 0px !important;
+  right: 0px !important;
+  width: 100% !important;
+  height: 100% !important;
+}
 </style></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/home/">Meow!!</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/home/">主页</a><a class="navbar-item" href="/home/archives">归档</a><a class="navbar-item" href="/home/categories">分类</a><a class="navbar-item" href="/home/tags">标签</a><a class="navbar-item" href="/home/about">关于我</a><a class="navbar-item" href="/home/cat-images">猫照片</a><a class="navbar-item" href="/home/tags/gallery">相册</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/"><i class="fab fa-github"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><div class="card-content"><nav class="breadcrumb" aria-label="breadcrumbs"><ul><li><a href="/home/tags/">标签</a></li><li class="is-active"><a href="#" aria-current="page">LeetCode</a></li></ul></nav></div></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time datetime="2024-03-03T03:14:34.000Z" title="2024/3/3 11:14:34">2024-03-03</time>发表</span><span class="level-item"><time datetime="2025-04-15T02:37:55.604Z" title="2025/4/15 10:37:55">2025-04-15</time>更新</span><span class="level-item"><a class="link-muted" href="/home/categories/LeetCode/">LeetCode</a><span>&nbsp;/&nbsp;</span><a class="link-muted" href="/home/categories/LeetCode/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></span><span class="level-item">19 分钟读完 (大约2820个字)</span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/home/2024/03/03/LeetCode/LeetCode-%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%88%B7%E9%A2%98%E6%80%BB%E7%BB%931/">LeetCode-数据库-1</a></p><div class="content"><h2 id="181-超过经理收入的员工"><a href="#181-超过经理收入的员工" class="headerlink" title="181. 超过经理收入的员工"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/employees-earning-more-than-their-managers/description/">181. 超过经理收入的员工</a></h2><h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><ul>
 <li><code>Employee</code>表中给出员工id，员工的manager的id</li>
 <li>按照managerid和员工id自连接一下，使用内连接去掉null</li>
