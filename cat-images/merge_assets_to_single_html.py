@@ -3,8 +3,8 @@
 Bundle an HTML page and its local CSS, JavaScript, images, and audio into one file.
 
 Examples:
-  python3 merge_assets_to_single_html.py 奶娃科学院.html
-  python3 merge_assets_to_single_html.py 奶娃科学院.html -o base64-src/奶娃科学院-base64.html
+  python3 merge_assets_to_single_html.py index.html
+  python3 merge_assets_to_single_html.py index.html -o base64-src/index-base64.html
 """
 
 from __future__ import annotations
@@ -16,7 +16,8 @@ import re
 from pathlib import Path
 from typing import Callable
 from urllib.parse import unquote, urlsplit
-
+import os
+import shutil
 
 TEXT_EXTENSIONS = {".css", ".js", ".html", ".htm", ".svg"}
 ASSET_EXTENSIONS = {
@@ -278,6 +279,41 @@ def main() -> None:
     bundle_html(input_path, output_path)
     print(f"Wrote {output_path}")
 
+# @params
+# des: 目录
+def symlink_dir(src: str, dst: str) -> None:
+    def ensure_symlink_dir(dstPath: Path) -> Path:
+        if dstPath.exists():
+            if dstPath.is_file():
+                return None
+            return dstPath
+        else:
+            dstPath.mkdir(parents=True, exist_ok=True)
+            return dstPath
+        
+    def walk_and_symlink(src: Path, dst: Path):
+        if not ensure_symlink_dir(dst):
+            return
+        if src.is_dir():
+            for file in os.listdir(src):
+                filePath = src / file
+                if filePath.is_dir():
+                    walk_and_symlink(filePath, dst / file)
+                    continue
+                walk_and_symlink(filePath, dst)
+        elif src.is_file():
+            dstSymLink = dst / src.name
+            if dstSymLink.is_symlink() or dstSymLink.exists():
+                return
+            os.symlink(src.absolute(), dstSymLink)
+    walk_and_symlink(Path(src), Path(dst))
+
+def prepare_symlink():
+    shutil.rmtree(r'./audio/')
+    shutil.rmtree(r'./lmm/')
+    symlink_dir(r'../source/audio/background/', r'./audio/')
+    symlink_dir(r'../source/cat-images/lmm/', r'./lmm/')
 
 if __name__ == "__main__":
+    prepare_symlink()
     main()
