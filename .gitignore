@@ -9,3 +9,4 @@ _multiconfig.yml
 _config.yml.bak
 token.txt
 deploy.log
+/.vscode
