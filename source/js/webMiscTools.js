@@ -1,53 +1,109 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // 拿到所有img
+    const concurrencyLimit = 3;
+    const pool = [];
+
+    async function scheduleImageLoad(imgs) {
+        if (imgs.length === 0) return;
+
+        for (const imgEl of imgs) {
+            // 防止重复加载
+            if (imgEl.dataset.globalLazyloaded) continue;
+            const url = imgEl.dataset.src;
+            if (!url) continue;
+
+            // 单个图片加载任务
+            const loadTask = new Promise((resolve) => {
+                const tempImg = new Image();
+                tempImg.crossOrigin = "anonymous";
+                tempImg.src = url;
+
+                tempImg.onload = () => {
+                    resolve({ ok: true, el: imgEl, url });
+                };
+                tempImg.onerror = () => {
+                    console.warn('图片预加载失败：', url);
+                    resolve({ ok: false, el: imgEl, url });
+                };
+            });
+
+            // 并发控制：池满了就等其中一个完成
+            if (pool.length >= concurrencyLimit) {
+                await Promise.race(pool);
+            }
+            pool.push(loadTask);
+
+            loadTask.then((res) => {
+                if (res.ok) {
+                    const el = res.el;
+                    el.src = url;
+                    el.dataset.globalLazyloaded = "1";
+                    el.classList.remove('global-lazy-loading-img');
+                    if(el.parentElement && el.parentElement.tagName === 'A'){
+                        el.parentElement.href = url;
+                    }
+                } else {
+                    const el = res.el;
+                    onLazyLoadFailed(el);
+                }
+            }).finally(() => {
+                // 无论成功失败，都从并发池移除
+                const idx = pool.indexOf(loadTask);
+                if (idx > -1) pool.splice(idx, 1);
+            });
+        }
+    }
+
+    // 获取所有图片
     const imgs = document.querySelectorAll('img');
-    // 懒加载观察者
+
+    function onLazyLoadFailed(img) {
+        img.src = img.dataset.src;
+        img.classList.remove('global-lazy-loading-img');
+        img.dataset.globalLazyloaded = "1";
+    }
+
+    // 交叉观察器，进入视口前200px触发加载
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 const targetImg = entry.target;
-                targetImg.src = targetImg.dataset.src;
+                if (targetImg.src && targetImg.src.startsWith("/home")) {
+                    scheduleImageLoad([targetImg]);
+                } else {
+                    onLazyLoadFailed(targetImg);
+                }
                 observer.unobserve(targetImg);
             }
         });
     }, {
-        rootMargin: '200px 0px', // 提前200px开始加载
+        rootMargin: '200px 0px',
         threshold: 0.01
     });
 
     function handleImg(img) {
-        if (img.loading.toLowerCase() == "eager") {
-            // console.log("pass eager:" + img.src)
-            return;
-        }
-        if (!img.dataset.src) {
-            // console.log("pass undifined:" + img.src)
-            return;
-        }
-        observer.observe(img)
+        // eager加载的图片跳过
+        if (img.loading?.toLowerCase() === "eager") return;
+        // 没有data-src的跳过
+        if (!img.dataset.src) return;
+        observer.observe(img);
     }
 
-    imgs.forEach(img => {
-        handleImg(img);
-    });
+    // 初始化页面已有图片
+    imgs.forEach(img => handleImg(img));
 
+    // 监听动态新增DOM（AJAX/JS插入图片）
     const mo = new MutationObserver((mutations) => {
         for (const mut of mutations) {
-            // 遍历所有新增节点
             mut.addedNodes.forEach(node => {
-                // 如果本身就是img标签
                 if (node.tagName && node.tagName.toLowerCase() === 'img') {
                     handleImg(node);
                     return;
                 }
-                // 如果是容器，递归查找内部所有img
                 if (node.querySelectorAll) {
                     const imgs = node.querySelectorAll('img');
-                    imgs.forEach(img => {
-                        handleImg(img);
-                    });
+                    imgs.forEach(img => handleImg(img));
                 }
-            })
+            });
         }
     });
 
@@ -56,25 +112,16 @@ document.addEventListener('DOMContentLoaded', function () {
         subtree: true
     });
 
-    // 页面卸载，释放监听（防止内存泄漏）
+    // 页面卸载清理，防止内存泄漏
     window.addEventListener('beforeunload', () => {
         mo.disconnect();
-    })
+        observer.disconnect();
+    });
 });
 
 document.addEventListener('DOMContentLoaded', function () {
-    const $galleriaList = document.querySelectorAll('.galleria');
+    const $galleriaList = document.querySelectorAll('.lazy-galleria');
     if ($galleriaList.length === 0) return; // 没有图库容器，直接退出，不加载资源
-
-    // 动态注入style
-    const style = document.createElement('style');
-    style.textContent = `
-    .galleria{ 
-        width: 100%; 
-        height: 100dvh; 
-    }
-  `;
-    document.head.appendChild(style);
 
     // 加载脚本工具函数，串行加载
     function loadScript(url) {
@@ -88,13 +135,12 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
 
-    async function preloadGalleriaImages() {
-        const imgs = Array.from(document.querySelectorAll('img[galleria-src]'));
-        if (imgs.length === 0) return;
-
+    async function loadGalleriaImages(galleria, index) {
         const concurrencyLimit = 3;
         const tasks = [];
         const pool = [];
+        const imgs = Array.from(galleria.querySelectorAll('img[galleria-src]'));
+        if (imgs.length === 0) return;
 
         for (const imgEl of imgs) {
             // 防止重复执行
@@ -102,20 +148,25 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const url = imgEl.getAttribute('galleria-src');
             if (!url) continue;
-
+            imgEl.dataset.galleriaLoaded = "1";
             // 单个图片加载Promise
             const loadTask = new Promise((resolve) => {
-                const tempImg = new Image();
-                tempImg.crossOrigin = "anonymous";
-                tempImg.src = url;
+                try {
+                    const tempImg = new Image();
+                    tempImg.crossOrigin = "anonymous";
+                    tempImg.src = url;
 
-                tempImg.onload = () => {
-                    resolve({ ok: true, el: imgEl, url });
-                };
-                tempImg.onerror = () => {
+                    tempImg.onload = () => {
+                        resolve({ ok: true, el: imgEl, url });
+                    };
+                    tempImg.onerror = () => {
+                        console.warn('图片预加载失败：', url);
+                        resolve({ ok: false, el: imgEl, url });
+                    };
+                } catch(err) {
                     console.warn('图片预加载失败：', url);
                     resolve({ ok: false, el: imgEl, url });
-                };
+                }
             });
 
             // 并发池控制
@@ -137,8 +188,20 @@ document.addEventListener('DOMContentLoaded', function () {
         results.forEach(({ ok, el, url }) => {
             if (ok) {
                 el.src = url;
-                el.dataset.galleriaLoaded = "1";
                 el.parentElement.href = url;
+                el.classList.remove('global-lazy-loading-img')
+            }
+        });
+        galleria.classList.remove("lazy-galleria")
+        const galleriaName = "galleria-" + index
+        galleria.classList.add(galleriaName)
+        galleria.classList.add('galleria')
+        Galleria.run('.' + galleriaName, {
+            extend: function () {
+                var gallery = this;
+                gallery.$('.container').click(function () {
+                    gallery.playToggle(1000).toggleFullscreen();
+                });
             }
         });
         // console.log("所有 galleria-src 图片预加载完毕，已更新src");
@@ -149,22 +212,38 @@ document.addEventListener('DOMContentLoaded', function () {
         try {
             await loadScript('https://cdnjs.cloudflare.com/ajax/libs/galleria/1.5.7/galleria.min.js');
             Galleria.loadTheme('https://cdnjs.cloudflare.com/ajax/libs/galleria/1.5.7/themes/classic/galleria.classic.min.js');
-
-            Galleria.run('.galleria', {
-                extend: function () {
-                    var gallery = this;
-                    gallery.$('container').click(function () {
-                        gallery.playToggle(1000).toggleFullscreen();
-                    });
-                }
-            });
         } catch (err) {
             console.error('Galleria 脚本加载失败', err);
         }
     }
-
-    preloadGalleriaImages().then(loadGalleriaLib).catch(e => {
-            console.error("预加载或图库初始化异常", e);
+    async function lazyLoadImages() {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const galleria = entry.target;
+                    const index = galleria.dataset.index || 0
+                    loadGalleriaImages(galleria, index)
+                    observer.unobserve(galleria);
+                }
+            });
+        }, {
+            rootMargin: '200px 0px',
+            threshold: 0.01
         });
+        let index = 1;
+        for (const galleria of $galleriaList) { 
+            galleria.dataset.index = index
+            index++
+            observer.observe(galleria);
+        }
+    }
+    loadGalleriaLib().then(lazyLoadImages).catch(e => {
+        console.error("图库初始化异常", e);
+    });
+
+    // 页面卸载清理，防止内存泄漏
+    window.addEventListener('beforeunload', () => {
+        observer.disconnect();
+    });
 
 });
