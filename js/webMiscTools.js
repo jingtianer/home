@@ -247,7 +247,7 @@ document.addEventListener('DOMContentLoaded', function () {
             threshold: 0.01
         });
         $galleriaList.forEach(function (galleria, index, arr) {
-            galleria.dataset.index = index
+            galleria.dataset.index = index + 1
             observer.observe(galleria);
         })
     }
