@@ -192,14 +192,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 el.classList.remove('global-lazy-loading-img')
             }
         });
-        galleria.classList.remove("lazy-galleria")
-        const galleriaName = "galleria-" + index
+        const galleriaName = "global-lazy-galleria-" + index
         galleria.classList.add(galleriaName)
-        galleria.classList.add('galleria')
         Galleria.run('.' + galleriaName, {
             extend: function () {
                 var gallery = this;
-                gallery.$('.container').click(function () {
+                $(galleria).click(function () {
                     gallery.playToggle(1000).toggleFullscreen();
                 });
             }

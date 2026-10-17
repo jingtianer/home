@@ -12,10 +12,6 @@ hexo.extend.filter.register('after_render:html', function (html) {
     height: 1.28em;
     font-size: 100%;
 }
-.galleria{ 
-    width: 100%; 
-    height: 100dvh; 
-}
 .lazy-galleria{ 
     width: 100%; 
     height: 100dvh; 
