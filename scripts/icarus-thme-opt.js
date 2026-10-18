@@ -61,20 +61,27 @@ hexo.extend.filter.register('after_render:html', function (html) {
   border: 1px solid rgba(255,255,255,0.25) !important;
   border-radius: 12px !important;
 }
+
 .navbar {
+--nav-height: 0px;
 width: calc(100% - 2em) !important;
 margin: 1em !important;
-position: fixed;
-backdrop-filter: blur(12px) !important;
+position: fixed !important;
+backdrop-filter: blur(8px) !important;
 -webkit-backdrop-filter: blur(12px) !important; /* Safari兼容 */
 
 /* 半透底色，必不可少 */
-background: rgba(255,255,255, 0.35) !important;
+background: rgba(255,255,255, 0.6) !important;
 
 /* 可选：细微边框提升质感 */
 border: 1px solid rgba(255,255,255,0.25) !important;
 border-radius: 12px !important;
 color: #000 !important;
+}
+.navbar-mirror{
+width: calc(100% - 2em) !important;
+margin: 1em !important;
+height: var(--nav-height);
 }
 .hljs {
   backdrop-filter: blur(12px) !important;
@@ -154,6 +161,15 @@ color: #000 !important;
   background: transparent !important;
 }
 `;
+const scriptHeightSync = `
+const navEl = document.querySelector('.navbar');
+function updateNavVar(){
+  document.documentElement.style.setProperty('--nav-height', navEl.offsetHeight + 'px')
+}
+const ro = new ResizeObserver(updateNavVar);
+ro.observe(navEl);
+updateNavVar();
+`
   // 注入样式
   $('<style>').text(cssText).appendTo('head');
   $('.navbar').addClass('global-blur')
@@ -172,5 +188,7 @@ const $container = $('<div>').addClass('body-bg-container');
 $('<div>').addClass('bg1').appendTo($container);   // 子1
 $('<div>').addClass('bg2').appendTo($container);   // 子2
 $container.prependTo('body');
+$('<div>').addClass('navbar-mirror').prependTo('body');
+$('<script>').text(scriptHeightSync).appendTo('body');
   return $.html();
 });
