@@ -154,10 +154,10 @@ $(function () {
 
   const $floatBox = $(`
     <div class="jingtian-bg-player" aria-label="播放背景音乐">
-      <div class="jingtian-bg-player__film card">
+      <div class="jingtian-bg-player__film global-blur">
         <div class="jingtian-bg-player__record"></div>
       </div>
-      <div class="jingtian-bg-player__volume-control card">
+      <div class="jingtian-bg-player__volume-control global-blur">
         <input class="jingtian-bg-player__volume" type="range" min="0" max="1" step="0.01" value="1" aria-label="背景音乐音量">
       </div>
       <div class="jingtian-bg-player__title">--</div>

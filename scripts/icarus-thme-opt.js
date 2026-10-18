@@ -15,6 +15,18 @@ hexo.extend.filter.register('after_render:html', function (html) {
   border-radius: 12px !important;
   color: #000 !important;
 }
+.global-blur{
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important; /* Safari兼容 */
+
+  /* 半透底色，必不可少 */
+  background: rgba(255,255,255, 0.3) !important;
+
+  /* 可选：细微边框提升质感 */
+  border: 1px solid rgba(255,255,255,0.25) !important;
+  border-radius: 12px !important;
+  color: #000 !important;
+}
 .gt-header-textarea{
   backdrop-filter: blur(12px) !important;
   -webkit-backdrop-filter: blur(12px) !important; /* Safari兼容 */
