@@ -136,16 +136,16 @@ body {
 `;
   // 注入样式
   $('<style>').text(cssText).appendTo('head');
-  $('.navbar').addClass('card')
-  $('.pagination-previous').addClass('card')
-  $('.pagination-next').addClass('card')
-  $('.pagination-link').addClass('card')
-  $('#back-to-top').addClass('card')
+  $('.navbar').addClass('global-blur')
+  $('.pagination-previous').addClass('global-blur')
+  $('.pagination-next').addClass('global-blur')
+  $('.pagination-link').addClass('global-blur')
+  $('#back-to-top').addClass('global-blur')
   $('.footer').addClass('card')
-  $('.gt-header-textarea').addClass('card')
-  $('.tag').addClass('card')
-  $('.tags .tag').removeClass('card').addClass('hljs')
-  $('.article-licensing').addClass('card')
+  $('.gt-header-textarea').addClass('global-blur')
+  $('.tag').addClass('global-blur')
+  $('.tags .tag').removeClass('global-blur').addClass('hljs')
+  $('.article-licensing').addClass('global-blur')
   $('table').addClass('hljs')
 
   return $.html();
