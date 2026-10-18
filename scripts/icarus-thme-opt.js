@@ -84,6 +84,9 @@ color: #000 !important;
 body {
   background: linear-gradient(90deg, #CAEFD7ee, #F5BFD7ee, #ABC9E9ee) !important;
 }
+.navbar-menu {
+  background: transparent !important;
+}
 .navbar-link.is-active:hover {
   backdrop-filter: blur(12px) !important;
   -webkit-backdrop-filter: blur(12px) !important; /* Safari兼容 */
