@@ -8,7 +8,7 @@ hexo.extend.filter.register('after_render:html', function (html) {
   -webkit-backdrop-filter: blur(12px) !important; /* Safari兼容 */
 
   /* 半透底色，必不可少 */
-  background: rgba(255,255,255, 0.3) !important;
+  background: rgba(255,255,255, 0.35) !important;
 
   /* 可选：细微边框提升质感 */
   border: 1px solid rgba(255,255,255,0.25) !important;
@@ -20,7 +20,7 @@ hexo.extend.filter.register('after_render:html', function (html) {
   -webkit-backdrop-filter: blur(12px) !important; /* Safari兼容 */
 
   /* 半透底色，必不可少 */
-  background: rgba(255,255,255, 0.3) !important;
+  background: rgba(255,255,255, 0.35) !important;
 
   /* 可选：细微边框提升质感 */
   border: 1px solid rgba(255,255,255,0.25) !important;
@@ -32,7 +32,7 @@ hexo.extend.filter.register('after_render:html', function (html) {
   -webkit-backdrop-filter: blur(12px) !important; /* Safari兼容 */
 
   /* 半透底色，必不可少 */
-  background: rgba(255,255,255, 0.3) !important;
+  background: rgba(255,255,255, 0.35) !important;
 
   /* 可选：细微边框提升质感 */
   border: 1px solid rgba(255,255,255,0.25) !important;
@@ -43,7 +43,7 @@ hexo.extend.filter.register('after_render:html', function (html) {
   -webkit-backdrop-filter: blur(12px) !important; /* Safari兼容 */
 
   /* 半透底色，必不可少 */
-  background: rgba(255,255,255, 0.3) !important;
+  background: rgba(255,255,255, 0.35) !important;
 
   /* 可选：细微边框提升质感 */
   border: 1px solid rgba(255,255,255,0.25) !important;
@@ -54,20 +54,22 @@ hexo.extend.filter.register('after_render:html', function (html) {
   -webkit-backdrop-filter: blur(12px) !important; /* Safari兼容 */
 
   /* 半透底色，必不可少 */
-  background: rgba(255,255,255, 0.3) !important;
-  background-color: rgba(255,255,255, 0.3) !important;
+  background: rgba(255,255,255, 0.35) !important;
+  background-color: rgba(255,255,255, 0.35) !important;
 
   /* 可选：细微边框提升质感 */
   border: 1px solid rgba(255,255,255,0.25) !important;
   border-radius: 12px !important;
 }
 .navbar {
+width: calc(100% - 2em) !important;
 margin: 1em !important;
+position: fixed;
 backdrop-filter: blur(12px) !important;
 -webkit-backdrop-filter: blur(12px) !important; /* Safari兼容 */
 
 /* 半透底色，必不可少 */
-background: rgba(255,255,255, 0.3) !important;
+background: rgba(255,255,255, 0.35) !important;
 
 /* 可选：细微边框提升质感 */
 border: 1px solid rgba(255,255,255,0.25) !important;
@@ -79,7 +81,7 @@ color: #000 !important;
   -webkit-backdrop-filter: blur(12px) !important; /* Safari兼容 */
 
   /* 半透底色，必不可少 */
-  background: rgba(255,255,255, 0.3) !important;
+  background: rgba(255,255,255, 0.35) !important;
 }
 .button{
   backdrop-filter: blur(12px) !important;
@@ -93,8 +95,25 @@ color: #000 !important;
   border: 1px solid rgba(255,255,255,0.25) !important;
   border-radius: 12px !important;
 }
-body {
+.body-bg-container {
+    position: fixed;
+    width: 100vw;
+    height: 100dvh;
+    z-index: -100;
+}
+.body-bg-container .bg1 {
+  position: fixed;
+  width: 100%;
+  height: 100%;
   background: linear-gradient(90deg, #CAEFD7ee, #F5BFD7ee, #ABC9E9ee) !important;
+  z-index: -99;
+}
+.body-bg-container .bg2 {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(#ffffff00, #ffffffa0) !important;
+  z-index: -98;
 }
 .navbar-menu {
   background: transparent !important;
@@ -104,7 +123,7 @@ body {
   -webkit-backdrop-filter: blur(12px) !important; /* Safari兼容 */
 
   /* 半透底色，必不可少 */
-  background: rgba(255,255,255, 0.3) !important;
+  background: rgba(255,255,255, 0.35) !important;
   background-color: transparent !important;
   margin-left: 0.1em !important;
   margin-right: 0.1em !important;
@@ -118,7 +137,7 @@ body {
   -webkit-backdrop-filter: blur(12px) !important; /* Safari兼容 */
 
   /* 半透底色，必不可少 */
-  background: rgba(255,255,255, 0.3) !important;
+  background: rgba(255,255,255, 0.35) !important;
 }
 .footer {
   margin: 1em !important;
@@ -149,5 +168,9 @@ body {
   $('.article-licensing').addClass('global-blur')
   $('table').addClass('hljs')
 
+const $container = $('<div>').addClass('body-bg-container');
+$('<div>').addClass('bg1').appendTo($container);   // 子1
+$('<div>').addClass('bg2').appendTo($container);   // 子2
+$container.prependTo('body');
   return $.html();
 });
