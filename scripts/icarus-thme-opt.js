@@ -125,6 +125,7 @@ body {
 }
 .widget .tags .tag:first-child {
   color: #000 !important;
+  margin-right: 3px;
 }
 .pagination-link.is-current {
   color: #000 !important;
@@ -144,7 +145,7 @@ body {
   $('.footer').addClass('card')
   $('.gt-header-textarea').addClass('global-blur')
   $('.tag').addClass('global-blur')
-  $('.tags .tag').removeClass('global-blur').addClass('hljs')
+//   $('.tags .tag').removeClass('global-blur').addClass('hljs')
   $('.article-licensing').addClass('global-blur')
   $('table').addClass('hljs')
 
