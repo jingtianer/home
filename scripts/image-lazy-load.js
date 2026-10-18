@@ -13,7 +13,7 @@ hexo.extend.filter.register('after_render:html', function (html) {
 }
 .lazy-galleria{ 
     width: 100%; 
-    height: 100dvh; 
+    height: calc(100dvh - var(--nav-height) - 2em); 
 }
 .galleria-stage {
   top: 0px !important;
