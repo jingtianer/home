@@ -47,6 +47,9 @@ $(function () {
         const isPlaying = !this.audio.paused;
         this.floatBox.toggleClass('is-playing', isPlaying);
         this.floatBox.attr('aria-label', isPlaying ? '暂停背景音乐' : '播放背景音乐');
+        const $toggle = this.floatBox.find('.jingtian-bg-player__toggle');
+        $toggle.html(`<i class="fa-solid ${isPlaying ? 'fa-pause' : 'fa-play'}"></i>`);
+        $toggle.attr('aria-label', isPlaying ? '暂停背景音乐' : '播放背景音乐');
       },
       loadMusic: function (idx) {
         if (idx < 0 || idx >= musicList.length) return;
@@ -56,6 +59,16 @@ $(function () {
         if (this.floatBox) {
           this.floatBox.find('.jingtian-bg-player__title').text(m.name);
         }
+      },
+      playPrevious: function () {
+        const nextIndex = (this.currentIndex - 1 + musicList.length) % musicList.length;
+        this.loadMusic(nextIndex);
+        this.audio.play().catch(e => console.log('上一首播放失败', e));
+      },
+      playNext: function () {
+        const nextIndex = (this.currentIndex + 1) % musicList.length;
+        this.loadMusic(nextIndex);
+        this.audio.play().catch(e => console.log('下一首播放失败', e));
       }
     };
     const player = window.__jingtianAudioPlayer;
@@ -120,7 +133,7 @@ $(function () {
       document.addEventListener(evt, firstUserInteraction);
     });
   }
-  if (!savedState.paused) {
+  if (!savedState || !savedState.paused) {
     firstUserInteraction();
     addMusicAutoPlayEvent();
   }
@@ -157,6 +170,13 @@ $(function () {
       <div class="jingtian-bg-player__film global-blur">
         <div class="jingtian-bg-player__record"></div>
       </div>
+      <div class="jingtian-bg-player__controls global-blur">
+        <div class="jingtian-bg-player__buttons">
+          <button class="jingtian-bg-player__button jingtian-bg-player__prev global-blur" type="button" aria-label="上一首"><i class="fa-solid fa-backward-step"></i></button>
+          <button class="jingtian-bg-player__button jingtian-bg-player__toggle global-blur" type="button" aria-label="播放背景音乐"><i class="fa-solid fa-play"></i></button>
+          <button class="jingtian-bg-player__button jingtian-bg-player__next global-blur" type="button" aria-label="下一首"><i class="fa-solid fa-forward-step"></i></button>
+        </div>
+      </div>
       <div class="jingtian-bg-player__volume-control global-blur">
         <input class="jingtian-bg-player__volume" type="range" min="0" max="1" step="0.01" value="1" aria-label="背景音乐音量">
       </div>
@@ -172,6 +192,10 @@ $(function () {
 
   const $title = $floatBox.find('.jingtian-bg-player__title');
   const $volume = $floatBox.find('.jingtian-bg-player__volume');
+  const $controls = $floatBox.find('.jingtian-bg-player__controls');
+  const $prev = $floatBox.find('.jingtian-bg-player__prev');
+  const $next = $floatBox.find('.jingtian-bg-player__next');
+  const $toggle = $floatBox.find('.jingtian-bg-player__toggle');
 
   const curSong = musicList[player.currentIndex];
   $title.text(curSong.name);
@@ -202,7 +226,7 @@ $(function () {
   let offsetX, offsetY;
   let startX, startY;
   $floatBox.on('mousedown', function (e) {
-    if ($(e.target).closest('.jingtian-bg-player__volume-control').length) return;
+    if ($(e.target).closest('.jingtian-bg-player__volume-control, .jingtian-bg-player__controls').length) return;
     isDrag = true;
     hasDragged = false;
     startX = e.clientX;
@@ -231,8 +255,23 @@ $(function () {
   })
   $floatBox.on('click', function (e) {
     e.stopPropagation();
-    if ($(e.target).closest('.jingtian-bg-player__volume-control').length) return;
+    if ($(e.target).closest('.jingtian-bg-player__volume-control, .jingtian-bg-player__controls').length) return;
     if (hasDragged) return;
+    togglePlay();
+  })
+  $controls.on('mousedown mouseup click input change keydown', function (e) {
+    e.stopPropagation();
+  })
+  $prev.on('click', function (e) {
+    e.stopPropagation();
+    player.playPrevious();
+  })
+  $next.on('click', function (e) {
+    e.stopPropagation();
+    player.playNext();
+  })
+  $toggle.on('click', function (e) {
+    e.stopPropagation();
     togglePlay();
   })
   $volume.on('mousedown mouseup click input change keydown', function (e) {
