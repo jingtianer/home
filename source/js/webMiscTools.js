@@ -146,9 +146,6 @@ document.addEventListener('DOMContentLoaded', function () {
         if (galleryList.length <= 0) {
             return
         }
-        const concurrencyLimit = 3;
-        const tasks = [];
-        const pool = [];
         gallery.splice(1, galleryList.length)
         function appendImage(url) {
             gallery.push({ image: url });
@@ -158,43 +155,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 appendImage('/home/images/picture-loading-failed.png');
                 continue;
             }
-            // 单个图片加载Promise
-            const loadTask = new Promise((resolve) => {
-                try {
-                    const tempImg = new Image();
-                    tempImg.crossOrigin = "anonymous";
-                    tempImg.src = url;
-
-                    tempImg.onload = () => {
-                        resolve({ ok: true, url });
-                        appendImage(url);
-                    };
-                    tempImg.onerror = () => {
-                        console.warn('图片预加载失败：', url);
-                        resolve({ ok: false, url });
-                        appendImage(url);
-                    };
-                } catch (err) {
-                    console.warn('图片预加载失败：', url);
-                    resolve({ ok: false, url });
-                    appendImage(url);
-                }
-            });
-
-            // 并发池控制
-            if (pool.length >= concurrencyLimit) {
-                await Promise.race(pool);
-            }
-            pool.push(loadTask);
-            loadTask.then(() => {
-                const idx = pool.indexOf(loadTask);
-                if (idx > -1) pool.splice(idx, 1);
-            });
-            tasks.push(loadTask);
+            appendImage(url);
         }
-
-        // 等待所有图片预加载完成
-        await Promise.all(tasks);
     }
 
     async function loadGalleriaLib() {
