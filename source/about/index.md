@@ -22,6 +22,10 @@ tag: resume
     border-color: #30363d;
     color: #7d8590;
 }
+#Star-Rail-Honkai{
+  aspect-ratio: 560/315;
+  width: 100%;
+}
 </style>
 
 
@@ -81,6 +85,6 @@ tag: resume
 
 <blockquote class="twitter-tweet"><p lang="ja" dir="ltr">七聖召喚の鍾離先生のカードがかっこよすぎる件について<a href="https://twitter.com/hashtag/%E5%8E%9F%E7%A5%9E?src=hash&amp;ref_src=twsrc%5Etfw">#原神</a> <a href="https://twitter.com/hashtag/%E9%8D%BE%E9%9B%A2?src=hash&amp;ref_src=twsrc%5Etfw">#鍾離</a> <a href="https://twitter.com/hashtag/Zhongli?src=hash&amp;ref_src=twsrc%5Etfw">#Zhongli</a> <a href="https://t.co/AOwV6ozK5e">pic.twitter.com/AOwV6ozK5e</a></p>&mdash; celsior500 (@celsior500) <a href="https://twitter.com/celsior500/status/1659389662593425409?ref_src=twsrc%5Etfw">May 19, 2023</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/Shonzh8EgNk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+<iframe id="Star-Rail-Honkai" src="https://www.youtube.com/embed/Shonzh8EgNk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 <blockquote class="twitter-tweet"><p lang="ko" dir="ltr">🎁🎄Merry Christmas🐺 메리 크리스마스 ⛓️<a href="https://twitter.com/hashtag/Wriothesley?src=hash&amp;ref_src=twsrc%5Etfw">#Wriothesley</a> <br>。゜・❄️・。・。 ・ 。。゜・。 ❅゜ ・。゜・ ❄️゜ ・。❄️゜ ゜ ・。゜ ・・❄️ ゜・ 。 ゜❅゜ ゜゜。 。 ゜・。 。゜ ・ 。 ❄️゜・ 。 ❅゜ ゜。・゜ ❄️。 ❅・。・。 ゜・ 。゜ ・ 。。゜。 ゜・ 。゜・ ❄️・ 。 ゜❅゜ ゜゜。 。 <a href="https://t.co/5HSjrdZRBB">pic.twitter.com/5HSjrdZRBB</a></p>&mdash; ✨NP✨ (@1231_0720) <a href="https://twitter.com/1231_0720/status/1738182848635379811?ref_src=twsrc%5Etfw">December 22, 2023</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
