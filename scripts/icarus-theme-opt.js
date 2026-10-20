@@ -162,7 +162,7 @@ height: var(--nav-height);
   background: transparent !important;
 }
 `;
-const scriptHeightSync = `
+  const scriptHeightSync = `
 const navEl = document.querySelector('.navbar');
 function updateNavVar(){
   document.documentElement.style.setProperty('--nav-height', navEl.offsetHeight + 'px')
@@ -170,26 +170,26 @@ function updateNavVar(){
 const ro = new ResizeObserver(updateNavVar);
 ro.observe(navEl);
 updateNavVar();
-`
+`;
   // 注入样式
   $('<style>').text(cssText).appendTo('head');
-  $('.navbar').addClass('global-blur')
-  $('.pagination-previous').addClass('global-blur')
-  $('.pagination-next').addClass('global-blur')
-  $('.pagination-link').addClass('global-blur')
-  $('#back-to-top').addClass('global-blur')
-  $('.footer').addClass('card')
-  $('.gt-header-textarea').addClass('global-blur')
-  $('.tag').addClass('global-blur')
-//   $('.tags .tag').removeClass('global-blur').addClass('hljs')
-  $('.article-licensing').addClass('global-blur')
-  $('table').addClass('hljs')
+  $('.navbar').addClass('global-blur');
+  $('.pagination-previous').addClass('global-blur');
+  $('.pagination-next').addClass('global-blur');
+  $('.pagination-link').addClass('global-blur');
+  $('#back-to-top').addClass('global-blur');
+  $('.footer').addClass('card');
+  $('.gt-header-textarea').addClass('global-blur');
+  $('.tag').addClass('global-blur');
+  //   $('.tags .tag').removeClass('global-blur').addClass('hljs')
+  $('.article-licensing').addClass('global-blur');
+  $('table').addClass('hljs');
 
-const $container = $('<div>').addClass('body-bg-container');
-$('<div>').addClass('bg1').appendTo($container);   // 子1
-$('<div>').addClass('bg2').appendTo($container);   // 子2
-$container.prependTo('body');
-$('<div>').addClass('navbar-mirror').prependTo('body');
-$('<script>').text(scriptHeightSync).appendTo('body');
+  const $container = $('<div>').addClass('body-bg-container');
+  $('<div>').addClass('bg1').appendTo($container);   // 子1
+  $('<div>').addClass('bg2').appendTo($container);   // 子2
+  $container.prependTo('body');
+  $('<div>').addClass('navbar-mirror').prependTo('body');
+  $('<script>').text(scriptHeightSync).appendTo('body');
   return $.html();
 });
