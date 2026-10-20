@@ -45,7 +45,7 @@ hexo.extend.filter.register('after_render:html', function (html) {
     $galleria.removeClass('galleria');
   })
 
-  const imgs = $('img');
+  const imgs = $('img:not([data-processed]), img[data-processed]:not([data-processed="1"])');
   imgs.each(function () {
     const $img = $(this);
     // 跳过已经标记的图片（galleria里面的img会直接在这里return）
