@@ -28,6 +28,7 @@ function walkDir(root, prefix) {
 
 var jsFiles = undefined // walkDir('./source/js', '/home/js')
 var cssFiles = undefined // walkDir('./source/css', '/home/css')
+var jsModuleFiles = undefined
 
 function addCss($, filename) {
     $('<link>').attr('rel', 'stylesheet').attr('type', 'text/css').attr('href', filename).appendTo('body');
@@ -37,10 +38,17 @@ function addJs($, filename) {
     $('<script>').attr('type', 'text/javascript').attr('src', filename).appendTo('body');
 }
 
+function addJsModule($, filename) {
+    $('<script>').attr('type', 'module').attr('src', filename).appendTo('body');
+}
+
 const cheerio = require('cheerio');
 hexo.extend.filter.register('after_render:html', function (html) {
     if (!jsFiles) {
-        jsFiles = walkDir('./source/js', '/home/js');
+        jsFiles = walkDir('./source/js/script', '/home/js/script');
+    }
+    if (!jsModuleFiles) {
+        jsModuleFiles = walkDir('./source/js/module', '/home/js/module');
     }
     if (!cssFiles) {
         cssFiles = walkDir('./source/css', '/home/css');
@@ -49,7 +57,9 @@ hexo.extend.filter.register('after_render:html', function (html) {
     for (const file of cssFiles) {
         addCss($, file);
     }
-
+    for (const file of jsModuleFiles) {
+        addJsModule($, file);
+    }
     for (const file of jsFiles) {
         addJs($, file);
     }
