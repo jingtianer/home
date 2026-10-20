@@ -1,0 +1,3 @@
+[submodule "qqpet-web"]
+	path = qqpet-web
+	url = https://github.com/AnkioTomas/qqpet.git

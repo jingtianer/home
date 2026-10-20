@@ -11,6 +11,7 @@ git add .
 git commit -m "`date`"
 git push origin master
 hexo g
+./build_qqpet.sh
 # sed -i 's/github.com\/jingtianer/jingtianer.github.io/g' public/atom.xml
 
 # disable errexit, to make sure the command that remove token from _comfig.yml can be executed no matter if deployment is successful or not

@@ -10,3 +10,9 @@ _config.yml.bak
 token.txt
 deploy.log
 /.vscode
+
+node_modules/
+out/
+dist/
+*.log
+.DS_Store

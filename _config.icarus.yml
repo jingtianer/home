@@ -50,6 +50,7 @@ navbar:
         关于我: /about
         猫照片: /cat-images
         相册: /tags/gallery
+        宠物: /qqpet
     links:
         Download on GitHub:
             icon: fab fa-github
