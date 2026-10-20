@@ -170,6 +170,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function getImageList(galleria) {
         const imgs = Array.from(galleria.querySelectorAll('img[galleria-src]'));
+        if (imgs.length <= 0) {
+            return []
+        }
         const firstImg = imgs[0]
         recoverImgSrc(imgs[0], firstImg.getAttribute('galleria-src')) // 第一张图默认展示，否则galleria有bug，无法更新封面图
         return imgs.slice(1).map(function (value, index, array) {
