@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Config>
+    <NormalRes>
+        <ResourceProperty ResID="CommunityMainFlash" ResName="world_1051.swf" />
+        <ResourceProperty ResID="NPCConfigure" ResName="Data/NpcList_1065" />
+        <ResourceProperty ResID="NavigationConfigure" ResName="Data/NavigationMap_1065" />
+        <ResourceProperty ResID="SceneConfigure" ResName="Data/SceneConfig_1065" />
+        <ResourceProperty ResID="MusicConfigure" ResName="Data/MusicConfig_3" />
+        <ResourceProperty ResID="LoadPanel" ResName="Data/LoadPanel/LoadPanel101" />
+        <ResourceProperty ResID="ServerInfo" ResName="ServerInfo4" />
+        <ResourceProperty ResID="WeatherSystem" ResName="Data/WeatherSystem/WeatherSystem2" />
+        <ResourceProperty ResID="MapConfigure" ResName="Data/MapCfg_1065" />
+        <ResourceProperty ResID="NpcRes" ResName="Data/Npc26" />
+        <ResourceProperty ResID="TitleCfg" ResName="title1064" />
+        <ResourceProperty ResID="TitleShow" ResName="Data/title_903" />
+        <ResourceProperty ResID="PetStatus" ResName="petstatusdesc2" />
+        <ResourceProperty ResID="StaticRes" ResName="StaticRes1041" />
+        <ResourceProperty ResID="XOGame2" ResName="Data/MysteryLakeAdventure_2" />
+        <ResourceProperty ResID="Market" ResName="..\..\common_market1042.zip" />
+        <ResourceProperty ResID="Animation" ResName="Data/Animation_1042" />
+        <ResourceProperty ResID="Wilderness" ResName="Data/Wilderness_5" />
+    </NormalRes>
+    <HighPriority>
+        <ResourceProperty ResID="NPCConfigure" ResName="22" />
+        <ResourceProperty ResID="SceneConfigure" ResName="22" />
+    </HighPriority>
+</Config>

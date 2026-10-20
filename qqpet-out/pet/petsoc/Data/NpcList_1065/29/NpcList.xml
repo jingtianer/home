@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?><Config>
+  <GridScene rows="10" cols="10">
+    <Viewport rows="8" cols="8"/>
+    <GridSize width="200" height="150"/>
+  </GridScene>
+  <NpcList/>
+</Config>

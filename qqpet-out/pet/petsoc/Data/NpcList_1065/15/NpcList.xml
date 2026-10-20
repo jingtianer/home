@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?><Config>
+  <GridScene rows="10" cols="10">
+    <Viewport rows="10" cols="10"/>
+    <GridSize width="80" height="60"/>
+  </GridScene>
+  <NpcList>
+    <Npc nid="123" mid="0" name="" validDistance="0" x="447" y="183" mapShowPoint="1" type="1">
+      <ParamList>
+        <Param name="view">Data/res/scene/15/20090826190938_V2.png</Param>
+        <Param name="cursorID">4</Param>
+        <Param name="namecardVisible">false</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="">
+          <Action name="openMainUrl">
+            <Param name="url">http://act.pet.qq.com/oneonegame/suanshu.html</Param>
+            <Param name="timestamp">false</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="185.8" h="157.55">
+        <Projection>
+          <CenterPoint x="60" y="125"/>
+        </Projection>
+      </EntityModel>
+      <Item x="383" y="97" cursorID="4"/>
+      <NavPointList>
+        <NavPoint x="421" y="295"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="121" mid="AnimateNPC" name="珍尼花" validDistance="100" x="550" y="328" mapShowPoint="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/15/20090824170125_V2.png</Param>
+        <Param name="cursorID">2</Param>
+        <Param name="namecardVisible">true</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="0" name="mouseClick">
+          <Action name="openSubUrl">
+            <Param name="url">http://web.pet.qq.com/fcgi-bin/petstudy?cmd=1&amp;grade=0&amp;type=0</Param>
+            <Param name="timestamp">false</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="140" h="140">
+        <Projection>
+          <CenterPoint x="73" y="125"/>
+        </Projection>
+      </EntityModel>
+      <Item x="476" y="231" cursorID="2"/>
+      <NavPointList>
+        <NavPoint x="472" y="345"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="132" mid="0" name="" validDistance="0" x="379" y="340" mapShowPoint="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/15/20090825105940_V2.png</Param>
+        <Param name="cursorID">4</Param>
+        <Param name="namecardVisible">false</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="">
+          <Action name="openMainUrl">
+            <Param name="timestamp">false</Param>
+            <Param name="url">http://act.pet.qq.com/oneonegame/qq_hhxx.html</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="97.75" h="95.9">
+        <Projection>
+          <CenterPoint x="71" y="100"/>
+        </Projection>
+      </EntityModel>
+      <Item x="326" y="272" cursorID="4"/>
+      <NavPointList>
+        <NavPoint x="294" y="330"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="134" mid="0" name="" validDistance="0" x="504" y="401" mapShowPoint="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/15/20090825105940_V2.png</Param>
+        <Param name="cursorID">4</Param>
+        <Param name="namecardVisible">false</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="">
+          <Action name="openMainUrl">
+            <Param name="url">http://act.pet.qq.com/oneonegame/qq_hhxx.html</Param>
+            <Param name="timestamp">false</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="97.75" h="95.9">
+        <Projection>
+          <CenterPoint x="70" y="98"/>
+        </Projection>
+      </EntityModel>
+      <Item x="451" y="334" cursorID="4"/>
+      <NavPointList>
+        <NavPoint x="469" y="352"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="117" mid="0" name="" validDistance="0" x="204" y="488" mapShowPoint="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/15/20090720114548_V2.png</Param>
+        <Param name="cursorID">7</Param>
+        <Param name="namecardVisible">false</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="0" name="mouseClick">
+          <Action name="enterScene">
+            <Param name="id">6</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="140" h="140">
+        <Projection>
+          <CenterPoint x="62" y="96"/>
+        </Projection>
+      </EntityModel>
+      <Item x="136" y="398" cursorID="7"/>
+      <NavPointList>
+        <NavPoint x="204" y="506"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="122" mid="0" name="" validDistance="0" x="0" y="0" mapShowPoint="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/15/20090824171600_V2.png</Param>
+        <Param name="cursorID">4</Param>
+        <Param name="namecardVisible">false</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="">
+          <Action name=""/>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="24.9" h="29.35">
+        <Projection>
+          <CenterPoint x="26" y="63"/>
+        </Projection>
+      </EntityModel>
+      <Item x="534" y="470" cursorID="4"/>
+      <NavPointList>
+        <NavPoint x="0" y="0"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="124" mid="0" name="" validDistance="0" x="0" y="0" mapShowPoint="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/15/20090824171600_V2.png</Param>
+        <Param name="cursorID">4</Param>
+        <Param name="namecardVisible">false</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="">
+          <Action name=""/>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="24.9" h="29.35">
+        <Projection>
+          <CenterPoint x="26" y="66"/>
+        </Projection>
+      </EntityModel>
+      <Item x="580" y="467" cursorID="4"/>
+      <NavPointList>
+        <NavPoint x="0" y="0"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="119" mid="0" name="" validDistance="0" x="0" y="0" mapShowPoint="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/15/20090824171600_V2.png</Param>
+        <Param name="cursorID">4</Param>
+        <Param name="namecardVisible">false</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="">
+          <Action name=""/>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="24.9" h="29.35">
+        <Projection>
+          <CenterPoint x="26" y="63"/>
+        </Projection>
+      </EntityModel>
+      <Item x="356" y="484" cursorID="4"/>
+      <NavPointList>
+        <NavPoint x="0" y="0"/>
+      </NavPointList>
+    </Npc>
+  </NpcList>
+</Config>

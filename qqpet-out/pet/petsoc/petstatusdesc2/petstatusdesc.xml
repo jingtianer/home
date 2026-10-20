@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="gb2312" standalone="no" ?>
+<!-- Pet1.0本地版本文件-->
+<status id="1" name="打工" desc="打工中">
+</status>
+<status id="2" name="学习" desc="学习中">
+</status>
+<status id="3" name="旅游" desc="旅游中">
+</status>
+<status id="4" name="待客" desc="待客中">
+</status>
+<status id="5" name="神奇之旅" desc="神奇之旅中">
+</status>
+<status id="10" name="包饺子" desc="包饺子中">
+</status>
+<status id="11" name="烧水" desc="烧水中">
+</status>
+<status id="12" name="煮饺子" desc="煮饺子中">
+</status>
+<status id="13" name="滑雪" desc="滑雪中">
+</status>
+<status id="14" name="送信" desc="送信途中">
+</status>
+<status id="15" name="探宝" desc="无名地探宝">
+</status>
+<status id="16" name="包粽子" desc="包粽子">
+</status>
+<status id="17" name="马术训练" desc="马术训练中">
+</status>
+<status id="18" name="下国际象棋" desc="国际象棋对局中">
+</status>
+<status id="19" name="打高尔夫" desc="高尔夫运动中">
+</status>
+<status id="20" name="爱的怀抱" desc="爱的怀抱">
+</status>
+<status id="21" name="休息" desc="休息中">
+</status>
+<status id="22" name="闲逛" desc="闲逛中">
+</status>
+<status id="23" name="玩耍" desc="玩耍中">
+</status>
+<status id="24" name="泡温泉" desc="泡温泉中">
+</status>
+<status id="25" name="看表演" desc="看表演中">
+</status>
+<status id="26" name="玩冰雕" desc="玩冰雕中">
+</status>
+<status id="27" name="做糖果" desc="做糖果中">
+</status>
+<status id="28" name="童话历险" desc="童话历险中">
+</status>
+<status id="29" name="虫虫放牧" desc="虫虫放牧中">
+</status>
+<status id="30" name="宫廷舞会" desc="宫廷舞会中">
+</status>
+<status id="31" name="海底探险" desc="海底探险中">
+</status>
+<status id="32" name="大显身手" desc="大显身手中">
+</status>
+<status id="33" name="开小灶" desc="开小灶中">
+</status>

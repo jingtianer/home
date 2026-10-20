@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="5" height="18" viewBox="585 0 5 18">
+  <linearGradient id="side" x2="1"><stop offset="0" stop-color="#e6c669"/><stop offset="1" stop-color="#e9cf7d"/></linearGradient>
+  <linearGradient id="sideR" x2="1"><stop offset="0" stop-color="#e9d07f"/><stop offset="1" stop-color="#e7c970"/></linearGradient>
+  <linearGradient id="head" x2="0" y2="1">
+    <stop offset="0" stop-color="#e7c86d"/><stop offset=".22" stop-color="#ead284"/><stop offset=".3" stop-color="#ebd58a"/><stop offset="1" stop-color="#eee2ad"/>
+  </linearGradient>
+  <linearGradient id="foot" x2="0" y2="1"><stop offset="0" stop-color="#ead284"/><stop offset="1" stop-color="#e6c669"/></linearGradient>
+  <linearGradient id="hl" x2="0" y2="1"><stop offset="0" stop-color="#f7ecce"/><stop offset="1" stop-color="#eed796"/></linearGradient>
+  <path d="M4 0H586L590 4V377L586 381H4L0 377V4Z" fill="#bc8204"/>
+  <path d="M4.5 1H585.5L589 4.5V376.5L585.5 380H4.5L1 376.5V4.5Z" fill="#be8509"/>
+  <rect x="2" y="2" width="3" height="377" fill="url(#side)"/>
+  <rect x="585" y="2" width="3" height="377" fill="url(#sideR)"/>
+  <filter id="paper" x="0" y="0" width="1" height="1">
+    <feTurbulence type="fractalNoise" baseFrequency=".16 .7" numOctaves="3" seed="7"/>
+    <feColorMatrix values="0 0 0 0 .55  0 0 0 0 .42  0 0 0 0 .18  0 0 0 -1.2 .72"/>
+  </filter>
+  <rect x="2" y="2" width="586" height="16" fill="url(#head)"/>
+  <rect x="2" y="6" width="586" height="12" filter="url(#paper)"/>
+  <rect x="2" y="375" width="586" height="5" fill="url(#foot)"/>
+  <rect x="5" y="18" width="580" height="357" fill="#fff"/>
+  <path d="M5 1.5H585" stroke="#f7ecce"/>
+  <path d="M1.5 5V376M588.5 5V376" stroke="#f7ecce" opacity=".9"/>
+  <path d="M1.5 18V375" stroke="url(#hl)"/>
+  <path d="M588.5 18V375" stroke="url(#hl)"/>
+</svg>

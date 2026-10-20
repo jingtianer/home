@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation imgbaseurl="">
+  <today><item url="$SURL$[qqpet://news]"/></today>
+  <guide><item url="$SURL$[qqpet://guide]"/></guide>
+  <duihuan><item url="$SURL$[qqpet://task]"/></duihuan>
+  <recommend>
+    <item name="科洛每日任务" npc="22-196-0" type="2"/>
+    <item name="布袋长老送信" npc="22-189-0" type="1"/>
+    <item name="图图宝藏图" npc="22-1109-0"/>
+    <item name="小艾爱心任务" npc="3-14-0"/>
+    <item name="天使坏坏" npc="22-3-0"/>
+  </recommend>
+  <recommendMore>
+    <item name="社区向导" npc="22-183-0"/>
+    <item name="东郊荒地打妖怪" npc="30-125-0"/>
+  </recommendMore>
+  <casual>
+    <item name="摩西钓鱼" npc="3-158-0" type="1"/>
+    <item name="饭饭端盘子" npc="3-162-0"/>
+    <item name="跆拳道" npc="7-125-0"/>
+    <item name="搭积木" npc="8-17-0"/>
+    <item name="好好学习" npc="15-132-0"/>
+  </casual>
+  <casualMore>
+    <item name="冒险岛" npc="3-15-0"/>
+    <item name="密室逃脱" npc="18-163-0"/>
+    <item name="满天星" npc="22-401-0"/>
+    <item name="找茬" npc="22-1136-0"/>
+    <item name="守护使" npc="21-121-0"/>
+    <item name="煎饼摊" npc="13-135-0"/>
+    <item name="摘星星" npc="21-119-0"/>
+    <item name="泡泡" npc="5-158-0"/>
+  </casualMore>
+  <other>
+    <item name="岛中心">
+      <item name="风语广场" npc="22-0-0"/>
+      <item name="百货店" npc="13-0-0"/>
+      <item name="咖啡厅" npc="20-0-0"/>
+      <item name="教堂" npc="18-0-0"/>
+      <item name="生日屋" npc="16-0-0"/>
+      <item name="小学课堂" npc="15-0-0"/>
+    </item>
+    <item name="海岸雪山">
+      <item name="夏帕海岸" npc="3-0-0"/>
+      <item name="粉钻雪山" npc="5-0-0"/>
+      <item name="粉钻度假村" npc="26-0-0"/>
+    </item>
+    <item name="游乐竞技">
+      <item name="竞技场" npc="7-0-0"/>
+      <item name="超级游乐场" npc="8-0-0"/>
+    </item>
+    <item name="神秘探险">
+      <item name="古堡森林" npc="21-0-0"/>
+      <item name="神秘岛" npc="23-0-0"/>
+      <item name="神秘湖" npc="27-0-0"/>
+      <item name="神秘湖底" npc="29-0-0"/>
+    </item>
+    <item name="东郊荒地">
+      <item name="东郊荒地" npc="30-0-0"/>
+      <item name="天剑峰" npc="31-0-0"/>
+      <item name="昆仑顶" npc="32-0-0"/>
+    </item>
+  </other>
+</navigation>

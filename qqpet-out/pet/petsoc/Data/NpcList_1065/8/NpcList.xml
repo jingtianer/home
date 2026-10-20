@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?><Config>
+  <GridScene rows="10" cols="10">
+    <Viewport rows="5" cols="6"/>
+    <GridSize width="300" height="199"/>
+  </GridScene>
+  <NpcList>
+    <Npc nid="17" mid="0" name="搭积木" validDistance="0" x="718" y="1494" mapShowPoint="1" type="1">
+      <ParamList>
+        <Param name="view">Data/res/scene/8/11_V2.png</Param>
+        <Param name="cursorID">4</Param>
+        <Param name="namecardVisible">true</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="">
+          <Action name="openMainUrl">
+            <Param name="url">http://act.pet.qq.com/oneonegame/dajimu.html</Param>
+            <Param name="timestamp">false</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="221" h="245">
+        <Projection>
+          <CenterPoint x="214" y="139"/>
+        </Projection>
+      </EntityModel>
+      <Item x="583" y="1398" cursorID="4"/>
+      <NavPointList>
+        <NavPoint x="823" y="1638"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="165" mid="0" name="回夏帕海岸" validDistance="0" x="1219" y="1877" mapShowPoint="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/8/20090625101525_V2.png</Param>
+        <Param name="cursorID">7</Param>
+        <Param name="namecardVisible">false</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="0" name="mouseClick">
+          <Action name="enterScene">
+            <Param name="id">3</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="140" h="140">
+        <Projection>
+          <CenterPoint x="62" y="79"/>
+        </Projection>
+      </EntityModel>
+      <Item x="1147" y="1797" cursorID="7"/>
+      <NavPointList>
+        <NavPoint x="1224" y="1886"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="173" mid="0" name="闯关守宝" validDistance="0" x="1087" y="1356" mapShowPoint="1" type="1">
+      <ParamList>
+        <Param name="view">Data/res/scene/8/20090806153603_V2.png</Param>
+        <Param name="cursorID">4</Param>
+        <Param name="namecardVisible">true</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="">
+          <Action name="openMiddleUrl">
+            <Param name="url">http://act.pet.qq.com/games/x_cgdb.html</Param>
+            <Param name="timestamp">false</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="209.15" h="257.4">
+        <Projection>
+          <CenterPoint x="136" y="225"/>
+        </Projection>
+      </EntityModel>
+      <Item x="970" y="1217" cursorID="4"/>
+      <NavPointList>
+        <NavPoint x="1171" y="1486"/>
+      </NavPointList>
+    </Npc>
+  </NpcList>
+</Config>

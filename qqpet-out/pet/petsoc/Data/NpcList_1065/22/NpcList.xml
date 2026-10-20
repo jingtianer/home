@@ -1,0 +1,1646 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Config>
+  <GridScene rows="10" cols="10">
+    <Viewport rows="6" cols="6"/>
+    <GridSize width="250" height="176"/>
+  </GridScene>
+  <NpcList>
+    <Npc nid="12" mid="0" name="去粉钻雪山" validDistance="0" x="1447" y="105" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/22/20091028165957_V2.png</Param>
+        <Param name="cursorID">7</Param>
+        <Param name="namecardVisible">true</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="">
+          <Action name="enterScene">
+            <Param name="id">25</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="140" h="140">
+        <Projection>
+          <CenterPoint x="72" y="92"/>
+        </Projection>
+      </EntityModel>
+      <Item x="1380" y="19" cursorID="7"/>
+      <NavPointList>
+        <NavPoint x="1446" y="122"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="1999" mid="" name="" validDistance="100" x="1258" y="155" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/22/20111130111705_V2.png</Param>
+        <Param name="cursorID">4</Param>
+        <Param name="namecardVisible">false</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="mouseClick">
+          <Action name="openSubUrl">
+            <Param name="url" value="http://web.pet.qq.com/petad/ad_tmp.html?ADTAG=IED.innercop.pet.community_town1&amp;sid=22&amp;aid=1">http://web.pet.qq.com/petad/ad_tmp.html?ADTAG=IED.innercop.pet.community_town1&amp;sid=22&amp;aid=1</Param>
+            <Param name="timestamp" value="false">false</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="257" h="242">
+        <Projection>
+          <CenterPoint x="169" y="192"/>
+        </Projection>
+      </EntityModel>
+      <Item x="1131" y="-12" cursorID="4"/>
+      <NavPointList>
+        <NavPoint x="1296" y="279"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="1107" mid="0" name="去古堡森林" validDistance="0" x="514" y="241" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/22/20091028165957_V2.png</Param>
+        <Param name="cursorID">7</Param>
+        <Param name="namecardVisible">true</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="">
+          <Action name="enterScene">
+            <Param name="id">21</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="140" h="140">
+        <Projection>
+          <CenterPoint x="66" y="98"/>
+        </Projection>
+      </EntityModel>
+      <Item x="450" y="153" cursorID="7"/>
+      <NavPointList>
+        <NavPoint x="513" y="260"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="1187" mid="" name="名宠俱乐部" validDistance="0" x="1632" y="179" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/22/20111122150238_V2.png</Param>
+        <Param name="cursorID">4</Param>
+        <Param name="namecardVisible">false</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="mouseClick">
+          <Action name="openMainUrl">
+            <Param name="url" value="http://img.pet.qq.com/swf/games/phb_Top.html">http://img.pet.qq.com/swf/games/phb_Top.html</Param>
+            <Param name="timestamp" value="false">false</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="426" h="374">
+        <Projection>
+          <CenterPoint x="170" y="215"/>
+        </Projection>
+      </EntityModel>
+      <Item x="1515" y="14" cursorID="4"/>
+      <NavPointList>
+        <NavPoint x="1556" y="314"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="1166" mid="AnimateNPC" name="红冠国王" validDistance="100" x="1522" y="248" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/22/20110112132235_V2.png</Param>
+        <Param name="cursorID">2</Param>
+        <Param name="namecardVisible">true</Param>
+      </ParamList>
+      <UserData>
+        <Speak>蓝冠国王投降吧，你打不过我的！|真人对局，赢取6套兵种装扮！</Speak>
+      </UserData>
+      <TriggerList>
+        <Trigger id="0" name="mouseClick">
+          <Action name="openMainUrl">
+            <Param name="timestamp">false</Param>
+            <Param name="url">http://act.pet.qq.com/huanjiazhanqi.html</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="140" h="140">
+        <Projection>
+          <CenterPoint x="73" y="129"/>
+        </Projection>
+      </EntityModel>
+      <Item x="1462" y="160" cursorID="2"/>
+      <NavPointList>
+        <NavPoint x="1576" y="338"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="101" mid="0" name="教堂" validDistance="0" x="908" y="240" mapShowPoint="1" layerType="1" type="1">
+      <ParamList>
+        <Param name="view">Data/res/scene/22/20100520104416_V2.png</Param>
+        <Param name="cursorID">3</Param>
+        <Param name="namecardVisible">false</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="">
+          <Action name="enterScene">
+            <Param name="id">18</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="200" h="200">
+        <Projection>
+          <CenterPoint x="82" y="224"/>
+        </Projection>
+      </EntityModel>
+      <Item x="830" y="111" cursorID="3"/>
+      <NavPointList>
+        <NavPoint x="971" y="380"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="196" mid="AnimateNPC" name="科洛" validDistance="100" x="1876" y="339" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/22/20110824153736_V2.png</Param>
+        <Param name="cursorID">2</Param>
+        <Param name="namecardVisible">true</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="0" name="mouseClick">
+          <Action name="openSubUrl">
+            <Param name="url" value="http://act.pet.qq.com/cgi-bin/daytask?cmd=enter">http://act.pet.qq.com/cgi-bin/daytask?cmd=enter</Param>
+            <Param name="timestamp" value="false">false</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="140" h="140">
+        <Projection>
+          <CenterPoint x="77" y="123"/>
+        </Projection>
+      </EntityModel>
+      <Item x="1804" y="235" cursorID="2"/>
+      <NavPointList>
+        <NavPoint x="1883" y="400"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="1138" mid="AnimateNPC" name="木木" validDistance="100" x="367" y="343" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/22/20091123175331_V2.png</Param>
+        <Param name="cursorID">2</Param>
+        <Param name="namecardVisible">true</Param>
+      </ParamList>
+      <UserData>
+        <Speak>小树苗，快快长大吧！|种树最光荣！|浇水咯~~除虫咯~~施肥咯!</Speak>
+      </UserData>
+      <TriggerList>
+        <Trigger id="0" name="mouseClick">
+          <Action name="openSubUrl">
+            <Param name="timestamp">false</Param>
+            <Param name="url">http://web.pet.qq.com/npc/npc_mumu.html</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="140" h="140">
+        <Projection>
+          <CenterPoint x="85" y="109"/>
+        </Projection>
+      </EntityModel>
+      <Item x="297" y="258" cursorID="2"/>
+      <NavPointList>
+        <NavPoint x="341" y="421"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="1141" mid="AnimateNPC" name="菜菜" validDistance="100" x="1759" y="360" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/22/20100201113047_V2.png</Param>
+        <Param name="cursorID">2</Param>
+        <Param name="namecardVisible">true</Param>
+      </ParamList>
+      <UserData>
+        <Speak>大乐斗火爆公测，你今天乐斗了么？|公测期间登录乐斗即送礼包！|全民乐斗，你不是一个人在战斗！</Speak>
+      </UserData>
+      <TriggerList>
+        <Trigger id="0" name="mouseClick">
+          <Action name="openSubUrl">
+            <Param name="timestamp">false</Param>
+            <Param name="url">http://act.pet.qq.com/cgi-bin/happyfight_strength?cmd=query</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="140" h="140">
+        <Projection>
+          <CenterPoint x="62" y="126"/>
+        </Projection>
+      </EntityModel>
+      <Item x="1688" y="256" cursorID="2"/>
+      <NavPointList>
+        <NavPoint x="1698" y="387"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="198" mid="0" name="" validDistance="0" x="2173" y="258" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/22/20100525194428_V2.png</Param>
+        <Param name="cursorID">4</Param>
+        <Param name="namecardVisible">false</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="">
+          <Action name="openMainUrl">
+            <Param name="url">http://act.pet.qq.com/tiaoshui/qcts.html</Param>
+            <Param name="timestamp">false</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="100" h="110">
+        <Projection>
+          <CenterPoint x="42" y="220"/>
+        </Projection>
+      </EntityModel>
+      <Item x="2120" y="178" cursorID="4"/>
+      <NavPointList>
+        <NavPoint x="2076" y="222"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="1160" mid="0" name="迪利" validDistance="0" x="1410" y="356" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/22/20100511171413_V2.png</Param>
+        <Param name="cursorID">2</Param>
+        <Param name="namecardVisible">true</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="">
+          <Action name="openMainUrl">
+            <Param name="url">http://act.pet.qq.com/dilidaren/dilidaren.html</Param>
+            <Param name="timestamp">false</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="177" h="191">
+        <Projection>
+          <CenterPoint x="96" y="183"/>
+        </Projection>
+      </EntityModel>
+      <Item x="1320" y="248" cursorID="2"/>
+      <NavPointList>
+        <NavPoint x="1311" y="463"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="1105" mid="AnimateNPC" name="" validDistance="100" x="2182" y="416" mapShowPoint="1" layerType="1" type="1">
+      <ParamList>
+        <Param name="view">Data/res/scene/22/20100130135356_V2.png</Param>
+        <Param name="cursorID">4</Param>
+        <Param name="namecardVisible">false</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="0" name="mouseClick">
+          <Action name="openSubUrl">
+            <Param name="timestamp">false</Param>
+            <Param name="url">http://act.pet.qq.com/cgi-bin/treasure_map?cmd=6&amp;award=4</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="140" h="140">
+        <Projection>
+          <CenterPoint x="72" y="116"/>
+        </Projection>
+      </EntityModel>
+      <Item x="2112" y="320" cursorID="4"/>
+      <NavPointList>
+        <NavPoint x="2015" y="404"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="401" mid="0" name="" validDistance="0" x="2301" y="471" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/22/20091028230815_V2.png</Param>
+        <Param name="cursorID">4</Param>
+        <Param name="namecardVisible">false</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="">
+          <Action name="openMainUrl">
+            <Param name="url">http://web.pet.qq.com/oneonegame/guanxingtai.html</Param>
+            <Param name="timestamp">false</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="100" h="100">
+        <Projection>
+          <CenterPoint x="33" y="118"/>
+        </Projection>
+      </EntityModel>
+      <Item x="2235" y="384" cursorID="4"/>
+      <NavPointList>
+        <NavPoint x="2313" y="543"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="1109" mid="AnimateNPC" name="图图" validDistance="100" x="521" y="483" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/22/20091028180050_V2.png</Param>
+        <Param name="cursorID">2</Param>
+        <Param name="namecardVisible">true</Param>
+      </ParamList>
+      <UserData>
+        <Speak>快来抢碎片啦！|粉钻可以无限量购买低级碎片哦！</Speak>
+      </UserData>
+      <TriggerList>
+        <Trigger id="0" name="mouseClick">
+          <Action name="openSubUrl">
+            <Param name="url">http://web.pet.qq.com/npc/npc_tutu.html</Param>
+            <Param name="timestamp">false</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="140" h="140">
+        <Projection>
+          <CenterPoint x="79" y="122"/>
+        </Projection>
+      </EntityModel>
+      <Item x="444" y="390" cursorID="2"/>
+      <NavPointList>
+        <NavPoint x="579" y="523"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="151" mid="AnimateNPC" name="杰无双" validDistance="100" x="1544" y="545" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/22/20101221193056_V2.png</Param>
+        <Param name="cursorID">2</Param>
+        <Param name="namecardVisible">true</Param>
+      </ParamList>
+      <UserData>
+        <Speak>天下英雄，非你莫属！|希望英雄们大展神威，夺得好名次！|对面的先生要不要也来试试？</Speak>
+      </UserData>
+      <TriggerList>
+        <Trigger id="0" name="mouseClick">
+          <Action name="openMainUrl">
+            <Param name="url">http://act.pet.qq.com/attribute_pk/qqxpk.html</Param>
+            <Param name="timestamp">false</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="140" h="140">
+        <Projection>
+          <CenterPoint x="73" y="120"/>
+        </Projection>
+      </EntityModel>
+      <Item x="1478" y="447" cursorID="2"/>
+      <NavPointList>
+        <NavPoint x="1464" y="567"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="1136" mid="0" name="" validDistance="0" x="231" y="561" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/22/20110420174845_V2.png</Param>
+        <Param name="cursorID">4</Param>
+        <Param name="namecardVisible">false</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="">
+          <Action name="openMainUrl">
+            <Param name="timestamp">false</Param>
+            <Param name="url">http://web.pet.qq.com/oneonegame/qcdzk.html</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="200" h="200">
+        <Projection>
+          <CenterPoint x="154" y="97"/>
+        </Projection>
+      </EntityModel>
+      <Item x="148" y="478" cursorID="4"/>
+      <NavPointList>
+        <NavPoint x="276" y="657"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="1108" mid="0" name="去东郊荒地" validDistance="0" x="2230" y="601" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/22/20110413165119_V2.png</Param>
+        <Param name="cursorID">2</Param>
+        <Param name="namecardVisible">true</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="">
+          <Action name="openFlashWeb">
+            <Param name="url">Data\Wilderness\main_shenqi_begin.swf</Param>
+            <Param name="userData">false</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="150" h="160">
+        <Projection>
+          <CenterPoint x="77" y="116"/>
+        </Projection>
+      </EntityModel>
+      <Item x="2155" y="493" cursorID="2"/>
+      <NavPointList>
+        <NavPoint x="2230" y="619"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="1140" mid="AnimateNPC" name="魔法宝箱" validDistance="100" x="436" y="585" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/22/20100112165502_V2.png</Param>
+        <Param name="cursorID">2</Param>
+        <Param name="namecardVisible">true</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="0" name="mouseClick">
+          <Action name="openSubUrl">
+            <Param name="url">PET://$SUB$[http://act.pet.qq.com/treasure_map/index.html]</Param>
+            <Param name="timestamp">false</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="140" h="140">
+        <Projection>
+          <CenterPoint x="41" y="120"/>
+        </Projection>
+      </EntityModel>
+      <Item x="358" y="490" cursorID="2"/>
+      <NavPointList>
+        <NavPoint x="493" y="621"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="189" mid="AnimateNPC" name="布袋长老" validDistance="100" x="1913" y="708" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/22/20091028183349_V2.png</Param>
+        <Param name="cursorID">2</Param>
+        <Param name="namecardVisible">true</Param>
+      </ParamList>
+      <UserData>
+        <Speak>古堡中危机四伏，勇士请小心啊！|小朋友来帮我送个信吧|使用成长药水可以快快长大</Speak>
+      </UserData>
+      <TriggerList>
+        <Trigger id="0" name="mouseClick">
+          <Action name="openSubUrl">
+            <Param name="url">http://web.pet.qq.com/npc/npc_bdzl.html</Param>
+            <Param name="timestamp">false</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="140" h="140">
+        <Projection>
+          <CenterPoint x="56" y="121"/>
+        </Projection>
+      </EntityModel>
+      <Item x="1840" y="611" cursorID="2"/>
+      <NavPointList>
+        <NavPoint x="1826" y="729"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="1200" mid="AnimateNPC" name="万事通" validDistance="100" x="2353" y="729" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/22/20110504144035_V2.png</Param>
+        <Param name="cursorID">2</Param>
+        <Param name="namecardVisible">true</Param>
+      </ParamList>
+      <UserData>
+        <Speak>神器传说等级开放到20级啦！|神器传说2期登场,新敌人新技能！</Speak>
+      </UserData>
+      <TriggerList>
+        <Trigger id="0" name="mouseClick">
+          <Action name="openFlashWeb">
+            <Param name="url">Data\Wilderness\main_shenqi_begin.swf</Param>
+            <Param name="userData">false</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="140" h="140">
+        <Projection>
+          <CenterPoint x="77" y="123"/>
+        </Projection>
+      </EntityModel>
+      <Item x="2280" y="626" cursorID="2"/>
+      <NavPointList>
+        <NavPoint x="2317" y="821"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="1104" mid="0" name="" validDistance="0" x="1853" y="797" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/22/20100520101832_V2.png</Param>
+        <Param name="cursorID">4</Param>
+        <Param name="namecardVisible">false</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="">
+          <Action name="openMainUrl">
+            <Param name="timestamp">false</Param>
+            <Param name="url">http://web.pet.qq.com/oneonegame/lianliankan.html</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="100" h="100">
+        <Projection>
+          <CenterPoint x="59" y="47"/>
+        </Projection>
+      </EntityModel>
+      <Item x="1807" y="731" cursorID="4"/>
+      <NavPointList>
+        <NavPoint x="1821" y="838"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="1147" mid="AnimateNPC" name="智慧长老" validDistance="100" x="401" y="720" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/22/20100201153856_V2.png</Param>
+        <Param name="cursorID">2</Param>
+        <Param name="namecardVisible">true</Param>
+      </ParamList>
+      <UserData>
+        <Speak>周六、周日不见不散哦！|一起参加神秘湖智慧大考验吧！</Speak>
+      </UserData>
+      <TriggerList>
+        <Trigger id="0" name="mouseClick">
+          <Action name="openSubUrl">
+            <Param name="url">http://act.pet.qq.com/npc/npc_xogame.html</Param>
+            <Param name="timestamp">false</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="140" h="140">
+        <Projection>
+          <CenterPoint x="83" y="128"/>
+        </Projection>
+      </EntityModel>
+      <Item x="319" y="621" cursorID="2"/>
+      <NavPointList>
+        <NavPoint x="455" y="753"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="141" mid="0" name="咖啡厅" validDistance="0" x="893" y="749" mapShowPoint="1" layerType="1" type="1">
+      <ParamList>
+        <Param name="view">Data/res/scene/22/20100520104240_V2.png</Param>
+        <Param name="cursorID">3</Param>
+        <Param name="namecardVisible">false</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="">
+          <Action name="enterScene">
+            <Param name="id">20</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="200" h="200">
+        <Projection>
+          <CenterPoint x="101" y="179"/>
+        </Projection>
+      </EntityModel>
+      <Item x="790" y="640" cursorID="3"/>
+      <NavPointList>
+        <NavPoint x="987" y="884"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="142" mid="AnimateNPC" name="精灵乐乐" validDistance="100" x="299" y="1015" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/22/20091028183511_V2.png</Param>
+        <Param name="cursorID">2</Param>
+        <Param name="namecardVisible">true</Param>
+      </ParamList>
+      <UserData>
+        <Speak>需要我的帮助么？|照顾宠物来我这~|好多小可爱哦~</Speak>
+      </UserData>
+      <TriggerList>
+        <Trigger id="0" name="mouseClick">
+          <Action name="openSubUrl">
+            <Param name="timestamp">false</Param>
+            <Param name="url">http://web.pet.qq.com/npc/npc_jlll.html</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="140" h="140">
+        <Projection>
+          <CenterPoint x="68" y="116"/>
+        </Projection>
+      </EntityModel>
+      <Item x="226" y="935" cursorID="2"/>
+      <NavPointList>
+        <NavPoint x="362" y="1061"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="139" mid="AnimateNPC" name="桑尼夫人" validDistance="100" x="1497" y="868" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/22/20091028185405_V2.png</Param>
+        <Param name="cursorID">2</Param>
+        <Param name="namecardVisible">true</Param>
+      </ParamList>
+      <UserData>
+        <Speak>粉钻新等级，特权更惊喜！|开通年费粉钻，独享VIP7特权！</Speak>
+      </UserData>
+      <TriggerList>
+        <Trigger id="0" name="mouseClick">
+          <Action name="openSubUrl">
+            <Param name="timestamp">false</Param>
+            <Param name="url">http://web.pet.qq.com/fzds.html</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="140" h="140">
+        <Projection>
+          <CenterPoint x="63" y="114"/>
+        </Projection>
+      </EntityModel>
+      <Item x="1427" y="772" cursorID="2"/>
+      <NavPointList>
+        <NavPoint x="1452" y="915"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="193" mid="AnimateNPC" name="赛孔明" validDistance="100" x="1570" y="927" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/22/20091028183730_V2.png</Param>
+        <Param name="cursorID">2</Param>
+        <Param name="namecardVisible">true</Param>
+      </ParamList>
+      <UserData>
+        <Speak>蜀国统帅，北伐曹魏。|东讨东吴，兴复汉室。|完成统一大业不是朝夕之事~</Speak>
+      </UserData>
+      <TriggerList>
+        <Trigger id="0" name="mouseClick">
+          <Action name="openSubUrl">
+            <Param name="timestamp">false</Param>
+            <Param name="url">http://web.pet.qq.com/npc/npc_saikm.html</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="140" h="140">
+        <Projection>
+          <CenterPoint x="70" y="117"/>
+        </Projection>
+      </EntityModel>
+      <Item x="1498" y="832" cursorID="2"/>
+      <NavPointList>
+        <NavPoint x="1507" y="974"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="1267" mid="0" name="" validDistance="0" x="1065" y="924" mapShowPoint="1" layerType="1" type="1">
+      <ParamList>
+        <Param name="view">Data/res/scene/22/20110111222645_V2.png</Param>
+        <Param name="cursorID">4</Param>
+        <Param name="namecardVisible">false</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="">
+          <Action name="openSubUrl">
+            <Param name="timestamp">false</Param>
+            <Param name="url">http://act.pet.qq.com/cgi-bin/treasure_map?cmd=6&amp;award=9</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="137" h="131">
+        <Projection>
+          <CenterPoint x="85" y="125"/>
+        </Projection>
+      </EntityModel>
+      <Item x="988" y="866" cursorID="4"/>
+      <NavPointList>
+        <NavPoint x="1066" y="1024"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="1181" mid="AnimateNPC" name="融少" validDistance="100" x="1249" y="978" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/22/20101122103731_V2.png</Param>
+        <Param name="cursorID">2</Param>
+        <Param name="namecardVisible">true</Param>
+      </ParamList>
+      <UserData>
+        <Speak>3月9日大乐斗Ⅱ热血公测！</Speak>
+      </UserData>
+      <TriggerList>
+        <Trigger id="0" name="mouseClick">
+          <Action name="openSubUrl">
+            <Param name="timestamp">false</Param>
+            <Param name="url">http://act.pet.qq.com/happyfighttwo/index.html</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="140" h="140">
+        <Projection>
+          <CenterPoint x="64" y="116"/>
+        </Projection>
+      </EntityModel>
+      <Item x="1174" y="885" cursorID="2"/>
+      <NavPointList>
+        <NavPoint x="1217" y="1043"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="1025" mid="" name="" validDistance="100" x="2400" y="982" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/22/20111130111755_V2.png</Param>
+        <Param name="cursorID">4</Param>
+        <Param name="namecardVisible">false</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="mouseClick">
+          <Action name="openSubUrl">
+            <Param name="url" value="http://web.pet.qq.com/petad/ad_tmp.html?ADTAG=IED.innercop.pet.community_town1&amp;sid=22&amp;aid=3">http://web.pet.qq.com/petad/ad_tmp.html?ADTAG=IED.innercop.pet.community_town1&amp;sid=22&amp;aid=3</Param>
+            <Param name="timestamp" value="false">false</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="257" h="242">
+        <Projection>
+          <CenterPoint x="137" y="215"/>
+        </Projection>
+      </EntityModel>
+      <Item x="2284" y="815" cursorID="4"/>
+      <NavPointList>
+        <NavPoint x="2444" y="1084"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="3" mid="AnimateNPC" name="天使坏坏" validDistance="100" x="736" y="992" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/22/20091028185526_V2.png</Param>
+        <Param name="cursorID">2</Param>
+        <Param name="namecardVisible">true</Param>
+      </ParamList>
+      <UserData>
+        <Speak>欢迎新来社区的小企鹅们~|快来点亮图标吧~</Speak>
+      </UserData>
+      <TriggerList>
+        <Trigger id="0" name="mouseClick">
+          <Action name="openSubUrl">
+            <Param name="url">http://web.pet.qq.com/npc/npc_tshh.html</Param>
+            <Param name="timestamp">false</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="140" h="140">
+        <Projection>
+          <CenterPoint x="75" y="127"/>
+        </Projection>
+      </EntityModel>
+      <Item x="663" y="914" cursorID="2"/>
+      <NavPointList>
+        <NavPoint x="789" y="1043"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="916" mid="AnimateNPC" name="嘟嘟" validDistance="100" x="683" y="640" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/22/20110504145336_V2.png</Param>
+        <Param name="cursorID">2</Param>
+        <Param name="namecardVisible">true</Param>
+      </ParamList>
+      <UserData>
+        <Speak>快去农场渔场种养新种子和鱼苗吧！|收集好材料可以找我自己做绝版哦！</Speak>
+      </UserData>
+      <TriggerList>
+        <Trigger id="0" name="mouseClick">
+          <Action name="openMainUrl">
+            <Param name="timestamp">false</Param>
+            <Param name="url">http://act.pet.qq.com/juebandiy/qq_jb.html</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="140" h="140">
+        <Projection>
+          <CenterPoint x="73" y="130"/>
+        </Projection>
+      </EntityModel>
+      <Item x="613" y="538" cursorID="2"/>
+      <NavPointList>
+        <NavPoint x="606" y="640"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="169" mid="AnimateNPC" name="皇家守卫" validDistance="100" x="1669" y="1040" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/22/20101019104829_V2.png</Param>
+        <Param name="cursorID">2</Param>
+        <Param name="namecardVisible">true</Param>
+      </ParamList>
+      <UserData>
+        <Speak>我们皇家守卫一定会把恶魔消灭的！|恶魔来的太多了，快来帮我们防守！</Speak>
+      </UserData>
+      <TriggerList>
+        <Trigger id="0" name="mouseClick">
+          <Action name="openMainUrl">
+            <Param name="url">http://act.pet.qq.com/td2.html</Param>
+            <Param name="timestamp">false</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="140" h="140">
+        <Projection>
+          <CenterPoint x="68" y="123"/>
+        </Projection>
+      </EntityModel>
+      <Item x="1600" y="937" cursorID="2"/>
+      <NavPointList>
+        <NavPoint x="1582" y="1056"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="1023" mid="AnimateNPC" name="T仔" validDistance="100" x="1044" y="539" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/22/20110615172419_V2.png</Param>
+        <Param name="cursorID">2</Param>
+        <Param name="namecardVisible">true</Param>
+      </ParamList>
+      <UserData>
+        <Speak>TNT开放测试火力爆启！</Speak>
+      </UserData>
+      <TriggerList>
+        <Trigger id="0" name="mouseClick">
+          <Action name="openFlashWeb">
+            <Param name="url" value="http://img.pet.qq.com/swf/games/tnt_qianhao.swf">http://img.pet.qq.com/swf/games/tnt_qianhao.swf</Param>
+            <Param name="userData" value="false">false</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="140" h="140">
+        <Projection>
+          <CenterPoint x="48" y="128"/>
+        </Projection>
+      </EntityModel>
+      <Item x="998" y="438" cursorID="2"/>
+      <NavPointList>
+        <NavPoint x="1121" y="533"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="197" mid="" name="" validDistance="0" x="130" y="1155" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/22/20111130111711_V2.png</Param>
+        <Param name="cursorID">4</Param>
+        <Param name="namecardVisible">false</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="mouseClick">
+          <Action name="openSubUrl">
+            <Param name="url" value="http://web.pet.qq.com/petad/ad_tmp.html?ADTAG=IED.innercop.pet.community_town1&amp;sid=22&amp;aid=2">http://web.pet.qq.com/petad/ad_tmp.html?ADTAG=IED.innercop.pet.community_town1&amp;sid=22&amp;aid=2</Param>
+            <Param name="timestamp" value="false">false</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="253" h="242">
+        <Projection>
+          <CenterPoint x="124" y="193"/>
+        </Projection>
+      </EntityModel>
+      <Item x="8" y="992" cursorID="4"/>
+      <NavPointList>
+        <NavPoint x="133" y="1288"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="187" mid="AnimateNPC" name="多多" validDistance="100" x="1119" y="271" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/22/20091028180738_V2.png</Param>
+        <Param name="cursorID">2</Param>
+        <Param name="namecardVisible">true</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="0" name="mouseClick">
+          <Action name="openSubUrl">
+            <Param name="url" value="http://act.pet.qq.com/newterm/index.html">http://act.pet.qq.com/newterm/index.html</Param>
+            <Param name="timestamp" value="false">false</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="140" h="140">
+        <Projection>
+          <CenterPoint x="72" y="119"/>
+        </Projection>
+      </EntityModel>
+      <Item x="1045" y="177" cursorID="2"/>
+      <NavPointList>
+        <NavPoint x="1178" y="333"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="176" mid="0" name="去瓦里步行街" validDistance="0" x="2315" y="1240" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/22/20091028165957_V2.png</Param>
+        <Param name="cursorID">7</Param>
+        <Param name="namecardVisible">true</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="">
+          <Action name="enterScene">
+            <Param name="id">28</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="140" h="140">
+        <Projection>
+          <CenterPoint x="66" y="93"/>
+        </Projection>
+      </EntityModel>
+      <Item x="2248" y="1157" cursorID="7"/>
+      <NavPointList>
+        <NavPoint x="2317" y="1258"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="173" mid="AnimateNPC" name="露西卡" validDistance="100" x="265" y="1324" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/22/20100803144622_V2.png</Param>
+        <Param name="cursorID">2</Param>
+        <Param name="namecardVisible">true</Param>
+      </ParamList>
+      <UserData>
+        <Speak>我可以用占星秘法送你去神秘岛探险|进入神秘岛后，就要看你的运气啦</Speak>
+      </UserData>
+      <TriggerList>
+        <Trigger id="0" name="mouseClick">
+          <Action name="openSubUrl">
+            <Param name="timestamp">false</Param>
+            <Param name="url">http://act.pet.qq.com/npc/npc_luxika.html</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="140" h="140">
+        <Projection>
+          <CenterPoint x="52" y="125"/>
+        </Projection>
+      </EntityModel>
+      <Item x="196" y="1233" cursorID="2"/>
+      <NavPointList>
+        <NavPoint x="215" y="1397"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="177" mid="0" name="去夏帕海岸" validDistance="0" x="71" y="1348" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/22/20091028165957_V2.png</Param>
+        <Param name="cursorID">7</Param>
+        <Param name="namecardVisible">true</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="">
+          <Action name="enterScene">
+            <Param name="id">24</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="140" h="140">
+        <Projection>
+          <CenterPoint x="69" y="94"/>
+        </Projection>
+      </EntityModel>
+      <Item x="3" y="1265" cursorID="7"/>
+      <NavPointList>
+        <NavPoint x="69" y="1371"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="183" mid="AnimateNPC" name="社区向导" validDistance="100" x="646" y="1328" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/22/20091029163654_V2.png</Param>
+        <Param name="cursorID">2</Param>
+        <Param name="namecardVisible">true</Param>
+      </ParamList>
+      <UserData>
+        <Speak>我对企鹅岛了如指掌！|去夏帕乐园，我告诉你！|你要找谁？|我可以给你指引方向！</Speak>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="">
+          <Action name="openSubUrl">
+            <Param name="timestamp">false</Param>
+            <Param name="url">http://web.pet.qq.com/guide/stf_index.html</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="140" h="140">
+        <Projection>
+          <CenterPoint x="74" y="123"/>
+        </Projection>
+      </EntityModel>
+      <Item x="574" y="1237" cursorID="2"/>
+      <NavPointList>
+        <NavPoint x="698" y="1378"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="191" mid="AnimateNPC" name="监狱长" validDistance="100" x="1744" y="1462" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/22/20091028183124_V2.png</Param>
+        <Param name="cursorID">2</Param>
+        <Param name="namecardVisible">true</Param>
+      </ParamList>
+      <UserData>
+        <Speak>糟了，狡猾的监狱猫逃跑了!|逮到监狱猫可以得猫猫套装</Speak>
+      </UserData>
+      <TriggerList>
+        <Trigger id="0" name="mouseClick">
+          <Action name="openSubUrl">
+            <Param name="timestamp">false</Param>
+            <Param name="url">http://web.pet.qq.com/npc/npc_jianyuzhang.html</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="140" h="140">
+        <Projection>
+          <CenterPoint x="70" y="111"/>
+        </Projection>
+      </EntityModel>
+      <Item x="1675" y="1380" cursorID="2"/>
+      <NavPointList>
+        <NavPoint x="1678" y="1423"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="1150" mid="0" name="" validDistance="100" x="248" y="1565" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/22/20100902105212_V2.png</Param>
+        <Param name="cursorID">4</Param>
+        <Param name="namecardVisible">false</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="">
+          <Action name="openSubUrl">
+            <Param name="timestamp">false</Param>
+            <Param name="url">http://web.pet.qq.com/attribute_pk/pk.html?cmd=1</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="165" h="170">
+        <Projection>
+          <CenterPoint x="88" y="149"/>
+        </Projection>
+      </EntityModel>
+      <Item x="167" y="1450" cursorID="4"/>
+      <NavPointList>
+        <NavPoint x="231" y="1672"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="1152" mid="0" name="" validDistance="100" x="121" y="1586" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/22/20100902105219_V2.png</Param>
+        <Param name="cursorID">4</Param>
+        <Param name="namecardVisible">false</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="">
+          <Action name="openSubUrl">
+            <Param name="url">http://web.pet.qq.com/attribute_pk/pk.html?cmd=3</Param>
+            <Param name="timestamp">false</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="165" h="170">
+        <Projection>
+          <CenterPoint x="103" y="144"/>
+        </Projection>
+      </EntityModel>
+      <Item x="44" y="1486" cursorID="4"/>
+      <NavPointList>
+        <NavPoint x="233" y="1670"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="200" mid="0" name="成就树" validDistance="0" x="2228" y="1516" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/22/20110420180732_V2.png</Param>
+        <Param name="cursorID">2</Param>
+        <Param name="namecardVisible">true</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="">
+          <Action name="openMainUrl">
+            <Param name="url">http://act.pet.qq.com/achievement/qq_cjxt.html</Param>
+            <Param name="timestamp">false</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="354" h="335">
+        <Projection>
+          <CenterPoint x="130" y="311"/>
+        </Projection>
+      </EntityModel>
+      <Item x="2053" y="1338" cursorID="2"/>
+      <NavPointList>
+        <NavPoint x="2027" y="1626"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="1151" mid="0" name="" validDistance="100" x="351" y="1632" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/22/20100901155307_V2.png</Param>
+        <Param name="cursorID">4</Param>
+        <Param name="namecardVisible">false</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="">
+          <Action name="openSubUrl">
+            <Param name="timestamp">false</Param>
+            <Param name="url">http://web.pet.qq.com/attribute_pk/pk.html?cmd=2</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="165" h="175">
+        <Projection>
+          <CenterPoint x="79" y="147"/>
+        </Projection>
+      </EntityModel>
+      <Item x="265" y="1525" cursorID="4"/>
+      <NavPointList>
+        <NavPoint x="219" y="1674"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="1112" mid="" name="机器宝宝" validDistance="0" x="1487" y="1622" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/22/20110920154755_V2.png</Param>
+        <Param name="cursorID">4</Param>
+        <Param name="namecardVisible">true</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="mouseClick">
+          <Action name="openMainUrl">
+            <Param name="url" value="http://img.pet.qq.com/swf/games/jqbb3in1.html">http://img.pet.qq.com/swf/games/jqbb3in1.html</Param>
+            <Param name="timestamp" value="false">false</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="200" h="220">
+        <Projection>
+          <CenterPoint x="13" y="202"/>
+        </Projection>
+      </EntityModel>
+      <Item x="1392" y="1492" cursorID="4"/>
+      <NavPointList>
+        <NavPoint x="1378" y="1587"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="182" mid="0" name="去企鹅镇" validDistance="0" x="1181" y="1680" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/22/20091028165957_V2.png</Param>
+        <Param name="cursorID">7</Param>
+        <Param name="namecardVisible">true</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="">
+          <Action name="enterScene">
+            <Param name="id">6</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="140" h="140">
+        <Projection>
+          <CenterPoint x="70" y="97"/>
+        </Projection>
+      </EntityModel>
+      <Item x="1112" y="1594" cursorID="7"/>
+      <NavPointList>
+        <NavPoint x="1179" y="1700"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="1114" mid="0" name="" validDistance="0" x="-1000" y="-1000" mapShowPoint="0" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/22/20110124172500_V2.png</Param>
+        <Param name="cursorID">4</Param>
+        <Param name="namecardVisible">false</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="">
+          <Action name=""/>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="60" h="60">
+        <Projection>
+          <CenterPoint x="38" y="110"/>
+        </Projection>
+      </EntityModel>
+      <Item x="1446" y="1593" cursorID="4"/>
+      <NavPointList>
+        <NavPoint x="1446" y="1593"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="2002" mid="AnimateNPC" name="兵临城下" validDistance="0" x="1330" y="541" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/22/20110719183950_V2.png</Param>
+        <Param name="cursorID">2</Param>
+        <Param name="namecardVisible">true</Param>
+      </ParamList>
+      <UserData>
+        <Speak>快来抵御恶魔，守护我们的家园！</Speak>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="mouseClick">
+          <Action name="openMainUrl">
+            <Param name="url" value="http://act.pet.qq.com/plantsvszombies/qq_zwjldzggw.html">http://act.pet.qq.com/plantsvszombies/qq_zwjldzggw.html</Param>
+            <Param name="timestamp" value="false">false</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="140" h="140">
+        <Projection>
+          <CenterPoint x="82" y="126"/>
+        </Projection>
+      </EntityModel>
+      <Item x="1249" y="439" cursorID="2"/>
+      <NavPointList>
+        <NavPoint x="1251" y="527"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="2010" mid="AnimateNPC" name="爽爽" validDistance="0" x="1821" y="1126" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/22/20110830173329_V2.png</Param>
+        <Param name="cursorID">1</Param>
+        <Param name="namecardVisible">true</Param>
+      </ParamList>
+      <UserData>
+        <Speak>夏日冰爽店，绝版天天领！</Speak>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="mouseClick">
+          <Action name="openMainUrl">
+            <Param name="url" value="http://act.pet.qq.com/main/summer_shop.html">http://act.pet.qq.com/main/summer_shop.html</Param>
+            <Param name="timestamp" value="false">false</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="140" h="140">
+        <Projection>
+          <CenterPoint x="75" y="125"/>
+        </Projection>
+      </EntityModel>
+      <Item x="1752" y="1017" cursorID="1"/>
+      <NavPointList>
+        <NavPoint x="1838" y="1231"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="2020" mid="AnimateNPC" name="唐三藏" validDistance="0" x="706" y="1163" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/22/20111019160600_V2.png</Param>
+        <Param name="cursorID">1</Param>
+        <Param name="namecardVisible">true</Param>
+      </ParamList>
+      <UserData>
+        <Speak>谁在妖言惑众，说我肉好吃的？|我是很帅很萌的唐三藏，来保护我吧</Speak>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="mouseClick">
+          <Action name="openMainUrl">
+            <Param name="url" value="http://act.pet.qq.com/main/xyjj.html">http://act.pet.qq.com/main/xyjj.html</Param>
+            <Param name="timestamp" value="false">false</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="140" h="140">
+        <Projection>
+          <CenterPoint x="74" y="120"/>
+        </Projection>
+      </EntityModel>
+      <Item x="632" y="1057" cursorID="1"/>
+      <NavPointList>
+        <NavPoint x="761" y="1219"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="2025" mid="AnimateNPC" name="兰兰" validDistance="0" x="543" y="820" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/22/20111026112245_V2.png</Param>
+        <Param name="cursorID">1</Param>
+        <Param name="namecardVisible">true</Param>
+      </ParamList>
+      <UserData>
+        <Speak>敢一口气通十关么？</Speak>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="mouseClick">
+          <Action name="openMainUrl">
+            <Param name="url" value="http://act.pet.qq.com/main/guoqing2011.html">http://act.pet.qq.com/main/guoqing2011.html</Param>
+            <Param name="timestamp" value="false">false</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="140" h="140">
+        <Projection>
+          <CenterPoint x="71" y="114"/>
+        </Projection>
+      </EntityModel>
+      <Item x="473" y="735" cursorID="1"/>
+      <NavPointList>
+        <NavPoint x="482" y="849"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="2027" mid="AnimateNPC" name="闹闹" validDistance="0" x="550" y="1013" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/22/20111026112253_V2.png</Param>
+        <Param name="cursorID">1</Param>
+        <Param name="namecardVisible">true</Param>
+      </ParamList>
+      <UserData>
+        <Speak>闹闹曲奇店，开张送绝版！</Speak>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="mouseClick">
+          <Action name="openMainUrl">
+            <Param name="url" value="http://act.pet.qq.com/main/cookies.html">http://act.pet.qq.com/main/cookies.html</Param>
+            <Param name="timestamp" value="false">false</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="140" h="140">
+        <Projection>
+          <CenterPoint x="69" y="128"/>
+        </Projection>
+      </EntityModel>
+      <Item x="482" y="912" cursorID="1"/>
+      <NavPointList>
+        <NavPoint x="498" y="1067"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="2029" mid="AnimateNPC" name="口袋精灵" validDistance="0" x="243" y="858" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/22/20111109114119_V2.png</Param>
+        <Param name="cursorID">1</Param>
+        <Param name="namecardVisible">true</Param>
+      </ParamList>
+      <UserData>
+        <Speak>精灵欢乐送，企鹅乐翻天</Speak>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="mouseClick">
+          <Action name="openMainUrl">
+            <Param name="url" value="http://act.pet.qq.com/octhappygive/octhappygive.html">http://act.pet.qq.com/octhappygive/octhappygive.html</Param>
+            <Param name="timestamp" value="false">false</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="140" h="140">
+        <Projection>
+          <CenterPoint x="75" y="131"/>
+        </Projection>
+      </EntityModel>
+      <Item x="169" y="747" cursorID="1"/>
+      <NavPointList>
+        <NavPoint x="328" y="908"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="2035" mid="AnimateNPC" name="贝松" validDistance="0" x="730" y="367" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/22/20111026111323_V2.png</Param>
+        <Param name="cursorID">1</Param>
+        <Param name="namecardVisible">true</Param>
+      </ParamList>
+      <UserData>
+        <Speak>分解，升级，炼化，来做小小元素师|点亮绝版图鉴，争做无敌绝版控！</Speak>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="mouseClick">
+          <Action name="openMainUrl">
+            <Param name="url" value="http://act.pet.qq.com/element_mill/index.html">http://act.pet.qq.com/element_mill/index.html</Param>
+            <Param name="timestamp" value="false">false</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="140" h="140">
+        <Projection>
+          <CenterPoint x="59" y="105"/>
+        </Projection>
+      </EntityModel>
+      <Item x="674" y="275" cursorID="1"/>
+      <NavPointList>
+        <NavPoint x="789" y="447"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="2036" mid="AnimateNPC" name="魔幻人鱼" validDistance="0" x="834" y="567" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/22/20111109110959_V2.png</Param>
+        <Param name="cursorID">1</Param>
+        <Param name="namecardVisible">true</Param>
+      </ParamList>
+      <UserData>
+        <Speak>玩魔幻大陆、领企鹅礼包称号~|开粉钻，得魔幻大陆超强宝宝！</Speak>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="mouseClick">
+          <Action name="openSubUrl">
+            <Param name="url" value="http://act.pet.qq.com/20111110mhdl/index.html">http://act.pet.qq.com/20111110mhdl/index.html</Param>
+            <Param name="timestamp" value="false">false</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="140" h="140">
+        <Projection>
+          <CenterPoint x="63" y="104"/>
+        </Projection>
+      </EntityModel>
+      <Item x="772" y="476" cursorID="1"/>
+      <NavPointList>
+        <NavPoint x="922" y="546"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="2037" mid="AnimateNPC" name="丘比特" validDistance="0" x="1960" y="1137" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/22/20111109121759_V2.png</Param>
+        <Param name="cursorID">1</Param>
+        <Param name="namecardVisible">true</Param>
+      </ParamList>
+      <UserData>
+        <Speak>当一回丘比特，解救单身鹅男鹅女！</Speak>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="mouseClick">
+          <Action name="openMainUrl">
+            <Param name="url" value="http://act.pet.qq.com/main/singlesday.html">http://act.pet.qq.com/main/singlesday.html</Param>
+            <Param name="timestamp" value="false">false</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="140" h="140">
+        <Projection>
+          <CenterPoint x="87" y="115"/>
+        </Projection>
+      </EntityModel>
+      <Item x="1874" y="1039" cursorID="1"/>
+      <NavPointList>
+        <NavPoint x="1857" y="1162"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="2041" mid="AnimateNPC" name="炫舞小妖" validDistance="0" x="920" y="1149" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/22/20111123143136_V2.png</Param>
+        <Param name="cursorID">1</Param>
+        <Param name="namecardVisible">true</Param>
+      </ParamList>
+      <UserData>
+        <Speak>紫钻粉钻一家亲，玩炫舞，送大礼！</Speak>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="mouseClick">
+          <Action name="openSubUrl">
+            <Param name="url" value="http://act.pet.qq.com/x5/index.html">http://act.pet.qq.com/x5/index.html</Param>
+            <Param name="timestamp" value="false">false</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="140" h="140">
+        <Projection>
+          <CenterPoint x="63" y="115"/>
+        </Projection>
+      </EntityModel>
+      <Item x="856" y="1059" cursorID="1"/>
+      <NavPointList>
+        <NavPoint x="848" y="1231"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="2042" mid="AnimateNPC" name="洛克大使" validDistance="0" x="1445" y="1157" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/22/20111123183011_V2.png</Param>
+        <Param name="cursorID">1</Param>
+        <Param name="namecardVisible">true</Param>
+      </ParamList>
+      <UserData>
+        <Speak>洛克神宠限时大放送啦！|三倍经验刷到爆！全年仅此一次！</Speak>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="mouseClick">
+          <Action name="openSubUrl">
+            <Param name="url" value="http://act.pet.qq.com/20111124roco/index.html">http://act.pet.qq.com/20111124roco/index.html</Param>
+            <Param name="timestamp" value="false">false</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="140" h="140">
+        <Projection>
+          <CenterPoint x="65" y="118"/>
+        </Projection>
+      </EntityModel>
+      <Item x="1386" y="1063" cursorID="1"/>
+      <NavPointList>
+        <NavPoint x="1537" y="1233"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="2043" mid="AnimateNPC" name="恩恩" validDistance="0" x="997" y="1200" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/22/20111123143245_V2.png</Param>
+        <Param name="cursorID">1</Param>
+        <Param name="namecardVisible">true</Param>
+      </ParamList>
+      <UserData>
+        <Speak>制作爱心卡，丰厚奖品等你拿！</Speak>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="mouseClick">
+          <Action name="openSubUrl">
+            <Param name="url" value="http://act.pet.qq.com/20111124td/index.html">http://act.pet.qq.com/20111124td/index.html</Param>
+            <Param name="timestamp" value="false">false</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="140" h="140">
+        <Projection>
+          <CenterPoint x="73" y="115"/>
+        </Projection>
+      </EntityModel>
+      <Item x="924" y="1103" cursorID="1"/>
+      <NavPointList>
+        <NavPoint x="947" y="1300"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="2038" mid="" name="糖果工厂" validDistance="0" x="736" y="1595" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/22/20111123163410_V2.png</Param>
+        <Param name="cursorID">1</Param>
+        <Param name="namecardVisible">true</Param>
+      </ParamList>
+      <UserData>
+        <Speak>经营糖果工厂，成就大亨梦想！</Speak>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="mouseClick">
+          <Action name="openMainUrl">
+            <Param name="url" value="http://act.pet.qq.com/candy_factory/candy_factory.html">http://act.pet.qq.com/candy_factory/candy_factory.html</Param>
+            <Param name="timestamp" value="false">false</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="230" h="180">
+        <Projection>
+          <CenterPoint x="112" y="156"/>
+        </Projection>
+      </EntityModel>
+      <Item x="619" y="1481" cursorID="1"/>
+      <NavPointList>
+        <NavPoint x="871" y="1544"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="2045" mid="AnimateNPC" name="占星师" validDistance="0" x="1385" y="1214" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/22/20111130111134_V2.png</Param>
+        <Param name="cursorID">1</Param>
+        <Param name="namecardVisible">true</Param>
+      </ParamList>
+      <UserData>
+        <Speak>寻找永恒之星，抽取星座大奖！|赶快带我去看看吧！</Speak>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="mouseClick">
+          <Action name="openMainUrl">
+            <Param name="url" value="http://act.pet.qq.com/main/qq_xzmy.html">http://act.pet.qq.com/main/qq_xzmy.html</Param>
+            <Param name="timestamp" value="false">false</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="140" h="140">
+        <Projection>
+          <CenterPoint x="80" y="124"/>
+        </Projection>
+      </EntityModel>
+      <Item x="1306" y="1106" cursorID="1"/>
+      <NavPointList>
+        <NavPoint x="1446" y="1288"/>
+      </NavPointList>
+    </Npc>
+  </NpcList>
+</Config>

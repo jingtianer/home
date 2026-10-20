@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+<item id="1" normal="data\cursor\normal.cur"  press="data\cursor\press.cur">默认</item>
+<item id="2" normal="data\cursor\People_NPC_mouseover.cur"  press="data\cursor\People_NPC_press.cur">NPC</item>
+<item id="3" normal="data\cursor\building_NPC_mouseover.cur"  press="data\cursor\building_NPC_press.cur">建筑</item>
+<item id="7" normal="data\cursor\Transmission_door_mouseover.cur"  press="data\cursor\Transmission_door_press.cur">传送门</item>
+<item id="5" normal="data\cursor\Unavailable.cur"  press="data\cursor\Unavailable_press.cur">不可点击区域</item>
+<item id="6" normal="data\cursor\pass_over.cur"  press="data\cursor\pass_press.cur">可到达区域</item>
+<item id="4" normal="data\cursor\Gear.cur"  press="data\cursor\Gear_press.cur">交互物件</item>
+<item id="11" normal="data\cursor\pass_over.cur"  press="data\cursor\pass_press.cur">hand cursor</item>
+</config>

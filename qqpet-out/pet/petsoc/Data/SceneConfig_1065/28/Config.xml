@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Config>
+  <SceneModel id="28" name="瓦里步行街" w="1700" h="1250">
+    <Cover path=""/>
+    <Background rows="10" cols="10" cursorID="5">
+      <Path value="Data/res/scene/28/bg_V43/"/>
+      <Item width="170" height="125"/>
+    </Background>
+    <GridScene rows="10" cols="10">
+      <Viewport rows="6" cols="6"/>
+      <GridSize width="170" height="125"/>
+    </GridScene>
+    <Navigator cursorID="6">
+      <Path value="Data/res/scene/28/nav_V43.png"/>
+    </Navigator>
+    <Script type="swf">
+      <Path value=""/>
+    </Script>
+    <EntityModelLib>
+      <EntityModel mid="1107" mname="铃.png" w="71" h="62">
+        <View type=".png" path="Data/res/scene/28/20101215150335_V2.png"/>
+        <Projection>
+          <CenterPoint x="0" y="0"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="1107" mid="0" name="铃.png" validDistancev="0" x="228" y="603"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="195" mname="02.png" w="303" h="128">
+        <View type=".png" path="Data/res/scene/28/20111122155353_V2.png"/>
+        <Projection>
+          <CenterPoint x="172" y="101"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="195" mid="" name="02.png" validDistancev="0" x="1397" y="569"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="186" mname="生日屋左边树.png" w="204" h="108">
+        <View type=".png" path="Data/res/scene/28/20111122155603_V2.png"/>
+        <Projection>
+          <CenterPoint x="97" y="84"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="186" mid="" name="生日屋左边树.png" validDistancev="0" x="0" y="587"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="119" mname="瓦里-路灯.png" w="72" h="150">
+        <View type=".png" path="Data/res/scene/28/20111122155829_V2.png"/>
+        <Projection>
+          <CenterPoint x="24" y="129"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="119" mid="" name="瓦里-路灯.png" validDistancev="0" x="1160" y="545"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="190" mname="01.png" w="272" h="125">
+        <View type=".png" path="Data/res/scene/28/20111122155305_V2.png"/>
+        <Projection>
+          <CenterPoint x="139" y="171"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="190" mid="" name="01.png" validDistancev="0" x="346" y="594"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="197" mname="03.png" w="816" h="206">
+        <View type=".png" path="Data/res/scene/28/20111122155533_V2.png"/>
+        <Projection>
+          <CenterPoint x="398" y="167"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="197" mid="" name="03.png" validDistancev="0" x="884" y="1044"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="1139" mname="5.png" w="239" h="281">
+        <View type=".png" path="Data/res/scene/28/20111122155519_V2.png"/>
+        <Projection>
+          <CenterPoint x="141" y="267"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="1139" mid="" name="5.png" validDistancev="0" x="0" y="969"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="1142" mname="2011国庆-步行街-9.png" w="91" h="169">
+        <View type=".png" path="Data/res/scene/28/20110923212923_V2.png"/>
+        <Projection>
+          <CenterPoint x="44" y="173"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="1142" mid="0" name="2011国庆-步行街-9.png" validDistancev="0" x="1400" y="743"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+    </EntityModelLib>
+    <Map>
+      <NavMap w="0" h="0" path="Data/res/scene/28/nav_V43.png"/>
+      <SmallMap w="0" h="0" path="Data/res/scene/28/minimap_V43.png"/>
+      <LargeMap w="0" h="0" path="Data/res/scene/28/largemp_V43.png"/>
+    </Map>
+    <Layers>
+      <Ground/>
+      <Space>
+        <Item name="铃.png" mid="1107" cursorID="3" x="228" y="603"/>
+        <Item name="02.png" mid="195" cursorID="3" x="1397" y="569"/>
+        <Item name="生日屋左边树.png" mid="186" cursorID="3" x="0" y="587"/>
+        <Item name="瓦里-路灯.png" mid="119" cursorID="3" x="1160" y="545"/>
+        <Item name="01.png" mid="190" cursorID="3" x="346" y="594"/>
+        <Item name="03.png" mid="197" cursorID="3" x="884" y="1044"/>
+        <Item name="5.png" mid="1139" cursorID="1" x="0" y="969"/>
+        <Item name="2011国庆-步行街-9.png" mid="1142" cursorID="1" x="1400" y="743"/>
+      </Space>
+      <Sky/>
+    </Layers>
+  </SceneModel>
+</Config>

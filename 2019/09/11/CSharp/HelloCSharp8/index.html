@@ -1,0 +1,358 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>HelloCS-8 - Jingtianer</title><link rel="manifest" href="/home/manifest.json"><meta name="application-name" content="Jingtianer"><meta name="msapplication-TileImage" content="images/avatar.jpg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Jingtianer"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="可空类型可空类型的声明12System.Nullable&amp;lt;T&amp;gt; variable;T? variable; 注意 可空类型的基础类型不能是可空类型或引用类型 可空类型的基类型可以是（非可空）值类型，有struct约束的类型参数  可空bool?类型"><meta property="og:type" content="blog"><meta property="og:title" content="HelloCS-8"><meta property="og:url" content="https://jingtianer.github.io/home/2019/09/11/CSharp/HelloCSharp8/"><meta property="og:site_name" content="Jingtianer"><meta property="og:description" content="可空类型可空类型的声明12System.Nullable&amp;lt;T&amp;gt; variable;T? variable; 注意 可空类型的基础类型不能是可空类型或引用类型 可空类型的基类型可以是（非可空）值类型，有struct约束的类型参数  可空bool?类型"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://jingtianer.github.io/home/img/og_image.png"><meta property="article:published_time" content="2019-09-11T13:15:36.000Z"><meta property="article:modified_time" content="2026-10-19T14:21:52.142Z"><meta property="article:author" content="Meow Meow Liu"><meta property="article:tag" content="CSharp"><meta property="article:tag" content="C#"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://jingtianer.github.io/home/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://jingtianer.github.io/home/2019/09/11/CSharp/HelloCSharp8/"},"headline":"HelloCS-8","image":["https://jingtianer.github.io/home/img/og_image.png"],"datePublished":"2019-09-11T13:15:36.000Z","dateModified":"2026-10-19T14:21:52.142Z","author":{"@type":"Person","name":"Meow Meow Liu"},"publisher":{"@type":"Organization","name":"Jingtianer","logo":{"@type":"ImageObject","url":{"text":"Meow!!"}}},"description":"可空类型可空类型的声明12System.Nullable&lt;T&gt; variable;T? variable; 注意 可空类型的基础类型不能是可空类型或引用类型 可空类型的基类型可以是（非可空）值类型，有struct约束的类型参数  可空bool?类型"}</script><link rel="canonical" href="https://jingtianer.github.io/home/2019/09/11/CSharp/HelloCSharp8/"><link rel="alternate" href="/home/atom.xml" title="Jingtianer" type="application/atom+xml"><link rel="icon" href="/home/images/avatar.jpg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link data-pjax="" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.7.0/styles/vs.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link data-pjax="" rel="stylesheet" href="/home/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"><style>
+.card{
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important; /* Safari兼容 */
+
+  /* 半透底色，必不可少 */
+  background: rgba(255,255,255, 0.35) !important;
+
+  /* 可选：细微边框提升质感 */
+  border: 1px solid rgba(255,255,255,0.25) !important;
+  border-radius: 12px !important;
+  color: #000 !important;
+}
+.global-blur{
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important; /* Safari兼容 */
+
+  /* 半透底色，必不可少 */
+  background: rgba(255,255,255, 0.35) !important;
+
+  /* 可选：细微边框提升质感 */
+  border: 1px solid rgba(255,255,255,0.25) !important;
+  border-radius: 12px !important;
+  color: #000 !important;
+}
+.gt-header-textarea{
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important; /* Safari兼容 */
+
+  /* 半透底色，必不可少 */
+  background: rgba(255,255,255, 0.35) !important;
+
+  /* 可选：细微边框提升质感 */
+  border: 1px solid rgba(255,255,255,0.25) !important;
+  border-radius: 12px !important;
+}
+.menu-list a.is-active{
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important; /* Safari兼容 */
+
+  /* 半透底色，必不可少 */
+  background: rgba(255,255,255, 0.35) !important;
+
+  /* 可选：细微边框提升质感 */
+  border: 1px solid rgba(255,255,255,0.25) !important;
+  border-radius: 12px !important;
+}
+.menu-list a:hover{
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important; /* Safari兼容 */
+
+  /* 半透底色，必不可少 */
+  background: rgba(255,255,255, 0.35) !important;
+  background-color: rgba(255,255,255, 0.35) !important;
+
+  /* 可选：细微边框提升质感 */
+  border: 1px solid rgba(255,255,255,0.25) !important;
+  border-radius: 12px !important;
+}
+
+.navbar {
+--nav-height: 0px;
+width: calc(100% - 2em) !important;
+margin: 1em !important;
+position: fixed !important;
+backdrop-filter: blur(8px) !important;
+-webkit-backdrop-filter: blur(12px) !important; /* Safari兼容 */
+
+/* 半透底色，必不可少 */
+background: rgba(255,255,255, 0.6) !important;
+
+/* 可选：细微边框提升质感 */
+border: 1px solid rgba(255,255,255,0.25) !important;
+border-radius: 12px !important;
+color: #000 !important;
+overflow: clip !important;
+}
+.navbar-mirror{
+width: calc(100% - 2em) !important;
+margin: 1em !important;
+height: var(--nav-height);
+}
+.hljs {
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important; /* Safari兼容 */
+
+  /* 半透底色，必不可少 */
+  background: rgba(255,255,255, 0.35) !important;
+}
+.button{
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important; /* Safari兼容 */
+
+  /* 半透底色，必不可少 */
+  // opacity: 0.8;
+  margin-left: 0.1em !important;
+  margin-right: 0.1em !important;
+  /* 可选：细微边框提升质感 */
+  border: 1px solid rgba(255,255,255,0.25) !important;
+  border-radius: 12px !important;
+}
+.body-bg-container {
+    position: fixed;
+    width: 100vw;
+    height: 100dvh;
+    z-index: -100;
+}
+.body-bg-container .bg1 {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, #CAEFD7ee, #F5BFD7ee, #ABC9E9ee) !important;
+  z-index: -99;
+}
+.body-bg-container .bg2 {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(#ffffff00, #ffffffa0) !important;
+  z-index: -98;
+}
+.navbar-menu {
+  background: transparent !important;
+}
+.navbar-link.is-active:hover {
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important; /* Safari兼容 */
+
+  /* 半透底色，必不可少 */
+  background: rgba(255,255,255, 0.35) !important;
+  background-color: transparent !important;
+  margin-left: 0.1em !important;
+  margin-right: 0.1em !important;
+  /* 可选：细微边框提升质感 */
+  border: 1px solid rgba(255,255,255,0.25) !important;
+  border-radius: 12px !important;
+  color: #000 !important;
+}
+.content blockquote{
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important; /* Safari兼容 */
+
+  /* 半透底色，必不可少 */
+  background: rgba(255,255,255, 0.35) !important;
+}
+.footer {
+  margin: 1em !important;
+}
+.widget .tags .tag:first-child {
+  color: #000 !important;
+  margin-right: 3px;
+}
+.pagination-link.is-current {
+  color: #000 !important;
+  font-weight: 600 !important;
+}
+.timeline .media:last-child:after{
+  background: transparent !important;
+}
+</style><style>
+.global-lazy-loading-img{ 
+    width: 1.28em; 
+    height: 1.28em;
+    font-size: 100%;
+}
+.lazy-galleria{ 
+    width: 100%; 
+    height: calc(100dvh - var(--nav-height) - 2em); 
+}
+.galleria-stage {
+  top: 0px !important;
+  bottom: 0px !important;
+  left: 0px !important;
+  right: 0px !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+</style></head><body class="is-2-column"><div class="navbar-mirror"></div><div class="body-bg-container"><div class="bg1"></div><div class="bg2"></div></div><nav class="navbar navbar-main global-blur"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/home/">Meow!!</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/home/">主页</a><a class="navbar-item" href="/home/archives">归档</a><a class="navbar-item" href="/home/categories">分类</a><a class="navbar-item" href="/home/tags">标签</a><a class="navbar-item" href="/home/about">关于我</a><a class="navbar-item" href="/home/cat-images">猫照片</a><a class="navbar-item" href="/home/tags/gallery">相册</a><a class="navbar-item" href="/home/qqpet">宠物</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time datetime="2019-09-11T13:15:36.000Z" title="9/11/2019, 9:15:36 PM">2019-09-11</time>发表</span><span class="level-item"><time datetime="2026-10-19T14:21:52.142Z" title="10/19/2026, 10:21:52 PM">2026-10-19</time>更新</span><span class="level-item"><a class="link-muted" href="/home/categories/CSharp/">CSharp</a></span><span class="level-item">6 分钟读完 (大约852个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">HelloCS-8</h1><div class="content"><h1 id="可空类型"><a href="#可空类型" class="headerlink" title="可空类型"></a>可空类型</h1><h2 id="可空类型的声明"><a href="#可空类型的声明" class="headerlink" title="可空类型的声明"></a>可空类型的声明</h2><figure class="highlight csharp"><table class="hljs"><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">System.Nullable&lt;T&gt; variable;</span><br><span class="line">T? variable;</span><br></pre></td></tr></tbody></table></figure>
+<h3 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h3><ol>
+<li>可空类型的基础类型不能是可空类型或引用类型</li>
+<li>可空类型的基类型可以是（非可空）值类型，有struct约束的类型参数</li>
+</ol>
+<h2 id="可空bool-类型"><a href="#可空bool-类型" class="headerlink" title="可空bool?类型"></a>可空bool?类型</h2><p>可空bool?类型可取的值有true，false，null，其运算符有&amp;、|，逻辑与和逻辑或</p>
+<h3 id="true、false和null的运算关系"><a href="#true、false和null的运算关系" class="headerlink" title="true、false和null的运算关系"></a>true、false和null的运算关系</h3><table class="hljs">
+<thead>
+<tr>
+<th>x</th>
+<th>y</th>
+<th>x &amp; y</th>
+<th>x | y</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>true</strong></td>
+<td><strong>null</strong></td>
+<td>null</td>
+<td>true</td>
+</tr>
+<tr>
+<td><strong>false</strong></td>
+<td><strong>null</strong></td>
+<td>false</td>
+<td>null</td>
+</tr>
+<tr>
+<td><strong>null</strong></td>
+<td><strong>true</strong></td>
+<td>null</td>
+<td>true</td>
+</tr>
+<tr>
+<td><strong>null</strong></td>
+<td><strong>false</strong></td>
+<td>false</td>
+<td>null</td>
+</tr>
+<tr>
+<td><strong>null</strong></td>
+<td><strong>null</strong></td>
+<td>null</td>
+<td>null</td>
+</tr>
+</tbody></table>
+<ul>
+<li><h4 id="以上的运算关系与SQL中的算法一致"><a href="#以上的运算关系与SQL中的算法一致" class="headerlink" title="以上的运算关系与SQL中的算法一致"></a>以上的运算关系与SQL中的算法一致</h4></li>
+</ul>
+<h1 id="赋值"><a href="#赋值" class="headerlink" title="赋值"></a>赋值</h1><h2 id="隐形局部变量"><a href="#隐形局部变量" class="headerlink" title="隐形局部变量"></a>隐形局部变量</h2><p>用var作变量类型，实际类型在其初始化表达式推到出来</p>
+<figure class="highlight cs"><table class="hljs"><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> i = <span class="number">10</span>;<span class="comment">//i的类型为int</span></span><br><span class="line">val s = <span class="string">"这是一个字符串"</span><span class="comment">//string</span></span><br></pre></td></tr></tbody></table></figure>
+<h3 id="注意-1"><a href="#注意-1" class="headerlink" title="注意"></a>注意</h3><figure class="highlight cs"><table class="hljs"><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> v1;<span class="comment">//隐形局部变量必须赋初值</span></span><br><span class="line"><span class="keyword">var</span> v2 = v2 - <span class="number">1</span>;<span class="comment">//隐形局部变量不能包括其本身</span></span><br><span class="line"><span class="keyword">var</span> v3 = {<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>};<span class="comment">//不能用数组作为初始化表达式的值</span></span><br><span class="line"><span class="comment">//正确写法</span></span><br><span class="line"><span class="keyword">var</span> arr = <span class="keyword">new</span> []{<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>};</span><br><span class="line"><span class="keyword">var</span> v4 = <span class="literal">null</span>;<span class="comment">//不能用null（无法推导出的类型）作为初始化的值</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="对象初始化器"><a href="#对象初始化器" class="headerlink" title="对象初始化器"></a>对象初始化器</h2><p>对对象进行初始化</p>
+<figure class="highlight cs"><table class="hljs"><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">namespace</span> <span class="title">HelloCS8</span></span><br><span class="line">{</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Stu</span></span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">public</span> <span class="built_in">int</span> age;<span class="comment">//想在构造器中初始化，必须public</span></span><br><span class="line">                        <span class="comment">//（如果被其他类调用）（等价于直接访问）</span></span><br><span class="line">        <span class="keyword">public</span> <span class="built_in">string</span> name;</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">private</span> <span class="built_in">int</span> age;</span><br><span class="line">        <span class="keyword">protected</span> <span class="built_in">string</span> name;</span><br><span class="line">        <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] <span class="keyword">args</span></span>)</span></span><br><span class="line">        {</span><br><span class="line">            Stu s = <span class="keyword">new</span> Stu</span><br><span class="line">            {</span><br><span class="line">                age = <span class="number">10</span>,<span class="comment">//注意这里用,</span></span><br><span class="line">                name = <span class="string">"啊哈哈"</span><span class="comment">//这里不用分好</span></span><br><span class="line"></span><br><span class="line">            };<span class="comment">//这里要加分号</span></span><br><span class="line">            <span class="comment">/*</span></span><br><span class="line"><span class="comment">             * 等价于以下写法</span></span><br><span class="line"><span class="comment">             * Stu s = new Stu();</span></span><br><span class="line"><span class="comment">             * s.age = 10;</span></span><br><span class="line"><span class="comment">             * s.name = "啊哈哈";</span></span><br><span class="line"><span class="comment">             */</span></span><br><span class="line">            Program pro = <span class="keyword">new</span> Program</span><br><span class="line">            {</span><br><span class="line">                age = <span class="number">11</span>,<span class="comment">//同一个类中,可在构造器中对非public赋值</span></span><br><span class="line">                name = <span class="string">"哇咔咔"</span></span><br><span class="line">            };</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="集合初始化器"><a href="#集合初始化器" class="headerlink" title="集合初始化器"></a>集合初始化器</h2><figure class="highlight cs"><table class="hljs"><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"><span class="keyword">namespace</span> <span class="title">collection</span></span><br><span class="line">{</span><br><span class="line">    <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">    {</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] <span class="keyword">args</span></span>)</span></span><br><span class="line">        {</span><br><span class="line">            List&lt;<span class="built_in">int</span>&gt; arr = <span class="keyword">new</span> List&lt;<span class="built_in">int</span>&gt; { <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">0</span> };</span><br><span class="line">            <span class="keyword">foreach</span>(<span class="keyword">var</span> item <span class="keyword">in</span> arr)</span><br><span class="line">            {</span><br><span class="line">                Console.WriteLine(item);</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="匿名类型"><a href="#匿名类型" class="headerlink" title="匿名类型"></a>匿名类型</h2><p>无需显示的定义一个类型，类似于java中的匿名类</p>
+<p>匿名类是直接从object继承的无名类(nameless class)类型</p>
+<p>匿名类是由一系列的读写属性构成</p>
+<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><figure class="highlight cs"><table class="hljs"><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"><span class="keyword">namespace</span> <span class="title">AnonymousClass</span></span><br><span class="line">{</span><br><span class="line">    <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">class</span> <span class="title">item</span></span><br><span class="line">        {</span><br><span class="line">            <span class="keyword">public</span> <span class="built_in">int</span> ItemID;</span><br><span class="line">            <span class="keyword">public</span> <span class="built_in">string</span> ItemName;</span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="built_in">string</span> <span class="title">ToString</span>()</span></span><br><span class="line">            {</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">base</span>.ToString() + <span class="string">"\n{ ItemID = "</span> + ItemID + <span class="string">", ItemName"</span> + ItemID + <span class="string">"}"</span>;</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">        <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] <span class="keyword">args</span></span>)</span></span><br><span class="line">        {</span><br><span class="line">            <span class="keyword">var</span> Ac = <span class="keyword">new</span></span><br><span class="line">            {</span><br><span class="line">                ID = <span class="number">1</span>,</span><br><span class="line">                Name = <span class="string">"哇耶耶"</span>,</span><br><span class="line">                Sex = <span class="string">"Female"</span>,</span><br><span class="line">                arr = <span class="keyword">new</span> List&lt;item&gt;</span><br><span class="line">                {</span><br><span class="line">                    <span class="keyword">new</span> item</span><br><span class="line">                    {</span><br><span class="line">                        ItemID = <span class="number">0</span>,</span><br><span class="line">                        ItemName = <span class="string">"小猫"</span></span><br><span class="line">                    },</span><br><span class="line">                    <span class="keyword">new</span> item</span><br><span class="line">                    {</span><br><span class="line">                        ItemID = <span class="number">1</span>,</span><br><span class="line">                        ItemName = <span class="string">"大猫"</span></span><br><span class="line">                    },</span><br><span class="line">                    <span class="keyword">new</span> item</span><br><span class="line">                    {</span><br><span class="line">                        ItemID = <span class="number">2</span>,</span><br><span class="line">                        ItemName = <span class="string">"男朋友"</span></span><br><span class="line">                    }</span><br><span class="line">                }</span><br><span class="line">            };</span><br><span class="line">            Console.WriteLine(<span class="string">"GetType : "</span> + Ac.GetType());</span><br><span class="line">            Console.WriteLine(<span class="string">"ID      = "</span> + Ac.ID);</span><br><span class="line">            Console.WriteLine(<span class="string">"Name    = "</span> + Ac.Name);</span><br><span class="line">            Console.WriteLine(<span class="string">"Sex     = "</span> + Ac.Sex);</span><br><span class="line">            <span class="keyword">var</span> arr = Ac.arr;</span><br><span class="line">            <span class="keyword">foreach</span>(<span class="keyword">var</span> item <span class="keyword">in</span> arr)</span><br><span class="line">                Console.WriteLine(item);</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>运行结果</p>
+<figure class="highlight plaintext"><table class="hljs"><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">GetType : &lt;&gt;f__AnonymousType0`4[System.Int32,System.String,System.String,System.Collections.Generic.List`1[AnonymousClass.Program+item]]</span><br><span class="line">ID      = 1</span><br><span class="line">Name    = 哇耶耶</span><br><span class="line">Sex     = Female</span><br><span class="line">AnonymousClass.Program+item</span><br><span class="line">{ ItemID = 0, ItemName0}</span><br><span class="line">AnonymousClass.Program+item</span><br><span class="line">{ ItemID = 1, ItemName1}</span><br><span class="line">AnonymousClass.Program+item</span><br><span class="line">{ ItemID = 2, ItemName2}</span><br></pre></td></tr></tbody></table></figure>
+<h3 id="等价写法"><a href="#等价写法" class="headerlink" title="等价写法"></a>等价写法</h3><figure class="highlight cs"><table class="hljs"><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">namespace</span> <span class="title">equal</span></span><br><span class="line">{</span><br><span class="line">    <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">    {</span><br><span class="line">        <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] <span class="keyword">args</span></span>)</span></span><br><span class="line">        {</span><br><span class="line">            <span class="keyword">var</span> AC = <span class="keyword">new</span> { ID = <span class="number">0</span>, Name = <span class="string">"哈哈哈"</span> };</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>等价于：</p>
+<figure class="highlight cs"><table class="hljs"><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">namespace</span> <span class="title">equal</span></span><br><span class="line">{</span><br><span class="line">    <span class="keyword">class</span> <span class="title">EQUAL</span></span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">private</span> <span class="built_in">int</span> f1;</span><br><span class="line">        <span class="keyword">private</span> <span class="built_in">string</span> f2;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">EQUAL</span>(<span class="params"><span class="built_in">int</span> a1, <span class="built_in">string</span> a2</span>)</span></span><br><span class="line">        {</span><br><span class="line">            f1 = a1;</span><br><span class="line">            f2 = a2;</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">public</span> <span class="built_in">int</span> ID { <span class="keyword">get</span> { <span class="keyword">return</span> f1; } <span class="keyword">set</span> { f1 = <span class="keyword">value</span>; } }</span><br><span class="line">        <span class="keyword">public</span> <span class="built_in">string</span> Name { <span class="keyword">get</span> { <span class="keyword">return</span> f2; } <span class="keyword">set</span> { f2 = <span class="keyword">value</span>; } }</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">    {</span><br><span class="line">        <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] <span class="keyword">args</span></span>)</span></span><br><span class="line">        {</span><br><span class="line">            <span class="keyword">var</span> AC = <span class="keyword">new</span> EQUAL(<span class="number">0</span>, <span class="string">"哈哈哈"</span>);</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h1 id="匿名数组"><a href="#匿名数组" class="headerlink" title="匿名数组"></a>匿名数组</h1><p>不指定数组元素类型，通过初始化参数来推断数组类型</p>
+<figure class="highlight cs"><table class="hljs"><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">ACArr</span></span><br><span class="line">{</span><br><span class="line">    <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">    {</span><br><span class="line">        <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] <span class="keyword">args</span></span>)</span></span><br><span class="line">        {</span><br><span class="line">            <span class="keyword">var</span> arr = <span class="keyword">new</span>[] { <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span> };</span><br><span class="line">            <span class="keyword">foreach</span>(<span class="keyword">var</span> item <span class="keyword">in</span> arr)</span><br><span class="line">            {</span><br><span class="line">                Console.WriteLine(item);</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h1 id="扩展方法"><a href="#扩展方法" class="headerlink" title="扩展方法"></a>扩展方法</h1><p>只能声明在static class</p>
+<figure class="highlight cs"><table class="hljs"><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">HelloCSharp</span> {</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">class</span> <span class="title">ExtensionMethod</span></span><br><span class="line">    {</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="built_in">int</span> <span class="title">ToInt32</span>(<span class="params"><span class="keyword">this</span> <span class="built_in">string</span> str</span>)<span class="comment">//只能声明在static class</span></span></span><br><span class="line">        {</span><br><span class="line">            <span class="keyword">return</span> Int32.Parse(str);</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">    {</span><br><span class="line">        <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] <span class="keyword">args</span></span>)</span></span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">string</span> Sval = <span class="string">"255"</span>;</span><br><span class="line">            <span class="built_in">int</span> Ival = Sval.ToInt32();</span><br><span class="line">            Console.WriteLine(Ival);</span><br><span class="line">            Console.Read();</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure></div><div class="article-licensing box global-blur"><div class="licensing-title"><p>HelloCS-8</p><p><a href="https://jingtianer.github.io/home/2019/09/11/CSharp/HelloCSharp8/">https://jingtianer.github.io/home/2019/09/11/CSharp/HelloCSharp8/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>Meow Meow Liu</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2019-09-11</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2026-10-19</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/home/tags/CSharp/">CSharp</a><a class="link-muted mr-2" rel="tag" href="/home/tags/C/">C#</a></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/home/2019/09/11/CSharp/HelloCSharp7/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">HelloCS-7</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/home/2019/09/11/CSharp/helloCsharp/"><span class="level-item">HelloCS-1</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card" id="comments"><div class="card-content"><h3 class="title is-5">评论</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+            id: "844a7ba1be1a113f5316fae235ccf73d",
+            repo: "blog_comment",
+            owner: "jingtianer",
+            clientID: "f0b13fe8021fcd2efe50",
+            clientSecret: "35207c14b34e77c48a3aeee1e94c9da169ffe0c2",
+            admin: ["jingtianer"],
+            createIssueManually: false,
+            distractionFreeMode: false,
+            perPage: 20,
+            pagerDirection: "last",
+            
+            
+            enableHotKey: true,
+            language: "zh-CN",
+        })
+        gitalk.render('comment-container')</script></div></div></div><!--!--><div class="column column-right is-4-tablet is-4-desktop is-4-widescreen  order-3 is-sticky"><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#可空类型"><span class="level-left"><span class="level-item">1</span><span class="level-item">可空类型</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#可空类型的声明"><span class="level-left"><span class="level-item">1.1</span><span class="level-item">可空类型的声明</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#注意"><span class="level-left"><span class="level-item">1.1.1</span><span class="level-item">注意</span></span></a></li></ul></li><li><a class="level is-mobile" href="#可空bool-类型"><span class="level-left"><span class="level-item">1.2</span><span class="level-item">可空bool?类型</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#true、false和null的运算关系"><span class="level-left"><span class="level-item">1.2.1</span><span class="level-item">true、false和null的运算关系</span></span></a></li></ul></li></ul></li><li><a class="level is-mobile" href="#赋值"><span class="level-left"><span class="level-item">2</span><span class="level-item">赋值</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#隐形局部变量"><span class="level-left"><span class="level-item">2.1</span><span class="level-item">隐形局部变量</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#注意-1"><span class="level-left"><span class="level-item">2.1.1</span><span class="level-item">注意</span></span></a></li></ul></li><li><a class="level is-mobile" href="#对象初始化器"><span class="level-left"><span class="level-item">2.2</span><span class="level-item">对象初始化器</span></span></a></li><li><a class="level is-mobile" href="#集合初始化器"><span class="level-left"><span class="level-item">2.3</span><span class="level-item">集合初始化器</span></span></a></li><li><a class="level is-mobile" href="#匿名类型"><span class="level-left"><span class="level-item">2.4</span><span class="level-item">匿名类型</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#例子"><span class="level-left"><span class="level-item">2.4.1</span><span class="level-item">例子</span></span></a></li><li><a class="level is-mobile" href="#等价写法"><span class="level-left"><span class="level-item">2.4.2</span><span class="level-item">等价写法</span></span></a></li></ul></li></ul></li><li><a class="level is-mobile" href="#匿名数组"><span class="level-left"><span class="level-item">3</span><span class="level-item">匿名数组</span></span></a></li><li><a class="level is-mobile" href="#扩展方法"><span class="level-left"><span class="level-item">4</span><span class="level-item">扩展方法</span></span></a></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/home/js/toc.js" defer=""></script></div></div></div></div></section><footer class="footer card"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/home/">Meow!!</a><p class="is-size-7"><span>© 2026 Meow Meow Liu</span>&nbsp;&nbsp;Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>&nbsp;&amp;&nbsp;<a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer=""></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script data-pjax="" src="/home/js/column.js"></script><script src="/home/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;" class="global-blur"><i class="fas fa-chevron-up"></i></a><script data-pjax="" src="/home/js/back_to_top.js" defer=""></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer=""></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer=""></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer=""></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/javascript" id="MathJax-script" async="">MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      },
+      chtml: {
+        matchFontHeight: false
+      }
+    };</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script><!--!--><!--!--><!--!--><script data-pjax="" src="/home/js/main.js" defer=""></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script data-pjax="" src="/home/js/insight.js" defer=""></script><script data-pjax="">document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/home/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script><script src="/home/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/home/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":200,"height":400},"mobile":{"show":true}});</script><link rel="stylesheet" type="text/css" href="/home/css/bgMusicPlayer.css"><link rel="stylesheet" type="text/css" href="/home/css/textPopup.css"><script type="module" src="/home/js/module/mermaidInitializer.js"></script><script type="text/javascript" src="/home/js/script/bgMusicPlayer.js"></script><script type="text/javascript" src="/home/js/script/clickClipBoard.js"></script><script type="text/javascript" src="/home/js/script/fairyDustCursor.js"></script><script type="text/javascript" src="/home/js/script/textPopup.js"></script><script type="text/javascript" src="/home/js/script/webMiscTools.js"></script><script>
+const navEl = document.querySelector('.navbar');
+function updateNavVar(){
+  document.documentElement.style.setProperty('--nav-height', navEl.offsetHeight + 'px')
+}
+const ro = new ResizeObserver(updateNavVar);
+ro.observe(navEl);
+updateNavVar();
+</script></body></html>

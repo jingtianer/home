@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<broadcast imgbaseurl="http://img.pet.qq.com/broadcast/" vipbaseurl="http://client.pet.qq.com/vippay.html" uinbaseurl="http://web.pet.qq.com/fcgi-bin/babyinfo?cmd=5&petid=">
+		<msg type = "1">
+			<img></img>
+			<content link=""><![CDATA[QQPet企鹅总动员内测啦！]]></content>
+	</msg>
+</broadcast>

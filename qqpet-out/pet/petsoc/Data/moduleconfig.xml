@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Modules folder="Module">
+  <Item module="pet"  className=""  src="data/pet/100.png">pet gg1</Item>
+  <Item module="pet"  className=""  src="data/pet/200.png">pet gg2</Item>
+  <Item module="pet"  className=""  src="data/pet/300.png">pet gg3</Item>
+  <Item module="pet"  className=""  src="data/pet/101.png">pet mm1</Item>
+  <Item module="pet"  className=""  src="data/pet/201.png">pet mm2</Item>
+  <Item module="pet"  className=""  src="data/pet/301.png">pet mm3</Item>  
+  <Item module="pet"  className=""  src="data/pet/holylight_self.png">Host pet effect</Item>  
+  <Item module="pet"  className=""  src="data/pet/select.png"> pet seleted</Item>
+  <Item module="pet"  className=""  src="data/pet/ui_speak.png"></Item>  
+  <Item module="pet"  className=""  src="data/pet/ui_expression.png"> </Item>  
+  <Item module="pet"  className=""  src="data/pet/icon_diamond.png">  </Item>    
+  <Item module="ui"  className=""   src="data/ui/effect/cursoreffect.png">  </Item>  
+  
+ 
+</Modules>

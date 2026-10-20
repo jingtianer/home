@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Music>
+	<Effect>
+	  <Item random="20" src="Data\Music\MusicEffectV2.swf"/>
+	</Effect>
+	<BackGround>
+	  <Item random="20" src="Data\MysteryLakeAdventure\music.mp3"/>
+	</BackGround>
+</Music>

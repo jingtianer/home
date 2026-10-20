@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Config>
+  <SceneModel id="25" name="粉钻雪山" w="1600" h="1200">
+    <Cover path=""/>
+    <Background rows="10" cols="10" cursorID="5">
+      <Path value="Data/res/scene/25/bg_V36/"/>
+      <Item width="160" height="120"/>
+    </Background>
+    <GridScene rows="10" cols="10">
+      <Viewport rows="6" cols="6"/>
+      <GridSize width="160" height="120"/>
+    </GridScene>
+    <Navigator cursorID="6">
+      <Path value="Data/res/scene/25/nav_V36.png"/>
+    </Navigator>
+    <Script type="swf">
+      <Path value=""/>
+    </Script>
+    <EntityModelLib>
+      <EntityModel mid="1109" mname="休闲椅1.png" w="174" h="164">
+        <View type=".png" path="Data/res/scene/25/20100428184235_V2.png"/>
+        <Projection>
+          <CenterPoint x="6" y="132"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="1109" mid="0" name="休闲椅1.png" validDistancev="0" x="961" y="331"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="1113" mname="树-2.png" w="110" h="227">
+        <View type=".png" path="Data/res/scene/25/20100422153531_V2.png"/>
+        <Projection>
+          <CenterPoint x="36" y="225"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="1113" mid="0" name="树-2.png" validDistancev="0" x="1490" y="392"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="126" mname="柱子-7.png" w="39" h="62">
+        <View type=".png" path="Data/res/scene/25/20100422215400_V2.png"/>
+        <Projection>
+          <CenterPoint x="3" y="53"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="126" mid="0" name="柱子-7.png" validDistancev="0" x="1025" y="571"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="128" mname="柱子-7.png" w="39" h="62">
+        <View type=".png" path="Data/res/scene/25/20100422215400_V2.png"/>
+        <Projection>
+          <CenterPoint x="32" y="48"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="128" mid="0" name="柱子-7.png" validDistancev="0" x="885" y="642"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="132" mname="柱子-7.png" w="39" h="62">
+        <View type=".png" path="Data/res/scene/25/20100422215400_V2.png"/>
+        <Projection>
+          <CenterPoint x="6" y="55"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="132" mid="0" name="柱子-7.png" validDistancev="0" x="136" y="645"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="1117" mname="桃花.png" w="181" h="152">
+        <View type=".png" path="Data/res/scene/25/20110302121418_V2.png"/>
+        <Projection>
+          <CenterPoint x="68" y="143"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="1117" mid="0" name="桃花.png" validDistancev="0" x="705" y="614"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="130" mname="柱子-7.png" w="39" h="62">
+        <View type=".png" path="Data/res/scene/25/20100422215400_V2.png"/>
+        <Projection>
+          <CenterPoint x="33" y="52"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="130" mid="0" name="柱子-7.png" validDistancev="0" x="-2" y="716"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="131" mname="qq.png" w="73" h="89">
+        <View type=".png" path="Data/res/scene/25/20100422224326_V2.png"/>
+        <Projection>
+          <CenterPoint x="35" y="77"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="131" mid="0" name="qq.png" validDistancev="0" x="673" y="751"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="1119" mname="柱子-1.png" w="55" h="105">
+        <View type=".png" path="Data/res/scene/25/20100422161110_V2.png"/>
+        <Projection>
+          <CenterPoint x="27" y="103"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="1119" mid="0" name="柱子-1.png" validDistancev="0" x="66" y="793"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="123" mname="柱子-6.png" w="52" h="105">
+        <View type=".png" path="Data/res/scene/25/20100422162821_V2.png"/>
+        <Projection>
+          <CenterPoint x="9" y="99"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="123" mid="0" name="柱子-6.png" validDistancev="0" x="1483" y="868"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="119" mname="柱子-3.png" w="53" h="110">
+        <View type=".png" path="Data/res/scene/25/20100422162718_V2.png"/>
+        <Projection>
+          <CenterPoint x="48" y="94"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="119" mid="0" name="柱子-3.png" validDistancev="0" x="344" y="976"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="117" mname="栏杆1.png" w="271" h="239">
+        <View type=".png" path="Data/res/scene/25/20111122153200_V2.png"/>
+        <Projection>
+          <CenterPoint x="4" y="215"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="117" mid="" name="栏杆1.png" validDistancev="0" x="0" y="873"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="125" mname="栏杆3.png" w="276" h="238">
+        <View type=".png" path="Data/res/scene/25/20111122153232_V2.png"/>
+        <Projection>
+          <CenterPoint x="194" y="198"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="125" mid="" name="栏杆3.png" validDistancev="0" x="1325" y="948"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="162" mname="01.png" w="64" h="82">
+        <View type=".png" path="Data/res/scene/25/20111122153249_V2.png"/>
+        <Projection>
+          <CenterPoint x="43" y="147"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="162" mid="" name="01.png" validDistancev="0" x="1295" y="1000"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="121" mname="栏杆2.png" w="217" h="143">
+        <View type=".png" path="Data/res/scene/25/20111122153208_V2.png"/>
+        <Projection>
+          <CenterPoint x="174" y="135"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="121" mid="" name="栏杆2.png" validDistancev="0" x="336" y="1056"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="1122" mname="花盆.png" w="64" h="82">
+        <View type=".png" path="Data/res/scene/25/20111122153249_V2.png"/>
+        <Projection>
+          <CenterPoint x="41" y="86"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="1122" mid="" name="花盆.png" validDistancev="0" x="1487" y="901"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="1124" mname="树-1.png" w="99" h="132">
+        <View type=".png" path="Data/res/scene/25/20110906112929_V2.png"/>
+        <Projection>
+          <CenterPoint x="52" y="132"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="1124" mid="0" name="树-1.png" validDistancev="0" x="1215" y="795"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="1127" mname="01.png" w="64" h="82">
+        <View type=".png" path="Data/res/scene/25/20111122153249_V2.png"/>
+        <Projection>
+          <CenterPoint x="43" y="147"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="1127" mid="" name="01.png" validDistancev="0" x="987" y="1116"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="1128" mname="01.png" w="64" h="82">
+        <View type=".png" path="Data/res/scene/25/20111122153249_V2.png"/>
+        <Projection>
+          <CenterPoint x="43" y="147"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="1128" mid="" name="01.png" validDistancev="0" x="740" y="1102"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="1129" mname="01.png" w="64" h="82">
+        <View type=".png" path="Data/res/scene/25/20111122153249_V2.png"/>
+        <Projection>
+          <CenterPoint x="43" y="147"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="1129" mid="" name="01.png" validDistancev="0" x="523" y="1103"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="1130" mname="01.png" w="64" h="82">
+        <View type=".png" path="Data/res/scene/25/20111122153249_V2.png"/>
+        <Projection>
+          <CenterPoint x="43" y="147"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="1130" mid="" name="01.png" validDistancev="0" x="327" y="1011"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+    </EntityModelLib>
+    <Map>
+      <NavMap w="0" h="0" path="Data/res/scene/25/nav_V36.png"/>
+      <SmallMap w="0" h="0" path="Data/res/scene/25/minimap_V36.png"/>
+      <LargeMap w="0" h="0" path="Data/res/scene/25/largemp_V36.png"/>
+    </Map>
+    <Layers>
+      <Ground/>
+      <Space>
+        <Item name="休闲椅1.png" mid="1109" cursorID="3" x="961" y="331"/>
+        <Item name="树-2.png" mid="1113" cursorID="3" x="1490" y="392"/>
+        <Item name="柱子-7.png" mid="126" cursorID="3" x="1025" y="571"/>
+        <Item name="柱子-7.png" mid="128" cursorID="3" x="885" y="642"/>
+        <Item name="柱子-7.png" mid="132" cursorID="3" x="136" y="645"/>
+        <Item name="桃花.png" mid="1117" cursorID="3" x="705" y="614"/>
+        <Item name="柱子-7.png" mid="130" cursorID="3" x="-2" y="716"/>
+        <Item name="qq.png" mid="131" cursorID="3" x="673" y="751"/>
+        <Item name="柱子-1.png" mid="1119" cursorID="3" x="66" y="793"/>
+        <Item name="柱子-6.png" mid="123" cursorID="3" x="1483" y="868"/>
+        <Item name="柱子-3.png" mid="119" cursorID="3" x="344" y="976"/>
+        <Item name="栏杆1.png" mid="117" cursorID="3" x="0" y="873"/>
+        <Item name="栏杆3.png" mid="125" cursorID="3" x="1325" y="948"/>
+        <Item name="01.png" mid="162" cursorID="3" x="1295" y="1000"/>
+        <Item name="栏杆2.png" mid="121" cursorID="3" x="336" y="1056"/>
+        <Item name="花盆.png" mid="1122" cursorID="3" x="1487" y="901"/>
+        <Item name="树-1.png" mid="1124" cursorID="1" x="1215" y="795"/>
+        <Item name="01.png" mid="1127" cursorID="3" x="987" y="1116"/>
+        <Item name="01.png" mid="1128" cursorID="3" x="740" y="1102"/>
+        <Item name="01.png" mid="1129" cursorID="3" x="523" y="1103"/>
+        <Item name="01.png" mid="1130" cursorID="3" x="327" y="1011"/>
+      </Space>
+      <Sky/>
+    </Layers>
+  </SceneModel>
+</Config>

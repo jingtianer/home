@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="gb2312" standalone="no" ?>
+<!-- Pet1.0本地版本文件-->
+<Title id="1" name="初出茅庐" color="ff7200"></Title>
+<Title id="2" name="小试身手" color="ff7200"></Title>
+<Title id="3" name="自命不凡" color="ff7200"></Title>
+<Title id="4" name="头脚峥嵘" color="ff7200"></Title>
+<Title id="5" name="首屈一指" color="ff7200"></Title>
+<Title id="6" name="一代风流" color="ff7200"></Title>
+<Title id="7" name="伏龙凤雏" color="ff7200"></Title>
+<Title id="8" name="绝世超轮" color="ff7200"></Title>
+<Title id="9" name="盖世英雄" color="ff7200"></Title>
+<Title id="10" name="天下无双" color="ff7200"></Title>
+<Title id="11" name="可爱小憨" color="0f6997"></Title>
+<Title id="12" name="呆头呆脑" color="0f6997"></Title>
+<Title id="13" name="手疾眼快" color="0f6997"></Title>
+<Title id="14" name="耳聪目明" color="0f6997"></Title>
+<Title id="15" name="冰雪聪明" color="0f6997"></Title>
+<Title id="16" name="独具慧眼" color="0f6997"></Title>
+<Title id="17" name="八面玲珑" color="0f6997"></Title>
+<Title id="18" name="机变如神" color="0f6997"></Title>
+<Title id="19" name="料事如神" color="0f6997"></Title>
+<Title id="20" name="未卜先知" color="0f6997"></Title>
+<Title id="21" name="初试时尚" color="bc47ed"></Title>
+<Title id="22" name="弄潮小资" color="bc47ed"></Title>
+<Title id="23" name="风度翩翩" color="bc47ed"></Title>
+<Title id="24" name="玉树临风" color="bc47ed"></Title>
+<Title id="25" name="脱胎换骨" color="bc47ed"></Title>
+<Title id="26" name="特立独行" color="bc47ed"></Title>
+<Title id="27" name="孤芳自赏" color="bc47ed"></Title>
+<Title id="28" name="一片冰心" color="bc47ed"></Title>
+<Title id="29" name="云中白鹤" color="bc47ed"></Title>
+<Title id="30" name="万古流芳" color="bc47ed"></Title>
+<Title id="31" name="乖乖宝宝" color="f9284a"></Title>
+<Title id="32" name="绝对黑马" color="f9284b"></Title>
+<Title id="33" name="后起之秀" color="f9284c"></Title>
+<Title id="34" name="卓尔不群" color="f9284d"></Title>
+<Title id="35" name="出口成章" color="f9284e"></Title>
+<Title id="36" name="出类拔萃" color="f9284f"></Title>
+<Title id="37" name="才气过人" color="f92850"></Title>
+<Title id="38" name="学问深广" color="f92851"></Title>
+<Title id="39" name="雄才大略" color="f92852"></Title>
+<Title id="40" name="才高八斗" color="f92853"></Title>
+<Title id="41" name="博大精深" color="f92854"></Title>
+<Title id="42" name="凤毛麟角" color="f92855"></Title>
+<Title id="43" name="造物奇迹" color="f92856"></Title>
+<Title id="44" name="天神下凡" color="f92857"></Title>
+<Title id="45" name="聚宝斗财爷" color="ff7200"></Title>
+<Title id="46" name="探险英雄" color="349a10" star = "1"></Title>
+<Title id="47" name="彩虹精灵" color="247dff" star = "2"></Title>
+<Title id="48" name="快乐小邮差" color="349a10" star = "1"></Title>
+<Title id="49" name="乐斗新星" color="349a10" star = "1"></Title>
+<Title id="50" name="乐斗强者" color="247dff" star = "2"></Title>
+<Title id="51" name="黄金乐斗士" color="ab0aff" star = "3"></Title>
+<Title id="52" name="传说乐斗士" color="ff61be" star = "4"></Title>
+<Title id="53" name="甜心巧克力" color="ff61be" star = "4"></Title>
+<Title id="54" name="浓情玫瑰" color="ff61be" star = "4"></Title>
+<Title id="55" name="探险王" color="247dff" star = "2"></Title>
+<Title id="56" name="绿化天使" color="247dff" star = "2"></Title>
+<Title id="57" name="勇者无敌" color="ab0aff" star = "3"></Title>
+<Title id="58" name="智慧王" color="349a10" star = "1"></Title>
+<Title id="59" name="智慧大天使" color="ab0aff" star = "3"></Title>
+<Title id="60" name="爱心大使" color="ff61be" star = "4"></Title>
+<Title id="62" name="浪漫情人" color="247dff" star = "2"></Title>
+<Title id="63" name="万人迷" color="ff61be" star = "4"></Title>
+<Title id="64" name="神勇斗士" color="247dff" star = "2"></Title>
+<Title id="65" name="机械之师" color="ab0aff" star = "3"></Title>
+<Title id="66" name="地理达人" color="ff61be" star = "4"></Title>
+<Title id="67" name="光明魔导士" color="ab0aff" star = "3"></Title>
+<Title id="68" name="仗义疏财" color="349a10" star = "1"></Title>
+<Title id="69" name="疯狂精灵星" color="ff61be" star = "4"></Title>
+<Title id="70" name="天下无双" color="ff61be" star = "4"></Title>
+<Title id="71" name="养鱼大师" color="ab0aff" star = "3"></Title>
+<Title id="72" name="机械神匠" color="ff61be" star = "4"></Title>
+<Title id="73" name="修月大神匠" color="ff61be" star = "4"></Title>
+<Title id="74" name="无敌守卫" color="ab0aff" star = "3"></Title>
+<Title id="75" name="荣誉成就" color="ff61be" star = "4"></Title>
+<Title id="76" name="至高成就" color="efa008" star = "5"></Title>
+<Title id="77" name="幽灵船长" color="349a10" star = "1"></Title>
+<Title id="78" name="粉钻贺新年" color="349a10" star = "1"></Title>
+<Title id="79" name="和事佬" color="247dff" star = "2"></Title>
+<Title id="80" name="跨年幸运星" color="349a10" star = "1"></Title>
+<Title id="81" name="红包达人" color="ff61be" star = "4"></Title>
+<Title id="82" name="微博大使" color="247dff" star = "2"></Title>
+<Title id="84" name="小閗士" color="349a10" star = "1"></Title>
+<Title id="85" name="閗魂" color="247dff" star = "2"></Title>
+<Title id="86" name="閗神" color="ff61be" star = "4"></Title>
+<Title id="87" name="甜蜜蜜" color="ff61be" star = "4"></Title>
+<Title id="83" name="图腾行者王" color="ab0aff" star = "3"></Title>
+<Title id="88" name="手工达人" color="247dff" star = "2"></Title>
+<Title id="89" name="神乎其技" color="ab0aff" star = "3"></Title>
+<Title id="90" name="巧夺天工" color="ff61be" star = "4"></Title>
+<Title id="91" name="时光旅行者" color="ff61be" star = "4"></Title>
+<Title id="92" name="粽子大王" color="ab0aff" star = "3"></Title>
+<Title id="93" name="微博达人" color="349a10" star = "1"></Title>
+<Title id="94" name="仲夏夜之梦" color="ff61be" star = "4"></Title>
+<Title id="95" name="打工皇帝" color="ff61be" star = "4"></Title>
+<Title id="96" name="垂钓渔仙" color="ff61be" star = "4"></Title>
+<Title id="99" name="竞技王" color="ff61be" star = "4"></Title>
+<Title id="100" name="天神降临" color="ff61be" star = "4"></Title>
+<Title id="101" name="驱魔者" color="ff61be" star = "4"></Title>
+<Title id="102" name="冒险王" color="ff61be" star = "4"></Title>
+<Title id="103" name="冰爽达人" color="ff61be" star = "4"></Title>
+<Title id="104" name="聪明宝贝" color="247dff" star = "2"></Title>
+<Title id="105" name="难不倒神童" color="ab0aff" star = "3"></Title>
+<Title id="106" name="酒仙" color="ff61be" star = "4"></Title>
+<Title id="107" name="幸运大天使" color="ab0aff" star = "3"></Title>
+<Title id="108" name="斩妖王" color="ab0aff" star = "3"></Title>
+<Title id="109" name="不给糖就捣蛋" color="ab0aff" star = "3"></Title>
+<Title id="110" name="糖果大亨" color="ff61be" star = "4"></Title>
+<Title id="111" name="元素师" color="ab0aff" star = "3"></Title>
+<Title id="112" name="绝版控" color="ff61be" star = "4"></Title>
+<Title id="113" name="魔幻勇者" color="349a10" star = "1"></Title>
+<Title id="114" name="爱的神箭手" color="349a10" star = "1"></Title>
+<Title id="115" name="炫舞达人" color="349a10" star = "1"></Title>
+<Title id="116" name="东方丘比特" color="247dff" star = "2"></Title>
+<Title id="117" name="爱心印记" color="247dff" star = "2"></Title>

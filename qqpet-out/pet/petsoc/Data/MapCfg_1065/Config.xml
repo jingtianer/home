@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Config>
+    <NavigateMap>
+	    <SceneModel id="1">
+	        <Links><DestSceneModel id="4" linknpcid="176"/></Links>
+			<Links><DestSceneModel id="6" linknpcid="182"/></Links>
+			<Links><DestSceneModel id="3" linknpcid="177"/></Links>
+			<Links><DestSceneModel id="5" linknpcid="12"/></Links>
+			<Links><DestSceneModel id="20" linknpcid="141"/></Links>
+			<Links><DestSceneModel id="18" linknpcid="101"/></Links>
+                        <Links><DestSceneModel id="21" linknpcid="1107"/></Links>
+                        <Links><DestSceneModel id="22" linknpcid="1103"/></Links>
+	    </SceneModel>
+		<SceneModel id="3">
+	        	<Links><DestSceneModel id="6" linknpcid="142"/></Links>
+			<Links><DestSceneModel id="22" linknpcid="113"/></Links>
+			<Links><DestSceneModel id="5" linknpcid="12"/></Links>
+			<Links><DestSceneModel id="7" linknpcid="115"/></Links>
+			<Links><DestSceneModel id="8" linknpcid="19"/></Links>
+	    </SceneModel>
+		<SceneModel id="4">
+	        	<Links><DestSceneModel id="6" linknpcid="150"/></Links>
+			<Links><DestSceneModel id="22" linknpcid="12"/></Links>
+			<Links><DestSceneModel id="25" linknpcid="111"/></Links>
+			<Links><DestSceneModel id="16" linknpcid="147"/></Links>
+			<Links><DestSceneModel id="13" linknpcid="112"/></Links>
+	    </SceneModel>
+		<SceneModel id="5">
+	        	<Links><DestSceneModel id="28" linknpcid="140"/></Links>
+			<Links><DestSceneModel id="22" linknpcid="138"/></Links>
+			<Links><DestSceneModel id="24" linknpcid="137"/></Links>
+	    </SceneModel>
+		<SceneModel id="6">
+	        	<Links><DestSceneModel id="22" linknpcid="11"/></Links>
+			<Links><DestSceneModel id="28" linknpcid="121"/></Links>
+			<Links><DestSceneModel id="24" linknpcid="135"/></Links>
+			<Links><DestSceneModel id="15" linknpcid="111"/></Links>
+	    </SceneModel>
+		<SceneModel id="7">
+			<Links><DestSceneModel id="24" linknpcid="119"/></Links>
+	    </SceneModel>
+		<SceneModel id="8">
+			<Links><DestSceneModel id="24" linknpcid="165"/></Links>
+	    </SceneModel>
+		<SceneModel id="13">
+			<Links><DestSceneModel id="28" linknpcid="117"/></Links>
+	    </SceneModel>
+		<SceneModel id="15">
+			<Links><DestSceneModel id="6" linknpcid="117"/></Links>
+	    </SceneModel>
+		<SceneModel id="16">
+			<Links><DestSceneModel id="28" linknpcid="115"/></Links>
+	    </SceneModel>
+		<SceneModel id="18">
+			<Links><DestSceneModel id="22" linknpcid="141"/></Links>
+	    </SceneModel>
+		<SceneModel id="20">
+			<Links><DestSceneModel id="22" linknpcid="141"/></Links>
+	    </SceneModel>
+		<SceneModel id="21">
+			<Links><DestSceneModel id="22" linknpcid="17"/></Links>
+	    </SceneModel>
+	        <SceneModel id="22">
+	                <Links><DestSceneModel id="28" linknpcid="176"/></Links>
+			<Links><DestSceneModel id="6" linknpcid="182"/></Links>
+			<Links><DestSceneModel id="24" linknpcid="177"/></Links>
+			<Links><DestSceneModel id="25" linknpcid="12"/></Links>
+			<Links><DestSceneModel id="20" linknpcid="141"/></Links>
+			<Links><DestSceneModel id="18" linknpcid="101"/></Links>
+                        <Links><DestSceneModel id="21" linknpcid="1107"/></Links>
+                        <Links><DestSceneModel id="1" linknpcid="181"/></Links>
+                        <Links><DestSceneModel id="23" linknpcid="1144"/></Links>
+                        <Links><DestSceneModel id="27" linknpcid="1147"/></Links>
+                        <Links><DestSceneModel id="29" linknpcid="173"/></Links>
+                        <Links><DestSceneModel id="30" linknpcid="1116"/></Links>
+	    </SceneModel>
+                <SceneModel id="23">
+			<Links><DestSceneModel id="22" linknpcid="12"/></Links>
+	    </SceneModel>
+	        <SceneModel id="24">
+			<Links><DestSceneModel id="6" linknpcid="147"/></Links>
+			<Links><DestSceneModel id="7" linknpcid="115"/></Links>
+			<Links><DestSceneModel id="8" linknpcid="19"/></Links>
+			<Links><DestSceneModel id="22" linknpcid="145"/></Links>
+                        <Links><DestSceneModel id="25" linknpcid="143"/></Links>
+	    </SceneModel>
+	        <SceneModel id="25">
+			<Links><DestSceneModel id="28" linknpcid="16"/></Links>
+			<Links><DestSceneModel id="22" linknpcid="14"/></Links>
+			<Links><DestSceneModel id="24" linknpcid="12"/></Links>
+	    </SceneModel>
+	        <SceneModel id="26">
+			<Links><DestSceneModel id="25" linknpcid="12"/></Links>
+	    </SceneModel>
+	        <SceneModel id="27">
+			<Links><DestSceneModel id="22" linknpcid="12"/></Links>
+	    </SceneModel>
+	        <SceneModel id="28">
+			<Links><DestSceneModel id="6" linknpcid="150"/></Links>
+			<Links><DestSceneModel id="22" linknpcid="12"/></Links>
+			<Links><DestSceneModel id="25" linknpcid="111"/></Links>
+			<Links><DestSceneModel id="16" linknpcid="147"/></Links>
+			<Links><DestSceneModel id="13" linknpcid="112"/></Links>
+	    </SceneModel>
+	        <SceneModel id="29">
+			<Links><DestSceneModel id="22" linknpcid="173"/></Links>
+	    </SceneModel>
+	        <SceneModel id="30">
+			<Links><DestSceneModel id="22" linknpcid="117"/></Links>
+			<Links><DestSceneModel id="31" linknpcid="1186"/></Links>
+			<Links><DestSceneModel id="32" linknpcid="1188"/></Links>
+	    </SceneModel>
+	        <SceneModel id="31">
+			<Links><DestSceneModel id="30" linknpcid="114"/></Links>
+	    </SceneModel>
+	        <SceneModel id="32">
+			<Links><DestSceneModel id="30" linknpcid="1141"/></Links>
+	    </SceneModel>
+    </NavigateMap>
+</Config>

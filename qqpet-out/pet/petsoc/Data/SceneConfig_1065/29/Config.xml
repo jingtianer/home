@@ -1,0 +1,357 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Config>
+  <SceneModel id="29" name="神秘湖底" w="2000" h="1500">
+    <Cover path=""/>
+    <Background rows="10" cols="10" cursorID="5">
+      <Path value="Data/res/scene/29/bg_V4/"/>
+      <Item width="200" height="150"/>
+    </Background>
+    <GridScene rows="10" cols="10">
+      <Viewport rows="8" cols="8"/>
+      <GridSize width="200" height="150"/>
+    </GridScene>
+    <Navigator cursorID="6">
+      <Path value="Data/res/scene/29/nav_V4.png"/>
+    </Navigator>
+    <Script type="swf">
+      <Path value="Data\MysteryLakeAdventure\MysteryLakeAdventure.swf"/>
+    </Script>
+    <EntityModelLib>
+      <EntityModel mid="114" mname="珊瑚.png" w="94" h="75">
+        <View type=".png" path="Data/res/scene/29/20100722161315_V2.png"/>
+        <Projection>
+          <CenterPoint x="43" y="60"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="114" mid="0" name="珊瑚.png" validDistancev="0" x="798" y="101"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="116" mname="珊瑚.png" w="94" h="75">
+        <View type=".png" path="Data/res/scene/29/20100722161315_V2.png"/>
+        <Projection>
+          <CenterPoint x="41" y="58"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="116" mid="0" name="珊瑚.png" validDistancev="0" x="590" y="158"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="128" mname="珊瑚.png" w="94" h="75">
+        <View type=".png" path="Data/res/scene/29/20100722161315_V2.png"/>
+        <Projection>
+          <CenterPoint x="41" y="58"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="128" mid="0" name="珊瑚.png" validDistancev="0" x="1307" y="258"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="12" mname="柱子5.png" w="90" h="70">
+        <View type=".png" path="Data/res/scene/29/20100722160913_V2.png"/>
+        <Projection>
+          <CenterPoint x="43" y="49"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="12" mid="0" name="柱子5.png" validDistancev="0" x="542" y="345"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="118" mname="珊瑚.png" w="94" h="75">
+        <View type=".png" path="Data/res/scene/29/20100722161315_V2.png"/>
+        <Projection>
+          <CenterPoint x="42" y="60"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="118" mid="0" name="珊瑚.png" validDistancev="0" x="372" y="429"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="16" mname="柱子1.png" w="127" h="96">
+        <View type=".png" path="Data/res/scene/29/20100722160947_V2.png"/>
+        <Projection>
+          <CenterPoint x="72" y="74"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="16" mid="0" name="柱子1.png" validDistancev="0" x="957" y="487"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="126" mname="珊瑚4.png" w="136" h="107">
+        <View type=".png" path="Data/res/scene/29/20100804164729_V2.png"/>
+        <Projection>
+          <CenterPoint x="70" y="79"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="126" mid="0" name="珊瑚4.png" validDistancev="0" x="1426" y="506"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="130" mname="珊瑚.png" w="94" h="75">
+        <View type=".png" path="Data/res/scene/29/20100722161315_V2.png"/>
+        <Projection>
+          <CenterPoint x="43" y="60"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="130" mid="0" name="珊瑚.png" validDistancev="0" x="1807" y="553"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="132" mname="珊瑚.png" w="94" h="75">
+        <View type=".png" path="Data/res/scene/29/20100722161315_V2.png"/>
+        <Projection>
+          <CenterPoint x="42" y="58"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="132" mid="0" name="珊瑚.png" validDistancev="0" x="1728" y="597"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="14" mname="柱子2.png" w="99" h="131">
+        <View type=".png" path="Data/res/scene/29/20100722160933_V2.png"/>
+        <Projection>
+          <CenterPoint x="59" y="109"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="14" mid="0" name="柱子2.png" validDistancev="0" x="784" y="551"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="18" mname="柱子4.png" w="89" h="55">
+        <View type=".png" path="Data/res/scene/29/20100722161008_V2.png"/>
+        <Projection>
+          <CenterPoint x="9" y="44"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="18" mid="0" name="柱子4.png" validDistancev="0" x="1251" y="680"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="112" mname="柱子6.png" w="120" h="102">
+        <View type=".png" path="Data/res/scene/29/20100722161247_V2.png"/>
+        <Projection>
+          <CenterPoint x="113" y="44"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="112" mid="0" name="柱子6.png" validDistancev="0" x="376" y="734"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="120" mname="珊瑚.png" w="94" h="75">
+        <View type=".png" path="Data/res/scene/29/20100722161315_V2.png"/>
+        <Projection>
+          <CenterPoint x="42" y="61"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="120" mid="0" name="珊瑚.png" validDistancev="0" x="99" y="751"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="110" mname="柱子3.png" w="61" h="80">
+        <View type=".png" path="Data/res/scene/29/20100722161218_V2.png"/>
+        <Projection>
+          <CenterPoint x="31" y="64"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="110" mid="0" name="柱子3.png" validDistancev="0" x="1003" y="765"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="122" mname="珊瑚.png" w="94" h="75">
+        <View type=".png" path="Data/res/scene/29/20100722161315_V2.png"/>
+        <Projection>
+          <CenterPoint x="42" y="60"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="122" mid="0" name="珊瑚.png" validDistancev="0" x="695" y="834"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="124" mname="珊瑚.png" w="94" h="75">
+        <View type=".png" path="Data/res/scene/29/20100722161315_V2.png"/>
+        <Projection>
+          <CenterPoint x="42" y="59"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="124" mid="0" name="珊瑚.png" validDistancev="0" x="1031" y="907"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="138" mname="珊瑚.png" w="94" h="75">
+        <View type=".png" path="Data/res/scene/29/20100722161315_V2.png"/>
+        <Projection>
+          <CenterPoint x="44" y="58"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="138" mid="0" name="珊瑚.png" validDistancev="0" x="1882" y="1013"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="134" mname="珊瑚.png" w="94" h="75">
+        <View type=".png" path="Data/res/scene/29/20100722161315_V2.png"/>
+        <Projection>
+          <CenterPoint x="42" y="60"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="134" mid="0" name="珊瑚.png" validDistancev="0" x="661" y="1059"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="140" mname="珊瑚.png" w="94" h="75">
+        <View type=".png" path="Data/res/scene/29/20100722161315_V2.png"/>
+        <Projection>
+          <CenterPoint x="41" y="58"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="140" mid="0" name="珊瑚.png" validDistancev="0" x="352" y="1100"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="142" mname="珊瑚.png" w="94" h="75">
+        <View type=".png" path="Data/res/scene/29/20100722161315_V2.png"/>
+        <Projection>
+          <CenterPoint x="41" y="57"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="142" mid="0" name="珊瑚.png" validDistancev="0" x="302" y="1162"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="144" mname="珊瑚3.png" w="291" h="119">
+        <View type=".png" path="Data/res/scene/29/20100722162607_V2.png"/>
+        <Projection>
+          <CenterPoint x="145" y="117"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="144" mid="0" name="珊瑚3.png" validDistancev="0" x="12" y="1260"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="136" mname="珊瑚2.png" w="513" h="250">
+        <View type=".png" path="Data/res/scene/29/20100722162426_V2.png"/>
+        <Projection>
+          <CenterPoint x="311" y="248"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="136" mid="0" name="珊瑚2.png" validDistancev="0" x="1487" y="1168"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="150" mname="珊瑚.png" w="94" h="75">
+        <View type=".png" path="Data/res/scene/29/20100722161315_V2.png"/>
+        <Projection>
+          <CenterPoint x="43" y="59"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="150" mid="0" name="珊瑚.png" validDistancev="0" x="1130" y="1415"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="148" mname="珊瑚.png" w="94" h="75">
+        <View type=".png" path="Data/res/scene/29/20100722161315_V2.png"/>
+        <Projection>
+          <CenterPoint x="45" y="49"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="148" mid="0" name="珊瑚.png" validDistancev="0" x="1189" y="1449"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="146" mname="石头.png" w="203" h="61">
+        <View type=".png" path="Data/res/scene/29/20100722162648_V2.png"/>
+        <Projection>
+          <CenterPoint x="101" y="60"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="146" mid="0" name="石头.png" validDistancev="0" x="237" y="1439"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+    </EntityModelLib>
+    <Map>
+      <NavMap w="0" h="0" path="Data/res/scene/29/nav_V4.png"/>
+      <SmallMap w="0" h="0" path="Data/res/scene/29/minimap_V4.png"/>
+      <LargeMap w="0" h="0" path="Data/res/scene/29/largemp_V4.png"/>
+    </Map>
+    <Layers>
+      <Ground/>
+      <Space>
+        <Item name="珊瑚.png" mid="114" cursorID="3" x="798" y="101"/>
+        <Item name="珊瑚.png" mid="116" cursorID="3" x="590" y="158"/>
+        <Item name="珊瑚.png" mid="128" cursorID="3" x="1307" y="258"/>
+        <Item name="柱子5.png" mid="12" cursorID="3" x="542" y="345"/>
+        <Item name="珊瑚.png" mid="118" cursorID="3" x="372" y="429"/>
+        <Item name="柱子1.png" mid="16" cursorID="3" x="957" y="487"/>
+        <Item name="珊瑚4.png" mid="126" cursorID="3" x="1426" y="506"/>
+        <Item name="珊瑚.png" mid="130" cursorID="3" x="1807" y="553"/>
+        <Item name="珊瑚.png" mid="132" cursorID="3" x="1728" y="597"/>
+        <Item name="柱子2.png" mid="14" cursorID="3" x="784" y="551"/>
+        <Item name="柱子4.png" mid="18" cursorID="3" x="1251" y="680"/>
+        <Item name="柱子6.png" mid="112" cursorID="3" x="376" y="734"/>
+        <Item name="珊瑚.png" mid="120" cursorID="3" x="99" y="751"/>
+        <Item name="柱子3.png" mid="110" cursorID="3" x="1003" y="765"/>
+        <Item name="珊瑚.png" mid="122" cursorID="3" x="695" y="834"/>
+        <Item name="珊瑚.png" mid="124" cursorID="3" x="1031" y="907"/>
+        <Item name="珊瑚.png" mid="138" cursorID="3" x="1882" y="1013"/>
+        <Item name="珊瑚.png" mid="134" cursorID="3" x="661" y="1059"/>
+        <Item name="珊瑚.png" mid="140" cursorID="3" x="352" y="1100"/>
+        <Item name="珊瑚.png" mid="142" cursorID="3" x="302" y="1162"/>
+        <Item name="珊瑚3.png" mid="144" cursorID="3" x="12" y="1260"/>
+        <Item name="珊瑚2.png" mid="136" cursorID="3" x="1487" y="1168"/>
+        <Item name="珊瑚.png" mid="150" cursorID="3" x="1130" y="1415"/>
+        <Item name="珊瑚.png" mid="148" cursorID="3" x="1189" y="1449"/>
+        <Item name="石头.png" mid="146" cursorID="3" x="237" y="1439"/>
+      </Space>
+      <Sky/>
+    </Layers>
+  </SceneModel>
+</Config>

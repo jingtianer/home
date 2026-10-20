@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WorldMapHotInfo>
+	<MouseOverInfo sence = "1" id = "1">
+	<![CDATA[风语广场位于企鹅岛的中心位置，其中包括教堂、市政厅、咖啡厅、图书馆等建筑物，是可爱的小企鹅们聚会、庆典的主要场所。]]>
+	</MouseOverInfo>
+	<MouseOverInfo sence = "3" id = "3">
+	<![CDATA[夏帕海岸是企鹅居民主要的游乐场所。包括超级游乐场、竞技场、嘉年华、乐园餐厅和沙滩乐园等重要建筑，是企鹅们最钟爱的地方。]]>
+	</MouseOverInfo>
+	<MouseOverInfo sence = "4" id = "4">
+	<![CDATA[企鹅岛上最繁华的商业街，这里有服装、百货、杂货店，还有生日屋，魔法俱乐部等建筑设施，满足了小企鹅们日常生活所需。]]>
+	</MouseOverInfo>
+	<MouseOverInfo sence = "5" id = "5">
+	<![CDATA[粉钻雪山是整座企鹅岛的至高点，桑尼夫人在这里建立了只有佩戴粉钻的高贵企鹅才能进入的高级俱乐部。]]>
+	</MouseOverInfo>
+	<MouseOverInfo sence = "6" id = "6">
+	<![CDATA[企鹅镇是岛上的企鹅们宁静、安逸的居住地。其中学习、打工、住宅、医疗、种植等各种生活必须设施一应俱全，保障了小企鹅们的基本生活。]]>
+	</MouseOverInfo>
+</WorldMapHotInfo>

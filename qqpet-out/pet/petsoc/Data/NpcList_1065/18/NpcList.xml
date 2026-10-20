@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?><Config>
+  <GridScene rows="10" cols="10">
+    <Viewport rows="9" cols="9"/>
+    <GridSize width="168" height="123"/>
+  </GridScene>
+  <NpcList>
+    <Npc nid="163" mid="0" name="" validDistance="0" x="870" y="305" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/18/20090819222416_V2.png</Param>
+        <Param name="cursorID">3</Param>
+        <Param name="namecardVisible">false</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="">
+          <Action name="openMainUrl">
+            <Param name="url">http://act.pet.qq.com/qq_mstx.html</Param>
+            <Param name="timestamp">false</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="142.05" h="215.9">
+        <Projection>
+          <CenterPoint x="60" y="184"/>
+        </Projection>
+      </EntityModel>
+      <Item x="812" y="173" cursorID="3"/>
+      <NavPointList>
+        <NavPoint x="942" y="408"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="191" mid="AnimateNPC" name="神父特里斯坦" validDistance="100" x="1193" y="509" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/18/20090819170556_V2.png</Param>
+        <Param name="cursorID">2</Param>
+        <Param name="namecardVisible">true</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="0" name="mouseClick">
+          <Action name="openSubUrl">
+            <Param name="timestamp">false</Param>
+            <Param name="url">http://act.pet.qq.com/cgi-bin/unmarry</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="140" h="140">
+        <Projection>
+          <CenterPoint x="70" y="128"/>
+        </Projection>
+      </EntityModel>
+      <Item x="1121" y="409" cursorID="2"/>
+      <NavPointList>
+        <NavPoint x="1006" y="634"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="152" mid="AnimateNPC" name="凯茜" validDistance="100" x="214" y="792" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/18/20090825115029_V2.png</Param>
+        <Param name="cursorID">2</Param>
+        <Param name="namecardVisible">true</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="0" name="mouseClick">
+          <Action name="openSubUrl">
+            <Param name="timestamp">false</Param>
+            <Param name="url">http://act.pet.qq.com/cgi-bin/register</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="140" h="140">
+        <Projection>
+          <CenterPoint x="75" y="120"/>
+        </Projection>
+      </EntityModel>
+      <Item x="142" y="695" cursorID="2"/>
+      <NavPointList>
+        <NavPoint x="275" y="840"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="141" mid="0" name="" validDistance="0" x="330" y="1020" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/18/20090819170754_V2.png</Param>
+        <Param name="cursorID">7</Param>
+        <Param name="namecardVisible">false</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="">
+          <Action name="enterScene">
+            <Param name="id">22</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="140" h="140">
+        <Projection>
+          <CenterPoint x="77" y="95"/>
+        </Projection>
+      </EntityModel>
+      <Item x="259" y="922" cursorID="7"/>
+      <NavPointList>
+        <NavPoint x="331" y="1030"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="157" mid="AnimateNPC" name="梅奥" validDistance="100" x="1419" y="581" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/18/20090922140111_V2.png</Param>
+        <Param name="cursorID">2</Param>
+        <Param name="namecardVisible">true</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="0" name="mouseClick">
+          <Action name="openSubUrl">
+            <Param name="timestamp">false</Param>
+            <Param name="url">http://web.pet.qq.com/npc/jiaotang/3.html</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="140" h="140">
+        <Projection>
+          <CenterPoint x="83" y="119"/>
+        </Projection>
+      </EntityModel>
+      <Item x="1346" y="501" cursorID="2"/>
+      <NavPointList>
+        <NavPoint x="1352" y="618"/>
+      </NavPointList>
+    </Npc>
+  </NpcList>
+</Config>

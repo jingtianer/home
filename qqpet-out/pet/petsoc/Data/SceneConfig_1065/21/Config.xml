@@ -1,0 +1,176 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Config>
+  <SceneModel id="21" name="古堡森林" w="1160" h="920">
+    <Cover path=""/>
+    <Background rows="10" cols="10" cursorID="5">
+      <Path value="Data/res/scene/21/bg_V31/"/>
+      <Item width="116" height="92"/>
+    </Background>
+    <GridScene rows="10" cols="10">
+      <Viewport rows="10" cols="10"/>
+      <GridSize width="116" height="92"/>
+    </GridScene>
+    <Navigator cursorID="6">
+      <Path value="Data/res/scene/21/nav_V31.png"/>
+    </Navigator>
+    <Script type="swf">
+      <Path value=""/>
+    </Script>
+    <EntityModelLib>
+      <EntityModel mid="123" mname="幽灵.png" w="78" h="69">
+        <View type=".png" path="Data/res/scene/21/20100526173017_V2.png"/>
+        <Projection>
+          <CenterPoint x="38" y="51"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="123" mid="0" name="幽灵.png" validDistancev="0" x="592" y="142"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="118" mname="树枝1.png" w="53" h="43">
+        <View type=".png" path="Data/res/scene/21/20090919182453_V2.png"/>
+        <Projection>
+          <CenterPoint x="28" y="81"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="118" mid="0" name="树枝1.png" validDistancev="0" x="996" y="427"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="125" mname="幽灵.png" w="78" h="69">
+        <View type=".png" path="Data/res/scene/21/20100526173017_V2.png"/>
+        <Projection>
+          <CenterPoint x="36" y="125"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="125" mid="0" name="幽灵.png" validDistancev="0" x="977" y="389"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="131" mname="路灯.png" w="93" h="168">
+        <View type=".png" path="Data/res/scene/21/20100526173504_V2.png"/>
+        <Projection>
+          <CenterPoint x="46" y="164"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="131" mid="0" name="路灯.png" validDistancev="0" x="807" y="372"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="122" mname="树枝1.png" w="53" h="43">
+        <View type=".png" path="Data/res/scene/21/20090919182453_V2.png"/>
+        <Projection>
+          <CenterPoint x="35" y="91"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="122" mid="0" name="树枝1.png" validDistancev="0" x="849" y="449"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="128" mname="枝桠.png" w="43" h="38">
+        <View type=".png" path="Data/res/scene/21/20100505205209_V2.png"/>
+        <Projection>
+          <CenterPoint x="37" y="39"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="128" mid="0" name="枝桠.png" validDistancev="0" x="754" y="788"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="126" mname="蜡烛.png" w="31" h="53">
+        <View type=".png" path="Data/res/scene/21/20101020143244_V2.png"/>
+        <Projection>
+          <CenterPoint x="27" y="40"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="126" mid="0" name="蜡烛.png" validDistancev="0" x="383" y="806"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="127" mname="木.png" w="64" h="60">
+        <View type=".png" path="Data/res/scene/21/20100505193402_V2.png"/>
+        <Projection>
+          <CenterPoint x="27" y="62"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="127" mid="0" name="木.png" validDistancev="0" x="287" y="798"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="138" mname="路灯.png" w="93" h="168">
+        <View type=".png" path="Data/res/scene/21/20100526173504_V2.png"/>
+        <Projection>
+          <CenterPoint x="49" y="163"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="138" mid="0" name="路灯.png" validDistancev="0" x="680" y="720"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="1117" mname="02.png" w="31" h="33">
+        <View type=".png" path="Data/res/scene/21/20111026143646_V2.png"/>
+        <Projection>
+          <CenterPoint x="19" y="84"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="1117" mid="0" name="02.png" validDistancev="0" x="815" y="456"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="1118" mname="02.png" w="31" h="33">
+        <View type=".png" path="Data/res/scene/21/20111026143646_V2.png"/>
+        <Projection>
+          <CenterPoint x="19" y="84"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="1118" mid="0" name="02.png" validDistancev="0" x="695" y="800"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+    </EntityModelLib>
+    <Map>
+      <NavMap w="0" h="0" path="Data/res/scene/21/nav_V31.png"/>
+      <SmallMap w="0" h="0" path="Data/res/scene/21/minimap_V31.png"/>
+      <LargeMap w="0" h="0" path="Data/res/scene/21/largemp_V31.png"/>
+    </Map>
+    <Layers>
+      <Ground/>
+      <Space>
+        <Item name="幽灵.png" mid="123" cursorID="3" x="592" y="142"/>
+        <Item name="树枝1.png" mid="118" cursorID="3" x="996" y="427"/>
+        <Item name="幽灵.png" mid="125" cursorID="3" x="977" y="389"/>
+        <Item name="路灯.png" mid="131" cursorID="3" x="807" y="372"/>
+        <Item name="树枝1.png" mid="122" cursorID="3" x="849" y="449"/>
+        <Item name="枝桠.png" mid="128" cursorID="3" x="754" y="788"/>
+        <Item name="蜡烛.png" mid="126" cursorID="3" x="383" y="806"/>
+        <Item name="木.png" mid="127" cursorID="3" x="287" y="798"/>
+        <Item name="路灯.png" mid="138" cursorID="3" x="680" y="720"/>
+        <Item name="02.png" mid="1117" cursorID="1" x="815" y="456"/>
+        <Item name="02.png" mid="1118" cursorID="1" x="695" y="800"/>
+      </Space>
+      <Sky/>
+    </Layers>
+  </SceneModel>
+</Config>

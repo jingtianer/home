@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?><Config>
+  <GridScene rows="10" cols="10">
+    <Viewport rows="7" cols="7"/>
+    <GridSize width="209" height="159"/>
+  </GridScene>
+  <NpcList>
+    <Npc nid="11" mid="0" name="天下第一武道会" validDistance="0" x="901" y="610" mapShowPoint="1" layerType="1" type="1">
+      <ParamList>
+        <Param name="view">Data/res/scene/7/0_V2.png</Param>
+        <Param name="cursorID">4</Param>
+        <Param name="namecardVisible">false</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="">
+          <Action name="openMiddleUrl">
+            <Param name="timestamp">false</Param>
+            <Param name="url">http://act.pet.qq.com/games/pk_wdh.html</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="331" h="266">
+        <Projection>
+          <CenterPoint x="323" y="233"/>
+        </Projection>
+      </EntityModel>
+      <Item x="755" y="462" cursorID="4"/>
+      <NavPointList>
+        <NavPoint x="832" y="715"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="16" mid="0" name="pk世界杯" validDistance="0" x="440" y="911" mapShowPoint="1" layerType="1" type="1">
+      <ParamList>
+        <Param name="view">Data/res/scene/7/5_V2.png</Param>
+        <Param name="cursorID">4</Param>
+        <Param name="namecardVisible">false</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="">
+          <Action name="openMiddleUrl">
+            <Param name="timestamp">false</Param>
+            <Param name="url">http://act.pet.qq.com/games/pk_zq.html</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="422" h="305">
+        <Projection>
+          <CenterPoint x="354" y="147"/>
+        </Projection>
+      </EntityModel>
+      <Item x="253" y="741" cursorID="4"/>
+      <NavPointList>
+        <NavPoint x="543" y="1002"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="112" mid="0" name="蔬菜大作战" validDistance="0" x="1734" y="1001" mapShowPoint="1" layerType="1" type="1">
+      <ParamList>
+        <Param name="view">Data/res/scene/7/10_V2.png</Param>
+        <Param name="cursorID">4</Param>
+        <Param name="namecardVisible">false</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="">
+          <Action name="openMiddleUrl">
+            <Param name="url">http://act.pet.qq.com/games/pk_scdz.html</Param>
+            <Param name="timestamp">false</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="376" h="313">
+        <Projection>
+          <CenterPoint x="374" y="197"/>
+        </Projection>
+      </EntityModel>
+      <Item x="1587" y="857" cursorID="4"/>
+      <NavPointList>
+        <NavPoint x="1600" y="1158"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="125" mid="0" name="跆拳道" validDistance="0" x="1317" y="1217" mapShowPoint="1" layerType="1" type="1">
+      <ParamList>
+        <Param name="view">Data/res/scene/7/20090817112416_V2.png</Param>
+        <Param name="cursorID">4</Param>
+        <Param name="namecardVisible">false</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="">
+          <Action name="openMainUrl">
+            <Param name="url">http://act.pet.qq.com/oneonegame/dg_tqd.html</Param>
+            <Param name="timestamp">false</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="507" h="269">
+        <Projection>
+          <CenterPoint x="249" y="153"/>
+        </Projection>
+      </EntityModel>
+      <Item x="1057" y="1059" cursorID="4"/>
+      <NavPointList>
+        <NavPoint x="1260" y="1339"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="119" mid="0" name="回夏帕海岸" validDistance="0" x="497" y="1251" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/7/14_V2.png</Param>
+        <Param name="cursorID">7</Param>
+        <Param name="namecardVisible">false</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="">
+          <Action name="enterScene">
+            <Param name="id">24</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="140" h="140">
+        <Projection>
+          <CenterPoint x="58" y="83"/>
+        </Projection>
+      </EntityModel>
+      <Item x="428" y="1167" cursorID="7"/>
+      <NavPointList>
+        <NavPoint x="503" y="1261"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="123" mid="0" name="跆拳道" validDistance="0" x="1316" y="1218" mapShowPoint="1" layerType="1" type="1">
+      <ParamList>
+        <Param name="view">Data/res/scene/7/20090817124237_V2.png</Param>
+        <Param name="cursorID">3</Param>
+        <Param name="namecardVisible">false</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="">
+          <Action name="openMainUrl">
+            <Param name="timestamp">false</Param>
+            <Param name="url">http://act.pet.qq.com/oneonegame/dg_tqd.html</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="144" h="161">
+        <Projection>
+          <CenterPoint x="65" y="114"/>
+        </Projection>
+      </EntityModel>
+      <Item x="1229" y="1149" cursorID="3"/>
+      <NavPointList>
+        <NavPoint x="1258" y="1340"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="173" mid="0" name="闯关夺宝" validDistance="0" x="1303" y="361" mapShowPoint="1" layerType="1" type="1">
+      <ParamList>
+        <Param name="view">Data/res/scene/7/20100106202617_V2.png</Param>
+        <Param name="cursorID">4</Param>
+        <Param name="namecardVisible">false</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="">
+          <Action name="openMiddleUrl">
+            <Param name="timestamp">false</Param>
+            <Param name="url">http://act.pet.qq.com/games/x_cgdb.html</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="203" h="241">
+        <Projection>
+          <CenterPoint x="154" y="229"/>
+        </Projection>
+      </EntityModel>
+      <Item x="1179" y="244" cursorID="4"/>
+      <NavPointList>
+        <NavPoint x="1393" y="503"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="17" mid="0" name="搭积木" validDistance="0" x="1899" y="663" mapShowPoint="1" layerType="1" type="1">
+      <ParamList>
+        <Param name="view">Data/res/scene/7/20100106210007_V2.png</Param>
+        <Param name="cursorID">4</Param>
+        <Param name="namecardVisible">false</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="">
+          <Action name="openMainUrl">
+            <Param name="timestamp">false</Param>
+            <Param name="url">http://act.pet.qq.com/oneonegame/dajimu.html</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="223" h="246">
+        <Projection>
+          <CenterPoint x="69" y="200"/>
+        </Projection>
+      </EntityModel>
+      <Item x="1794" y="538" cursorID="4"/>
+      <NavPointList>
+        <NavPoint x="1798" y="765"/>
+      </NavPointList>
+    </Npc>
+  </NpcList>
+</Config>

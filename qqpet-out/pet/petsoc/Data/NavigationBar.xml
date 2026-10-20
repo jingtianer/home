@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+	<news name="最新活动">
+		<item img="1" name="最新活动一" npc="1-1-1"/>
+		<item img="2" name="最新活动二" npc="1-1-1"/>
+		<item img="2" name="最新活动三" npc="1-1-1"/>
+	</news>
+	<hot name="推荐活动">
+		<item img="3" name="推荐活动一" npc="1-1-1"/>
+		<item img="4" name="推荐活动二" npc="1-1-1"/>
+		<item img="2" name="推荐活动三" npc="1-1-1"/>
+	</hot>
+	<other name="更多活动">
+		<item img="5" name="粉钻专区" vip="1" npc="1-1-1">
+			<item img="7" name="更多活动一中的一个活动" npc="1-1-1"/>
+			<item img="8" name="更多活动一中的一个活动" npc="1-1-1"/>
+		</item>
+		<item img="6" name="更多活动二" vip="0" npc="1-1-1">
+			<item img="9" name="更多活动二中的一个活动" npc="1-1-1"/>
+			<item img="10" name="更多活动二中的一个活动" npc="1-1-1"/>
+		</item>
+		<item img="5" name="更多活动一" vip="0" npc="1-1-1">
+			<item img="7" name="更多活动一中的一个活动" npc="1-1-1"/>
+			<item img="8" name="更多活动一中的一个活动" npc="1-1-1"/>
+		</item>
+		<item img="6" name="更多活动二" vip="0" npc="1-1-1">
+			<item img="9" name="更多活动二中的一个活动" npc="1-1-1"/>
+			<item img="10" name="更多活动二中的一个活动" npc="1-1-1"/>
+		</item>
+	</other>
+</root>

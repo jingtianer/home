@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8"?><Config>
+  <SceneModel id="20" name="咖啡厅" w="1000" h="800">
+    <Cover path=""/>
+    <Background rows="5" cols="5" cursorID="5">
+      <Path value="Data/res/scene/20/bg_V15/"/>
+      <Item width="200" height="160"/>
+    </Background>
+    <GridScene rows="5" cols="5">
+      <Viewport rows="5" cols="5"/>
+      <GridSize width="200" height="160"/>
+    </GridScene>
+    <Navigator cursorID="6">
+      <Path value="Data/res/scene/20/nav_V15.png"/>
+    </Navigator>
+    <Script type="swf">
+      <Path value=""/>
+    </Script>
+    <EntityModelLib>
+      <EntityModel mid="182" mname="咖啡厅-舞台彩灯.swf" w="476.6" h="209.2">
+        <View type=".swf" path="Data/res/scene/20/20091013163833_V2.png"/>
+        <Projection>
+          <CenterPoint x="0" y="0"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="182" mid="0" name="咖啡厅-舞台彩灯.swf" validDistancev="0" x="68" y="103"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="130" mname="花盆.png" w="55" h="107">
+        <View type=".png" path="Data/res/scene/20/20091201143500_V2.png"/>
+        <Projection>
+          <CenterPoint x="30" y="70"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="130" mid="0" name="花盆.png" validDistancev="0" x="477" y="207"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="132" mname="留声机.png" w="122" h="166">
+        <View type=".png" path="Data/res/scene/20/20091201143512_V2.png"/>
+        <Projection>
+          <CenterPoint x="118" y="98"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="132" mid="0" name="留声机.png" validDistancev="0" x="383" y="192"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="184" mname="咖啡厅-招牌灯.swf" w="162.2" h="166.1">
+        <View type=".swf" path="Data/res/scene/20/20091013163915_V2.png"/>
+        <Projection>
+          <CenterPoint x="82" y="125"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="184" mid="0" name="咖啡厅-招牌灯.swf" validDistancev="0" x="627" y="177"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="136" mname="花盆1.png" w="55" h="86">
+        <View type=".png" path="Data/res/scene/20/20091201143846_V2.png"/>
+        <Projection>
+          <CenterPoint x="31" y="70"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="136" mid="0" name="花盆1.png" validDistancev="0" x="375" y="256"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="180" mname="" w="159.4" h="130.55">
+        <View type=".swf" path="Data/res/scene/20/20091013163813_V2.png"/>
+        <Projection>
+          <CenterPoint x="149" y="151"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="180" mid="0" name="" validDistancev="0" x="198" y="266"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="118" mname="" w="373" h="212">
+        <View type=".png" path="Data/res/scene/20/20091013182653_V2.png"/>
+        <Projection>
+          <CenterPoint x="7" y="87"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="118" mid="0" name="" validDistancev="0" x="544" y="342"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="152" mname="吧台前椅子.png" w="49" h="92">
+        <View type=".png" path="Data/res/scene/20/20091013154324_V2.png"/>
+        <Projection>
+          <CenterPoint x="24" y="56"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="152" mid="0" name="吧台前椅子.png" validDistancev="0" x="508" y="395"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="178" mname="吧台前椅子.png" w="49" h="92">
+        <View type=".png" path="Data/res/scene/20/20091013154324_V2.png"/>
+        <Projection>
+          <CenterPoint x="25" y="54"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="178" mid="0" name="吧台前椅子.png" validDistancev="0" x="607" y="446"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="164" mname="" w="289" h="212">
+        <View type=".png" path="Data/res/scene/20/20091013162126_V2.png"/>
+        <Projection>
+          <CenterPoint x="253" y="189"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="164" mid="0" name="" validDistancev="0" x="557" y="321"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="131" mname="花台2.png" w="220" h="142">
+        <View type=".png" path="Data/res/scene/20/20091014155343_V2.png"/>
+        <Projection>
+          <CenterPoint x="57" y="139"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="131" mid="0" name="花台2.png" validDistancev="0" x="772" y="466"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="172" mname="椅子3.png" w="48" h="72">
+        <View type=".png" path="Data/res/scene/20/20091013163038_V2.png"/>
+        <Projection>
+          <CenterPoint x="24" y="59"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="172" mid="0" name="椅子3.png" validDistancev="0" x="246" y="547"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="176" mname="" w="47" h="73">
+        <View type=".png" path="Data/res/scene/20/20091013163048_V2.png"/>
+        <Projection>
+          <CenterPoint x="25" y="57"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="176" mid="0" name="" validDistancev="0" x="582" y="582"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="166" mname="桌子2.png" w="115" h="133">
+        <View type=".png" path="Data/res/scene/20/20091013162903_V2.png"/>
+        <Projection>
+          <CenterPoint x="54" y="114"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="166" mid="0" name="桌子2.png" validDistancev="0" x="270" y="540"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="168" mname="" w="115" h="122">
+        <View type=".png" path="Data/res/scene/20/20091013162939_V2.png"/>
+        <Projection>
+          <CenterPoint x="57" y="102"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="168" mid="0" name="" validDistancev="0" x="483" y="567"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="170" mname="椅子4.png" w="47" h="77">
+        <View type=".png" path="Data/res/scene/20/20091013163034_V2.png"/>
+        <Projection>
+          <CenterPoint x="24" y="61"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="170" mid="0" name="椅子4.png" validDistancev="0" x="362" y="616"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="174" mname="" w="50" h="68">
+        <View type=".png" path="Data/res/scene/20/20091013163046_V2.png"/>
+        <Projection>
+          <CenterPoint x="24" y="51"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="174" mid="0" name="" validDistancev="0" x="467" y="643"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="129" mname="花台1.png" w="705" h="271">
+        <View type=".png" path="Data/res/scene/20/20091014155335_V2.png"/>
+        <Projection>
+          <CenterPoint x="361" y="238"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="129" mid="0" name="花台1.png" validDistancev="0" x="17" y="524"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+    </EntityModelLib>
+    <Map>
+      <NavMap w="0" h="0" path="Data/res/scene/20/nav_V15.png"/>
+      <SmallMap w="0" h="0" path="Data/res/scene/20/minimap_V15.png"/>
+      <LargeMap w="0" h="0" path="Data/res/scene/20/largemp_V15.png"/>
+    </Map>
+    <Layers>
+      <Ground/>
+      <Space>
+        <Item name="咖啡厅-舞台彩灯.swf" mid="182" cursorID="3" x="68" y="103"/>
+        <Item name="花盆.png" mid="130" cursorID="3" x="477" y="207"/>
+        <Item name="留声机.png" mid="132" cursorID="3" x="383" y="192"/>
+        <Item name="咖啡厅-招牌灯.swf" mid="184" cursorID="3" x="627" y="177"/>
+        <Item name="花盆1.png" mid="136" cursorID="3" x="375" y="256"/>
+        <Item name="" mid="180" cursorID="3" x="198" y="266"/>
+        <Item name="" mid="118" cursorID="3" x="544" y="342"/>
+        <Item name="吧台前椅子.png" mid="152" cursorID="3" x="508" y="395"/>
+        <Item name="吧台前椅子.png" mid="178" cursorID="3" x="607" y="446"/>
+        <Item name="" mid="164" cursorID="3" x="557" y="321"/>
+        <Item name="花台2.png" mid="131" cursorID="3" x="772" y="466"/>
+        <Item name="椅子3.png" mid="172" cursorID="3" x="246" y="547"/>
+        <Item name="" mid="176" cursorID="3" x="582" y="582"/>
+        <Item name="桌子2.png" mid="166" cursorID="3" x="270" y="540"/>
+        <Item name="" mid="168" cursorID="3" x="483" y="567"/>
+        <Item name="椅子4.png" mid="170" cursorID="3" x="362" y="616"/>
+        <Item name="" mid="174" cursorID="3" x="467" y="643"/>
+        <Item name="花台1.png" mid="129" cursorID="3" x="17" y="524"/>
+      </Space>
+      <Sky/>
+    </Layers>
+  </SceneModel>
+</Config>

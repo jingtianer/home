@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Config>
+  <SceneModel id="27" name="神秘湖" w="2000" h="1500">
+    <Cover path=""/>
+    <Background rows="10" cols="10" cursorID="5">
+      <Path value="Data/res/scene/27/bg_V6/"/>
+      <Item width="200" height="150"/>
+    </Background>
+    <GridScene rows="10" cols="10">
+      <Viewport rows="8" cols="8"/>
+      <GridSize width="200" height="150"/>
+    </GridScene>
+    <Navigator cursorID="6">
+      <Path value="Data/res/scene/27/nav_V6.png"/>
+    </Navigator>
+    <Script type="swf">
+      <Path value="Data\MysteryLakeAdventure\MysteryLakeAdventure.swf"/>
+    </Script>
+    <EntityModelLib>
+      <EntityModel mid="17" mname="柱子.png" w="55" h="73">
+        <View type=".png" path="Data/res/scene/27/20100510141609_V2.png"/>
+        <Projection>
+          <CenterPoint x="5" y="57"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="17" mid="0" name="柱子.png" validDistancev="0" x="96" y="223"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="16" mname="神秘草.png" w="98" h="66">
+        <View type=".png" path="Data/res/scene/27/20100804132221_V2.png"/>
+        <Projection>
+          <CenterPoint x="47" y="46"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="16" mid="0" name="神秘草.png" validDistancev="0" x="605" y="425"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="114" mname="神秘草2.png" w="193" h="114">
+        <View type=".png" path="Data/res/scene/27/20100804132809_V2.png"/>
+        <Projection>
+          <CenterPoint x="103" y="77"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="114" mid="0" name="神秘草2.png" validDistancev="0" x="309" y="799"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="110" mname="神秘草1.png" w="116" h="79">
+        <View type=".png" path="Data/res/scene/27/20100804132417_V2.png"/>
+        <Projection>
+          <CenterPoint x="61" y="50"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="110" mid="0" name="神秘草1.png" validDistancev="0" x="1395" y="921"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="116" mname="木.png" w="80" h="67">
+        <View type=".png" path="Data/res/scene/27/20100804132931_V2.png"/>
+        <Projection>
+          <CenterPoint x="37" y="50"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="116" mid="0" name="木.png" validDistancev="0" x="1413" y="1216"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="14" mname="树.png" w="133" h="344">
+        <View type=".png" path="Data/res/scene/27/20100507175051_V2.png"/>
+        <Projection>
+          <CenterPoint x="119" y="340"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="14" mid="0" name="树.png" validDistancev="0" x="1867" y="939"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="15" mname="图腾柱.png" w="204" h="265">
+        <View type=".png" path="Data/res/scene/27/20100510141344_V2.png"/>
+        <Projection>
+          <CenterPoint x="104" y="234"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="15" mid="0" name="图腾柱.png" validDistancev="0" x="1552" y="1030"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="12" mname="石像.png" w="141" h="204">
+        <View type=".png" path="Data/res/scene/27/20100507174731_V2.png"/>
+        <Projection>
+          <CenterPoint x="73" y="184"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="12" mid="0" name="石像.png" validDistancev="0" x="205" y="1126"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+    </EntityModelLib>
+    <Map>
+      <NavMap w="0" h="0" path="Data/res/scene/27/nav_V6.png"/>
+      <SmallMap w="0" h="0" path="Data/res/scene/27/minimap_V6.png"/>
+      <LargeMap w="0" h="0" path="Data/res/scene/27/largemp_V6.png"/>
+    </Map>
+    <Layers>
+      <Ground/>
+      <Space>
+        <Item name="柱子.png" mid="17" cursorID="3" x="96" y="223"/>
+        <Item name="神秘草.png" mid="16" cursorID="3" x="605" y="425"/>
+        <Item name="神秘草2.png" mid="114" cursorID="3" x="309" y="799"/>
+        <Item name="神秘草1.png" mid="110" cursorID="3" x="1395" y="921"/>
+        <Item name="木.png" mid="116" cursorID="3" x="1413" y="1216"/>
+        <Item name="树.png" mid="14" cursorID="3" x="1867" y="939"/>
+        <Item name="图腾柱.png" mid="15" cursorID="3" x="1552" y="1030"/>
+        <Item name="石像.png" mid="12" cursorID="3" x="205" y="1126"/>
+      </Space>
+      <Sky/>
+    </Layers>
+  </SceneModel>
+</Config>

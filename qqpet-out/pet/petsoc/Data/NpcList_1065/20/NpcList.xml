@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="utf-8"?><Config>
+  <GridScene rows="5" cols="5">
+    <Viewport rows="5" cols="5"/>
+    <GridSize width="200" height="160"/>
+  </GridScene>
+  <NpcList>
+    <Npc nid="142" mid="0" name="" validDistance="0" x="542" y="275" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/20/20091201144007_V2.png</Param>
+        <Param name="cursorID">4</Param>
+        <Param name="namecardVisible">false</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="">
+          <Action name="clickButton">
+            <Param name="type">2</Param>
+            <Param name="id">4</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="84.8" h="103.6">
+        <Projection>
+          <CenterPoint x="50" y="112"/>
+        </Projection>
+      </EntityModel>
+      <Item x="467" y="192" cursorID="4"/>
+      <NavPointList>
+        <NavPoint x="522" y="352"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="139" mid="AnimateNPC" name="翠花" validDistance="100" x="442" y="311" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/20/20090807161626_V2.png</Param>
+        <Param name="cursorID">2</Param>
+        <Param name="namecardVisible">true</Param>
+      </ParamList>
+      <UserData>
+        <Speak>呃~好累，谁来帮帮忙哦？|好~翠花我这就来~</Speak>
+      </UserData>
+      <TriggerList>
+        <Trigger id="0" name="mouseClick">
+          <Action name="openMainUrl">
+            <Param name="url">http://act.pet.qq.com/oneonegame/Dish.html</Param>
+            <Param name="timestamp">fasle</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="140" h="140">
+        <Projection>
+          <CenterPoint x="66" y="127"/>
+        </Projection>
+      </EntityModel>
+      <Item x="373" y="214" cursorID="2"/>
+      <NavPointList>
+        <NavPoint x="447" y="367"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="140" mid="AnimateNPC" name="佐佐" validDistance="100" x="676" y="386" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/20/20090630152338_V2.png</Param>
+        <Param name="cursorID">2</Param>
+        <Param name="namecardVisible">true</Param>
+      </ParamList>
+      <UserData>
+        <Speak>yeah~好多顾客！欢迎欢迎！|古堡中危机四伏，勇士请小心啊！|你好~请问您需要什么？</Speak>
+      </UserData>
+      <TriggerList>
+        <Trigger id="0" name="mouseClick">
+          <Action name="openSubUrl">
+            <Param name="url">http://act.pet.qq.com/coffee/kf_index.html</Param>
+            <Param name="timestamp">false</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="140" h="140">
+        <Projection>
+          <CenterPoint x="82" y="124"/>
+        </Projection>
+      </EntityModel>
+      <Item x="600" y="286" cursorID="2"/>
+      <NavPointList>
+        <NavPoint x="587" y="526"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="126" mid="AnimateNPC" name="" validDistance="100" x="-1000" y="-1000" mapShowPoint="0" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/20/20091013205549_V2.png</Param>
+        <Param name="cursorID">1</Param>
+        <Param name="namecardVisible">false</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="0" name="mouseClick">
+          <Action name="doNothing">
+            <Param name="id">int</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="140" h="140">
+        <Projection>
+          <CenterPoint x="72" y="107"/>
+        </Projection>
+      </EntityModel>
+      <Item x="151" y="325" cursorID="1"/>
+      <NavPointList>
+        <NavPoint x="0" y="0"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="153" mid="0" name="" validDistance="0" x="668" y="415" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/20/20091013192859_V2.png</Param>
+        <Param name="cursorID">4</Param>
+        <Param name="namecardVisible">false</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="">
+          <Action name="openSubUrl">
+            <Param name="timestamp">false</Param>
+            <Param name="url">http://act.pet.qq.com/coffee/food_index.html?id=6</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="38" h="34">
+        <Projection>
+          <CenterPoint x="20" y="29"/>
+        </Projection>
+      </EntityModel>
+      <Item x="637" y="406" cursorID="4"/>
+      <NavPointList>
+        <NavPoint x="666" y="519"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="141" mid="0" name="" validDistance="0" x="611" y="386" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/20/20091014230633_V2.png</Param>
+        <Param name="cursorID">4</Param>
+        <Param name="namecardVisible">false</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="">
+          <Action name="openSubUrl">
+            <Param name="url">http://act.pet.qq.com/coffee/food_index.html?id=10</Param>
+            <Param name="timestamp">false</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="38" h="34">
+        <Projection>
+          <CenterPoint x="16" y="99"/>
+        </Projection>
+      </EntityModel>
+      <Item x="582" y="377" cursorID="4"/>
+      <NavPointList>
+        <NavPoint x="515" y="485"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="144" mid="0" name="" validDistance="0" x="154" y="531" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/20/20091015155458_V2.png</Param>
+        <Param name="cursorID">4</Param>
+        <Param name="namecardVisible">false</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="">
+          <Action name="openMainUrl">
+            <Param name="timestamp">false</Param>
+            <Param name="url">http://act.pet.qq.com/oneonegame/qq_ppl.html</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="93" h="99.45">
+        <Projection>
+          <CenterPoint x="93" y="78"/>
+        </Projection>
+      </EntityModel>
+      <Item x="97" y="475" cursorID="4"/>
+      <NavPointList>
+        <NavPoint x="202" y="581"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="121" mid="0" name="回风语广场" validDistance="0" x="774" y="609" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/20/20090625165205_V2.png</Param>
+        <Param name="cursorID">7</Param>
+        <Param name="namecardVisible">false</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="0" name="mouseClick">
+          <Action name="enterScene">
+            <Param name="id">22</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="140" h="140">
+        <Projection>
+          <CenterPoint x="66" y="89"/>
+        </Projection>
+      </EntityModel>
+      <Item x="700" y="526" cursorID="7"/>
+      <NavPointList>
+        <NavPoint x="765" y="626"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="128" mid="AnimateNPC" name="2-3.png" validDistance="100" x="-1000" y="-1000" mapShowPoint="0" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/20/20091013205707_V2.png</Param>
+        <Param name="cursorID">1</Param>
+        <Param name="namecardVisible">false</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="0" name="mouseClick">
+          <Action name="doNothing">
+            <Param name="id">int</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="140" h="140">
+        <Projection>
+          <CenterPoint x="71" y="124"/>
+        </Projection>
+      </EntityModel>
+      <Item x="529" y="517" cursorID="1"/>
+      <NavPointList>
+        <NavPoint x="0" y="0"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="138" mid="0" name="" validDistance="0" x="344" y="586" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/20/20091013192411_V2.png</Param>
+        <Param name="cursorID">4</Param>
+        <Param name="namecardVisible">false</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="">
+          <Action name="openSubUrl">
+            <Param name="timestamp">false</Param>
+            <Param name="url">http://act.pet.qq.com/coffee/food_index.html?id=7</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="38" h="34">
+        <Projection>
+          <CenterPoint x="20" y="82"/>
+        </Projection>
+      </EntityModel>
+      <Item x="325" y="574" cursorID="4"/>
+      <NavPointList>
+        <NavPoint x="421" y="604"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="0" mid="0" name="" validDistance="0" x="309" y="574" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/20/20091014230651_V2.png</Param>
+        <Param name="cursorID">4</Param>
+        <Param name="namecardVisible">false</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="">
+          <Action name="openSubUrl">
+            <Param name="timestamp">false</Param>
+            <Param name="url">http://act.pet.qq.com/coffee/food_index.html?id=8</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="38" h="34">
+        <Projection>
+          <CenterPoint x="4" y="107"/>
+        </Projection>
+      </EntityModel>
+      <Item x="287" y="552" cursorID="4"/>
+      <NavPointList>
+        <NavPoint x="375" y="561"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="159" mid="0" name="" validDistance="0" x="548" y="612" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/20/20091013195057_V2.png</Param>
+        <Param name="cursorID">4</Param>
+        <Param name="namecardVisible">false</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="">
+          <Action name="openSubUrl">
+            <Param name="url">http://act.pet.qq.com/coffee/food_index.html?id=4</Param>
+            <Param name="timestamp">false</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="38" h="34">
+        <Projection>
+          <CenterPoint x="23" y="74"/>
+        </Projection>
+      </EntityModel>
+      <Item x="505" y="601" cursorID="4"/>
+      <NavPointList>
+        <NavPoint x="458" y="627"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="157" mid="0" name="" validDistance="0" x="580" y="593" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/20/20091013193152_V2.png</Param>
+        <Param name="cursorID">4</Param>
+        <Param name="namecardVisible">false</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="">
+          <Action name="openSubUrl">
+            <Param name="timestamp">false</Param>
+            <Param name="url">http://act.pet.qq.com/coffee/food_index.html?id=9</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="38" h="34">
+        <Projection>
+          <CenterPoint x="21" y="98"/>
+        </Projection>
+      </EntityModel>
+      <Item x="539" y="578" cursorID="4"/>
+      <NavPointList>
+        <NavPoint x="497" y="576"/>
+      </NavPointList>
+    </Npc>
+  </NpcList>
+</Config>

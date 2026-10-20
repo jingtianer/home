@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Config>
+    <WorldMapDesc>
+	    <SceneModel id="1" left="-1" top="0" name="风语广场" w="200" h="100"  SceneMapWidth="3200" SceneMapHigh="2400" backmapWidth="711" backmapHight="535">
+			<backmap src="Data/res/scene/1/s01-largemap-V7.png" type="2"/>
+	    </SceneModel>
+	    <SceneModel id="2" left="-1" top="0" name="关闭的场景" w="200" h="100" SceneMapWidth="1600" SceneMapHigh="1200" backmapWidth="800" backmapHight="600">
+			<backmap src="Data/res/scene/2/s02-largemap-V4.png" type="2"/>
+	    </SceneModel>
+	    <SceneModel id="3" left="-1" top="0" name="夏帕海岸" w="200" h="100" SceneMapWidth="2360" SceneMapHigh="2040" backmapWidth="637" backmapHight="548">
+			<backmap src="Data/res/scene/3/s03-largemap-V5.png" type="2"/>
+	    </SceneModel>
+		<SceneModel id="4" left="-1" top="0" name="瓦里步行街" w="200" h="100" SceneMapWidth="2400" SceneMapHigh="1800" backmapWidth="726" backmapHight="545">
+			<backmap src="Data/res/scene/4/s04-largemap-V15.png" type="2"/>
+	    </SceneModel>
+		<SceneModel id="5" left="-1" top="0" name="粉钻雪山" w="200" h="100" SceneMapWidth="2400" SceneMapHigh="1990" backmapWidth="660" backmapHight="549">
+			<backmap src="Data/res/scene/5/s05-largemap-V9.png" type="2"/>
+	    </SceneModel>
+		<SceneModel id="6" left="-1" top="0" name="企鹅镇" w="200" h="100" SceneMapWidth="2397" SceneMapHigh="1923" backmapWidth="684" backmapHight="549">
+			<backmap src="Data/res/scene/6/s06-largemap-V23.png" type="2"/>
+	    </SceneModel>	
+		<SceneModel id="7" left="-1" top="0" name="竞技场" w="200" h="100" SceneMapWidth="2090" SceneMapHigh="1590" backmapWidth="720" backmapHight="548">
+			<backmap src="Data/res/scene/7/s07-largemap-V4.png" type="2"/>
+	    </SceneModel>
+		<SceneModel id="8" left="-1" top="0" name="超级游乐场" w="200" h="100" SceneMapWidth="3000" SceneMapHigh="1990" backmapWidth="780" backmapHight="520">
+			<backmap src="Data/res/scene/8/s08-largemap-V4.png" type="2"/>
+	    </SceneModel>		
+		<SceneModel id="20" left="-1" top="0" name="咖啡厅" w="200" h="100" SceneMapWidth="1000" SceneMapHigh="800" backmapWidth="682" backmapHight="547">
+			<backmap src="Data/res/scene/20/s20-largemap-V8.png" type="2"/>
+	    </SceneModel>
+		<SceneModel id="13" left="-1" top="0" name="百货店" w="200" h="100" SceneMapWidth="1100" SceneMapHigh="800" backmapWidth="724" backmapHight="544">
+			<backmap src="Data/res/scene/13/s13-largemap-V5.png" type="2"/>
+	    </SceneModel>
+		<SceneModel id="15" left="-1" top="0" name="小学课堂" w="200" h="100" SceneMapWidth="800" SceneMapHigh="600" backmapWidth="731" backmapHight="549">
+			<backmap src="Data/res/scene/15/s15-largemap-V1.png" type="2"/>
+	    </SceneModel>
+		<SceneModel id="16" left="-1" top="0" name="生日屋" w="200" h="100" SceneMapWidth="800" SceneMapHigh="600" backmapWidth="724" backmapHight="545">
+			<backmap src="Data/res/scene/16/s16-largemap-V2.png" type="2"/>
+	    </SceneModel>
+		<SceneModel id="18" left="-1" top="0" name="教堂" w="200" h="100" SceneMapWidth="1684" SceneMapHigh="1234" backmapWidth="748" backmapHight="548">
+			<backmap src="Data/res/scene/18/s18-largemap-V3.png" type="2"/>
+	    </SceneModel>
+		<SceneModel id="21" left="-1" top="0" name="古堡森林" w="200" h="100" SceneMapWidth="1160" SceneMapHigh="926" backmapWidth="687" backmapHight="549">
+			<backmap src="Data/res/scene/21/s21-largemap-V15.png" type="2"/>
+	    </SceneModel>
+	    <SceneModel id="22" left="-1" top="0" name="风语广场" w="200" h="100"  SceneMapWidth="2500" SceneMapHigh="1765" backmapWidth="767" backmapHight="542">
+			<backmap src="Data/res/scene/22/s22-largemap-V36.png" type="2"/>
+	    </SceneModel>
+	    <SceneModel id="23" left="-1" top="0" name="神秘岛" w="200" h="100"  SceneMapWidth="1200" SceneMapHigh="908" backmapWidth="726" backmapHight="550">
+			<backmap src="Data/res/scene/23/s23-largemap-V3.png" type="2"/>
+	    </SceneModel>
+	    <SceneModel id="24" left="-1" top="0" name="夏帕海岸" w="200" h="100"  SceneMapWidth="2600" SceneMapHigh="2000" backmapWidth="708" backmapHight="547">
+			<backmap src="Data/res/scene/24/s24-largemap-V20.png" type="2"/>
+	    </SceneModel>
+	    <SceneModel id="25" left="-1" top="0" name="粉钻雪山" w="200" h="100"  SceneMapWidth="1600" SceneMapHigh="1200" backmapWidth="729" backmapHight="547">
+			<backmap src="Data/res/scene/25/s25-largemap-V13.png" type="2"/>	
+	    </SceneModel>
+		<SceneModel id="26" left="-1" top="0" name="粉钻度假村" w="200" h="100" SceneMapWidth="1800" SceneMapHigh="1170" backmapWidth="783" backmapHight="509">
+			<backmap src="Data/res/scene/26/s26-largemap-V4.png" type="2"/>
+	    </SceneModel>
+		<SceneModel id="27" left="-1" top="0" name="湖边密林" w="200" h="100" SceneMapWidth="2000" SceneMapHigh="1500" backmapWidth="732" backmapHight="550">
+			<backmap src="Data/res/scene/27/s27-largemap-V1.png" type="2"/>
+	    </SceneModel>
+		<SceneModel id="28" left="-1" top="0" name="瓦里步行街" w="200" h="100" SceneMapWidth="1700" SceneMapHigh="1250" backmapWidth="747" backmapHight="550">
+			<backmap src="Data/res/scene/28/s28-largemap-V17.png" type="2"/>
+	    </SceneModel>
+		<SceneModel id="29" left="-1" top="0" name="退潮湖底" w="200" h="100" SceneMapWidth="2000" SceneMapHigh="1500" backmapWidth="729" backmapHight="547">
+			<backmap src="Data/res/scene/29/s29-largemap-V1.png" type="2"/>
+	    </SceneModel>
+		<SceneModel id="30" left="-1" top="0" name="东郊荒地" w="200" h="100" SceneMapWidth="2000" SceneMapHigh="1500" backmapWidth="731" backmapHight="548">
+			<backmap src="Data/res/scene/30/s30-largemap-V1.png" type="2"/>
+	    </SceneModel>
+		<SceneModel id="31" left="-1" top="0" name="天剑峰" w="200" h="100" SceneMapWidth="2500" SceneMapHigh="1900" backmapWidth="724" backmapHight="550">
+			<backmap src="Data/res/scene/31/s31-largemap-V1.png" type="2"/>
+	    </SceneModel>
+    </WorldMapDesc>
+
+</Config>

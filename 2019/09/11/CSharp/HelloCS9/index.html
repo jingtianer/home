@@ -1,0 +1,328 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>HelloCS-9 - Jingtianer</title><link rel="manifest" href="/home/manifest.json"><meta name="application-name" content="Jingtianer"><meta name="msapplication-TileImage" content="images/avatar.jpg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Jingtianer"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="C#中的数据结构C#提供了以下几种数据结构：Array、ArraList、List、Queue、Stack、Dictionart&amp;lt;K,T&amp;gt;、LinkLedList Array特点 数组中数据存储在连续的内存上。 存储的数据类型相同。 通过下标可直接访问。  声明一个属数组时，将在堆中分配一段连续的内存来储存数量为n的数据。存储的数据为值类型时，在分配的内存中会有n个未装箱的值类型被创建"><meta property="og:type" content="blog"><meta property="og:title" content="HelloCS-9"><meta property="og:url" content="https://jingtianer.github.io/home/2019/09/11/CSharp/HelloCS9/"><meta property="og:site_name" content="Jingtianer"><meta property="og:description" content="C#中的数据结构C#提供了以下几种数据结构：Array、ArraList、List、Queue、Stack、Dictionart&amp;lt;K,T&amp;gt;、LinkLedList Array特点 数组中数据存储在连续的内存上。 存储的数据类型相同。 通过下标可直接访问。  声明一个属数组时，将在堆中分配一段连续的内存来储存数量为n的数据。存储的数据为值类型时，在分配的内存中会有n个未装箱的值类型被创建"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://jingtianer.github.io/home/img/og_image.png"><meta property="article:published_time" content="2019-09-11T13:15:36.000Z"><meta property="article:modified_time" content="2026-10-19T14:21:52.142Z"><meta property="article:author" content="Meow Meow Liu"><meta property="article:tag" content="CSharp"><meta property="article:tag" content="C#"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://jingtianer.github.io/home/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://jingtianer.github.io/home/2019/09/11/CSharp/HelloCS9/"},"headline":"HelloCS-9","image":["https://jingtianer.github.io/home/img/og_image.png"],"datePublished":"2019-09-11T13:15:36.000Z","dateModified":"2026-10-19T14:21:52.142Z","author":{"@type":"Person","name":"Meow Meow Liu"},"publisher":{"@type":"Organization","name":"Jingtianer","logo":{"@type":"ImageObject","url":{"text":"Meow!!"}}},"description":"C#中的数据结构C#提供了以下几种数据结构：Array、ArraList、List、Queue、Stack、Dictionart&lt;K,T&gt;、LinkLedList Array特点 数组中数据存储在连续的内存上。 存储的数据类型相同。 通过下标可直接访问。  声明一个属数组时，将在堆中分配一段连续的内存来储存数量为n的数据。存储的数据为值类型时，在分配的内存中会有n个未装箱的值类型被创建"}</script><link rel="canonical" href="https://jingtianer.github.io/home/2019/09/11/CSharp/HelloCS9/"><link rel="alternate" href="/home/atom.xml" title="Jingtianer" type="application/atom+xml"><link rel="icon" href="/home/images/avatar.jpg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link data-pjax="" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.7.0/styles/vs.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link data-pjax="" rel="stylesheet" href="/home/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"><style>
+.card{
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important; /* Safari兼容 */
+
+  /* 半透底色，必不可少 */
+  background: rgba(255,255,255, 0.35) !important;
+
+  /* 可选：细微边框提升质感 */
+  border: 1px solid rgba(255,255,255,0.25) !important;
+  border-radius: 12px !important;
+  color: #000 !important;
+}
+.global-blur{
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important; /* Safari兼容 */
+
+  /* 半透底色，必不可少 */
+  background: rgba(255,255,255, 0.35) !important;
+
+  /* 可选：细微边框提升质感 */
+  border: 1px solid rgba(255,255,255,0.25) !important;
+  border-radius: 12px !important;
+  color: #000 !important;
+}
+.gt-header-textarea{
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important; /* Safari兼容 */
+
+  /* 半透底色，必不可少 */
+  background: rgba(255,255,255, 0.35) !important;
+
+  /* 可选：细微边框提升质感 */
+  border: 1px solid rgba(255,255,255,0.25) !important;
+  border-radius: 12px !important;
+}
+.menu-list a.is-active{
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important; /* Safari兼容 */
+
+  /* 半透底色，必不可少 */
+  background: rgba(255,255,255, 0.35) !important;
+
+  /* 可选：细微边框提升质感 */
+  border: 1px solid rgba(255,255,255,0.25) !important;
+  border-radius: 12px !important;
+}
+.menu-list a:hover{
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important; /* Safari兼容 */
+
+  /* 半透底色，必不可少 */
+  background: rgba(255,255,255, 0.35) !important;
+  background-color: rgba(255,255,255, 0.35) !important;
+
+  /* 可选：细微边框提升质感 */
+  border: 1px solid rgba(255,255,255,0.25) !important;
+  border-radius: 12px !important;
+}
+
+.navbar {
+--nav-height: 0px;
+width: calc(100% - 2em) !important;
+margin: 1em !important;
+position: fixed !important;
+backdrop-filter: blur(8px) !important;
+-webkit-backdrop-filter: blur(12px) !important; /* Safari兼容 */
+
+/* 半透底色，必不可少 */
+background: rgba(255,255,255, 0.6) !important;
+
+/* 可选：细微边框提升质感 */
+border: 1px solid rgba(255,255,255,0.25) !important;
+border-radius: 12px !important;
+color: #000 !important;
+overflow: clip !important;
+}
+.navbar-mirror{
+width: calc(100% - 2em) !important;
+margin: 1em !important;
+height: var(--nav-height);
+}
+.hljs {
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important; /* Safari兼容 */
+
+  /* 半透底色，必不可少 */
+  background: rgba(255,255,255, 0.35) !important;
+}
+.button{
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important; /* Safari兼容 */
+
+  /* 半透底色，必不可少 */
+  // opacity: 0.8;
+  margin-left: 0.1em !important;
+  margin-right: 0.1em !important;
+  /* 可选：细微边框提升质感 */
+  border: 1px solid rgba(255,255,255,0.25) !important;
+  border-radius: 12px !important;
+}
+.body-bg-container {
+    position: fixed;
+    width: 100vw;
+    height: 100dvh;
+    z-index: -100;
+}
+.body-bg-container .bg1 {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, #CAEFD7ee, #F5BFD7ee, #ABC9E9ee) !important;
+  z-index: -99;
+}
+.body-bg-container .bg2 {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(#ffffff00, #ffffffa0) !important;
+  z-index: -98;
+}
+.navbar-menu {
+  background: transparent !important;
+}
+.navbar-link.is-active:hover {
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important; /* Safari兼容 */
+
+  /* 半透底色，必不可少 */
+  background: rgba(255,255,255, 0.35) !important;
+  background-color: transparent !important;
+  margin-left: 0.1em !important;
+  margin-right: 0.1em !important;
+  /* 可选：细微边框提升质感 */
+  border: 1px solid rgba(255,255,255,0.25) !important;
+  border-radius: 12px !important;
+  color: #000 !important;
+}
+.content blockquote{
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important; /* Safari兼容 */
+
+  /* 半透底色，必不可少 */
+  background: rgba(255,255,255, 0.35) !important;
+}
+.footer {
+  margin: 1em !important;
+}
+.widget .tags .tag:first-child {
+  color: #000 !important;
+  margin-right: 3px;
+}
+.pagination-link.is-current {
+  color: #000 !important;
+  font-weight: 600 !important;
+}
+.timeline .media:last-child:after{
+  background: transparent !important;
+}
+</style><style>
+.global-lazy-loading-img{ 
+    width: 1.28em; 
+    height: 1.28em;
+    font-size: 100%;
+}
+.lazy-galleria{ 
+    width: 100%; 
+    height: calc(100dvh - var(--nav-height) - 2em); 
+}
+.galleria-stage {
+  top: 0px !important;
+  bottom: 0px !important;
+  left: 0px !important;
+  right: 0px !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+</style></head><body class="is-2-column"><div class="navbar-mirror"></div><div class="body-bg-container"><div class="bg1"></div><div class="bg2"></div></div><nav class="navbar navbar-main global-blur"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/home/">Meow!!</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/home/">主页</a><a class="navbar-item" href="/home/archives">归档</a><a class="navbar-item" href="/home/categories">分类</a><a class="navbar-item" href="/home/tags">标签</a><a class="navbar-item" href="/home/about">关于我</a><a class="navbar-item" href="/home/cat-images">猫照片</a><a class="navbar-item" href="/home/tags/gallery">相册</a><a class="navbar-item" href="/home/qqpet">宠物</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time datetime="2019-09-11T13:15:36.000Z" title="9/11/2019, 9:15:36 PM">2019-09-11</time>发表</span><span class="level-item"><time datetime="2026-10-19T14:21:52.142Z" title="10/19/2026, 10:21:52 PM">2026-10-19</time>更新</span><span class="level-item"><a class="link-muted" href="/home/categories/CSharp/">CSharp</a></span><span class="level-item">7 分钟读完 (大约1050个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">HelloCS-9</h1><div class="content"><h1 id="C-中的数据结构"><a href="#C-中的数据结构" class="headerlink" title="C#中的数据结构"></a>C#中的数据结构</h1><p>C#提供了以下几种数据结构：Array、ArraList、List<t>、Queue<t>、Stack<t>、Dictionart&lt;K,T&gt;、LinkLedList<t></t></t></t></t></p>
+<h2 id="Array"><a href="#Array" class="headerlink" title="Array"></a>Array</h2><h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><ol>
+<li>数组中数据存储在连续的内存上。</li>
+<li>存储的数据类型相同。</li>
+<li>通过下标可直接访问。</li>
+</ol>
+<p>声明一个属数组时，将在堆中分配一段连续的内存来储存数量为n的数据。存储的数据为值类型时，在分配的内存中会有n个未装箱的值类型被创建；存储的数据为引用类型时，在分配的内存中会有n个引用类型的索引被创建。</p>
+<h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><p>数组在内存上是连续的存储，因此它的索引速度很快，访问其中的一个元素的时间是恒定的，与其的元素数量无关，数组中赋值与修改的元素很简单。</p>
+<h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><ol>
+<li>数组是连续存储，在其俩个元素中插入一个新的元素变得不方便</li>
+<li>在声明数组时，必须制定其长度，就会产生当我们声明的长度过长时浪费内存，当声明的长度过短时，会有溢出的风险。这种随机定义数组长度的不稳定性，严重影响了使用Array的使用频率，针对这种缺点，由此引出ArraList。</li>
+</ol>
+<h2 id="ArrayList"><a href="#ArrayList" class="headerlink" title="ArrayList"></a>ArrayList</h2><p><code>using System.Collections</code></p>
+<h3 id="优点："><a href="#优点：" class="headerlink" title="优点："></a>优点：</h3><ol>
+<li>使用中不用申明其长度，ArrayList是根据其存储的元素长度来动态变化的。</li>
+<li>ArrayList可以存储不同类型的元素，ArrayList中所有存储的元素都会当做Object来处理，所以能存储不同的元素。</li>
+</ol>
+<h3 id="缺点："><a href="#缺点：" class="headerlink" title="缺点："></a>缺点：</h3><ol>
+<li>发生装箱和拆箱：由于ArrayList中所有的存储的元素都被当做Object类型来处理，值类型在存储中会转换为引用类型（装箱），读取过程中会再转换为值类型（拆箱），装箱时会生成新的引用类型，有时间消耗，影响效率。</li>
+<li>ArrayList存储类型是不安全的（原因会在深入了解中解释）。因此在实际操作中考虑到安全和效率ArrayList也是几乎不怎么用，下面综合上面的优点、用的最多的List<t>将会登场。</t></li>
+</ol>
+<h2 id="List"><a href="#List" class="headerlink" title="List"></a>List<t></t></h2><ol>
+<li><code>using System.Collections.Generic;</code></li>
+<li>为了解决ArrayList不安全类型和装箱和拆箱的缺点，出现了集合泛型。List<t>内部是通过Array来实现的（会在List<t>内部构造介绍）。</t></t></li>
+</ol>
+<h3 id="优点：-1"><a href="#优点：-1" class="headerlink" title="优点："></a>优点：</h3><ol>
+<li>保证了存储元素的类型的安全</li>
+<li>取消了装箱和拆箱，同时也融合了Array的快速访问和ArrayList长度的灵活的优点。</li>
+</ol>
+<h2 id="Queue"><a href="#Queue" class="headerlink" title="Queue"></a>Queue<t></t></h2><ol>
+<li><code>using System.Collections.Generic;</code></li>
+<li>这种数据结构中，最先插入的元素是最先被删除（先进先出FIFO —firist in first out的线性表）通常使用Enqueue和Dequeue这俩个方法实现存取。</li>
+</ol>
+<h2 id="Stack"><a href="#Stack" class="headerlink" title="Stack"></a>Stack<t></t></h2><ol>
+<li><code>using System.Collections.Generic;</code></li>
+<li>这种数据结构中，最先插入的元素是最先被删除（先进后出LIFO —late in first out的线性表）通常使用pop和push这俩个方法实现存取</li>
+</ol>
+<h2 id="Dictionart"><a href="#Dictionart" class="headerlink" title="Dictionart<K,T>"></a>Dictionart&lt;K,T&gt;</h2><p><code>using System.Collections.Generic;</code></p>
+<p>Dictionary&lt;K,T&gt;在操作中能快速实现功能，是因为通过更多内存的开销的来满足。在创建字典时，我们可以传入一个容量值，但实际的容量并非该值，字典中而是使用不小于该值的最小质数作为它的实际容量，最小是3。（哈希冲突再说）当有了实际容量，字典并非实现索引，而是通过创建额外的2个数组的来实现间接索引，即int[] buckets和Entry[] entries两个数组（即buckets中保存的其实是entries数组的下标）。我们新建了一个空的字典，那么伴随而来的是2个长度为3的数组。</p>
+<blockquote>
+<p>所以当处理的数据不多时，还是慎重使用字典为好。</p>
+</blockquote>
+</div><div class="article-licensing box global-blur"><div class="licensing-title"><p>HelloCS-9</p><p><a href="https://jingtianer.github.io/home/2019/09/11/CSharp/HelloCS9/">https://jingtianer.github.io/home/2019/09/11/CSharp/HelloCS9/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>Meow Meow Liu</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2019-09-11</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2026-10-19</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/home/tags/CSharp/">CSharp</a><a class="link-muted mr-2" rel="tag" href="/home/tags/C/">C#</a></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/home/2019/09/11/CSharp/HelloCS10/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">HelloCS-10</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/home/2019/09/11/CSharp/HelloCSharp3/"><span class="level-item">HelloCS-3</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card" id="comments"><div class="card-content"><h3 class="title is-5">评论</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+            id: "350bb7fa2f1bd8291a10d82160cd571d",
+            repo: "blog_comment",
+            owner: "jingtianer",
+            clientID: "f0b13fe8021fcd2efe50",
+            clientSecret: "35207c14b34e77c48a3aeee1e94c9da169ffe0c2",
+            admin: ["jingtianer"],
+            createIssueManually: false,
+            distractionFreeMode: false,
+            perPage: 20,
+            pagerDirection: "last",
+            
+            
+            enableHotKey: true,
+            language: "zh-CN",
+        })
+        gitalk.render('comment-container')</script></div></div></div><!--!--><div class="column column-right is-4-tablet is-4-desktop is-4-widescreen  order-3 is-sticky"><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#C-中的数据结构"><span class="level-left"><span class="level-item">1</span><span class="level-item">C#中的数据结构</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#Array"><span class="level-left"><span class="level-item">1.1</span><span class="level-item">Array</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#特点"><span class="level-left"><span class="level-item">1.1.1</span><span class="level-item">特点</span></span></a></li><li><a class="level is-mobile" href="#优点"><span class="level-left"><span class="level-item">1.1.2</span><span class="level-item">优点</span></span></a></li><li><a class="level is-mobile" href="#缺点"><span class="level-left"><span class="level-item">1.1.3</span><span class="level-item">缺点</span></span></a></li></ul></li><li><a class="level is-mobile" href="#ArrayList"><span class="level-left"><span class="level-item">1.2</span><span class="level-item">ArrayList</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#优点："><span class="level-left"><span class="level-item">1.2.1</span><span class="level-item">优点：</span></span></a></li><li><a class="level is-mobile" href="#缺点："><span class="level-left"><span class="level-item">1.2.2</span><span class="level-item">缺点：</span></span></a></li></ul></li><li><a class="level is-mobile" href="#List"><span class="level-left"><span class="level-item">1.3</span><span class="level-item">List</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#优点：-1"><span class="level-left"><span class="level-item">1.3.1</span><span class="level-item">优点：</span></span></a></li></ul></li><li><a class="level is-mobile" href="#Queue"><span class="level-left"><span class="level-item">1.4</span><span class="level-item">Queue</span></span></a></li><li><a class="level is-mobile" href="#Stack"><span class="level-left"><span class="level-item">1.5</span><span class="level-item">Stack</span></span></a></li><li><a class="level is-mobile" href="#Dictionart"><span class="level-left"><span class="level-item">1.6</span><span class="level-item">Dictionart&lt;K,T&gt;</span></span></a></li></ul></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/home/js/toc.js" defer=""></script></div></div></div></div></section><footer class="footer card"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/home/">Meow!!</a><p class="is-size-7"><span>© 2026 Meow Meow Liu</span>&nbsp;&nbsp;Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>&nbsp;&amp;&nbsp;<a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer=""></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script data-pjax="" src="/home/js/column.js"></script><script src="/home/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;" class="global-blur"><i class="fas fa-chevron-up"></i></a><script data-pjax="" src="/home/js/back_to_top.js" defer=""></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer=""></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer=""></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer=""></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/javascript" id="MathJax-script" async="">MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      },
+      chtml: {
+        matchFontHeight: false
+      }
+    };</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script><!--!--><!--!--><!--!--><script data-pjax="" src="/home/js/main.js" defer=""></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script data-pjax="" src="/home/js/insight.js" defer=""></script><script data-pjax="">document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/home/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script><script src="/home/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/home/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":200,"height":400},"mobile":{"show":true}});</script><link rel="stylesheet" type="text/css" href="/home/css/bgMusicPlayer.css"><link rel="stylesheet" type="text/css" href="/home/css/textPopup.css"><script type="module" src="/home/js/module/mermaidInitializer.js"></script><script type="text/javascript" src="/home/js/script/bgMusicPlayer.js"></script><script type="text/javascript" src="/home/js/script/clickClipBoard.js"></script><script type="text/javascript" src="/home/js/script/fairyDustCursor.js"></script><script type="text/javascript" src="/home/js/script/textPopup.js"></script><script type="text/javascript" src="/home/js/script/webMiscTools.js"></script><script>
+const navEl = document.querySelector('.navbar');
+function updateNavVar(){
+  document.documentElement.style.setProperty('--nav-height', navEl.offsetHeight + 'px')
+}
+const ro = new ResizeObserver(updateNavVar);
+ro.observe(navEl);
+updateNavVar();
+</script></body></html>

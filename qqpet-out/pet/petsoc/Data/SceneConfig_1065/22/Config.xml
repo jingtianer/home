@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Config>
+  <SceneModel id="22" name="风语广场" w="2500" h="1584">
+    <Cover path=""/>
+    <Background rows="9" cols="10" cursorID="5">
+      <Path value="Data/res/scene/22/bg_V110/"/>
+      <Item width="250" height="176"/>
+    </Background>
+    <GridScene rows="10" cols="10">
+      <Viewport rows="6" cols="6"/>
+      <GridSize width="250" height="176"/>
+    </GridScene>
+    <Navigator cursorID="6">
+      <Path value="Data/res/scene/22/nav_V110.png"/>
+    </Navigator>
+    <Script type="swf">
+      <Path value=""/>
+    </Script>
+    <EntityModelLib>
+      <EntityModel mid="1139" mname="种树-树苗.png" w="85" h="62">
+        <View type=".png" path="Data/res/scene/22/20091123180330_V2.png"/>
+        <Projection>
+          <CenterPoint x="16" y="38"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="1139" mid="0" name="种树-树苗.png" validDistancev="0" x="301" y="338"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="1113" mname="07.png" w="96" h="274">
+        <View type=".png" path="Data/res/scene/22/20111122143722_V2.png"/>
+        <Projection>
+          <CenterPoint x="75" y="276"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="1113" mid="" name="07.png" validDistancev="0" x="2391" y="537"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="181" mname="011.png" w="36" h="54">
+        <View type=".png" path="Data/res/scene/22/20111122150649_V2.png"/>
+        <Projection>
+          <CenterPoint x="43" y="71"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="181" mid="" name="011.png" validDistancev="0" x="2149" y="862"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="1176" mname="22.png" w="132" h="134">
+        <View type=".png" path="Data/res/scene/22/20110218144324_V2.png"/>
+        <Projection>
+          <CenterPoint x="88" y="95"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="1176" mid="0" name="22.png" validDistancev="0" x="1253" y="866"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="180" mname="21.png" w="135" h="126">
+        <View type=".png" path="Data/res/scene/22/20110218144252_V2.png"/>
+        <Projection>
+          <CenterPoint x="65" y="105"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="180" mid="0" name="21.png" validDistancev="0" x="1118" y="865"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="1178" mname="24.png" w="118" h="69">
+        <View type=".png" path="Data/res/scene/22/20110218145601_V2.png"/>
+        <Projection>
+          <CenterPoint x="86" y="52"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="1178" mid="0" name="24.png" validDistancev="0" x="1364" y="942"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="184" mname="f-11.png" w="125" h="89">
+        <View type=".png" path="Data/res/scene/22/20110112140501_V2.png"/>
+        <Projection>
+          <CenterPoint x="2" y="86"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="184" mid="0" name="f-11.png" validDistancev="0" x="884" y="920"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="194" mname="f-14.png" w="245" h="122">
+        <View type=".png" path="Data/res/scene/22/20110112141024_V2.png"/>
+        <Projection>
+          <CenterPoint x="5" y="88"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="194" mid="0" name="f-14.png" validDistancev="0" x="863" y="1059"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="1101" mname="f-15.png" w="255" h="118">
+        <View type=".png" path="Data/res/scene/22/20110112141042_V2.png"/>
+        <Projection>
+          <CenterPoint x="244" y="87"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="1101" mid="0" name="f-15.png" validDistancev="0" x="1249" y="1060"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="1111" mname="010.png" w="31" h="63">
+        <View type=".png" path="Data/res/scene/22/20111122150519_V2.png"/>
+        <Projection>
+          <CenterPoint x="21" y="70"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="1111" mid="" name="010.png" validDistancev="0" x="510" y="1089"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="1106" mname="09.png" w="32" h="59">
+        <View type=".png" path="Data/res/scene/22/20111122150431_V2.png"/>
+        <Projection>
+          <CenterPoint x="12" y="65"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="1106" mid="" name="09.png" validDistancev="0" x="356" y="1089"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="178" mname="08.png" w="138" h="308">
+        <View type=".png" path="Data/res/scene/22/20111122151135_V2.png"/>
+        <Projection>
+          <CenterPoint x="92" y="306"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="178" mid="" name="08.png" validDistancev="0" x="2009" y="903"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="174" mname="06.png" w="115" h="213">
+        <View type=".png" path="Data/res/scene/22/20111122143552_V2.png"/>
+        <Projection>
+          <CenterPoint x="96" y="235"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="174" mid="" name="06.png" validDistancev="0" x="2387" y="1196"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="1119" mname="04.png" w="115" h="213">
+        <View type=".png" path="Data/res/scene/22/20111122143552_V2.png"/>
+        <Projection>
+          <CenterPoint x="50" y="200"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="1119" mid="" name="04.png" validDistancev="0" x="1583" y="1463"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="1117" mname="03.png" w="190" h="201">
+        <View type=".png" path="Data/res/scene/22/20111122143531_V2.png"/>
+        <Projection>
+          <CenterPoint x="88" y="181"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="1117" mid="" name="03.png" validDistancev="0" x="849" y="1574"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="2012" mname="014.png" w="109" h="274">
+        <View type=".png" path="Data/res/scene/22/20111122143352_V2.png"/>
+        <Projection>
+          <CenterPoint x="41" y="148"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="2012" mid="" name="014.png" validDistancev="0" x="-11" y="1405"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="2015" mname="02.png" w="96" h="164">
+        <View type=".png" path="Data/res/scene/22/20111122143447_V2.png"/>
+        <Projection>
+          <CenterPoint x="60" y="149"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="2015" mid="" name="02.png" validDistancev="0" x="510" y="1469"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="2016" mname="05.png" w="115" h="213">
+        <View type=".png" path="Data/res/scene/22/20111122143552_V2.png"/>
+        <Projection>
+          <CenterPoint x="79" y="153"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="2016" mid="" name="05.png" validDistancev="0" x="1857" y="1420"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="2039" mname="09.png" w="32" h="59">
+        <View type=".png" path="Data/res/scene/22/20111122150431_V2.png"/>
+        <Projection>
+          <CenterPoint x="12" y="65"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="2039" mid="" name="09.png" validDistancev="0" x="1102" y="558"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="2040" mname="010.png" w="31" h="63">
+        <View type=".png" path="Data/res/scene/22/20111122150519_V2.png"/>
+        <Projection>
+          <CenterPoint x="21" y="70"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="2040" mid="" name="010.png" validDistancev="0" x="1255" y="558"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+    </EntityModelLib>
+    <Map>
+      <NavMap w="0" h="0" path="Data/res/scene/22/nav_V110.png"/>
+      <SmallMap w="0" h="0" path="Data/res/scene/22/minimap_V110.png"/>
+      <LargeMap w="0" h="0" path="Data/res/scene/22/largemp_V110.png"/>
+    </Map>
+    <Layers>
+      <Ground/>
+      <Space>
+        <Item name="种树-树苗.png" mid="1139" cursorID="3" x="301" y="338"/>
+        <Item name="07.png" mid="1113" cursorID="3" x="2391" y="537"/>
+        <Item name="011.png" mid="181" cursorID="3" x="2149" y="862"/>
+        <Item name="22.png" mid="1176" cursorID="3" x="1253" y="866"/>
+        <Item name="21.png" mid="180" cursorID="3" x="1118" y="865"/>
+        <Item name="24.png" mid="1178" cursorID="3" x="1364" y="942"/>
+        <Item name="f-11.png" mid="184" cursorID="3" x="884" y="920"/>
+        <Item name="f-14.png" mid="194" cursorID="3" x="863" y="1059"/>
+        <Item name="f-15.png" mid="1101" cursorID="3" x="1249" y="1060"/>
+        <Item name="010.png" mid="1111" cursorID="3" x="510" y="1089"/>
+        <Item name="09.png" mid="1106" cursorID="3" x="356" y="1089"/>
+        <Item name="08.png" mid="178" cursorID="3" x="2009" y="903"/>
+        <Item name="06.png" mid="174" cursorID="3" x="2387" y="1196"/>
+        <Item name="04.png" mid="1119" cursorID="3" x="1583" y="1463"/>
+        <Item name="03.png" mid="1117" cursorID="3" x="849" y="1574"/>
+        <Item name="014.png" mid="2012" cursorID="1" x="-11" y="1405"/>
+        <Item name="02.png" mid="2015" cursorID="1" x="510" y="1469"/>
+        <Item name="05.png" mid="2016" cursorID="1" x="1857" y="1420"/>
+        <Item name="09.png" mid="2039" cursorID="3" x="1102" y="558"/>
+        <Item name="010.png" mid="2040" cursorID="3" x="1255" y="558"/>
+      </Space>
+      <Sky/>
+    </Layers>
+  </SceneModel>
+</Config>

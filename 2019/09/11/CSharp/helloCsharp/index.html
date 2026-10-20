@@ -1,0 +1,286 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>HelloCS-1 - Jingtianer</title><link rel="manifest" href="/home/manifest.json"><meta name="application-name" content="Jingtianer"><meta name="msapplication-TileImage" content="images/avatar.jpg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Jingtianer"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081using System;namespace HelloCSharp&amp;#123;    cla"><meta property="og:type" content="blog"><meta property="og:title" content="HelloCS-1"><meta property="og:url" content="https://jingtianer.github.io/home/2019/09/11/CSharp/helloCsharp/"><meta property="og:site_name" content="Jingtianer"><meta property="og:description" content="123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081using System;namespace HelloCSharp&amp;#123;    cla"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://jingtianer.github.io/home/img/og_image.png"><meta property="article:published_time" content="2019-09-11T13:15:36.000Z"><meta property="article:modified_time" content="2026-10-19T14:21:52.143Z"><meta property="article:author" content="Meow Meow Liu"><meta property="article:tag" content="CSharp"><meta property="article:tag" content="C#"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://jingtianer.github.io/home/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://jingtianer.github.io/home/2019/09/11/CSharp/helloCsharp/"},"headline":"HelloCS-1","image":["https://jingtianer.github.io/home/img/og_image.png"],"datePublished":"2019-09-11T13:15:36.000Z","dateModified":"2026-10-19T14:21:52.143Z","author":{"@type":"Person","name":"Meow Meow Liu"},"publisher":{"@type":"Organization","name":"Jingtianer","logo":{"@type":"ImageObject","url":{"text":"Meow!!"}}},"description":"123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081using System;namespace HelloCSharp&#123;    cla"}</script><link rel="canonical" href="https://jingtianer.github.io/home/2019/09/11/CSharp/helloCsharp/"><link rel="alternate" href="/home/atom.xml" title="Jingtianer" type="application/atom+xml"><link rel="icon" href="/home/images/avatar.jpg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link data-pjax="" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.7.0/styles/vs.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link data-pjax="" rel="stylesheet" href="/home/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"><style>
+.card{
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important; /* Safari兼容 */
+
+  /* 半透底色，必不可少 */
+  background: rgba(255,255,255, 0.35) !important;
+
+  /* 可选：细微边框提升质感 */
+  border: 1px solid rgba(255,255,255,0.25) !important;
+  border-radius: 12px !important;
+  color: #000 !important;
+}
+.global-blur{
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important; /* Safari兼容 */
+
+  /* 半透底色，必不可少 */
+  background: rgba(255,255,255, 0.35) !important;
+
+  /* 可选：细微边框提升质感 */
+  border: 1px solid rgba(255,255,255,0.25) !important;
+  border-radius: 12px !important;
+  color: #000 !important;
+}
+.gt-header-textarea{
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important; /* Safari兼容 */
+
+  /* 半透底色，必不可少 */
+  background: rgba(255,255,255, 0.35) !important;
+
+  /* 可选：细微边框提升质感 */
+  border: 1px solid rgba(255,255,255,0.25) !important;
+  border-radius: 12px !important;
+}
+.menu-list a.is-active{
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important; /* Safari兼容 */
+
+  /* 半透底色，必不可少 */
+  background: rgba(255,255,255, 0.35) !important;
+
+  /* 可选：细微边框提升质感 */
+  border: 1px solid rgba(255,255,255,0.25) !important;
+  border-radius: 12px !important;
+}
+.menu-list a:hover{
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important; /* Safari兼容 */
+
+  /* 半透底色，必不可少 */
+  background: rgba(255,255,255, 0.35) !important;
+  background-color: rgba(255,255,255, 0.35) !important;
+
+  /* 可选：细微边框提升质感 */
+  border: 1px solid rgba(255,255,255,0.25) !important;
+  border-radius: 12px !important;
+}
+
+.navbar {
+--nav-height: 0px;
+width: calc(100% - 2em) !important;
+margin: 1em !important;
+position: fixed !important;
+backdrop-filter: blur(8px) !important;
+-webkit-backdrop-filter: blur(12px) !important; /* Safari兼容 */
+
+/* 半透底色，必不可少 */
+background: rgba(255,255,255, 0.6) !important;
+
+/* 可选：细微边框提升质感 */
+border: 1px solid rgba(255,255,255,0.25) !important;
+border-radius: 12px !important;
+color: #000 !important;
+overflow: clip !important;
+}
+.navbar-mirror{
+width: calc(100% - 2em) !important;
+margin: 1em !important;
+height: var(--nav-height);
+}
+.hljs {
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important; /* Safari兼容 */
+
+  /* 半透底色，必不可少 */
+  background: rgba(255,255,255, 0.35) !important;
+}
+.button{
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important; /* Safari兼容 */
+
+  /* 半透底色，必不可少 */
+  // opacity: 0.8;
+  margin-left: 0.1em !important;
+  margin-right: 0.1em !important;
+  /* 可选：细微边框提升质感 */
+  border: 1px solid rgba(255,255,255,0.25) !important;
+  border-radius: 12px !important;
+}
+.body-bg-container {
+    position: fixed;
+    width: 100vw;
+    height: 100dvh;
+    z-index: -100;
+}
+.body-bg-container .bg1 {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, #CAEFD7ee, #F5BFD7ee, #ABC9E9ee) !important;
+  z-index: -99;
+}
+.body-bg-container .bg2 {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(#ffffff00, #ffffffa0) !important;
+  z-index: -98;
+}
+.navbar-menu {
+  background: transparent !important;
+}
+.navbar-link.is-active:hover {
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important; /* Safari兼容 */
+
+  /* 半透底色，必不可少 */
+  background: rgba(255,255,255, 0.35) !important;
+  background-color: transparent !important;
+  margin-left: 0.1em !important;
+  margin-right: 0.1em !important;
+  /* 可选：细微边框提升质感 */
+  border: 1px solid rgba(255,255,255,0.25) !important;
+  border-radius: 12px !important;
+  color: #000 !important;
+}
+.content blockquote{
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important; /* Safari兼容 */
+
+  /* 半透底色，必不可少 */
+  background: rgba(255,255,255, 0.35) !important;
+}
+.footer {
+  margin: 1em !important;
+}
+.widget .tags .tag:first-child {
+  color: #000 !important;
+  margin-right: 3px;
+}
+.pagination-link.is-current {
+  color: #000 !important;
+  font-weight: 600 !important;
+}
+.timeline .media:last-child:after{
+  background: transparent !important;
+}
+</style><style>
+.global-lazy-loading-img{ 
+    width: 1.28em; 
+    height: 1.28em;
+    font-size: 100%;
+}
+.lazy-galleria{ 
+    width: 100%; 
+    height: calc(100dvh - var(--nav-height) - 2em); 
+}
+.galleria-stage {
+  top: 0px !important;
+  bottom: 0px !important;
+  left: 0px !important;
+  right: 0px !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+</style></head><body class="is-2-column"><div class="navbar-mirror"></div><div class="body-bg-container"><div class="bg1"></div><div class="bg2"></div></div><nav class="navbar navbar-main global-blur"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/home/">Meow!!</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/home/">主页</a><a class="navbar-item" href="/home/archives">归档</a><a class="navbar-item" href="/home/categories">分类</a><a class="navbar-item" href="/home/tags">标签</a><a class="navbar-item" href="/home/about">关于我</a><a class="navbar-item" href="/home/cat-images">猫照片</a><a class="navbar-item" href="/home/tags/gallery">相册</a><a class="navbar-item" href="/home/qqpet">宠物</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time datetime="2019-09-11T13:15:36.000Z" title="9/11/2019, 9:15:36 PM">2019-09-11</time>发表</span><span class="level-item"><time datetime="2026-10-19T14:21:52.143Z" title="10/19/2026, 10:21:52 PM">2026-10-19</time>更新</span><span class="level-item"><a class="link-muted" href="/home/categories/CSharp/">CSharp</a></span><span class="level-item">4 分钟读完 (大约611个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">HelloCS-1</h1><div class="content"><figure class="highlight csharp"><table class="hljs"><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">namespace</span> <span class="title">HelloCSharp</span></span><br><span class="line">{</span><br><span class="line">    <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">    {</span><br><span class="line">        <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] <span class="keyword">args</span></span>)</span></span><br><span class="line">        {</span><br><span class="line">            Console.WriteLine(<span class="number">1f</span>/<span class="number">0</span>);</span><br><span class="line">            Console.WriteLine(<span class="number">1d</span>/<span class="number">0</span>);</span><br><span class="line">            <span class="comment">//以上两个结果为∞</span></span><br><span class="line">            <span class="comment">//Console.WriteLine(1m / 0);</span></span><br><span class="line">            <span class="comment">//decimal类型不能除以0</span></span><br><span class="line">            File x = File.Read | File.Write;</span><br><span class="line">            Console.WriteLine(x);</span><br><span class="line">            <span class="comment">/*</span></span><br><span class="line"><span class="comment">             * 1.指针类型</span></span><br><span class="line"><span class="comment">             * 2.值类型——值类型的基础是ValueType，而ValueType本身是类类型</span></span><br><span class="line"><span class="comment">             *         ——分配在堆栈上</span></span><br><span class="line"><span class="comment">             * * 1.枚举类型——基础类型必须是除char以外的其他整数类型</span></span><br><span class="line"><span class="comment">             * * 2.结构类型</span></span><br><span class="line"><span class="comment">             * * * 1.自定义结构类型</span></span><br><span class="line"><span class="comment">             * * * 2.布尔类型</span></span><br><span class="line"><span class="comment">             * * * 3.数值类型</span></span><br><span class="line"><span class="comment">             * * * * 1.decimal</span></span><br><span class="line"><span class="comment">             * * * * 2.浮点类型</span></span><br><span class="line"><span class="comment">             * * * * * 1.float</span></span><br><span class="line"><span class="comment">             * * * * * 2.double</span></span><br><span class="line"><span class="comment">             * * * * 3.整数类型</span></span><br><span class="line"><span class="comment">             * * * * * 1.sbyte  ——有符号——8位</span></span><br><span class="line"><span class="comment">             * * * * * 2.byte   ——无符号——8位</span></span><br><span class="line"><span class="comment">             * * * * * 3.char   ——无符号——16位</span></span><br><span class="line"><span class="comment">             * * * * * 4.short  ——有符号——16位</span></span><br><span class="line"><span class="comment">             * * * * * 5.ushort ——无符号——16位</span></span><br><span class="line"><span class="comment">             * * * * * 6.int    ——有符号——32位</span></span><br><span class="line"><span class="comment">             * * * * * 7.uint   ——无符号——32位</span></span><br><span class="line"><span class="comment">             * * * * * 8.long   ——有符号——64位</span></span><br><span class="line"><span class="comment">             * * * * * 9.ulong  ——无符号——64位</span></span><br><span class="line"><span class="comment">             * 3.引用类型——分配在托管堆上</span></span><br><span class="line"><span class="comment">             * * 1.object</span></span><br><span class="line"><span class="comment">             * * 2.string</span></span><br><span class="line"><span class="comment">             * * 3.类</span></span><br><span class="line"><span class="comment">             * * 4.接口</span></span><br><span class="line"><span class="comment">             * * 5.委托——相当于函数指针</span></span><br><span class="line"><span class="comment">             * * 6.数组</span></span><br><span class="line"><span class="comment">             */</span></span><br><span class="line">            <span class="comment">/*</span></span><br><span class="line"><span class="comment">             * 装箱 值类型隐士转换为引用类型</span></span><br><span class="line"><span class="comment">             *     常见的装箱</span></span><br><span class="line"><span class="comment">             *         任何值类型到object类型</span></span><br><span class="line"><span class="comment">             *         任何值类型到ValueType类型</span></span><br><span class="line"><span class="comment">             *         任何值类型到值类型实现的任何接口类型</span></span><br><span class="line"><span class="comment">             *         任何枚举类型到System.Enum类型</span></span><br><span class="line"><span class="comment">             * 拆箱 引用类型隐式转换为值类型</span></span><br><span class="line"><span class="comment">             *     常见的拆箱</span></span><br><span class="line"><span class="comment">             *         object到任何值类型</span></span><br><span class="line"><span class="comment">             *         ValueType到任何值类型</span></span><br><span class="line"><span class="comment">             *         接口类型到任何实现了该接口类型的值类型</span></span><br><span class="line"><span class="comment">             *         System.Enum到任何枚举类型</span></span><br><span class="line"><span class="comment">             */</span></span><br><span class="line">            <span class="comment">/*</span></span><br><span class="line"><span class="comment">             * 静态变量</span></span><br><span class="line"><span class="comment">             * 实例变量   —— 在使用时才会进行内存分配的变量，比如类、结构体中定义的变量</span></span><br><span class="line"><span class="comment">             * 局部变量</span></span><br><span class="line"><span class="comment">             * 值参数     ——函数的参数列表中的参数</span></span><br><span class="line"><span class="comment">             * 引用参数   ——用ref修饰符声明的参数，在调用含有引用参数的函数时，也要在ref参数之前加ref修饰符</span></span><br><span class="line"><span class="comment">             * 输出参数   ——用out修饰符声明的参数，在调用含有输出参数的函数时，也要在out参数之前加out修饰符</span></span><br><span class="line"><span class="comment">             *  区别</span></span><br><span class="line"><span class="comment">             *      1、使用ref型参数时，传入的参数必须先被初始化。对out而言，必须在方法中对其完成初始化。</span></span><br><span class="line"><span class="comment">             *      2、out适合用在需要retrun多个返回值的地方，而ref则用在需要被调用的方法修改调用者的引用的时候。</span></span><br><span class="line"><span class="comment">             */</span></span><br><span class="line">             </span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"><span class="built_in">enum</span> File</span><br><span class="line">{</span><br><span class="line">    None,</span><br><span class="line">    Read,</span><br><span class="line">    Write,</span><br><span class="line">    Delete</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure></div><div class="article-licensing box global-blur"><div class="licensing-title"><p>HelloCS-1</p><p><a href="https://jingtianer.github.io/home/2019/09/11/CSharp/helloCsharp/">https://jingtianer.github.io/home/2019/09/11/CSharp/helloCsharp/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>Meow Meow Liu</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2019-09-11</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2026-10-19</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/home/tags/CSharp/">CSharp</a><a class="link-muted mr-2" rel="tag" href="/home/tags/C/">C#</a></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/home/2019/09/11/CSharp/HelloCSharp8/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">HelloCS-8</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/home/2019/09/11/CSharp/hellpCsharp2/"><span class="level-item">HelloCS-2</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card" id="comments"><div class="card-content"><h3 class="title is-5">评论</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+            id: "72eb7297eff7577310a09b887900a05f",
+            repo: "blog_comment",
+            owner: "jingtianer",
+            clientID: "f0b13fe8021fcd2efe50",
+            clientSecret: "35207c14b34e77c48a3aeee1e94c9da169ffe0c2",
+            admin: ["jingtianer"],
+            createIssueManually: false,
+            distractionFreeMode: false,
+            perPage: 20,
+            pagerDirection: "last",
+            
+            
+            enableHotKey: true,
+            language: "zh-CN",
+        })
+        gitalk.render('comment-container')</script></div></div></div><!--!--><div class="column column-right is-4-tablet is-4-desktop is-4-widescreen  order-3 is-sticky"><!--!--></div></div></div></section><footer class="footer card"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/home/">Meow!!</a><p class="is-size-7"><span>© 2026 Meow Meow Liu</span>&nbsp;&nbsp;Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>&nbsp;&amp;&nbsp;<a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer=""></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script data-pjax="" src="/home/js/column.js"></script><script src="/home/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;" class="global-blur"><i class="fas fa-chevron-up"></i></a><script data-pjax="" src="/home/js/back_to_top.js" defer=""></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer=""></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer=""></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer=""></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/javascript" id="MathJax-script" async="">MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      },
+      chtml: {
+        matchFontHeight: false
+      }
+    };</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script><!--!--><!--!--><!--!--><script data-pjax="" src="/home/js/main.js" defer=""></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script data-pjax="" src="/home/js/insight.js" defer=""></script><script data-pjax="">document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/home/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script><script src="/home/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/home/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":200,"height":400},"mobile":{"show":true}});</script><link rel="stylesheet" type="text/css" href="/home/css/bgMusicPlayer.css"><link rel="stylesheet" type="text/css" href="/home/css/textPopup.css"><script type="module" src="/home/js/module/mermaidInitializer.js"></script><script type="text/javascript" src="/home/js/script/bgMusicPlayer.js"></script><script type="text/javascript" src="/home/js/script/clickClipBoard.js"></script><script type="text/javascript" src="/home/js/script/fairyDustCursor.js"></script><script type="text/javascript" src="/home/js/script/textPopup.js"></script><script type="text/javascript" src="/home/js/script/webMiscTools.js"></script><script>
+const navEl = document.querySelector('.navbar');
+function updateNavVar(){
+  document.documentElement.style.setProperty('--nav-height', navEl.offsetHeight + 'px')
+}
+const ro = new ResizeObserver(updateNavVar);
+ro.observe(navEl);
+updateNavVar();
+</script></body></html>

@@ -1,0 +1,783 @@
+<?xml version="1.0" encoding="utf-8"?><Config>
+  <SceneModel id="8" name="超级游乐场" w="3000" h="1990">
+    <Cover path=""/>
+    <Background rows="10" cols="10" cursorID="5">
+      <Path value="Data/res/scene/8/bg_V3/"/>
+      <Item width="300" height="199"/>
+    </Background>
+    <GridScene rows="10" cols="10">
+      <Viewport rows="5" cols="6"/>
+      <GridSize width="300" height="199"/>
+    </GridScene>
+    <Navigator cursorID="6">
+      <Path value="Data/res/scene/8/nav_V3.png"/>
+    </Navigator>
+    <EntityModelLib>
+      <EntityModel mid="180" mname="未标题-16.png" w="155" h="226">
+        <View type=".png" path="Data/res/scene/8/20090625094930_V2.png"/>
+        <Projection>
+          <CenterPoint x="73" y="209"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="180" mid="0" name="未标题-16.png" validDistancev="0" x="1416" y="84"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="168" mname="未标题-14.png" w="291" h="192">
+        <View type=".png" path="Data/res/scene/8/20090625094409_V2.png"/>
+        <Projection>
+          <CenterPoint x="186" y="23"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="168" mid="0" name="未标题-14.png" validDistancev="0" x="993" y="334"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="166" mname="未标题-14.png" w="291" h="192">
+        <View type=".png" path="Data/res/scene/8/20090625094409_V2.png"/>
+        <Projection>
+          <CenterPoint x="274" y="124"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="166" mid="0" name="未标题-14.png" validDistancev="0" x="1712" y="282"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="144" mname="未标题-10.png" w="40" h="54">
+        <View type=".png" path="Data/res/scene/8/0_V2.png"/>
+        <Projection>
+          <CenterPoint x="19" y="43"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="144" mid="0" name="未标题-10.png" validDistancev="0" x="1330" y="502"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="138" mname="未标题-10.png" w="40" h="54">
+        <View type=".png" path="Data/res/scene/8/0_V2.png"/>
+        <Projection>
+          <CenterPoint x="20" y="41"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="138" mid="0" name="未标题-10.png" validDistancev="0" x="1526" y="536"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="142" mname="未标题-10.png" w="40" h="54">
+        <View type=".png" path="Data/res/scene/8/0_V2.png"/>
+        <Projection>
+          <CenterPoint x="18" y="44"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="142" mid="0" name="未标题-10.png" validDistancev="0" x="1192" y="545"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="123" mname="未标题-9.png" w="150" h="168">
+        <View type=".png" path="Data/res/scene/8/1_V2.png"/>
+        <Projection>
+          <CenterPoint x="36" y="137"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="123" mid="0" name="未标题-9.png" validDistancev="0" x="1325" y="487"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="139" mname="未标题-10.png" w="40" h="54">
+        <View type=".png" path="Data/res/scene/8/0_V2.png"/>
+        <Projection>
+          <CenterPoint x="23" y="44"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="139" mid="0" name="未标题-10.png" validDistancev="0" x="1782" y="606"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="140" mname="未标题-10.png" w="40" h="54">
+        <View type=".png" path="Data/res/scene/8/0_V2.png"/>
+        <Projection>
+          <CenterPoint x="19" y="41"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="140" mid="0" name="未标题-10.png" validDistancev="0" x="1059" y="612"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="137" mname="未标题-10.png" w="40" h="54">
+        <View type=".png" path="Data/res/scene/8/0_V2.png"/>
+        <Projection>
+          <CenterPoint x="21" y="42"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="137" mid="0" name="未标题-10.png" validDistancev="0" x="1505" y="617"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="178" mname="未标题-15.png" w="228" h="291">
+        <View type=".png" path="Data/res/scene/8/20090625094900_V2.png"/>
+        <Projection>
+          <CenterPoint x="130" y="264"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="178" mid="0" name="未标题-15.png" validDistancev="0" x="579" y="398"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="169" mname="未标题-119.png" w="53" h="93">
+        <View type=".png" path="Data/res/scene/8/20090629210232_V2.png"/>
+        <Projection>
+          <CenterPoint x="27" y="86"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="169" mid="0" name="未标题-119.png" validDistancev="0" x="1261" y="604"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="135" mname="未标题-10.png" w="40" h="54">
+        <View type=".png" path="Data/res/scene/8/0_V2.png"/>
+        <Projection>
+          <CenterPoint x="16" y="45"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="135" mid="0" name="未标题-10.png" validDistancev="0" x="1602" y="664"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="153" mname="未标题-10.png" w="40" h="54">
+        <View type=".png" path="Data/res/scene/8/0_V2.png"/>
+        <Projection>
+          <CenterPoint x="19" y="41"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="153" mid="0" name="未标题-10.png" validDistancev="0" x="1929" y="676"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="148" mname="未标题-10.png" w="40" h="54">
+        <View type=".png" path="Data/res/scene/8/0_V2.png"/>
+        <Projection>
+          <CenterPoint x="21" y="42"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="148" mid="0" name="未标题-10.png" validDistancev="0" x="920" y="678"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="111" mname="复件 未标题-21.png" w="400" h="274">
+        <View type=".png" path="Data/res/scene/8/20090629214321_V2.png"/>
+        <Projection>
+          <CenterPoint x="388" y="128"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="111" mid="0" name="复件 未标题-21.png" validDistancev="0" x="880" y="600"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="171" mname="未标题-11.png" w="79" h="128">
+        <View type=".png" path="Data/res/scene/8/4_V2.png"/>
+        <Projection>
+          <CenterPoint x="8" y="102"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="171" mid="0" name="未标题-11.png" validDistancev="0" x="1975" y="636"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="141" mname="未标题-10.png" w="40" h="54">
+        <View type=".png" path="Data/res/scene/8/0_V2.png"/>
+        <Projection>
+          <CenterPoint x="18" y="46"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="141" mid="0" name="未标题-10.png" validDistancev="0" x="2069" y="743"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="146" mname="未标题-10.png" w="40" h="54">
+        <View type=".png" path="Data/res/scene/8/0_V2.png"/>
+        <Projection>
+          <CenterPoint x="23" y="42"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="146" mid="0" name="未标题-10.png" validDistancev="0" x="790" y="749"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="170" mname="未标题-14.png" w="291" h="192">
+        <View type=".png" path="Data/res/scene/8/20090625094409_V2.png"/>
+        <Projection>
+          <CenterPoint x="270" y="96"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="170" mid="0" name="未标题-14.png" validDistancev="0" x="2314" y="705"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="167" mname="未标题-14.png" w="291" h="192">
+        <View type=".png" path="Data/res/scene/8/20090625094409_V2.png"/>
+        <Projection>
+          <CenterPoint x="273" y="114"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="167" mid="0" name="未标题-14.png" validDistancev="0" x="1685" y="707"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="125" mname="未标题-7.png" w="66" h="71">
+        <View type=".png" path="Data/res/scene/8/3_V2.png"/>
+        <Projection>
+          <CenterPoint x="23" y="64"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="125" mid="0" name="未标题-7.png" validDistancev="0" x="434" y="769"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="127" mname="未标题-10.png" w="40" h="54">
+        <View type=".png" path="Data/res/scene/8/0_V2.png"/>
+        <Projection>
+          <CenterPoint x="18" y="41"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="127" mid="0" name="未标题-10.png" validDistancev="0" x="511" y="837"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="182" mname="未标题-17.png" w="253" h="280">
+        <View type=".png" path="Data/res/scene/8/20090625095230_V2.png"/>
+        <Projection>
+          <CenterPoint x="107" y="220"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="182" mid="0" name="未标题-17.png" validDistancev="0" x="2669" y="658"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="129" mname="未标题-10.png" w="40" h="54">
+        <View type=".png" path="Data/res/scene/8/0_V2.png"/>
+        <Projection>
+          <CenterPoint x="17" y="42"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="129" mid="0" name="未标题-10.png" validDistancev="0" x="616" y="838"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="176" mname="未标题-10.png" w="40" h="54">
+        <View type=".png" path="Data/res/scene/8/0_V2.png"/>
+        <Projection>
+          <CenterPoint x="19" y="41"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="176" mid="0" name="未标题-10.png" validDistancev="0" x="2096" y="840"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="143" mname="未标题-10.png" w="40" h="54">
+        <View type=".png" path="Data/res/scene/8/0_V2.png"/>
+        <Projection>
+          <CenterPoint x="19" y="44"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="143" mid="0" name="未标题-10.png" validDistancev="0" x="2153" y="943"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="145" mname="未标题-10.png" w="40" h="54">
+        <View type=".png" path="Data/res/scene/8/0_V2.png"/>
+        <Projection>
+          <CenterPoint x="21" y="44"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="145" mid="0" name="未标题-10.png" validDistancev="0" x="2257" y="995"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="147" mname="未标题-10.png" w="40" h="54">
+        <View type=".png" path="Data/res/scene/8/0_V2.png"/>
+        <Projection>
+          <CenterPoint x="18" y="41"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="147" mid="0" name="未标题-10.png" validDistancev="0" x="2598" y="1018"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="150" mname="未标题-10.png" w="40" h="54">
+        <View type=".png" path="Data/res/scene/8/0_V2.png"/>
+        <Projection>
+          <CenterPoint x="22" y="43"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="150" mid="0" name="未标题-10.png" validDistancev="0" x="2427" y="1021"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="162" mname="未标题-10.png" w="40" h="54">
+        <View type=".png" path="Data/res/scene/8/0_V2.png"/>
+        <Projection>
+          <CenterPoint x="19" y="40"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="162" mid="0" name="未标题-10.png" validDistancev="0" x="1611" y="1048"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="149" mname="未标题-10.png" w="40" h="54">
+        <View type=".png" path="Data/res/scene/8/0_V2.png"/>
+        <Projection>
+          <CenterPoint x="19" y="44"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="149" mid="0" name="未标题-10.png" validDistancev="0" x="2769" y="1096"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="157" mname="未标题-10.png" w="40" h="54">
+        <View type=".png" path="Data/res/scene/8/0_V2.png"/>
+        <Projection>
+          <CenterPoint x="20" y="42"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="157" mid="0" name="未标题-10.png" validDistancev="0" x="1732" y="1112"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="121" mname="未标题-9.png" w="150" h="168">
+        <View type=".png" path="Data/res/scene/8/1_V2.png"/>
+        <Projection>
+          <CenterPoint x="9" y="116"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="121" mid="0" name="未标题-9.png" validDistancev="0" x="2543" y="1039"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="159" mname="未标题-10.png" w="40" h="54">
+        <View type=".png" path="Data/res/scene/8/0_V2.png"/>
+        <Projection>
+          <CenterPoint x="23" y="42"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="159" mid="0" name="未标题-10.png" validDistancev="0" x="1194" y="1122"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="151" mname="未标题-10.png" w="40" h="54">
+        <View type=".png" path="Data/res/scene/8/0_V2.png"/>
+        <Projection>
+          <CenterPoint x="22" y="39"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="151" mid="0" name="未标题-10.png" validDistancev="0" x="3123" y="1134"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="117" mname="未标题-11.png" w="79" h="128">
+        <View type=".png" path="Data/res/scene/8/4_V2.png"/>
+        <Projection>
+          <CenterPoint x="33" y="108"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="117" mid="0" name="未标题-11.png" validDistancev="0" x="1789" y="1074"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="113" mname="未标题-5.png" w="194" h="242">
+        <View type=".png" path="Data/res/scene/8/5_V2.png"/>
+        <Projection>
+          <CenterPoint x="4" y="147"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="113" mid="0" name="未标题-5.png" validDistancev="0" x="632" y="1053"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="161" mname="未标题-10.png" w="40" h="54">
+        <View type=".png" path="Data/res/scene/8/0_V2.png"/>
+        <Projection>
+          <CenterPoint x="21" y="43"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="161" mid="0" name="未标题-10.png" validDistancev="0" x="1083" y="1172"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="13" mname="未标题-1-改.png" w="396" h="446">
+        <View type=".png" path="Data/res/scene/8/6_V2.png"/>
+        <Projection>
+          <CenterPoint x="392" y="298"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="13" mid="0" name="未标题-1-改.png" validDistancev="0" x="1269" y="918"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="160" mname="未标题-10.png" w="40" h="54">
+        <View type=".png" path="Data/res/scene/8/0_V2.png"/>
+        <Projection>
+          <CenterPoint x="22" y="42"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="160" mid="0" name="未标题-10.png" validDistancev="0" x="2723" y="1182"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="134" mname="未标题-10.png" w="40" h="54">
+        <View type=".png" path="Data/res/scene/8/0_V2.png"/>
+        <Projection>
+          <CenterPoint x="21" y="44"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="134" mid="0" name="未标题-10.png" validDistancev="0" x="1887" y="1191"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="174" mname="未标题-10.png" w="40" h="54">
+        <View type=".png" path="Data/res/scene/8/0_V2.png"/>
+        <Projection>
+          <CenterPoint x="21" y="43"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="174" mid="0" name="未标题-10.png" validDistancev="0" x="960" y="1234"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="158" mname="未标题-10.png" w="40" h="54">
+        <View type=".png" path="Data/res/scene/8/0_V2.png"/>
+        <Projection>
+          <CenterPoint x="20" y="39"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="158" mid="0" name="未标题-10.png" validDistancev="0" x="2597" y="1250"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="136" mname="未标题-10.png" w="40" h="54">
+        <View type=".png" path="Data/res/scene/8/0_V2.png"/>
+        <Projection>
+          <CenterPoint x="18" y="43"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="136" mid="0" name="未标题-10.png" validDistancev="0" x="2001" y="1248"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="119" mname="未标题-8.png" w="64" h="71">
+        <View type=".png" path="Data/res/scene/8/7_V2.png"/>
+        <Projection>
+          <CenterPoint x="42" y="65"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="119" mid="0" name="未标题-8.png" validDistancev="0" x="2485" y="1252"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="115" mname="未标题-6.png" w="171" h="296">
+        <View type=".png" path="Data/res/scene/8/8_V2.png"/>
+        <Projection>
+          <CenterPoint x="150" y="253"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="115" mid="0" name="未标题-6.png" validDistancev="0" x="112" y="1070"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="163" mname="未标题-10.png" w="40" h="54">
+        <View type=".png" path="Data/res/scene/8/0_V2.png"/>
+        <Projection>
+          <CenterPoint x="21" y="41"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="163" mid="0" name="未标题-10.png" validDistancev="0" x="846" y="1291"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="152" mname="未标题-10.png" w="40" h="54">
+        <View type=".png" path="Data/res/scene/8/0_V2.png"/>
+        <Projection>
+          <CenterPoint x="20" y="45"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="152" mid="0" name="未标题-10.png" validDistancev="0" x="2125" y="1294"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="156" mname="未标题-10.png" w="40" h="54">
+        <View type=".png" path="Data/res/scene/8/0_V2.png"/>
+        <Projection>
+          <CenterPoint x="19" y="42"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="156" mid="0" name="未标题-10.png" validDistancev="0" x="2420" y="1309"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="154" mname="未标题-10.png" w="40" h="54">
+        <View type=".png" path="Data/res/scene/8/0_V2.png"/>
+        <Projection>
+          <CenterPoint x="18" y="43"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="154" mid="0" name="未标题-10.png" validDistancev="0" x="2264" y="1319"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="172" mname="未标题-10.png" w="40" h="54">
+        <View type=".png" path="Data/res/scene/8/0_V2.png"/>
+        <Projection>
+          <CenterPoint x="20" y="45"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="172" mid="0" name="未标题-10.png" validDistancev="0" x="696" y="1363"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="164" mname="未标题-18.png" w="137" h="181">
+        <View type=".png" path="Data/res/scene/8/20090625094333_V2.png"/>
+        <Projection>
+          <CenterPoint x="131" y="121"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="164" mid="0" name="未标题-18.png" validDistancev="0" x="810" y="1297"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="19" mname="未标题-12.png" w="77" h="128">
+        <View type=".png" path="Data/res/scene/8/10_V2.png"/>
+        <Projection>
+          <CenterPoint x="42" y="109"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="19" mid="0" name="未标题-12.png" validDistancev="0" x="531" y="1363"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="155" mname="未标题-10.png" w="40" h="54">
+        <View type=".png" path="Data/res/scene/8/0_V2.png"/>
+        <Projection>
+          <CenterPoint x="16" y="41"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="155" mid="0" name="未标题-10.png" validDistancev="0" x="251" y="1468"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="133" mname="未标题-10.png" w="40" h="54">
+        <View type=".png" path="Data/res/scene/8/0_V2.png"/>
+        <Projection>
+          <CenterPoint x="22" y="44"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="133" mid="0" name="未标题-10.png" validDistancev="0" x="482" y="1471"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="131" mname="未标题-10.png" w="40" h="54">
+        <View type=".png" path="Data/res/scene/8/0_V2.png"/>
+        <Projection>
+          <CenterPoint x="19" y="43"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="131" mid="0" name="未标题-10.png" validDistancev="0" x="378" y="1522"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="16" mname="未标题-4.png" w="299" h="346">
+        <View type=".png" path="Data/res/scene/8/12_V2.png"/>
+        <Projection>
+          <CenterPoint x="296" y="210"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="16" mid="0" name="未标题-4.png" validDistancev="0" x="1597" y="1454"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+    </EntityModelLib>
+    <Map>
+      <NavMap w="0" h="0" path="Data/res/scene/8/nav_V3.png"/>
+      <SmallMap w="0" h="0" path="Data/res/scene/8/minimap_V3.png"/>
+      <LargeMap w="0" h="0" path="Data/res/scene/8/largemp_V3.png"/>
+    </Map>
+    <Layers>
+      <Ground/>
+      <Space>
+        <Item name="未标题-16.png" mid="180" cursorID="3" x="1416" y="84"/>
+        <Item name="未标题-14.png" mid="168" cursorID="3" x="993" y="334"/>
+        <Item name="未标题-14.png" mid="166" cursorID="3" x="1712" y="282"/>
+        <Item name="未标题-10.png" mid="144" cursorID="3" x="1330" y="502"/>
+        <Item name="未标题-10.png" mid="138" cursorID="3" x="1526" y="536"/>
+        <Item name="未标题-10.png" mid="142" cursorID="3" x="1192" y="545"/>
+        <Item name="未标题-9.png" mid="123" cursorID="3" x="1325" y="487"/>
+        <Item name="未标题-10.png" mid="139" cursorID="3" x="1782" y="606"/>
+        <Item name="未标题-10.png" mid="140" cursorID="3" x="1059" y="612"/>
+        <Item name="未标题-10.png" mid="137" cursorID="3" x="1505" y="617"/>
+        <Item name="未标题-15.png" mid="178" cursorID="3" x="579" y="398"/>
+        <Item name="未标题-119.png" mid="169" cursorID="3" x="1261" y="604"/>
+        <Item name="未标题-10.png" mid="135" cursorID="3" x="1602" y="664"/>
+        <Item name="未标题-10.png" mid="153" cursorID="3" x="1929" y="676"/>
+        <Item name="未标题-10.png" mid="148" cursorID="3" x="920" y="678"/>
+        <Item name="复件 未标题-21.png" mid="111" cursorID="3" x="880" y="600"/>
+        <Item name="未标题-11.png" mid="171" cursorID="3" x="1975" y="636"/>
+        <Item name="未标题-10.png" mid="141" cursorID="3" x="2069" y="743"/>
+        <Item name="未标题-10.png" mid="146" cursorID="3" x="790" y="749"/>
+        <Item name="未标题-14.png" mid="170" cursorID="3" x="2314" y="705"/>
+        <Item name="未标题-14.png" mid="167" cursorID="3" x="1685" y="707"/>
+        <Item name="未标题-7.png" mid="125" cursorID="3" x="434" y="769"/>
+        <Item name="未标题-10.png" mid="127" cursorID="3" x="511" y="837"/>
+        <Item name="未标题-17.png" mid="182" cursorID="3" x="2669" y="658"/>
+        <Item name="未标题-10.png" mid="129" cursorID="3" x="616" y="838"/>
+        <Item name="未标题-10.png" mid="176" cursorID="3" x="2096" y="840"/>
+        <Item name="未标题-10.png" mid="143" cursorID="3" x="2153" y="943"/>
+        <Item name="未标题-10.png" mid="145" cursorID="3" x="2257" y="995"/>
+        <Item name="未标题-10.png" mid="147" cursorID="3" x="2598" y="1018"/>
+        <Item name="未标题-10.png" mid="150" cursorID="3" x="2427" y="1021"/>
+        <Item name="未标题-10.png" mid="162" cursorID="3" x="1611" y="1048"/>
+        <Item name="未标题-10.png" mid="149" cursorID="3" x="2769" y="1096"/>
+        <Item name="未标题-10.png" mid="157" cursorID="3" x="1732" y="1112"/>
+        <Item name="未标题-9.png" mid="121" cursorID="3" x="2543" y="1039"/>
+        <Item name="未标题-10.png" mid="159" cursorID="3" x="1194" y="1122"/>
+        <Item name="未标题-10.png" mid="151" cursorID="3" x="3123" y="1134"/>
+        <Item name="未标题-11.png" mid="117" cursorID="3" x="1789" y="1074"/>
+        <Item name="未标题-5.png" mid="113" cursorID="3" x="632" y="1053"/>
+        <Item name="未标题-10.png" mid="161" cursorID="3" x="1083" y="1172"/>
+        <Item name="未标题-1-改.png" mid="13" cursorID="3" x="1269" y="918"/>
+        <Item name="未标题-10.png" mid="160" cursorID="3" x="2723" y="1182"/>
+        <Item name="未标题-10.png" mid="134" cursorID="3" x="1887" y="1191"/>
+        <Item name="未标题-10.png" mid="174" cursorID="3" x="960" y="1234"/>
+        <Item name="未标题-10.png" mid="158" cursorID="3" x="2597" y="1250"/>
+        <Item name="未标题-10.png" mid="136" cursorID="3" x="2001" y="1248"/>
+        <Item name="未标题-8.png" mid="119" cursorID="3" x="2485" y="1252"/>
+        <Item name="未标题-6.png" mid="115" cursorID="3" x="112" y="1070"/>
+        <Item name="未标题-10.png" mid="163" cursorID="3" x="846" y="1291"/>
+        <Item name="未标题-10.png" mid="152" cursorID="3" x="2125" y="1294"/>
+        <Item name="未标题-10.png" mid="156" cursorID="3" x="2420" y="1309"/>
+        <Item name="未标题-10.png" mid="154" cursorID="3" x="2264" y="1319"/>
+        <Item name="未标题-10.png" mid="172" cursorID="3" x="696" y="1363"/>
+        <Item name="未标题-18.png" mid="164" cursorID="3" x="810" y="1297"/>
+        <Item name="未标题-12.png" mid="19" cursorID="3" x="531" y="1363"/>
+        <Item name="未标题-10.png" mid="155" cursorID="3" x="251" y="1468"/>
+        <Item name="未标题-10.png" mid="133" cursorID="3" x="482" y="1471"/>
+        <Item name="未标题-10.png" mid="131" cursorID="3" x="378" y="1522"/>
+        <Item name="未标题-4.png" mid="16" cursorID="3" x="1597" y="1454"/>
+      </Space>
+      <Sky/>
+    </Layers>
+  </SceneModel>
+</Config>

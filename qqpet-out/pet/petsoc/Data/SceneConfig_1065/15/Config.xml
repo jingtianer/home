@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?><Config>
+  <SceneModel id="15" name="小学课堂" w="800" h="600">
+    <Cover path=""/>
+    <Background rows="10" cols="10" cursorID="5">
+      <Path value="Data/res/scene/15/bg_V7/"/>
+      <Item width="80" height="60"/>
+    </Background>
+    <GridScene rows="10" cols="10">
+      <Viewport rows="10" cols="10"/>
+      <GridSize width="80" height="60"/>
+    </GridScene>
+    <Navigator cursorID="6">
+      <Path value="Data/res/scene/15/nav_V7.png"/>
+    </Navigator>
+    <EntityModelLib>
+      <EntityModel mid="126" mname="小学课堂_眼睛.swf" w="145.8" h="49.25">
+        <View type=".swf" path="Data/res/scene/15/20090824172810_V2.png"/>
+        <Projection>
+          <CenterPoint x="0" y="0"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="126" mid="0" name="小学课堂_眼睛.swf" validDistancev="0" x="371" y="85"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="129" mname="小学课堂_红花.swf" w="20.8" h="26.4">
+        <View type=".swf" path="Data/res/scene/15/20090824172842_V2.png"/>
+        <Projection>
+          <CenterPoint x="0" y="0"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="129" mid="0" name="小学课堂_红花.swf" validDistancev="0" x="562" y="150"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="131" mname="小学课堂_红花.swf" w="20.8" h="26.4">
+        <View type=".swf" path="Data/res/scene/15/20090824172842_V2.png"/>
+        <Projection>
+          <CenterPoint x="0" y="0"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="131" mid="0" name="小学课堂_红花.swf" validDistancev="0" x="596" y="169"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="133" mname="小学课堂_红花.swf" w="20.8" h="26.4">
+        <View type=".swf" path="Data/res/scene/15/20090824172842_V2.png"/>
+        <Projection>
+          <CenterPoint x="0" y="0"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="133" mid="0" name="小学课堂_红花.swf" validDistancev="0" x="615" y="211"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="14" mname="009.png" w="41" h="55">
+        <View type=".png" path="Data/res/scene/15/20090717153301_V2.png"/>
+        <Projection>
+          <CenterPoint x="32" y="46"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="14" mid="0" name="009.png" validDistancev="0" x="621" y="250"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="110" mname="004.png" w="64" h="67">
+        <View type=".png" path="Data/res/scene/15/20090717153430_V2.png"/>
+        <Projection>
+          <CenterPoint x="39" y="56"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="110" mid="0" name="004.png" validDistancev="0" x="276" y="353"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="116" mname="005.png" w="109" h="137">
+        <View type=".png" path="Data/res/scene/15/20090717153623_V2.png"/>
+        <Projection>
+          <CenterPoint x="61" y="105"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="116" mid="0" name="005.png" validDistancev="0" x="586" y="345"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="130" mname="003.png" w="77" h="136">
+        <View type=".png" path="Data/res/scene/15/20090717154503_V2.png"/>
+        <Projection>
+          <CenterPoint x="55" y="121"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="130" mid="0" name="003.png" validDistancev="0" x="97" y="338"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="114" mname="004.png" w="64" h="67">
+        <View type=".png" path="Data/res/scene/15/20090717153430_V2.png"/>
+        <Projection>
+          <CenterPoint x="40" y="57"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="114" mid="0" name="004.png" validDistancev="0" x="404" y="414"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="118" mname="006.png" w="101" h="34">
+        <View type=".png" path="Data/res/scene/15/20090717153644_V2.png"/>
+        <Projection>
+          <CenterPoint x="69" y="27"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="118" mid="0" name="006.png" validDistancev="0" x="522" y="468"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="120" mname="001.png" w="113" h="46">
+        <View type=".png" path="Data/res/scene/15/20090717153722_V2.png"/>
+        <Projection>
+          <CenterPoint x="0" y="0"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="120" mid="0" name="001.png" validDistancev="0" x="419" y="506"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="128" mname="002.png" w="75" h="147">
+        <View type=".png" path="Data/res/scene/15/20090717154422_V2.png"/>
+        <Projection>
+          <CenterPoint x="53" y="131"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="128" mid="0" name="002.png" validDistancev="0" x="283" y="424"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+    </EntityModelLib>
+    <Map>
+      <NavMap w="0" h="0" path="Data/res/scene/15/nav_V7.png"/>
+      <SmallMap w="0" h="0" path="Data/res/scene/15/minimap_V7.png"/>
+      <LargeMap w="0" h="0" path="Data/res/scene/15/largemp_V7.png"/>
+    </Map>
+    <Layers>
+      <Ground/>
+      <Space>
+        <Item name="小学课堂_眼睛.swf" mid="126" cursorID="3" x="371" y="85"/>
+        <Item name="小学课堂_红花.swf" mid="129" cursorID="3" x="562" y="150"/>
+        <Item name="小学课堂_红花.swf" mid="131" cursorID="3" x="596" y="169"/>
+        <Item name="小学课堂_红花.swf" mid="133" cursorID="3" x="615" y="211"/>
+        <Item name="009.png" mid="14" cursorID="3" x="621" y="250"/>
+        <Item name="004.png" mid="110" cursorID="3" x="276" y="353"/>
+        <Item name="005.png" mid="116" cursorID="3" x="586" y="345"/>
+        <Item name="003.png" mid="130" cursorID="3" x="97" y="338"/>
+        <Item name="004.png" mid="114" cursorID="3" x="404" y="414"/>
+        <Item name="006.png" mid="118" cursorID="3" x="522" y="468"/>
+        <Item name="001.png" mid="120" cursorID="3" x="419" y="506"/>
+        <Item name="002.png" mid="128" cursorID="3" x="283" y="424"/>
+      </Space>
+      <Sky/>
+    </Layers>
+  </SceneModel>
+</Config>

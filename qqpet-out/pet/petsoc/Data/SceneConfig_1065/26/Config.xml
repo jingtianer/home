@@ -1,0 +1,591 @@
+<?xml version="1.0" encoding="utf-8"?><Config>
+  <SceneModel id="26" name="粉钻度假村" w="1800" h="1170">
+    <Cover path=""/>
+    <Background rows="10" cols="10" cursorID="5">
+      <Path value="Data/res/scene/26/bg_V9/"/>
+      <Item width="180" height="117"/>
+    </Background>
+    <GridScene rows="10" cols="10">
+      <Viewport rows="8" cols="10"/>
+      <GridSize width="180" height="117"/>
+    </GridScene>
+    <Navigator cursorID="6">
+      <Path value="Data/res/scene/26/nav_V9.png"/>
+    </Navigator>
+    <Script type="swf">
+      <Path value=""/>
+    </Script>
+    <EntityModelLib>
+      <EntityModel mid="167" mname="墙壁遮挡.png" w="44" h="69">
+        <View type=".png" path="Data/res/scene/26/20100512151516_V2.png"/>
+        <Projection>
+          <CenterPoint x="19" y="66"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="167" mid="0" name="墙壁遮挡.png" validDistancev="0" x="1080" y="269"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="165" mname="粉钻-10.png" w="53" h="70">
+        <View type=".png" path="Data/res/scene/26/20100428182445_V2.png"/>
+        <Projection>
+          <CenterPoint x="28" y="59"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="165" mid="0" name="粉钻-10.png" validDistancev="0" x="1051" y="278"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="145" mname="盆栽-6.png" w="62" h="129">
+        <View type=".png" path="Data/res/scene/26/20100424193509_V2.png"/>
+        <Projection>
+          <CenterPoint x="19" y="123"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="145" mid="0" name="盆栽-6.png" validDistancev="0" x="469" y="229"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="153" mname="栏.png" w="242" h="82">
+        <View type=".png" path="Data/res/scene/26/20100424193749_V2.png"/>
+        <Projection>
+          <CenterPoint x="235" y="71"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="153" mid="0" name="栏.png" validDistancev="0" x="470" y="342"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="140" mname="粉钻-10.png" w="53" h="70">
+        <View type=".png" path="Data/res/scene/26/20100428182445_V2.png"/>
+        <Projection>
+          <CenterPoint x="21" y="60"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="140" mid="0" name="粉钻-10.png" validDistancev="0" x="1103" y="401"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="137" mname="粉钻-8.png" w="72" h="90">
+        <View type=".png" path="Data/res/scene/26/20100428182205_V2.png"/>
+        <Projection>
+          <CenterPoint x="13" y="64"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="137" mid="0" name="粉钻-8.png" validDistancev="0" x="1047" y="419"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="138" mname="粉钻-17.png" w="134" h="130">
+        <View type=".png" path="Data/res/scene/26/20100428182432_V2.png"/>
+        <Projection>
+          <CenterPoint x="116" y="106"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="138" mid="0" name="粉钻-17.png" validDistancev="0" x="1125" y="395"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="14" mname="粉钻-4.png" w="142" h="127">
+        <View type=".png" path="Data/res/scene/26/20100428182008_V2.png"/>
+        <Projection>
+          <CenterPoint x="68" y="99"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="14" mid="0" name="粉钻-4.png" validDistancev="0" x="635" y="418"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="117" mname="粉钻-11.png" w="104" h="87">
+        <View type=".png" path="Data/res/scene/26/20100428182513_V2.png"/>
+        <Projection>
+          <CenterPoint x="8" y="57"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="117" mid="0" name="粉钻-11.png" validDistancev="0" x="1080" y="467"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="127" mname="粉钻-6.png" w="67" h="85">
+        <View type=".png" path="Data/res/scene/26/20100428182527_V2.png"/>
+        <Projection>
+          <CenterPoint x="60" y="62"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="127" mid="0" name="粉钻-6.png" validDistancev="0" x="1134" y="495"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="142" mname="粉钻-7.png" w="67" h="85">
+        <View type=".png" path="Data/res/scene/26/20100428182524_V2.png"/>
+        <Projection>
+          <CenterPoint x="8" y="63"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="142" mid="0" name="粉钻-7.png" validDistancev="0" x="1056" y="495"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="156" mname="粉钻-10.png" w="53" h="70">
+        <View type=".png" path="Data/res/scene/26/20100428182445_V2.png"/>
+        <Projection>
+          <CenterPoint x="32" y="59"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="156" mid="0" name="粉钻-10.png" validDistancev="0" x="924" y="503"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="150" mname="粉钻-8.png" w="72" h="90">
+        <View type=".png" path="Data/res/scene/26/20100428182205_V2.png"/>
+        <Projection>
+          <CenterPoint x="14" y="64"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="150" mid="0" name="粉钻-8.png" validDistancev="0" x="883" y="510"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="125" mname="粉钻-8.png" w="72" h="90">
+        <View type=".png" path="Data/res/scene/26/20100428182205_V2.png"/>
+        <Projection>
+          <CenterPoint x="17" y="65"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="125" mid="0" name="粉钻-8.png" validDistancev="0" x="1250" y="533"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="121" mname="粉钻-17.png" w="134" h="130">
+        <View type=".png" path="Data/res/scene/26/20100428182432_V2.png"/>
+        <Projection>
+          <CenterPoint x="64" y="104"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="121" mid="0" name="粉钻-17.png" validDistancev="0" x="1328" y="506"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="152" mname="粉钻-11.png" w="104" h="87">
+        <View type=".png" path="Data/res/scene/26/20100428182513_V2.png"/>
+        <Projection>
+          <CenterPoint x="9" y="55"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="152" mid="0" name="粉钻-11.png" validDistancev="0" x="925" y="557"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="163" mname="挡.png" w="68" h="65">
+        <View type=".png" path="Data/res/scene/26/20100426193930_V2.png"/>
+        <Projection>
+          <CenterPoint x="17" y="64"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="163" mid="0" name="挡.png" validDistancev="0" x="247" y="561"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="144" mname="粉钻-10.png" w="53" h="70">
+        <View type=".png" path="Data/res/scene/26/20100428182445_V2.png"/>
+        <Projection>
+          <CenterPoint x="33" y="60"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="144" mid="0" name="粉钻-10.png" validDistancev="0" x="1418" y="586"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="123" mname="粉钻-11.png" w="104" h="87">
+        <View type=".png" path="Data/res/scene/26/20100428182513_V2.png"/>
+        <Projection>
+          <CenterPoint x="8" y="65"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="123" mid="0" name="粉钻-11.png" validDistancev="0" x="1290" y="584"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="154" mname="粉钻-6.png" w="67" h="85">
+        <View type=".png" path="Data/res/scene/26/20100428182527_V2.png"/>
+        <Projection>
+          <CenterPoint x="62" y="66"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="154" mid="0" name="粉钻-6.png" validDistancev="0" x="984" y="584"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="172" mname="粉钻-7.png" w="67" h="85">
+        <View type=".png" path="Data/res/scene/26/20100428182524_V2.png"/>
+        <Projection>
+          <CenterPoint x="9" y="61"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="172" mid="0" name="粉钻-7.png" validDistancev="0" x="1260" y="608"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="133" mname="粉钻-16.png" w="118" h="119">
+        <View type=".png" path="Data/res/scene/26/20100428182542_V2.png"/>
+        <Projection>
+          <CenterPoint x="106" y="72"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="133" mid="0" name="粉钻-16.png" validDistancev="0" x="1335" y="598"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="160" mname="粉钻-8.png" w="72" h="90">
+        <View type=".png" path="Data/res/scene/26/20100428182205_V2.png"/>
+        <Projection>
+          <CenterPoint x="15" y="67"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="160" mid="0" name="粉钻-8.png" validDistancev="0" x="1114" y="644"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="166" mname="粉钻-2.png" w="69" h="63">
+        <View type=".png" path="Data/res/scene/26/20100428181917_V2.png"/>
+        <Projection>
+          <CenterPoint x="7" y="48"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="166" mid="0" name="粉钻-2.png" validDistancev="0" x="720" y="670"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="168" mname="粉钻-3.png" w="69" h="63">
+        <View type=".png" path="Data/res/scene/26/20100428181910_V2.png"/>
+        <Projection>
+          <CenterPoint x="56" y="56"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="168" mid="0" name="粉钻-3.png" validDistancev="0" x="881" y="670"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="135" mname="粉钻-11.png" w="104" h="87">
+        <View type=".png" path="Data/res/scene/26/20100428182513_V2.png"/>
+        <Projection>
+          <CenterPoint x="8" y="56"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="135" mid="0" name="粉钻-11.png" validDistancev="0" x="1151" y="685"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="170" mname="粉钻-10.png" w="53" h="70">
+        <View type=".png" path="Data/res/scene/26/20100428182445_V2.png"/>
+        <Projection>
+          <CenterPoint x="32" y="59"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="170" mid="0" name="粉钻-10.png" validDistancev="0" x="1242" y="704"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="16" mname="粉钻-1.png" w="184" h="167">
+        <View type=".png" path="Data/res/scene/26/20100428181903_V2.png"/>
+        <Projection>
+          <CenterPoint x="85" y="138"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="16" mid="0" name="粉钻-1.png" validDistancev="0" x="745" y="632"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="164" mname="粉钻-2.png" w="69" h="63">
+        <View type=".png" path="Data/res/scene/26/20100428181917_V2.png"/>
+        <Projection>
+          <CenterPoint x="59" y="32"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="164" mid="0" name="粉钻-2.png" validDistancev="0" x="877" y="741"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="161" mname="粉钻-3.png" w="69" h="63">
+        <View type=".png" path="Data/res/scene/26/20100428181910_V2.png"/>
+        <Projection>
+          <CenterPoint x="8" y="34"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="161" mid="0" name="粉钻-3.png" validDistancev="0" x="725" y="742"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="158" mname="粉钻-6.png" w="67" h="85">
+        <View type=".png" path="Data/res/scene/26/20100428182527_V2.png"/>
+        <Projection>
+          <CenterPoint x="62" y="65"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="158" mid="0" name="粉钻-6.png" validDistancev="0" x="1211" y="716"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="155" mname="粉钻-5.png" w="126" h="126">
+        <View type=".png" path="Data/res/scene/26/20100428183057_V2.png"/>
+        <Projection>
+          <CenterPoint x="4" y="78"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="155" mid="0" name="粉钻-5.png" validDistancev="0" x="1514" y="766"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="112" mname="粉钻-15.png" w="106" h="121">
+        <View type=".png" path="Data/res/scene/26/20100428183015_V2.png"/>
+        <Projection>
+          <CenterPoint x="70" y="109"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="112" mid="0" name="粉钻-15.png" validDistancev="0" x="399" y="748"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="18" mname="qq石像.png" w="112" h="154">
+        <View type=".png" path="Data/res/scene/26/20100424190803_V2.png"/>
+        <Projection>
+          <CenterPoint x="104" y="124"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="18" mid="0" name="qq石像.png" validDistancev="0" x="329" y="738"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="113" mname="盆栽-1.png" w="106" h="95">
+        <View type=".png" path="Data/res/scene/26/20100424191347_V2.png"/>
+        <Projection>
+          <CenterPoint x="25" y="81"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="113" mid="0" name="盆栽-1.png" validDistancev="0" x="1626" y="806"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="136" mname="盆栽-2.png" w="106" h="95">
+        <View type=".png" path="Data/res/scene/26/20100424191346_V2.png"/>
+        <Projection>
+          <CenterPoint x="49" y="57"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="136" mid="0" name="盆栽-2.png" validDistancev="0" x="1064" y="873"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="118" mname="盆栽-2.png" w="106" h="95">
+        <View type=".png" path="Data/res/scene/26/20100424191346_V2.png"/>
+        <Projection>
+          <CenterPoint x="84" y="85"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="118" mid="0" name="盆栽-2.png" validDistancev="0" x="728" y="873"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="120" mname="盆栽-1.png" w="106" h="95">
+        <View type=".png" path="Data/res/scene/26/20100424191347_V2.png"/>
+        <Projection>
+          <CenterPoint x="21" y="88"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="120" mid="0" name="盆栽-1.png" validDistancev="0" x="979" y="870"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="116" mname="盆栽-3.png" w="199" h="179">
+        <View type=".png" path="Data/res/scene/26/20100424190729_V2.png"/>
+        <Projection>
+          <CenterPoint x="94" y="136"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="116" mid="0" name="盆栽-3.png" validDistancev="0" x="811" y="846"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="114" mname="粉钻-15.png" w="106" h="121">
+        <View type=".png" path="Data/res/scene/26/20100428183015_V2.png"/>
+        <Projection>
+          <CenterPoint x="53" y="114"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="114" mid="0" name="粉钻-15.png" validDistancev="0" x="599" y="872"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="110" mname="qq石像.png" w="112" h="154">
+        <View type=".png" path="Data/res/scene/26/20100424190803_V2.png"/>
+        <Projection>
+          <CenterPoint x="2" y="110"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="110" mid="0" name="qq石像.png" validDistancev="0" x="600" y="899"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="159" mname="衣架-1.png" w="174" h="179">
+        <View type=".png" path="Data/res/scene/26/20100424193927_V2.png"/>
+        <Projection>
+          <CenterPoint x="31" y="142"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="159" mid="0" name="衣架-1.png" validDistancev="0" x="1331" y="880"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="157" mname="衣架-2.png" w="174" h="179">
+        <View type=".png" path="Data/res/scene/26/20100424193924_V2.png"/>
+        <Projection>
+          <CenterPoint x="144" y="143"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="157" mid="0" name="衣架-2.png" validDistancev="0" x="1164" y="883"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+    </EntityModelLib>
+    <Map>
+      <NavMap w="0" h="0" path="Data/res/scene/26/nav_V9.png"/>
+      <SmallMap w="0" h="0" path="Data/res/scene/26/minimap_V9.png"/>
+      <LargeMap w="0" h="0" path="Data/res/scene/26/largemp_V9.png"/>
+    </Map>
+    <Layers>
+      <Ground/>
+      <Space>
+        <Item name="墙壁遮挡.png" mid="167" cursorID="3" x="1080" y="269"/>
+        <Item name="粉钻-10.png" mid="165" cursorID="3" x="1051" y="278"/>
+        <Item name="盆栽-6.png" mid="145" cursorID="3" x="469" y="229"/>
+        <Item name="栏.png" mid="153" cursorID="3" x="470" y="342"/>
+        <Item name="粉钻-10.png" mid="140" cursorID="3" x="1103" y="401"/>
+        <Item name="粉钻-8.png" mid="137" cursorID="3" x="1047" y="419"/>
+        <Item name="粉钻-17.png" mid="138" cursorID="3" x="1125" y="395"/>
+        <Item name="粉钻-4.png" mid="14" cursorID="3" x="635" y="418"/>
+        <Item name="粉钻-11.png" mid="117" cursorID="3" x="1080" y="467"/>
+        <Item name="粉钻-6.png" mid="127" cursorID="3" x="1134" y="495"/>
+        <Item name="粉钻-7.png" mid="142" cursorID="3" x="1056" y="495"/>
+        <Item name="粉钻-10.png" mid="156" cursorID="3" x="924" y="503"/>
+        <Item name="粉钻-8.png" mid="150" cursorID="3" x="883" y="510"/>
+        <Item name="粉钻-8.png" mid="125" cursorID="3" x="1250" y="533"/>
+        <Item name="粉钻-17.png" mid="121" cursorID="3" x="1328" y="506"/>
+        <Item name="粉钻-11.png" mid="152" cursorID="3" x="925" y="557"/>
+        <Item name="挡.png" mid="163" cursorID="3" x="247" y="561"/>
+        <Item name="粉钻-10.png" mid="144" cursorID="3" x="1418" y="586"/>
+        <Item name="粉钻-11.png" mid="123" cursorID="3" x="1290" y="584"/>
+        <Item name="粉钻-6.png" mid="154" cursorID="3" x="984" y="584"/>
+        <Item name="粉钻-7.png" mid="172" cursorID="3" x="1260" y="608"/>
+        <Item name="粉钻-16.png" mid="133" cursorID="3" x="1335" y="598"/>
+        <Item name="粉钻-8.png" mid="160" cursorID="3" x="1114" y="644"/>
+        <Item name="粉钻-2.png" mid="166" cursorID="3" x="720" y="670"/>
+        <Item name="粉钻-3.png" mid="168" cursorID="3" x="881" y="670"/>
+        <Item name="粉钻-11.png" mid="135" cursorID="3" x="1151" y="685"/>
+        <Item name="粉钻-10.png" mid="170" cursorID="3" x="1242" y="704"/>
+        <Item name="粉钻-1.png" mid="16" cursorID="3" x="745" y="632"/>
+        <Item name="粉钻-2.png" mid="164" cursorID="3" x="877" y="741"/>
+        <Item name="粉钻-3.png" mid="161" cursorID="3" x="725" y="742"/>
+        <Item name="粉钻-6.png" mid="158" cursorID="3" x="1211" y="716"/>
+        <Item name="粉钻-5.png" mid="155" cursorID="3" x="1514" y="766"/>
+        <Item name="粉钻-15.png" mid="112" cursorID="3" x="399" y="748"/>
+        <Item name="qq石像.png" mid="18" cursorID="3" x="329" y="738"/>
+        <Item name="盆栽-1.png" mid="113" cursorID="3" x="1626" y="806"/>
+        <Item name="盆栽-2.png" mid="136" cursorID="3" x="1064" y="873"/>
+        <Item name="盆栽-2.png" mid="118" cursorID="3" x="728" y="873"/>
+        <Item name="盆栽-1.png" mid="120" cursorID="3" x="979" y="870"/>
+        <Item name="盆栽-3.png" mid="116" cursorID="3" x="811" y="846"/>
+        <Item name="粉钻-15.png" mid="114" cursorID="3" x="599" y="872"/>
+        <Item name="qq石像.png" mid="110" cursorID="3" x="600" y="899"/>
+        <Item name="衣架-1.png" mid="159" cursorID="3" x="1331" y="880"/>
+        <Item name="衣架-2.png" mid="157" cursorID="3" x="1164" y="883"/>
+      </Space>
+      <Sky/>
+    </Layers>
+  </SceneModel>
+</Config>

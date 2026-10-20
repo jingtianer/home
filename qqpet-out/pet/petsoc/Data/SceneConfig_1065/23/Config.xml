@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Config>
+  <SceneModel id="23" name="神秘岛" w="1200" h="900">
+    <Cover path=""/>
+    <Background rows="10" cols="10" cursorID="5">
+      <Path value="Data/res/scene/23/bg_V6/"/>
+      <Item width="120" height="90"/>
+    </Background>
+    <GridScene rows="10" cols="10">
+      <Viewport rows="10" cols="10"/>
+      <GridSize width="120" height="90"/>
+    </GridScene>
+    <Navigator cursorID="6">
+      <Path value="Data/res/scene/23/nav_V6.png"/>
+    </Navigator>
+    <EntityModelLib/>
+    <Map>
+      <NavMap w="0" h="0" path="Data/res/scene/23/nav_V6.png"/>
+      <SmallMap w="0" h="0" path="Data/res/scene/23/minimap_V6.png"/>
+      <LargeMap w="0" h="0" path="Data/res/scene/23/largemp_V6.png"/>
+    </Map>
+    <Layers>
+      <Ground/>
+      <Space/>
+      <Sky/>
+    </Layers>
+  </SceneModel>
+</Config>

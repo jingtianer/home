@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Music>
+	<Effect>
+	  <Item random="20" src="Data\Music\MusicEffect.swf"/>
+	</Effect>
+	<BackGround>
+	  <Item random="20" src="Data\Music\snow01.mp3"/>
+	  <Item random="20" src="Data\Music\snow02.mp3"/>
+	</BackGround>
+</Music>

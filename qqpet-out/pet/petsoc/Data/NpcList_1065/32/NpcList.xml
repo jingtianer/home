@@ -1,0 +1,548 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Config>
+  <GridScene rows="10" cols="10">
+    <Viewport rows="6" cols="6"/>
+    <GridSize width="220" height="145"/>
+  </GridScene>
+  <NpcList>
+    <Npc nid="1141" mid="0" name="去东郊荒地" validDistance="0" x="100" y="1141" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/32/20110621113011_V2.png</Param>
+        <Param name="cursorID">7</Param>
+        <Param name="namecardVisible">true</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="">
+          <Action name="enterScene">
+            <Param name="id">30</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="150" h="160">
+        <Projection>
+          <CenterPoint x="75" y="98"/>
+        </Projection>
+      </EntityModel>
+      <Item x="25" y="1050" cursorID="7"/>
+      <NavPointList>
+        <NavPoint x="99" y="1157"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="1143" mid="" name="冰魂" validDistance="0" x="1864" y="1195" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/32/20110808125514_V2.png</Param>
+        <Param name="cursorID">2</Param>
+        <Param name="namecardVisible">false</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="mouseClick">
+          <Action name="openMainUrl">
+            <Param name="url" value="http://act.pet.qq.com/shenqichuangshuo.html?id=18">http://act.pet.qq.com/shenqichuangshuo.html?id=18</Param>
+            <Param name="timestamp" value="false">false</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="100" h="110">
+        <Projection>
+          <CenterPoint x="52" y="96"/>
+        </Projection>
+      </EntityModel>
+      <Item x="1813" y="1127" cursorID="2"/>
+      <NavPointList>
+        <NavPoint x="1769" y="1159"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="1144" mid="" name="雪妖" validDistance="0" x="327" y="717" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/32/20110808125523_V2.png</Param>
+        <Param name="cursorID">2</Param>
+        <Param name="namecardVisible">false</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="mouseClick">
+          <Action name="openMainUrl">
+            <Param name="url" value="http://act.pet.qq.com/shenqichuangshuo.html?id=17">http://act.pet.qq.com/shenqichuangshuo.html?id=17</Param>
+            <Param name="timestamp" value="false">false</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="100" h="110">
+        <Projection>
+          <CenterPoint x="43" y="90"/>
+        </Projection>
+      </EntityModel>
+      <Item x="285" y="649" cursorID="2"/>
+      <NavPointList>
+        <NavPoint x="286" y="783"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="1145" mid="AnimateNPC" name="玄机子" validDistance="0" x="642" y="320" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/32/20110808125532_V2.png</Param>
+        <Param name="cursorID">2</Param>
+        <Param name="namecardVisible">true</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="mouseClick">
+          <Action name="openFlashWeb">
+            <Param name="url" value="Data\Wilderness\main_sq_kl.swf">Data\Wilderness\main_sq_kl.swf</Param>
+            <Param name="userData" value="false">false</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="140" h="140">
+        <Projection>
+          <CenterPoint x="68" y="127"/>
+        </Projection>
+      </EntityModel>
+      <Item x="572" y="212" cursorID="2"/>
+      <NavPointList>
+        <NavPoint x="662" y="392"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="1146" mid="AnimateNPC" name="独行侠" validDistance="0" x="780" y="972" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/32/20110808125543_V2.png</Param>
+        <Param name="cursorID">2</Param>
+        <Param name="namecardVisible">true</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="mouseClick">
+          <Action name="openFlashWeb">
+            <Param name="url" value="Data\Wilderness\main_sq_task1.swf">Data\Wilderness\main_sq_task1.swf</Param>
+            <Param name="userData" value="false">false</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="140" h="140">
+        <Projection>
+          <CenterPoint x="81" y="125"/>
+        </Projection>
+      </EntityModel>
+      <Item x="700" y="870" cursorID="2"/>
+      <NavPointList>
+        <NavPoint x="708" y="1018"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="1149" mid="" name="石狮精" validDistance="0" x="503" y="1322" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/32/20110808130212_V2.png</Param>
+        <Param name="cursorID">2</Param>
+        <Param name="namecardVisible">false</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="mouseClick">
+          <Action name="openMainUrl">
+            <Param name="url" value="http://act.pet.qq.com/shenqichuangshuo.html?id=16">http://act.pet.qq.com/shenqichuangshuo.html?id=16</Param>
+            <Param name="timestamp" value="false">false</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="100" h="110">
+        <Projection>
+          <CenterPoint x="47" y="97"/>
+        </Projection>
+      </EntityModel>
+      <Item x="453" y="1243" cursorID="2"/>
+      <NavPointList>
+        <NavPoint x="428" y="1303"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="1150" mid="AnimateNPC" name="金老板" validDistance="0" x="1048" y="1251" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/32/20110808130724_V2.png</Param>
+        <Param name="cursorID">2</Param>
+        <Param name="namecardVisible">true</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="mouseClick">
+          <Action name="openFlashWeb">
+            <Param name="url" value="Data\Wilderness\main_shenqi_buy.swf">Data\Wilderness\main_shenqi_buy.swf</Param>
+            <Param name="userData" value="false">false</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="140" h="140">
+        <Projection>
+          <CenterPoint x="73" y="127"/>
+        </Projection>
+      </EntityModel>
+      <Item x="973" y="1143" cursorID="2"/>
+      <NavPointList>
+        <NavPoint x="944" y="1261"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="1151" mid="AnimateNPC" name="银掌柜" validDistance="0" x="1287" y="1186" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/32/20110808130838_V2.png</Param>
+        <Param name="cursorID">2</Param>
+        <Param name="namecardVisible">true</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="mouseClick">
+          <Action name="openFlashWeb">
+            <Param name="url" value="Data\Wilderness\main_exchange.swf">Data\Wilderness\main_exchange.swf</Param>
+            <Param name="userData" value="false">false</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="140" h="140">
+        <Projection>
+          <CenterPoint x="79" y="170"/>
+        </Projection>
+      </EntityModel>
+      <Item x="1207" y="1088" cursorID="2"/>
+      <NavPointList>
+        <NavPoint x="1366" y="1177"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="1152" mid="AnimateNPC" name="粉莲道人" validDistance="0" x="1201" y="953" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/32/20110808130954_V2.png</Param>
+        <Param name="cursorID">2</Param>
+        <Param name="namecardVisible">true</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="mouseClick">
+          <Action name="openFlashWeb">
+            <Param name="url" value="Data\Wilderness\main_shenqi_hf.swf">Data\Wilderness\main_shenqi_hf.swf</Param>
+            <Param name="userData" value="false">false</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="140" h="140">
+        <Projection>
+          <CenterPoint x="71" y="127"/>
+        </Projection>
+      </EntityModel>
+      <Item x="1130" y="847" cursorID="2"/>
+      <NavPointList>
+        <NavPoint x="1277" y="986"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="1153" mid="" name="" validDistance="0" x="-1000" y="-1000" mapShowPoint="0" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/32/20110808131255_V2.png</Param>
+        <Param name="cursorID">1</Param>
+        <Param name="namecardVisible">false</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="mouseClick">
+          <Action name="openFlashWeb">
+            <Param name="url" value="Data\Wilderness\main_sq_taskNew.swf?id=110">Data\Wilderness\main_sq_taskNew.swf?id=110</Param>
+            <Param name="userData" value="false">false</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="60" h="60">
+        <Projection>
+          <CenterPoint x="0" y="0"/>
+        </Projection>
+      </EntityModel>
+      <Item x="276" y="264" cursorID="1"/>
+      <NavPointList>
+        <NavPoint x="276" y="264"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="1155" mid="" name="幻境" validDistance="0" x="1066" y="381" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/32/20110621113011_V2.png</Param>
+        <Param name="cursorID">4</Param>
+        <Param name="namecardVisible">true</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="mouseClick">
+          <Action name="openMainUrl">
+            <Param name="url" value="http://act.pet.qq.com/shenqichuangshuo.html?id=29">http://act.pet.qq.com/shenqichuangshuo.html?id=29</Param>
+            <Param name="timestamp" value="false">false</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="150" h="160">
+        <Projection>
+          <CenterPoint x="75" y="98"/>
+        </Projection>
+      </EntityModel>
+      <Item x="991" y="290" cursorID="4"/>
+      <NavPointList>
+        <NavPoint x="1065" y="397"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="1156" mid="AnimateNPC" name="楚子虚" validDistance="0" x="1654" y="789" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/32/20110808144803_V2.png</Param>
+        <Param name="cursorID">2</Param>
+        <Param name="namecardVisible">true</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="mouseClick">
+          <Action name="openFlashWeb">
+            <Param name="url" value="Data\Wilderness\main_npc_kl.swf">Data\Wilderness\main_npc_kl.swf</Param>
+            <Param name="userData" value="false">false</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="140" h="140">
+        <Projection>
+          <CenterPoint x="73" y="127"/>
+        </Projection>
+      </EntityModel>
+      <Item x="1583" y="681" cursorID="2"/>
+      <NavPointList>
+        <NavPoint x="1595" y="834"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="1157" mid="AnimateNPC" name="玄阳子" validDistance="0" x="1677" y="405" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/32/20110808145011_V2.png</Param>
+        <Param name="cursorID">2</Param>
+        <Param name="namecardVisible">true</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="mouseClick">
+          <Action name="openFlashWeb">
+            <Param name="url" value="Data\Wilderness\sq_npc_talk.swf?id=7">Data\Wilderness\sq_npc_talk.swf?id=7</Param>
+            <Param name="userData" value="false">false</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="140" h="140">
+        <Projection>
+          <CenterPoint x="72" y="127"/>
+        </Projection>
+      </EntityModel>
+      <Item x="1605" y="300" cursorID="2"/>
+      <NavPointList>
+        <NavPoint x="1620" y="458"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="1158" mid="AnimateNPC" name="青尘子" validDistance="0" x="875" y="652" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/32/20110808145315_V2.png</Param>
+        <Param name="cursorID">2</Param>
+        <Param name="namecardVisible">true</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="mouseClick">
+          <Action name="openFlashWeb">
+            <Param name="url" value="Data\Wilderness\sq_npc_talk.swf?id=6">Data\Wilderness\sq_npc_talk.swf?id=6</Param>
+            <Param name="userData" value="false">false</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="140" h="140">
+        <Projection>
+          <CenterPoint x="74" y="123"/>
+        </Projection>
+      </EntityModel>
+      <Item x="802" y="549" cursorID="2"/>
+      <NavPointList>
+        <NavPoint x="793" y="641"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="1159" mid="AnimateNPC" name="昆仑弟子" validDistance="0" x="363" y="1042" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/32/20110808150021_V2.png</Param>
+        <Param name="cursorID">2</Param>
+        <Param name="namecardVisible">true</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="mouseClick">
+          <Action name="openFlashWeb">
+            <Param name="url" value="Data\Wilderness\sq_npc_talk.swf?id=5">Data\Wilderness\sq_npc_talk.swf?id=5</Param>
+            <Param name="userData" value="false">false</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="140" h="140">
+        <Projection>
+          <CenterPoint x="72" y="127"/>
+        </Projection>
+      </EntityModel>
+      <Item x="291" y="934" cursorID="2"/>
+      <NavPointList>
+        <NavPoint x="295" y="1079"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="1160" mid="AnimateNPC" name="昆仑弟子" validDistance="0" x="1165" y="470" mapShowPoint="1" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/32/20110808150021_V2.png</Param>
+        <Param name="cursorID">2</Param>
+        <Param name="namecardVisible">true</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="mouseClick">
+          <Action name="openFlashWeb">
+            <Param name="url" value="Data\Wilderness\sq_npc_talk.swf?id=8">Data\Wilderness\sq_npc_talk.swf?id=8</Param>
+            <Param name="userData" value="false">false</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="140" h="140">
+        <Projection>
+          <CenterPoint x="72" y="127"/>
+        </Projection>
+      </EntityModel>
+      <Item x="1093" y="362" cursorID="2"/>
+      <NavPointList>
+        <NavPoint x="1106" y="520"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="1161" mid="" name="" validDistance="0" x="-1000" y="-1000" mapShowPoint="0" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/32/20110808151454_V2.png</Param>
+        <Param name="cursorID">4</Param>
+        <Param name="namecardVisible">false</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="mouseClick">
+          <Action name="openFlashWeb">
+            <Param name="url" value="Data\Wilderness\main_sq_taskNew.swf?id=108">Data\Wilderness\main_sq_taskNew.swf?id=108</Param>
+            <Param name="userData" value="false">false</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="30" h="30">
+        <Projection>
+          <CenterPoint x="11" y="76"/>
+        </Projection>
+      </EntityModel>
+      <Item x="163" y="556" cursorID="4"/>
+      <NavPointList>
+        <NavPoint x="239" y="613"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="1162" mid="" name="" validDistance="0" x="-1000" y="-1000" mapShowPoint="0" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/32/20110808151454_V2.png</Param>
+        <Param name="cursorID">4</Param>
+        <Param name="namecardVisible">false</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="mouseClick">
+          <Action name="openFlashWeb">
+            <Param name="url" value="Data\Wilderness\main_sq_taskNew.swf?id=108">Data\Wilderness\main_sq_taskNew.swf?id=108</Param>
+            <Param name="userData" value="false">false</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="30" h="30">
+        <Projection>
+          <CenterPoint x="14" y="230"/>
+        </Projection>
+      </EntityModel>
+      <Item x="759" y="1288" cursorID="4"/>
+      <NavPointList>
+        <NavPoint x="729" y="1261"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="1163" mid="" name="" validDistance="0" x="-1000" y="-1000" mapShowPoint="0" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/32/20110808151454_V2.png</Param>
+        <Param name="cursorID">4</Param>
+        <Param name="namecardVisible">false</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="mouseClick">
+          <Action name="openFlashWeb">
+            <Param name="url" value="Data\Wilderness\main_sq_taskNew.swf?id=108">Data\Wilderness\main_sq_taskNew.swf?id=108</Param>
+            <Param name="userData" value="false">false</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="30" h="30">
+        <Projection>
+          <CenterPoint x="20" y="164"/>
+        </Projection>
+      </EntityModel>
+      <Item x="1493" y="1208" cursorID="4"/>
+      <NavPointList>
+        <NavPoint x="1492" y="1161"/>
+      </NavPointList>
+    </Npc>
+    <Npc nid="1164" mid="" name="" validDistance="0" x="-1000" y="-1000" mapShowPoint="0" layerType="1" type="0">
+      <ParamList>
+        <Param name="view">Data/res/scene/32/20110808151454_V2.png</Param>
+        <Param name="cursorID">4</Param>
+        <Param name="namecardVisible">false</Param>
+      </ParamList>
+      <UserData>
+        <Speak/>
+      </UserData>
+      <TriggerList>
+        <Trigger id="" name="mouseClick">
+          <Action name="openFlashWeb">
+            <Param name="url" value="Data\Wilderness\main_sq_taskNew.swf?id=108">Data\Wilderness\main_sq_taskNew.swf?id=108</Param>
+            <Param name="userData" value="false">false</Param>
+          </Action>
+        </Trigger>
+      </TriggerList>
+      <EntityModel w="30" h="30">
+        <Projection>
+          <CenterPoint x="12" y="35"/>
+        </Projection>
+      </EntityModel>
+      <Item x="501" y="175" cursorID="4"/>
+      <NavPointList>
+        <NavPoint x="495" y="315"/>
+      </NavPointList>
+    </Npc>
+  </NpcList>
+</Config>

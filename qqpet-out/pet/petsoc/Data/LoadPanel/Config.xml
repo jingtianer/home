@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?><Config version="0" date="Wed Nov 30 2011 02:44:40 PM">
+  <LoadPanel>
+    <ProgressBar x="237" y="215" style="0"/>
+    <Background>
+      <Default url=""/>
+      <FirstLoad url="data/LoadPanel/bg_20111130.jpg"/>
+      <OtherLoad useSnapshot="true" url="" mask="data/LoadPanel/mask_20111130.png"/>
+    </Background>
+    <ProgressTitle length="32"/>
+  </LoadPanel>
+</Config>

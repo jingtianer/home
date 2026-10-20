@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Config>
+  <SceneModel id="6" name="企鹅镇" w="2390" h="1920">
+    <Cover path=""/>
+    <Background rows="10" cols="10" cursorID="5">
+      <Path value="Data/res/scene/6/bg_V69/"/>
+      <Item width="239" height="192"/>
+    </Background>
+    <GridScene rows="10" cols="10">
+      <Viewport rows="6" cols="6"/>
+      <GridSize width="239" height="192"/>
+    </GridScene>
+    <Navigator cursorID="6">
+      <Path value="Data/res/scene/6/nav_V69.png"/>
+    </Navigator>
+    <Script type="swf">
+      <Path value=""/>
+    </Script>
+    <EntityModelLib>
+      <EntityModel mid="13" mname="8.png" w="260" h="248">
+        <View type=".png" path="Data/res/scene/6/20111122112727_V2.png"/>
+        <Projection>
+          <CenterPoint x="55" y="189"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="13" mid="" name="8.png" validDistancev="100" x="997" y="6"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="1184" mname="001.png" w="27" h="58">
+        <View type=".png" path="Data/res/scene/6/20100323225339_V2.png"/>
+        <Projection>
+          <CenterPoint x="10" y="54"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="1184" mid="0" name="001.png" validDistancev="0" x="1794" y="375"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="17" mname="10.png" w="447" h="429">
+        <View type=".png" path="Data/res/scene/6/20111122105652_V2.png"/>
+        <Projection>
+          <CenterPoint x="14" y="285"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="17" mid="" name="10.png" validDistancev="100" x="1857" y="142"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="141" mname="fc.swf" w="234" h="233">
+        <View type=".swf" path="Data/res/scene/6/28_V2.png"/>
+        <Projection>
+          <CenterPoint x="115" y="448"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="141" mid="0" name="fc.swf" validDistancev="100" x="1902" y="127"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="178" mname="waterWave3.swf" w="111" h="50">
+        <View type=".swf" path="Data/res/scene/6/20110413204646_V2.png"/>
+        <Projection>
+          <CenterPoint x="55" y="41"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="178" mid="0" name="waterWave3.swf" validDistancev="0" x="1161" y="863"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="185" mname="waterWave3.swf" w="111" h="50">
+        <View type=".swf" path="Data/res/scene/6/20110413204646_V2.png"/>
+        <Projection>
+          <CenterPoint x="57" y="40"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="185" mid="0" name="waterWave3.swf" validDistancev="0" x="1551" y="888"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="1102" mname="005.png" w="77" h="82">
+        <View type=".png" path="Data/res/scene/6/20100226171245_V2.png"/>
+        <Projection>
+          <CenterPoint x="40" y="77"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="1102" mid="0" name="005.png" validDistancev="0" x="1476" y="863"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="126" mname="s06-02.png" w="87" h="112">
+        <View type=".png" path="Data/res/scene/6/18_V2.png"/>
+        <Projection>
+          <CenterPoint x="46" y="103"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="126" mid="0" name="s06-02.png" validDistancev="100" x="559" y="863"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="181" mname="waterWave3.swf" w="111" h="50">
+        <View type=".swf" path="Data/res/scene/6/20110413204646_V2.png"/>
+        <Projection>
+          <CenterPoint x="0" y="0"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="181" mid="0" name="waterWave3.swf" validDistancev="0" x="1435" y="1028"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="174" mname="waterWave3.swf" w="111" h="50">
+        <View type=".swf" path="Data/res/scene/6/20110413204646_V2.png"/>
+        <Projection>
+          <CenterPoint x="0" y="0"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="174" mid="0" name="waterWave3.swf" validDistancev="0" x="1188" y="1273"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="172" mname="waterWave3.swf" w="111" h="50">
+        <View type=".swf" path="Data/res/scene/6/20110413204646_V2.png"/>
+        <Projection>
+          <CenterPoint x="0" y="0"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="172" mid="0" name="waterWave3.swf" validDistancev="0" x="1322" y="1417"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="170" mname="waterWave3.swf" w="111" h="50">
+        <View type=".swf" path="Data/res/scene/6/20110413204646_V2.png"/>
+        <Projection>
+          <CenterPoint x="0" y="0"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="170" mid="0" name="waterWave3.swf" validDistancev="0" x="1713" y="1496"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="183" mname="waterWave3.swf" w="111" h="50">
+        <View type=".swf" path="Data/res/scene/6/20110413204646_V2.png"/>
+        <Projection>
+          <CenterPoint x="0" y="0"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="183" mid="0" name="waterWave3.swf" validDistancev="0" x="1557" y="1603"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="186" mname="07.png" w="215" h="61">
+        <View type=".png" path="Data/res/scene/6/20110510104459_V2.png"/>
+        <Projection>
+          <CenterPoint x="116" y="39"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="186" mid="0" name="07.png" validDistancev="0" x="1488" y="1882"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="1359" mname="s06-10.png" w="67" h="88">
+        <View type=".png" path="Data/res/scene/6/20111122105910_V2.png"/>
+        <Projection>
+          <CenterPoint x="54" y="81"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="1359" mid="" name="s06-10.png" validDistancev="0" x="2299" y="1196"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="1362" mname="夏企4.png" w="67" h="88">
+        <View type=".png" path="Data/res/scene/6/20111122105910_V2.png"/>
+        <Projection>
+          <CenterPoint x="44" y="89"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="1362" mid="" name="夏企4.png" validDistancev="0" x="1325" y="1242"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="1363" mname="夏企4.png" w="67" h="88">
+        <View type=".png" path="Data/res/scene/6/20111122105910_V2.png"/>
+        <Projection>
+          <CenterPoint x="44" y="89"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="1363" mid="" name="夏企4.png" validDistancev="0" x="1439" y="1308"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="1364" mname="夏企4.png" w="67" h="88">
+        <View type=".png" path="Data/res/scene/6/20111122105910_V2.png"/>
+        <Projection>
+          <CenterPoint x="44" y="89"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="1364" mid="" name="夏企4.png" validDistancev="0" x="1719" y="1384"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="1365" mname="夏企4.png" w="67" h="88">
+        <View type=".png" path="Data/res/scene/6/20111122105910_V2.png"/>
+        <Projection>
+          <CenterPoint x="44" y="89"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="1365" mid="" name="夏企4.png" validDistancev="0" x="1816" y="1346"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="1367" mname="01.png" w="99" h="144">
+        <View type=".png" path="Data/res/scene/6/20111122110318_V2.png"/>
+        <Projection>
+          <CenterPoint x="49" y="124"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="1367" mid="0" name="01.png" validDistancev="0" x="446" y="1760"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+      <EntityModel mid="1368" mname="夏企4.png" w="67" h="88">
+        <View type=".png" path="Data/res/scene/6/20111122105910_V2.png"/>
+        <Projection>
+          <CenterPoint x="44" y="89"/>
+        </Projection>
+        <NpcOption>
+          <Npc nid="1368" mid="" name="夏企4.png" validDistancev="0" x="1025" y="1680"/>
+          <NavPointList>
+            <NavPoint x="0" y="0"/>
+          </NavPointList>
+        </NpcOption>
+      </EntityModel>
+    </EntityModelLib>
+    <Map>
+      <NavMap w="0" h="0" path="Data/res/scene/6/nav_V69.png"/>
+      <SmallMap w="0" h="0" path="Data/res/scene/6/minimap_V69.png"/>
+      <LargeMap w="0" h="0" path="Data/res/scene/6/largemp_V69.png"/>
+    </Map>
+    <Layers>
+      <Ground/>
+      <Space>
+        <Item name="8.png" mid="13" cursorID="3" x="997" y="6"/>
+        <Item name="001.png" mid="1184" cursorID="3" x="1794" y="375"/>
+        <Item name="10.png" mid="17" cursorID="3" x="1857" y="142"/>
+        <Item name="fc.swf" mid="141" cursorID="3" x="1902" y="127"/>
+        <Item name="waterWave3.swf" mid="178" cursorID="3" x="1161" y="863"/>
+        <Item name="waterWave3.swf" mid="185" cursorID="3" x="1551" y="888"/>
+        <Item name="005.png" mid="1102" cursorID="3" x="1476" y="863"/>
+        <Item name="s06-02.png" mid="126" cursorID="3" x="559" y="863"/>
+        <Item name="waterWave3.swf" mid="181" cursorID="3" x="1435" y="1028"/>
+        <Item name="waterWave3.swf" mid="174" cursorID="3" x="1188" y="1273"/>
+        <Item name="waterWave3.swf" mid="172" cursorID="3" x="1322" y="1417"/>
+        <Item name="waterWave3.swf" mid="170" cursorID="3" x="1713" y="1496"/>
+        <Item name="waterWave3.swf" mid="183" cursorID="3" x="1557" y="1603"/>
+        <Item name="07.png" mid="186" cursorID="3" x="1488" y="1882"/>
+        <Item name="s06-10.png" mid="1359" cursorID="1" x="2299" y="1196"/>
+        <Item name="夏企4.png" mid="1362" cursorID="3" x="1325" y="1242"/>
+        <Item name="夏企4.png" mid="1363" cursorID="3" x="1439" y="1308"/>
+        <Item name="夏企4.png" mid="1364" cursorID="3" x="1719" y="1384"/>
+        <Item name="夏企4.png" mid="1365" cursorID="3" x="1816" y="1346"/>
+        <Item name="01.png" mid="1367" cursorID="1" x="446" y="1760"/>
+        <Item name="夏企4.png" mid="1368" cursorID="3" x="1025" y="1680"/>
+      </Space>
+      <Sky/>
+    </Layers>
+  </SceneModel>
+</Config>
